@@ -3,5 +3,5 @@
 The Publication Data Platform has 3 schemas types.
 
 - Avro Ingest
-- Avro Egest
+- Avro Egest (not released yet)
 - GraphQL
