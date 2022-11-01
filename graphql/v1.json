@@ -246,7 +246,7 @@
                         },
                         {
                             "kind": "OBJECT",
-                            "name": "Item",
+                            "name": "Clip",
                             "ofType": null
                         },
                         {
@@ -891,7 +891,7 @@
                                     "name": null,
                                     "ofType": {
                                         "kind": "OBJECT",
-                                        "name": "Item",
+                                        "name": "Clip",
                                         "ofType": null
                                     }
                                 }
@@ -1677,7 +1677,7 @@
                 },
                 {
                     "kind": "OBJECT",
-                    "name": "Item",
+                    "name": "Clip",
                     "description": null,
                     "fields": [
                         {
@@ -1900,7 +1900,7 @@
                                     "name": null,
                                     "ofType": {
                                         "kind": "OBJECT",
-                                        "name": "Item",
+                                        "name": "Clip",
                                         "ofType": null
                                     }
                                 }
@@ -1990,7 +1990,7 @@
                         },
                         {
                             "name": "hasType",
-                            "description": "Always has the value \"Item\"",
+                            "description": "Always has the value \"Clip\"",
                             "args": [],
                             "type": {
                                 "kind": "NON_NULL",
@@ -2985,7 +2985,7 @@
                                     "name": null,
                                     "ofType": {
                                         "kind": "OBJECT",
-                                        "name": "Item",
+                                        "name": "Clip",
                                         "ofType": null
                                     }
                                 }
@@ -4070,12 +4070,12 @@
                 {
                     "kind": "INPUT_OBJECT",
                     "name": "TemporalFilterInput",
-                    "description": "A filter for a temporal field. If you provide a date-time for both the after and\nbefore fields, the result will only contain items between those two date-times.\nIf you only provide one of the date-times, then the result  will contain all\nitems before or after the respective date-time. Both the after and the before \ndate-time are exclusive, i.e. the result will not contain items with the exact \nsame date-time.",
+                    "description": "A filter for a temporal field. If you provide a date-time for both the after and\nbefore fields, the result will only contain Clips between those two date-times.\nIf you only provide one of the date-times, then the result  will contain all\nClips before or after the respective date-time. Both the after and the before \ndate-time are exclusive, i.e. the result will not contain Clips with the exact \nsame date-time.",
                     "fields": null,
                     "inputFields": [
                         {
                             "name": "before",
-                            "description": "Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as \n2022-07-18T10:15:30+02:00 to filter for items strictly before that date-time. (ISO-8601)",
+                            "description": "Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as \n2022-07-18T10:15:30+02:00 to filter for Clips strictly before that date-time. (ISO-8601)",
                             "type": {
                                 "kind": "SCALAR",
                                 "name": "DateTime",
@@ -4085,7 +4085,7 @@
                         },
                         {
                             "name": "after",
-                            "description": "Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as \n2022-07-18T10:15:30+02:00 to filter for items strictly after that date-time. (ISO-8601)",
+                            "description": "Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as \n2022-07-18T10:15:30+02:00 to filter for Clips strictly after that date-time. (ISO-8601)",
                             "type": {
                                 "kind": "SCALAR",
                                 "name": "DateTime",
