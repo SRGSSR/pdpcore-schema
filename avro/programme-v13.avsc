@@ -1,0 +1,1322 @@
+{
+  "type": "record",
+  "name": "Programme",
+  "namespace": "ch.srgssr.pdp.domain.ebucore.v13",
+  "fields": [
+    {
+      "name": "hasType",
+      "type": "string",
+      "default": "Programme"
+    },
+    {
+      "name": "identifier",
+      "type": "string"
+    },
+    {
+      "name": "hasProvenance",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "ProvenanceType",
+          "symbols": [
+            "Archive",
+            "CMS",
+            "Play"
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "assetType",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "AssetType",
+          "symbols": [
+            "audio",
+            "video"
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "comments",
+      "type": {
+        "type": "array",
+        "items": "string"
+      },
+      "default": []
+    },
+    {
+      "name": "title",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "abstract",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "description",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "dateArchived",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "dateModified",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "dateBroadcast",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "dateProduced",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "duration",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "hasAccessConditions",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "AccessConditionType",
+          "symbols": [
+            "GD_G_PDP_Intern",
+            "GD_G_PDP_Public"
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "hasGenre",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Genre",
+          "fields": [
+            {
+              "name": "hasType",
+              "type": "string",
+              "default": "Genre"
+            },
+            {
+              "name": "identifier",
+              "type": "string"
+            },
+            {
+              "name": "prefLabel",
+              "type": "string"
+            },
+            {
+              "name": "description",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "example",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            }
+          ]
+        }
+      },
+      "default": []
+    },
+    {
+      "name": "hasUsageRights",
+      "type": {
+        "type": "array",
+        "items": "string"
+      },
+      "default": []
+    },
+    {
+      "name": "hasProductionType",
+      "type": {
+        "type": "array",
+        "items": "string"
+      },
+      "default": []
+    },
+    {
+      "name": "hasRelatedLocation",
+      "type": {
+        "type": "array",
+        "items": "string"
+      },
+      "default": []
+    },
+    {
+      "name": "hasRelatedEvent",
+      "type": {
+        "type": "array",
+        "items": "string"
+      },
+      "default": []
+    },
+    {
+      "name": "hasRelatedPicture",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Picture",
+          "fields": [
+            {
+              "name": "hasType",
+              "type": "string",
+              "default": "Picture"
+            },
+            {
+              "name": "identifier",
+              "type": "string"
+            },
+            {
+              "name": "title",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "hasResourceLocator",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            }
+          ]
+        }
+      },
+      "default": []
+    },
+    {
+      "name": "hasSubtitling",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "ClosedSubtitling",
+          "fields": [
+            {
+              "name": "hasType",
+              "type": "string",
+              "default": "ClosedSubtitling"
+            },
+            {
+              "name": "identifier",
+              "type": "string"
+            },
+            {
+              "name": "hasLocator",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "hasLanguage",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            }
+          ]
+        }
+      },
+      "default": []
+    },
+    {
+      "name": "aspectRatio",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "isCoveredBy",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Rights",
+          "fields": [
+            {
+              "name": "hasRightsHolder",
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          ]
+        }
+      },
+      "default": []
+    },
+    {
+      "name": "hasContributor",
+      "type": {
+        "type": "array",
+        "items": [
+          {
+            "type": "record",
+            "name": "Person",
+            "fields": [
+              {
+                "name": "hasType",
+                "type": "string",
+                "default": "Person"
+              },
+              {
+                "name": "hasRole",
+                "type": {
+                  "type": "array",
+                  "items": "string"
+                },
+                "default": []
+              },
+              {
+                "name": "givenName",
+                "type": [
+                  "null",
+                  "string"
+                ],
+                "default": null
+              },
+              {
+                "name": "familyName",
+                "type": [
+                  "null",
+                  "string"
+                ],
+                "default": null
+              },
+              {
+                "name": "agentName",
+                "type": [
+                  "null",
+                  "string"
+                ],
+                "default": null
+              }
+            ]
+          },
+          {
+            "type": "record",
+            "name": "Team",
+            "fields": [
+              {
+                "name": "hasType",
+                "type": "string",
+                "default": "Team"
+              },
+              {
+                "name": "agentName",
+                "type": [
+                  "null",
+                  "string"
+                ],
+                "default": null
+              }
+            ]
+          },
+          {
+            "type": "record",
+            "name": "Department",
+            "fields": [
+              {
+                "name": "hasType",
+                "type": "string",
+                "default": "Department"
+              },
+              {
+                "name": "agentName",
+                "type": [
+                  "null",
+                  "string"
+                ],
+                "default": null
+              }
+            ]
+          }
+        ]
+      },
+      "default": []
+    },
+    {
+      "name": "hasProducer",
+      "type": {
+        "type": "array",
+        "items": "string"
+      },
+      "default": []
+    },
+    {
+      "name": "hasTopic",
+      "type": {
+        "type": "array",
+        "items": "string"
+      },
+      "default": []
+    },
+    {
+      "name": "isMemberOf",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "Collection",
+          "fields": [
+            {
+              "name": "hasType",
+              "type": "string",
+              "default": "Collection"
+            },
+            {
+              "name": "identifier",
+              "type": "string"
+            },
+            {
+              "name": "hasGenre",
+              "type": {
+                "type": "array",
+                "items": "Genre"
+              },
+              "default": []
+            },
+            {
+              "name": "hasProvenance",
+              "type": [
+                "null",
+                "ProvenanceType"
+              ],
+              "default": null
+            },
+            {
+              "name": "hasPublisher",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "title",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "abstract",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "description",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "hasRelatedPicture",
+              "type": {
+                "type": "array",
+                "items": "Picture"
+              },
+              "default": []
+            }
+          ]
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "hasMember",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Item",
+          "fields": [
+            {
+              "name": "hasType",
+              "type": "string",
+              "default": "Item"
+            },
+            {
+              "name": "comments",
+              "type": {
+                "type": "array",
+                "items": "string"
+              },
+              "default": []
+            },
+            {
+              "name": "identifier",
+              "type": "string"
+            },
+            {
+              "name": "hasProvenance",
+              "type": [
+                "null",
+                "ProvenanceType"
+              ],
+              "default": null
+            },
+            {
+              "name": "hasParentEditorialObject",
+              "type": [
+                "null",
+                "Programme"
+              ],
+              "default": null
+            },
+            {
+              "name": "title",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "abstract",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "dateArchived",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "dateModified",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "description",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "duration",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "end",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "hasAccessConditions",
+              "type": [
+                "null",
+                "AccessConditionType"
+              ],
+              "default": null
+            },
+            {
+              "name": "hasUsageRights",
+              "type": {
+                "type": "array",
+                "items": "string"
+              },
+              "default": []
+            },
+            {
+              "name": "hasProductionType",
+              "type": {
+                "type": "array",
+                "items": "string"
+              },
+              "default": []
+            },
+            {
+              "name": "hasRelatedLocation",
+              "type": {
+                "type": "array",
+                "items": "string"
+              },
+              "default": []
+            },
+            {
+              "name": "hasRelatedPicture",
+              "type": {
+                "type": "array",
+                "items": "Picture"
+              },
+              "default": []
+            },
+            {
+              "name": "hasUsageRestrictions",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "hasSubtitling",
+              "type": {
+                "type": "array",
+                "items": "ClosedSubtitling"
+              },
+              "default": []
+            },
+            {
+              "name": "position",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "aspectRatio",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "isCoveredBy",
+              "type": {
+                "type": "array",
+                "items": "Rights"
+              },
+              "default": []
+            },
+            {
+              "name": "hasContributor",
+              "type": {
+                "type": "array",
+                "items": [
+                  "Person",
+                  "Team",
+                  "Department"
+                ]
+              },
+              "default": []
+            },
+            {
+              "name": "hasProducer",
+              "type": {
+                "type": "array",
+                "items": "string"
+              },
+              "default": []
+            },
+            {
+              "name": "hasTopic",
+              "type": {
+                "type": "array",
+                "items": "string"
+              },
+              "default": []
+            },
+            {
+              "name": "hasPart",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "record",
+                  "name": "Part",
+                  "fields": [
+                    {
+                      "name": "hasType",
+                      "type": "string",
+                      "default": "Part"
+                    },
+                    {
+                      "name": "identifier",
+                      "type": "string"
+                    },
+                    {
+                      "name": "title",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "dateArchived",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "dateModified",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "start",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "end",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "duration",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "hasPublisher",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "assetType",
+                      "type": [
+                        "null",
+                        "AssetType"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "hasRelatedLocation",
+                      "type": {
+                        "type": "array",
+                        "items": "string"
+                      },
+                      "default": []
+                    }
+                  ]
+                }
+              },
+              "default": []
+            },
+            {
+              "name": "hasRelatedEditorialObject",
+              "type": {
+                "type": "array",
+                "items": "Item"
+              },
+              "default": []
+            },
+            {
+              "name": "hasRelatedResource",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "record",
+                  "name": "Document",
+                  "fields": [
+                    {
+                      "name": "hasType",
+                      "type": "string",
+                      "default": "Document"
+                    },
+                    {
+                      "name": "hasProvenance",
+                      "type": [
+                        "null",
+                        "ProvenanceType"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "hasAccessConditions",
+                      "type": [
+                        "null",
+                        "AccessConditionType"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "identifier",
+                      "type": "string"
+                    },
+                    {
+                      "name": "hasContributor",
+                      "type": {
+                        "type": "array",
+                        "items": [
+                          "Person",
+                          "Team",
+                          "Department"
+                        ]
+                      },
+                      "default": []
+                    },
+                    {
+                      "name": "hasGenre",
+                      "type": {
+                        "type": "array",
+                        "items": "Genre"
+                      },
+                      "default": []
+                    },
+                    {
+                      "name": "hasPublisher",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "hasRelatedEditorialObject",
+                      "type": {
+                        "type": "array",
+                        "items": "Item"
+                      },
+                      "default": []
+                    },
+                    {
+                      "name": "hasRelatedPicture",
+                      "type": {
+                        "type": "array",
+                        "items": "Picture"
+                      },
+                      "default": []
+                    },
+                    {
+                      "name": "hasRelatedTextLine",
+                      "type": {
+                        "type": "array",
+                        "items": "string"
+                      },
+                      "default": []
+                    },
+                    {
+                      "name": "hasRelatedResource",
+                      "type": {
+                        "type": "array",
+                        "items": "Document"
+                      },
+                      "default": []
+                    },
+                    {
+                      "name": "hasResourceLocator",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "resourceFilename",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "resourceFileSize",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "title",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "abstract",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "dateModified",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "dateProduced",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "dateReleased",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "pubStatus",
+                      "type": [
+                        "null",
+                        {
+                          "type": "enum",
+                          "name": "PubStatusType",
+                          "symbols": [
+                            "published",
+                            "unpublished"
+                          ]
+                        }
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "kicker",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "commentsAllowed",
+                      "type": [
+                        "null",
+                        "boolean"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "isLongForm",
+                      "type": [
+                        "null",
+                        "boolean"
+                      ],
+                      "default": null
+                    }
+                  ]
+                }
+              },
+              "default": []
+            },
+            {
+              "name": "isInstantiatedBy",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "record",
+                  "name": "MediaResource",
+                  "fields": [
+                    {
+                      "name": "hasType",
+                      "type": "string",
+                      "default": "MediaResource"
+                    },
+                    {
+                      "name": "identifier",
+                      "type": "string"
+                    },
+                    {
+                      "name": "aspectRatio",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "audioTrackConfiguration",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "comments",
+                      "type": {
+                        "type": "array",
+                        "items": "string"
+                      },
+                      "default": []
+                    },
+                    {
+                      "name": "dateProduced",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "dateModified",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "dateMigrated",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "isParentOf",
+                      "type": {
+                        "type": "array",
+                        "items": "MediaResource"
+                      },
+                      "default": []
+                    },
+                    {
+                      "name": "hasAudioTrack",
+                      "type": {
+                        "type": "array",
+                        "items": {
+                          "type": "record",
+                          "name": "AudioTrack",
+                          "fields": [
+                            {
+                              "name": "hasType",
+                              "type": "string",
+                              "default": "AudioTrack"
+                            },
+                            {
+                              "name": "identifier",
+                              "type": "string"
+                            },
+                            {
+                              "name": "hasLanguage",
+                              "type": [
+                                "null",
+                                "string"
+                              ],
+                              "default": null
+                            },
+                            {
+                              "name": "trackName",
+                              "type": [
+                                "null",
+                                "string"
+                              ],
+                              "default": null
+                            }
+                          ]
+                        }
+                      },
+                      "default": []
+                    },
+                    {
+                      "name": "hasAudioEncodingFormat",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "hasVideoEncodingFormat",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "hasColourSpace",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "hasFormat",
+                      "type": [
+                        "null",
+                        {
+                          "type": "enum",
+                          "name": "FormatType",
+                          "symbols": [
+                            "digitalFile",
+                            "physicalMedia"
+                          ]
+                        }
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "hasLanguage",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "hasLocator",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "hasMedium",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "hasParentMediaResource",
+                      "type": [
+                        "null",
+                        "MediaResource"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "hasSource",
+                      "type": {
+                        "type": "array",
+                        "items": "MediaResource"
+                      },
+                      "default": []
+                    },
+                    {
+                      "name": "start",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    },
+                    {
+                      "name": "end",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null
+                    }
+                  ]
+                }
+              },
+              "default": []
+            },
+            {
+              "name": "start",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            }
+          ]
+        }
+      },
+      "default": []
+    },
+    {
+      "name": "hasPart",
+      "type": {
+        "type": "array",
+        "items": "Part"
+      },
+      "default": []
+    },
+    {
+      "name": "hasRelatedEditorialObject",
+      "type": {
+        "type": "array",
+        "items": "Programme"
+      },
+      "default": []
+    },
+    {
+      "name": "hasRelatedResource",
+      "type": {
+        "type": "array",
+        "items": "Document"
+      },
+      "default": []
+    },
+    {
+      "name": "isInstantiatedBy",
+      "type": {
+        "type": "array",
+        "items": "MediaResource"
+      },
+      "default": []
+    },
+    {
+      "name": "isScheduledOn",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "PublicationEvent",
+          "fields": [
+            {
+              "name": "hasType",
+              "type": "string",
+              "default": "PublicationEvent"
+            },
+            {
+              "name": "identifier",
+              "type": "string"
+            },
+            {
+              "name": "hasProvenance",
+              "type": [
+                "null",
+                "ProvenanceType"
+              ],
+              "default": null
+            },
+            {
+              "name": "publicationStartDateTime",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "publicationEndDateTime",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            },
+            {
+              "name": "hasRelatedPublicationChannel",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            }
+          ]
+        }
+      },
+      "default": []
+    },
+    {
+      "name": "position",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    }
+  ]
+}

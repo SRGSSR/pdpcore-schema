@@ -1,0 +1,94 @@
+{
+  "type": "record",
+  "name": "FaroAisCorrelationEvent",
+  "namespace": "ch.srgssr.pdp.correlation.events",
+  "fields": [
+    {
+      "name": "faroProgramId",
+      "type": "string"
+    },
+    {
+      "name": "data",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "FaroAisCorrelationData",
+          "namespace": "ch.srgssr.pdp.correlation.events.domain",
+          "fields": [
+            {
+              "name": "assetSetId",
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            {
+              "name": "businessUnit",
+              "type": {
+                "type": "enum",
+                "name": "BusinessUnit",
+                "namespace": "ch.srgssr.pdp.common.events.domain",
+                "symbols": [
+                  "RSI",
+                  "RTR",
+                  "RTS",
+                  "SRF"
+                ]
+              }
+            },
+            {
+              "name": "mediaType",
+              "type": {
+                "type": "enum",
+                "name": "Mediatype",
+                "namespace": "ch.srgssr.pdp.common.events.domain",
+                "symbols": [
+                  "AUDIO",
+                  "VIDEO"
+                ]
+              }
+            },
+            {
+              "name": "items",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "record",
+                  "name": "CorrelationTuple",
+                  "fields": [
+                    {
+                      "name": "faroItemId",
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    },
+                    {
+                      "name": "assetId",
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "proteusSeId",
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            {
+              "name": "proteusSlotId",
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

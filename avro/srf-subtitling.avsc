@@ -1,0 +1,38 @@
+{
+  "type": "record",
+  "name": "Programme",
+  "namespace": "ch.srgssr.pdp.domain.srf.subtitling",
+  "fields": [
+    {
+      "name": "hasType",
+      "type": "string",
+      "default": "Programme"
+    },
+    {
+      "name": "identifier",
+      "type": "string"
+    },
+    {
+      "name": "hasSubtitling",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "ClosedSubtitling",
+          "fields": [
+            {
+              "name": "hasType",
+              "type": "string",
+              "default": "ClosedSubtitling"
+            },
+            {
+              "name": "identifier",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "default": []
+    }
+  ]
+}

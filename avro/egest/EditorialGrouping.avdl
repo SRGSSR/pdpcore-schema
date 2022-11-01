@@ -1,0 +1,34 @@
+@namespace("ch.srgssr.pdp.domain.ingest")
+protocol EditorialGrouping {
+
+    import idl "AccessCondition.avdl";
+    import idl "AlternativeIdentifier.avdl";
+    import idl "Provenance.avdl";
+    import idl "Publisher.avdl";
+    import idl "Text.avdl";
+
+    /** An EditorialGrouping is defined as a marketing tool to promote selected content to one or several audiences on a specific platform. */
+    record EditorialGrouping {
+        /** The business unit or external organisation publishing the metadata. */
+        Publisher publisher;
+        /** The source system publishing the metadata. */
+        Provenance provenance;
+        /** The id of the editorial grouping in the source system. It has to be unique in the source system, but not globally. */
+        string sourceId;
+        /** Alternative identifiers from other systems. */
+        array<AlternativeIdentifier> alternativeIdentifiers = [];
+        /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
+        AccessCondition accessCondition = "Intern";
+        /** The title or name given to the EditorialGrouping. */
+        Text title;
+        /** This fields indicates the type of the editorial grouping. */
+        union{null, EditorialGroupingType} type = null;
+    }
+
+    /** If you need another editorial grouping type, please contact the PDP team. */
+    enum EditorialGroupingType {
+        Swimlane,
+        Playlist
+    }
+
+}
