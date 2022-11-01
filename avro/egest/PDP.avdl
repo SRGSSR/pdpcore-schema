@@ -1,0 +1,14 @@
+// Only IDLs imported into this file (including transitive imports) are converted to avsc.
+@namespace("ch.srgssr.pdp.domain.ingest")
+protocol PDP {
+
+    import idl "Article.avdl";
+    import idl "Channel.avdl";
+    import idl "Clip.avdl";
+    import idl "ClosedSubtitling.avdl";
+    import idl "EditorialGrouping.avdl";
+    import idl "Episode.avdl";
+    import idl "MessageKey.avdl";
+    import idl "Show.avdl";
+
+}

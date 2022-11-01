@@ -1,0 +1,10 @@
+@namespace("ch.srgssr.pdp.domain.ingest")
+protocol ProductionType {
+
+    /** The type of the production. */
+    record ProductionType {
+        /** The name of the production type, e.g. "in-house production", "third-party production". */
+        string type;
+    }
+
+}

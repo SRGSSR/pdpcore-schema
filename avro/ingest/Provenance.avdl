@@ -1,0 +1,16 @@
+@namespace("ch.srgssr.pdp.domain.ingest")
+protocol Provenance {
+
+    /** The source system publishing the metadata. */
+    enum Provenance {
+        Archive,
+        CMS,
+        Play,
+        PlaySuisse,
+        OfferPortfolio,
+        AIS,
+        Digas,
+        MOVEit
+    }
+
+}

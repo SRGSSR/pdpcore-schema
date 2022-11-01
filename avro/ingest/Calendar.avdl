@@ -1,0 +1,31 @@
+@namespace("ch.srgssr.pdp.domain.ingest")
+protocol Calendar {
+
+    /** A day of the week. */
+    enum DayOfWeek {
+        Monday,
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday,
+        Sunday
+    }
+
+    /** A month of the year. */
+    enum Month {
+        January,
+        February,
+        March,
+        April,
+        May,
+        June,
+        July,
+        August,
+        September,
+        October,
+        November,
+        December
+    }
+
+}
