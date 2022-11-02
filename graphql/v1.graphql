@@ -1,0 +1,485 @@
+"Indicates a Bean Validation constraint"
+directive @constraint(format: String, max: BigInteger, maxFloat: BigDecimal, maxLength: Int, min: BigInteger, minFloat: BigDecimal, minLength: Int, pattern: String) repeatable on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+"Marks the definition as deprecated with an optional reason."
+directive @deprecated(reason: String) on QUERY | MUTATION | SUBSCRIPTION | FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
+
+"Directs the executor to include this field or fragment only when the `if` argument is true"
+directive @include(
+    "Included when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Directs the executor to skip this field or fragment when the `if` argument is true."
+directive @skip(
+    "Skipped when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Exposes a URL that specifies the behaviour of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behaviour of this scalar."
+    url: String!
+  ) on SCALAR
+
+interface Agent {
+  agentName: String
+  hasType: String!
+}
+
+interface Asset {
+  hasType: String!
+  identifier: String!
+}
+
+"The alternative identifier holds the value for different identifiers which the entities have in other systems"
+type AlternativeIdentifier {
+  hasProvenance: Provenance!
+  hasPublisher: String!
+  hasType: String!
+  identifierType: String!
+  identifierValue: String!
+}
+
+type AudioTrack {
+  hasLanguage: String
+  hasType: String
+  identifier: String
+  trackName: String
+}
+
+type ClosedSubtitling implements Asset {
+  hasLanguage: String
+  hasLocator: String
+  "Always has the value \"ClosedSubtitling\""
+  hasType: String!
+  identifier: String!
+}
+
+"A group of Programmes, a.k.a 'show', 'émission', 'emissione', 'Sendung'. Examples: 'Mise au Point', 'Arena'."
+type Collection implements Asset {
+  abstract: String
+  description: String
+  hasGenre: [Genre]!
+  hasProvenance: Provenance!
+  hasPublisher: String!
+  hasRelatedPicture: [Picture]!
+  "Always has the value \"Collection\""
+  hasType: String!
+  identifier: String!
+  title: String
+}
+
+type CollectionPage {
+  cursor: String
+  edges: [Collection]!
+}
+
+type Department implements Agent {
+  agentName: String
+  hasType: String!
+}
+
+type Document implements Asset {
+  abstract: String
+  commentsAllowed: Boolean
+  "ISO-8601"
+  dateModified: DateTime
+  "ISO-8601"
+  dateProduced: DateTime
+  "ISO-8601"
+  dateReleased: DateTime
+  hasAccessConditions: AccessCondition
+  hasContributor: [Agent]!
+  hasGenre: [Genre]!
+  hasProvenance: Provenance
+  hasPublisher: String
+  hasRelatedEditorialObject: [Item]!
+  hasRelatedPicture: [Picture]!
+  hasRelatedResource: [Document]!
+  hasRelatedTextLine: [String]!
+  hasResourceLocator: String
+  hasType: String!
+  identifier: String!
+  isLongForm: Boolean
+  kicker: String
+  pubStatus: PubStatus
+  resourceFileSize: String
+  resourceFilename: String
+  tagline: String
+  title: String
+}
+
+type DocumentPage {
+  cursor: String
+  edges: [Document]!
+}
+
+type DopeSheet implements Asset {
+  alternativeIdentifiers: [AlternativeIdentifier]
+  assetType: String
+  "ISO-8601"
+  dateExpires: DateTime
+  "ISO-8601"
+  dateModified: DateTime
+  "ISO-8601"
+  dateProduced: DateTime
+  hasAccessCondition: AccessCondition
+  hasLanguage: String
+  hasProvenance: Provenance
+  hasPublisher: String
+  "Always has the value \"Dopesheet\""
+  hasType: String!
+  hasUsageRights: [String]
+  identifier: String!
+  title: String
+}
+
+type DopeSheetPage {
+  cursor: String
+  edges: [DopeSheet]!
+}
+
+type Genre {
+  description: String
+  example: String
+  hasProvenance: Provenance
+  "Always has the value \"Genre\""
+  hasType: String!
+  identifier: String!
+  prefLabel: String!
+}
+
+type Item implements Asset {
+  abstract: String
+  comments: [String]!
+  "ISO-8601"
+  dateArchived: DateTime
+  "ISO-8601"
+  dateModified: DateTime
+  description: String
+  duration: Int
+  end: String
+  hasAccessConditions: AccessCondition
+  hasContributor: [Agent]!
+  hasParentEditorialObject: Programme
+  hasPart: [Part]!
+  hasProducer: [String]!
+  hasProductionType: [String]!
+  hasProvenance: Provenance
+  hasRelatedEditorialObject: [Item]!
+  hasRelatedLocation: [String]!
+  hasRelatedPicture: [Picture]!
+  hasRelatedResource: [Document]!
+  hasTopic: [String]!
+  "Always has the value \"Item\""
+  hasType: String!
+  hasUsageRestrictions: String
+  hasUsageRights: [String]!
+  identifier: String!
+  isCoveredBy: [Rights]
+  isInstantiatedBy: [MediaResource]
+  position: String
+  start: String
+  tagline: String
+  title: String
+}
+
+type MediaResource implements Asset {
+  aspectRatio: String
+  audioTrackConfiguration: String
+  comments: [String]!
+  "ISO-8601"
+  dateMigrated: DateTime
+  "ISO-8601"
+  dateModified: DateTime
+  "ISO-8601"
+  dateProduced: DateTime
+  end: String
+  hasAudioEncodingFormat: String
+  hasAudioTrack: [AudioTrack]!
+  hasColourSpace: String
+  hasFormat: FormatType
+  hasLanguage: String
+  hasLocator: String
+  hasMedium: String
+  hasParentMediaResource: MediaResource
+  hasSource: [MediaResource]!
+  hasType: String!
+  hasVideoEncodingFormat: String
+  identifier: String!
+  isParentOf: [MediaResource]
+  start: String
+}
+
+type Part {
+  assetType: AssetType
+  "ISO-8601"
+  dateArchived: DateTime
+  "ISO-8601"
+  dateModified: DateTime
+  duration: String
+  end: String
+  hasPublisher: String
+  hasRelatedLocation: [String]!
+  hasType: String!
+  identifier: String!
+  start: String
+  title: String
+}
+
+type Person implements Agent {
+  agentName: String
+  familyName: String
+  givenName: String
+  hasRole: [String]!
+  hasType: String!
+}
+
+type Picture {
+  hasIdentifier: AlternativeIdentifier
+  hasResourceLocator: String
+  hasType: String
+  identifier: String
+  title: String
+}
+
+type Programme implements Asset {
+  abstract: String
+  assetType: AssetType
+  comments: [String]!
+  "ISO-8601"
+  dateArchived: DateTime
+  "ISO-8601"
+  dateBroadcast: DateTime
+  "ISO-8601"
+  dateModified: DateTime
+  "ISO-8601"
+  dateProduced: DateTime
+  description: String
+  duration: Int
+  episodeNumberInSeason: Int
+  hasAccessConditions: AccessCondition
+  hasContributor: [Agent]!
+  hasGenre: [Genre]!
+  hasIdentifier: [AlternativeIdentifier]!
+  hasMember: [Item]!
+  hasPart: [Part]!
+  hasProducer: [String]!
+  hasProductionType: [String]!
+  hasProvenance: Provenance
+  hasRelatedEditorialObject: [Programme]!
+  hasRelatedEvent: [String]!
+  hasRelatedLocation: [String]!
+  hasRelatedPicture: [Picture]!
+  hasRelatedResource: [Document]!
+  hasSubtitling: [ClosedSubtitling]!
+  hasTopic: [String]!
+  "Always has the value \"Programme\""
+  hasType: String!
+  hasUsageRights: [String]!
+  identifier: String!
+  isCoveredBy: [Rights]
+  isInstantiatedBy: [MediaResource]
+  isMemberOf: Collection
+  isScheduledOn: [PublicationEvent]
+  position: Int
+  seasonNumber: Int
+  tagline: String
+  title: String
+}
+
+type ProgrammePage {
+  cursor: String
+  edges: [Programme]!
+}
+
+type PublicationEvent {
+  hasProvenance: Provenance
+  hasRelatedPublicationChannel: String
+  hasType: String
+  identifier: String
+  "ISO-8601"
+  publicationEndDateTime: DateTime
+  "ISO-8601"
+  publicationStartDateTime: DateTime
+}
+
+"Query root"
+type Query {
+  assets(identifiers: [String]): [Asset]
+  collectionPage(
+    "The cursor of the previous page."
+    after: String,
+    """
+    The returned page will contain only collections that match all filters. Only
+    filters with values affect the result. If you don't want to filter at all, then
+    you can set this field to null.
+    """
+    filter: CollectionFilterInput,
+    first: Int! @constraint(max : 500) @constraint(min : 1),
+    "Deprecated: use filter.hasProvenance instead."
+    hasProvenance: Provenance,
+    "Deprecated: use filter.hasPublisher instead."
+    hasPublisher: String
+  ): CollectionPage
+  documentPage(after: String, filter: DocumentFilterInput, first: Int! @constraint(max : 500) @constraint(min : 1)): DocumentPage
+  dopeSheetPage(after: String, filter: DopeSheetFilterInput, first: Int! @constraint(max : 500) @constraint(min : 1)): DopeSheetPage
+  programmePage(
+    "The cursor of the previous page."
+    after: String,
+    """
+    The returned page will contain only programmes that match all filters. Only
+    filters with values affect the result. If you don't want to filter at all, then 
+    you can set this field to null.
+    """
+    filter: ProgrammeFilterInput,
+    "The number of programmes per page."
+    first: Int! @constraint(max : 500) @constraint(min : 1),
+    "Deprecated: use filter.hasProvenance instead."
+    hasProvenance: Provenance,
+    "Deprecated: use filter.isMemberOf instead."
+    isMemberOf: String
+  ): ProgrammePage
+}
+
+type Rights {
+  hasRightsHolder: String
+}
+
+type Team implements Agent {
+  agentName: String
+  hasType: String!
+}
+
+enum AccessCondition {
+  "Assets with this access condition must be made available only to authenticated SRG SSR employees or services."
+  GD_G_PDP_Intern
+  "Assets with this access condition can be made available to everyone."
+  GD_G_PDP_Public
+  "The access condition for this asset is unknown. Assume the most restrictive access condition applies."
+  Unknown
+}
+
+enum AssetType {
+  Audio
+  Unknown
+  Video
+}
+
+enum FormatType {
+  DigitalFile
+  PhysicalMedia
+  Unknown
+}
+
+enum Provenance {
+  AIS
+  Archive
+  CMS
+  Digas
+  MOVEit
+  OfferPortfolio
+  Play
+  PlaySuisse
+  Unknown
+}
+
+enum ProvenanceType {
+  AIS
+  Archive
+  CMS
+  Digas
+  MOVEit
+  MoveIT
+  OfferPortfolio
+  Play
+  PlaySuisse
+  Unknown
+}
+
+enum PubStatus {
+  Published
+  Unknown
+  Unpublished
+}
+
+input CollectionFilterInput {
+  hasProvenance: Provenance
+  hasPublisher: String
+}
+
+input DocumentFilterInput {
+  hasProvenance: Provenance
+  hasPublisher: String
+  """
+  Filter documents depending on when they were updated. A document counts as
+  updated when either the source system changes its data or a relation to another
+  asset is modified. Note: the field "dateModified" is set by the source system 
+  and only changes when the source system changes the document's data, not when
+  PDP modifies a relation to another asset.
+  """
+  updated: TemporalFilterInput
+}
+
+input DopeSheetFilter {
+  "Possible types: Unknown, Archive, CMS, Play, PlaySuisse, MoveIT"
+  hasProvenance: ProvenanceType
+  hasPublisher: String
+  hasType: String
+  identifierType: String
+  identifierValue: String
+}
+
+input DopeSheetFilterInput {
+  "Filter by specific alternative identifiers and optionally specifier the alternative identifier type"
+  alternativeIdentifiers: [DopeSheetFilter]
+  hasProvenance: Provenance
+  hasPublisher: String
+  "Filter for primary identifiers as well as alternative identifiers"
+  identifier: String
+  """
+  Filter DopeSheets depending on when they were updated. A DopeSheet counts as
+  updated when either the source system changes its data or a relation to another
+  asset is modified. Note: the field "dateModified" is set by the source system 
+  and only changes when the source system changes the document's data, not when
+  PDP modifies a relation to another asset.
+  """
+  updated: TemporalFilterInput
+}
+
+input ProgrammeFilterInput {
+  hasProvenance: Provenance
+  hasPublisher: String
+  "Provide an identifier of a collection to filter for programmes belonging to that collection."
+  isMemberOf: String
+  """
+  Filter programmes depending on when they were updated. A programme counts as
+  updated when either the source system changes its data or a relation to another
+  asset is modified. Note: the field "dateModified" is set by the source system 
+  and only changes when the source system changes the programme's data, not when
+  PDP modifies a relation to another asset.
+  """
+  updated: TemporalFilterInput
+}
+
+"""
+A filter for a temporal field. If you provide a date-time for both the after and
+before fields, the result will only contain items between those two date-times.
+If you only provide one of the date-times, then the result  will contain all
+items before or after the respective date-time. Both the after and the before 
+date-time are exclusive, i.e. the result will not contain items with the exact 
+same date-time.
+"""
+input TemporalFilterInput {
+  """
+  Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as 
+  2022-07-18T10:15:30+02:00 to filter for items strictly after that date-time. (ISO-8601)
+  """
+  after: DateTime
+  """
+  Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as 
+  2022-07-18T10:15:30+02:00 to filter for items strictly before that date-time. (ISO-8601)
+  """
+  before: DateTime
+}
