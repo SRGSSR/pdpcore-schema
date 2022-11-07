@@ -17,4 +17,4 @@ The Publication Data Platform has three schemas types.
 
 ## Contributing
 
-1. Fork this repo and create PR with your changes.
+Fork this repo and create PR with your changes.
