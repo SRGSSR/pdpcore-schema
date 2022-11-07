@@ -2,6 +2,8 @@
 
 This repository contains the PDP schemas.
 It is meant to be used for discussing the schemas and suggesting changes.
+Please open a new issue or pull request to start a discussion, ask questions or suggest changes.
+
 It must not be used by applications that use the PDP. 
 Applications must use the Avro schemas published in the
 [Avro schema registry](https://akhq.pdp.production.admin.srgssr.ch/ui/strimzi/schema)
