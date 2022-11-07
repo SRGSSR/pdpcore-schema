@@ -1,7 +1,14 @@
 # PDPCore MetaData Schema Specification
 
-The Publication Data Platform has 3 schemas types.
+This repository contains the PDP schemas.
+It is meant to be used for discussing the schemas and suggesting changes.
+It must not be used by applications that use the PDP. 
+Applications must use the Avro schemas published in the
+[Avro schema registry](https://akhq.pdp.production.admin.srgssr.ch/ui/strimzi/schema)
+and the [GraphQL schema](https://api.pdp.production.srgssr.ch/graphql/schema.graphql) provided by the PDP API.
+
+The Publication Data Platform has three schemas types.
 
 - Avro Ingest
-- Avro Egest (not released yet)
+- Avro Egest (not yet released)
 - GraphQL
