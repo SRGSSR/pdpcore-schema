@@ -10,6 +10,7 @@ protocol Provenance {
         OfferPortfolio,
         AIS,
         Digas,
+        OpenMedia,
         MOVEit
     }
 

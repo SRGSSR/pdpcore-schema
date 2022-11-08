@@ -384,6 +384,7 @@ enum Provenance {
   Digas
   MOVEit
   OfferPortfolio
+  OpenMedia
   Play
   PlaySuisse
   Unknown
@@ -397,6 +398,7 @@ enum ProvenanceType {
   MOVEit
   MoveIT
   OfferPortfolio
+  OpenMedia
   Play
   PlaySuisse
   Unknown
