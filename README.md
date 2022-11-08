@@ -11,6 +11,6 @@ and the [GraphQL schema](https://api.pdp.production.srgssr.ch/graphql/schema.gra
 
 The Publication Data Platform has three schemas types.
 
+- GraphQL
 - Avro Ingest
 - Avro Egest (not yet released)
-- GraphQL
