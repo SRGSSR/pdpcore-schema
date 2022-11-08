@@ -1,3 +1,7 @@
+schema {
+  query: Query
+}
+
 "Indicates a Bean Validation constraint"
 directive @constraint(format: String, max: BigInteger, maxFloat: BigDecimal, maxLength: Int, min: BigInteger, minFloat: BigDecimal, minLength: Int, pattern: String) repeatable on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
 
@@ -403,6 +407,15 @@ enum PubStatus {
   Unknown
   Unpublished
 }
+
+"Scalar for BigDecimal"
+scalar BigDecimal
+
+"Scalar for BigInteger"
+scalar BigInteger
+
+"Scalar for DateTime"
+scalar DateTime
 
 input CollectionFilterInput {
   hasProvenance: Provenance
