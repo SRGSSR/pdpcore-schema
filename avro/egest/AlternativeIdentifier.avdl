@@ -1,0 +1,22 @@
+@namespace("ch.srgssr.pdp.domain.egest")
+protocol AlternativeIdentifier {
+
+    import idl "Provenance.avdl";
+    import idl "Publisher.avdl";
+
+    /**
+An alternative identifier holds an identifier that is used in a system outside of PDP, usually the source system.
+For records having both sourceId and alternativeIdentifiers fields, the PDP automatically adds an entry with the sourceId to the alternativeIdentifiers when ingesting the record.
+   */
+    record AlternativeIdentifier {
+        /** The business unit or external organisation publishing the metadata. */
+        Publisher publisher;
+        /** The source system publishing the metadata. */
+        Provenance provenance;
+        /** The alternative identifier. */
+        string value;
+        /** The type of the alternative identifier. The identifier of the source system has the type 'SourceId'. */
+        string type;
+    }
+
+}

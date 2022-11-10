@@ -1,0 +1,36 @@
+@namespace("ch.srgssr.pdp.domain.egest")
+protocol ClosedSubtitling {
+
+    import idl "AccessCondition.avdl";
+    import idl "AlternativeIdentifier.avdl";
+    import idl "ClipReference.avdl";
+    import idl "Language.avdl";
+    import idl "EpisodeReference.avdl";
+    import idl "Publisher.avdl";
+    import idl "URL.avdl";
+
+    /** Contains a closed subtitle for audiovisual objects as separate content. */
+    record ClosedSubtitling {
+        /**The PDP urn*/
+        string id;
+        /** The business unit or external organisation publishing the metadata. */
+        Publisher publisher;
+        /** The source system publishing the metadata. */
+        Provenance provenance;
+        /** The id of the closed subtitle in the source system. It has to be unique in the source system, but not globally. */
+        string sourceId;
+        /** Alternative identifiers from the source system. */
+        array<AlternativeIdentifier> alternativeIdentifiers = [];
+        /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
+        AccessCondition accessCondition = "Intern";
+        /** The URL from where the subtitles can be accessed. */
+        URL url;
+        /** An ISO 639-1 two character language code, e.g. de, fr, it, rm. */
+        union{null, Language} language = null;
+        /** The corresponding episode or clip. */
+        union{
+            null, EpisodePDPReference, EpisodeSourceReference, ClipPDPReference, ClipSourceReference
+        } belongsTo = null;
+    }
+
+}

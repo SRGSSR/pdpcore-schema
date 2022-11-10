@@ -1,0 +1,19 @@
+@namespace("ch.srgssr.pdp.domain.egest")
+protocol Genre {
+
+    import idl "AlternativeIdentifier.avdl";
+    import idl "Text.avdl";
+
+    /** The genre is used to classify audiovisual objects depending on their content into subject areas such as "Culture", "Sports", "News" or "Economy". */
+    record Genre {
+        /** Alternative identifiers from the source system. */
+        array<AlternativeIdentifier> alternativeIdentifiers = [];
+        /** The preferred lexical label for a genre, in a given language. */
+        Text prefLabel;
+        /** A general description of the genre. */
+        union{null, Text} description = null;
+        /** Example of assets (episodes, clips or articles) belonging to this genre, e.g. "The episode 'Tagesschau' is part of the 'News' genre".*/
+        union{null, Text} example = null;
+    }
+
+}
