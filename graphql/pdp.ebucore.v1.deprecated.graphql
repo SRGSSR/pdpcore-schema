@@ -47,8 +47,8 @@ type AlternativeIdentifier {
 
 type AudioTrack {
   hasLanguage: String
-  hasType: String
-  identifier: String
+  hasType: String!
+  identifier: String!
   trackName: String
 }
 
@@ -120,21 +120,21 @@ type DocumentPage {
 }
 
 type DopeSheet implements Asset {
-  alternativeIdentifiers: [AlternativeIdentifier]
-  assetType: String
+  alternativeIdentifiers: [AlternativeIdentifier]!
+  assetType: String!
   "ISO-8601"
-  dateExpires: DateTime
+  dateExpires: DateTime!
   "ISO-8601"
-  dateModified: DateTime
+  dateModified: DateTime!
   "ISO-8601"
-  dateProduced: DateTime
-  hasAccessCondition: AccessCondition
-  hasLanguage: String
-  hasProvenance: Provenance
+  dateProduced: DateTime!
+  hasAccessCondition: AccessCondition!
+  hasLanguage: String!
+  hasProvenance: Provenance!
   hasPublisher: String
   "Always has the value \"Dopesheet\""
   hasType: String!
-  hasUsageRights: [String]
+  hasUsageRights: [String]!
   identifier: String!
   title: String
 }
@@ -147,7 +147,7 @@ type DopeSheetPage {
 type Genre {
   description: String
   example: String
-  hasProvenance: Provenance
+  hasProvenance: Provenance!
   "Always has the value \"Genre\""
   hasType: String!
   identifier: String!
@@ -164,9 +164,9 @@ type Item implements Asset {
   description: String
   duration: Int
   end: String
-  hasAccessConditions: AccessCondition
+  hasAccessConditions: AccessCondition!
   hasContributor: [Agent]!
-  hasParentEditorialObject: Programme
+  hasParentEditorialObject: Programme!
   hasPart: [Part]!
   hasProducer: [String]!
   hasProductionType: [String]!
@@ -181,8 +181,8 @@ type Item implements Asset {
   hasUsageRestrictions: String
   hasUsageRights: [String]!
   identifier: String!
-  isCoveredBy: [Rights]
-  isInstantiatedBy: [MediaResource]
+  isCoveredBy: [Rights]!
+  isInstantiatedBy: [MediaResource]!
   position: String
   start: String
   tagline: String
@@ -212,7 +212,7 @@ type MediaResource implements Asset {
   hasType: String!
   hasVideoEncodingFormat: String
   identifier: String!
-  isParentOf: [MediaResource]
+  isParentOf: [MediaResource]!
   start: String
 }
 
@@ -283,10 +283,10 @@ type Programme implements Asset {
   hasType: String!
   hasUsageRights: [String]!
   identifier: String!
-  isCoveredBy: [Rights]
-  isInstantiatedBy: [MediaResource]
+  isCoveredBy: [Rights]!
+  isInstantiatedBy: [MediaResource]!
   isMemberOf: Collection
-  isScheduledOn: [PublicationEvent]
+  isScheduledOn: [PublicationEvent]!
   position: Int
   seasonNumber: Int
   tagline: String
@@ -299,10 +299,10 @@ type ProgrammePage {
 }
 
 type PublicationEvent {
-  hasProvenance: Provenance
+  hasProvenance: Provenance!
   hasRelatedPublicationChannel: String
-  hasType: String
-  identifier: String
+  hasType: String!
+  identifier: String!
   "ISO-8601"
   publicationEndDateTime: DateTime
   "ISO-8601"
@@ -311,7 +311,7 @@ type PublicationEvent {
 
 "Query root"
 type Query {
-  assets(identifiers: [String]): [Asset]
+  assets(identifiers: [String]!): [Asset]!
   collectionPage(
     "The cursor of the previous page."
     after: String,
@@ -323,12 +323,12 @@ type Query {
     filter: CollectionFilterInput,
     first: Int! @constraint(max : 500) @constraint(min : 1),
     "Deprecated: use filter.hasProvenance instead."
-    hasProvenance: Provenance,
+    hasProvenance: Provenance @deprecated(reason : "Use filter.hasProvenance instead"),
     "Deprecated: use filter.hasPublisher instead."
-    hasPublisher: String
-  ): CollectionPage
-  documentPage(after: String, filter: DocumentFilterInput, first: Int! @constraint(max : 500) @constraint(min : 1)): DocumentPage
-  dopeSheetPage(after: String, filter: DopeSheetFilterInput, first: Int! @constraint(max : 500) @constraint(min : 1)): DopeSheetPage
+    hasPublisher: String @deprecated(reason : "Use filter.hasPublisher instead")
+  ): CollectionPage!
+  documentPage(after: String, filter: DocumentFilterInput, first: Int! @constraint(max : 500) @constraint(min : 1)): DocumentPage!
+  dopeSheetPage(after: String, filter: DopeSheetFilterInput, first: Int! @constraint(max : 500) @constraint(min : 1)): DopeSheetPage!
   programmePage(
     "The cursor of the previous page."
     after: String,
@@ -341,10 +341,10 @@ type Query {
     "The number of programmes per page."
     first: Int! @constraint(max : 500) @constraint(min : 1),
     "Deprecated: use filter.hasProvenance instead."
-    hasProvenance: Provenance,
+    hasProvenance: Provenance @deprecated(reason : "use filter.hasProvenance instead"),
     "Deprecated: use filter.isMemberOf instead."
-    isMemberOf: String
-  ): ProgrammePage
+    isMemberOf: String @deprecated(reason : "use filter.isMemberOf instead")
+  ): ProgrammePage!
 }
 
 type Rights {
