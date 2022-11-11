@@ -12,5 +12,5 @@ and the [GraphQL schema](https://api.pdp.production.srgssr.ch/graphql/schema.gra
 The Publication Data Platform has three schemas types.
 
 - [Avro Ingest](https://github.com/SRGSSR/pdpcore-schema/blob/main/avro/ingest/PDP.avdl)
-- [Avro Egest](https://github.com/SRGSSR/pdpcore-schema/blob/main/avro/egest/PDP.avdl)
+- Avro Egest comming soon
 - [GraphQL](https://github.com/SRGSSR/pdpcore-schema/blob/main/graphql/pdp.ebucore.v1.deprecated.graphql) (EBUCore deprecated)
