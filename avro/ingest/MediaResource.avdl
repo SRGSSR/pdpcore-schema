@@ -20,8 +20,6 @@ protocol MediaResource {
         union{null, timestamp_ms} modifiedAt = null;
         /** The date and time at which the media resource was migrated. */
         union{null, timestamp_ms} migratedAt = null;
-        /** The potential child media resources of this media resource. */
-        array<MediaResource> parentOf = [];
         /** The audio tracks of the media resource. */
         array<AudioTrack> audioTracks = [];
         /** The audio encoding format of the media resource. */
@@ -38,8 +36,6 @@ protocol MediaResource {
         union{null, URL} url = null;
         /** The medium on which the media resource is stored.*/
         union{null, Medium} medium = null;
-        /** Link from digital file to phyiscal storage medium (source of digitalisation). */
-        array<MediaResource> sources = [];
         /** Start point relative to the parent resource's start in milliseconds. */
         union{null, long} start = null;
         /** End point relative to the parent resource's start in milliseconds. */
