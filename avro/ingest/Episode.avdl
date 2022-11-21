@@ -4,6 +4,7 @@ protocol Episode {
     import idl "AccessCondition.avdl";
     import idl "Agent.avdl";
     import idl "AssetType.avdl";
+    import idl "DistributionType.avdl";
     import idl "ShowReference.avdl";
     import idl "Comment.avdl";
     import idl "EditorialGroupingReference.avdl";
@@ -37,6 +38,8 @@ protocol Episode {
         AccessCondition accessCondition = "Intern";
         /** Defines the media type of the episode. */
         AssetType assetType;
+        /** Specifies the distribution type of an episode or a clip. */
+        DistributionType distributionType;
         /** Comments about the episode from the source system (not from a user). */
         array<Comment> comments = [];
         /** The title or name given to the episode. */
@@ -79,7 +82,7 @@ protocol Episode {
         union{null, ShowSourceReference, ShowPDPReference} memberOf = null;
         /** A part is used to describe and subdivide individual contributions ("Clip") or episodes ("Episode") in more detail. A clip is an intellectual unit which is published. A part, on the other hand, is (rather) a potentially independent selection (for content indexing and/or internal purposes) and is correspondingly less relevant for media consumers. */
         array<Part> parts = [];
-        /** Other episodes related to this episode. */
+        /** Other episodes related to this episode. Use this field for example if you got multiple distribution-versions (like VOD and HbbTV) of the same episode in your source system. */
         array<union{EpisodeSourceReference, EpisodePDPReference}> relatedEpisodes = [];
         /** Media resources (digital files or physical medias) instantiating the episode. */
         array<MediaResource> instances = [];
