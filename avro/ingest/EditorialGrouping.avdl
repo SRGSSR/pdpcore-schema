@@ -18,11 +18,11 @@ protocol EditorialGrouping {
         /** Alternative identifiers from other systems. */
         array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        AccessCondition accessCondition = "Intern";
+        AccessCondition accessCondition = "Internal";
         /** The title or name given to the EditorialGrouping. */
         Text title;
         /** This fields indicates the type of the editorial grouping. */
-        union{null, EditorialGroupingType} type = null;
+        EditorialGroupingType? type = null;
     }
 
     /** If you need another editorial grouping type, please contact the PDP team. */

@@ -15,7 +15,7 @@ protocol EditorialGroupingReference {
     }
 
     /** A reference to an editorial grouping. Use this when you have the grouping's PDP id. */
-    record EditorialGroupingPDPReference {
+    record EditorialGroupingIdReference {
         /**
         PDP id, format: 'urn:pdp:{publisher}:{provenance}:editorialgrouping:{sourceId}
         Example: urn:pdp:srf:archive:editorialgrouping:1234abcd

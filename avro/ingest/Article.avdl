@@ -5,6 +5,7 @@ protocol Article {
     import idl "AlternativeIdentifier.avdl";
     import idl "Agent.avdl";
     import idl "ArticleReference.avdl";
+    import idl "ArticleFile.avdl";
     import idl "EditorialGroupingReference.avdl";
     import idl "Event.avdl";
     import idl "Genre.avdl";
@@ -31,7 +32,7 @@ protocol Article {
         /** Alternative identifiers from other systems. */
         array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        AccessCondition accessCondition = "Intern";
+        AccessCondition accessCondition = "Internal";
         /** The title or name given to the article. */
         Text title;
         /** The topic(s) addressed by the article. */
@@ -41,9 +42,9 @@ protocol Article {
         /** The genres this article belongs to. */
         array<Genre> genres = [];
         /** Episodes related to this article. */
-        array<union{EpisodeSourceReference, EpisodePDPReference}> relatedEpisodes = [];
+        array<union{EpisodeSourceReference, EpisodeIdReference}> relatedEpisodes = [];
         /** Clips related to the article. */
-        array<union{ClipSourceReference, ClipPDPReference}> relatedClips = [];
+        array<union{ClipSourceReference, ClipIdReference}> relatedClips = [];
         /** The locations, real or fictional, covered by the article. */
         array<Location> relatedLocations = [];
         /** The events, real or fictional, covered by the article. */
@@ -51,35 +52,33 @@ protocol Article {
         /** Pictures related to the article. */
         array<Picture> relatedPictures = [];
         /** The fulltext of the article. */
-        union{null, ArticleContent} content = null;
+        ArticleContent? content = null;
         /** Other articles related to this article. */
-        array<union{ArticleSourceReference, ArticlePDPReference}> relatedArticles = [];
+        array<union{ArticleSourceReference, ArticleIdReference}> relatedArticles = [];
         /** The URL from where the article can be accessed. */
-        union{null, URL} url = null;
-        /** The name of the file containing the article. */
-        union{null, string} fileName = null;
-        /** The size of the file containing the article in bytes. */
-        union{null, long} fileSize = null;
+        URL? url = null;
+        /** The file containing the article. */
+        ArticleFile? articlefile = null;
         /** An abstract is a self-contained, brief, and meaningful description of an article. In contrast to the "description", the "abstract" is about a description of the asset that is as complete as possible. */
-        union{null, Text} abstract = null;
+        Text? abstract = null;
         /** The date and time at which the article was modified. */
-        union{null, timestamp_ms} modifiedAt = null;
+        timestamp_ms? modifiedAt = null;
         /** The date and time at which the article was produced. */
-        union{null, timestamp_ms} producedAt = null;
+        timestamp_ms? producedAt = null;
         /** The date and time at which the article was released. */
-        union{null, timestamp_ms} releasedAt = null;
+        timestamp_ms? releasedAt = null;
         /** Indicates if the website article has been published online. */
-        union{null, PublicationStatus} publicationStatus = null;
+        PublicationStatus? publicationStatus = null;
         /** A kicker is a short topic information, which is usually placed above the actual title and allows the user to see at a glance what an article is about. */
-        union{null, Text} kicker = null;
+        Text? kicker = null;
         /** Indicates whether user comments are allowed for this article. */
-        union{null, boolean} isCommentingAllowed = null;
+        boolean? isCommentingAllowed = null;
         /** This field indicates whether the article is longer or more extensive. */
-        union{null, boolean} isLongForm = null;
+        boolean? isLongForm = null;
         /** An ISO 639-1 two character language code, e.g. de, fr, it, rm. */
-        union{null, Language} language = null;
+        Language? language = null;
         /** An EditorialGrouping is defined as a marketing tool to promote selected content to one or several audiences on a specific platform. */
-        array<union{EditorialGroupingSourceReference, EditorialGroupingPDPReference}> includedIn = [];
+        array<union{EditorialGroupingSourceReference, EditorialGroupingIdReference}> includedIn = [];
     }
 
     record ArticleContent {

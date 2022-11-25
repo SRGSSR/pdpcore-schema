@@ -1,7 +1,7 @@
 @namespace("ch.srgssr.pdp.domain.ingest")
 protocol AspectRatio {
 
-    /** The aspect ratio of a video-asset. */
+    /** The aspect ratio of an asset. */
     record AspectRatio {
         /** The aspect ratio, e.g. 16:9 or 4:3. */
         string ratio;

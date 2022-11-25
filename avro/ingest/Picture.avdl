@@ -1,6 +1,7 @@
 @namespace("ch.srgssr.pdp.domain.ingest")
 protocol Picture {
 
+    import idl "AspectRatio.avdl";
     import idl "Rights.avdl";
     import idl "Text.avdl";
     import idl "URL.avdl";
@@ -10,9 +11,15 @@ protocol Picture {
         /** The URL from where the picture can be accessed. */
         URL url;
         /** The title or name given to the picture. */
-        union{null, Text} title = null;
+        Text? title = null;
         /** Rights and restrictions associated to the picture. */
         array<Rights> rights = [];
+        /** The width of the picture in pixels. */
+        int? width = null;
+        /** The height of the picture in pixels. */
+        int? height = null;
+        /** The aspect ratio of the picture, e.g. 16:9 or 4:3. */
+        AspectRatio? aspectRatio = null;
     }
 
 }

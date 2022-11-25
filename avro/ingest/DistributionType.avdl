@@ -1,8 +1,9 @@
 @namespace("ch.srgssr.pdp.domain.ingest")
 protocol DistributionType {
 
-	/** Specifies the distribution type of an episode or a clip */
-	enum DistributionType {
-		Broadcast, HbbTV, VideoOnDemand, AudioOnDemand, VideoPodcast, AudioPodcast, LiveStream
-	}
+    /** Specifies the distribution type of an episode or a clip */
+    enum DistributionType {
+        Broadcast, HbbTV, VideoOnDemand, AudioOnDemand, VideoPodcast, AudioPodcast, LiveStream
+    }
+
 }

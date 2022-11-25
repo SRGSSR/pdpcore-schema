@@ -20,14 +20,14 @@ protocol ClosedSubtitling {
         /** Alternative identifiers from the source system. */
         array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        AccessCondition accessCondition = "Intern";
+        AccessCondition accessCondition = "Internal";
         /** The URL from where the subtitles can be accessed. */
         URL url;
         /** An ISO 639-1 two character language code, e.g. de, fr, it, rm. */
-        union{null, Language} language = null;
+        Language? language = null;
         /** The corresponding episode or clip. */
         union{
-            null, EpisodePDPReference, EpisodeSourceReference, ClipPDPReference, ClipSourceReference
+            null, EpisodeIdReference, EpisodeSourceReference, ClipIdReference, ClipSourceReference
         } belongsTo = null;
     }
 

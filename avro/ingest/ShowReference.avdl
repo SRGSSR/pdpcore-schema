@@ -15,7 +15,7 @@ protocol ShowReference {
     }
 
     /** A reference to a show. Use this when you have the show's PDP id. */
-    record ShowPDPReference {
+    record ShowIdReference {
         /**
         PDP id, format: 'urn:pdp:{publisher}:{provenance}:show:{sourceId}
         Example: urn:pdp:srf:archive:show:1234abcd

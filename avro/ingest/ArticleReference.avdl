@@ -15,7 +15,7 @@ protocol ArticleReference {
     }
 
     /** A reference to an article. Use this when you have the articles PDP id. */
-    record ArticlePDPReference {
+    record ArticleIdReference {
         /**
         PDP id, format: 'urn:pdp:{publisher}:{provenance}:article:{sourceId}
         Example: urn:pdp:srf:archive:article:1234abcd

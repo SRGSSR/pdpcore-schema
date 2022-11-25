@@ -14,7 +14,7 @@ protocol EpisodeReference {
     }
 
     /** A reference to a Episode. Use this when you have the episode's PDP id. */
-    record EpisodePDPReference {
+    record EpisodeIdReference {
         /**
         PDP id, format: 'urn:pdp:{publisher}:{provenance}:episode:{sourceId}
         Example: urn:pdp:srf:archive:episode:1234abcd

@@ -17,7 +17,7 @@ protocol Channel {
         /** Alternative identifiers from other systems. */
         array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        AccessCondition accessCondition = "Intern";
+        AccessCondition accessCondition = "Internal";
         /** The name of the channel. */
         string name;
     }

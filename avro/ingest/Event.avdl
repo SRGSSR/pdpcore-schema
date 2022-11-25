@@ -1,10 +1,12 @@
 @namespace("ch.srgssr.pdp.domain.ingest")
 protocol Event {
 
+    import idl "Text.avdl";
+
     /** An event, real or fictional, covered by an asset */
     record Event {
         /** The name of the event, e.g. "1. August celebration" or "Fête des vignerons 2019". */
-        string name;
+        Text name;
     }
 
 }

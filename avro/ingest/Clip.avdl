@@ -36,35 +36,31 @@ protocol Clip {
         /** Alternative identifiers from other systems. */
         array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        AccessCondition accessCondition = "Intern";
+        AccessCondition accessCondition = "Internal";
         /** Defines the media type of the clip. */
         AssetType assetType;
         /** Specifies the distribution type of an episode or a clip. */
-        DistributionType distributionType;
+        DistributionType? distributionType;
         /** The title or name given to the clip. */
         Text title;
         /** The episode this clip belongs to. */
-        union{null, EpisodeSourceReference, EpisodePDPReference} parentEpisode = null;
+        union{null, EpisodeSourceReference, EpisodeIdReference} parentEpisode = null;
         /** An abstract is a self-contained, brief, and meaningful description of a clip. In contrast to the "description", the "abstract" is about a description of the asset that is as complete as possible. */
-        union{null, Text} abstract = null;
+        Text? abstract = null;
         /** A general description of the clip. */
-        union{null, Text} description = null;
+        Text? description = null;
         /** The date and time when the clip was archived. */
-        union{null, timestamp_ms} archivedAt = null;
+        timestamp_ms? archivedAt = null;
         /** The date and time at which the clip has been modified. */
-        union{null, timestamp_ms} modifiedAt = null;
+        timestamp_ms? modifiedAt = null;
         /* The date and time when the clip was produced. */
-        union{null, timestamp_ms} producedAt = null;
-        /** The date and time from when the clip is available for public use. */
-        union{null, timestamp_ms} availableFrom = null;
-        /** The date and time until when the clip is available for public use. */
-        union{null, timestamp_ms} availableTo = null;
+        timestamp_ms? producedAt = null;
         /** Start point relative to the episode's start in milliseconds. */
-        union{null, long} start = null;
+        long? start = null;
         /** The duration of the clip in milliseconds. */
-        union{null, long} duration = null;
+        long? duration = null;
         /** End point relative to the episode's start in milliseconds. */
-        union{null, long} end = null;
+        long? end = null;
         /** The genres this clip belongs to. */
         array<Genre> genres = [];
         /** Comments about the clip from the source system (not from a user). */
@@ -78,7 +74,7 @@ protocol Clip {
         /** Pictures associated with the clip. */
         array<Picture> relatedPictures = [];
         /** The position of the clip in an ordered group (e.g. an episode). */
-        union{null, int} position = null;
+        int? position = null;
         /** Rights and restrictions associated to the clip. */
         array<Rights> rights = [];
         /** People, teams or departments who contributed to the clip. */
@@ -88,20 +84,20 @@ protocol Clip {
         /** A "Part" is used to describe and subdivide the clip in more detail. A clip is an intellectual unit which is published. A "Part", on the other hand, is (rather) a potentially independent selection (for content indexing and/or internal purposes) and is correspondingly less relevant for media consumers. */
         array<Part> parts = [];
         /** Clips related to this clip. Use this field for example if you got multiple distribution-versions (like VOD and HbbTV) of the same clip in your source system. */
-        array<union{ClipSourceReference, ClipPDPReference}> relatedClips = [];
+        array<union{ClipSourceReference, ClipIdReference}> relatedClips = [];
         /** Media resources (digital files or physical medias) instantiating the clip. */
         array<MediaResource> instances = [];
         /** Used to further specify the audiovisual asset type. */
-        union{null, MediaType} mediaType = null;
+        MediaType? mediaType = null;
         /** The episode or clip from which this clip is derived. */
-        union{null, EpisodeSourceReference, EpisodePDPReference, ClipSourceReference, ClipPDPReference}
-                derivedFrom = null;
+        union{null, EpisodeSourceReference, EpisodeIdReference, ClipSourceReference, ClipIdReference}
+            derivedFrom = null;
         /** An ISO 639-1 two character language code, e.g. de, fr, it, rm. */
-        union{null, Language} language = null;
+        Language? language = null;
         /** The URL from where the clip can be accessed, e.g. the Play URL. */
-        union{null, URL} url = null;
+        URL? url = null;
         /** An EditorialGrouping is defined as a marketing tool to promote selected content to one or several audiences on a specific platform. */
-        array<union{EditorialGroupingSourceReference, EditorialGroupingPDPReference}> includedIn = [];
+        array<union{EditorialGroupingSourceReference, EditorialGroupingIdReference}> includedIn = [];
     }
 
 }

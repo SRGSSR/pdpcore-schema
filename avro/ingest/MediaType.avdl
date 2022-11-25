@@ -3,7 +3,7 @@ protocol MediaType {
 
     /** Used to further specify the audiovisual asset type. */
     enum MediaType {
-        Broadcast, Movie, Series, Podcast, Livestream, Trailer
+        Broadcast, Movie, Series, Podcast, LiveStream, Trailer
     }
 
 }

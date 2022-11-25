@@ -8,50 +8,46 @@ protocol MediaResource {
     import idl "URL.avdl";
 
     record MediaResource {
-        /** Alternative identifiers from other systems. */
-        array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** The aspect ratio of a video-asset, e.g. 16:9 or 4:3. */
-        union{null, AspectRatio} aspectRatio = null;
+        AspectRatio? aspectRatio = null;
         /** Comments about the media resource from the source system (not from a user). */
         array<Comment> comments = [];
         /** The date and time at which the media resource was produced. */
-        union{null, timestamp_ms} producedAt = null;
+        timestamp_ms? producedAt = null;
         /** The date and time at which the media resource was modified. */
-        union{null, timestamp_ms} modifiedAt = null;
+        timestamp_ms? modifiedAt = null;
         /** The date and time at which the media resource was migrated. */
-        union{null, timestamp_ms} migratedAt = null;
+        timestamp_ms? migratedAt = null;
         /** The audio tracks of the media resource. */
         array<AudioTrack> audioTracks = [];
         /** The audio encoding format of the media resource. */
-        union{null, AudioEncodingFormat} audioEncodingFormat = null;
+        AudioEncodingFormat? audioEncodingFormat = null;
         /** The video encoding format of the media resource. */
-        union{null, VideoEncodingFormat} videoEncodingFormat = null;
+        VideoEncodingFormat? videoEncodingFormat = null;
         /** The colour space of the media resource. */
-        union{null, ColourSpace} colourSpace = null;
+        ColourSpace? colourSpace = null;
         /** Whether the media resource is digital or physical. */
-        union{null, MediaResourceType} mediaResourceType = null;
+        MediaResourceType? mediaResourceType = null;
         /** An ISO 639-1 two character language code, e.g. de, fr, it, rm. */
-        union{null, Language} language = null;
+        Language? language = null;
         /** The URL from where the media resource can be accessed. */
-        union{null, URL} url = null;
+        URL? url = null;
         /** The medium on which the media resource is stored.*/
-        union{null, Medium} medium = null;
-        /** Start point relative to the parent resource's start in milliseconds. */
-        union{null, long} start = null;
-        /** End point relative to the parent resource's start in milliseconds. */
-        union{null, long} end = null;
+        Medium? medium = null;
+        /** Start point relative to the episode's or clip's start in milliseconds. */
+        long? start = null;
+        /** End point relative to the episode's or clip's start in milliseconds. */
+        long? end = null;
     }
 
     /** An audio track is the soundtrack that belongs to a digital or analog media object. */
     record AudioTrack {
-        /** Alternative identifiers from other systems. */
-        array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** The name of the track. */
-        union{null, string} name = null;
+        string? name = null;
         /** An ISO 639-1 two character language code, e.g. de, fr, it, rm. */
-        union{null, Language} language = null;
+        Language? language = null;
         /** The track type of the audio track, e.g. "Stereo", "Mono", "Dolby". */
-        union{null, string} trackType = null;
+        string? trackType = null;
     }
 
     enum MediaResourceType {

@@ -15,7 +15,7 @@ protocol ClipReference {
     }
 
     /** A reference to a clip. Use this when you have the clip's PDP id. */
-    record ClipPDPReference {
+    record ClipIdReference {
         /**
         PDP id, format: 'urn:pdp:{publisher}:{provenance}:clip:{sourceId}
         Example: urn:pdp:srf:archive:clip:1234abcd

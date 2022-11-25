@@ -20,13 +20,13 @@ protocol Show {
         /** Alternative identifiers from other systems. */
         array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        AccessCondition accessCondition = "Intern";
+        AccessCondition accessCondition = "Internal";
         /** The title or name given to the show. */
         Text title;
         /** An abstract is a self-contained, brief, and meaningful description of a show. In contrast to the "description", the "abstract" is about a description of the asset that is as complete as possible. */
-        union{null, Text} abstract = null;
+        Text? abstract = null;
         /** A general description of a show. */
-        union{null, Text} description = null;
+        Text? description = null;
         /** The genres this show belongs to. */
         array<Genre> genres = [];
         /** Pictures associated with the show. */

@@ -15,7 +15,7 @@ protocol ChannelReference {
     }
 
     /** A reference to a channel. Use this when you have the channel's PDP id. */
-    record ChannelPDPReference {
+    record ChannelIdReference {
         /**
         PDP id, format: 'urn:pdp:{publisher}:{provenance}:channel:{sourceId}
         Example: urn:pdp:srf:archive:channel:srf1
