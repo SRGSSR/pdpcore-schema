@@ -39,7 +39,7 @@ protocol Clip {
         AccessCondition accessCondition = "Internal";
         /** Defines the media type of the clip. */
         AssetType assetType;
-        /** Specifies the distribution type of an episode or a clip. */
+        /** Specifies the distribution type of the clip. */
         DistributionType? distributionType;
         /** The title or name given to the clip. */
         Text title;
