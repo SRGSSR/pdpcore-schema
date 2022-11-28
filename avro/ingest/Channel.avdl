@@ -3,6 +3,8 @@ protocol Channel {
 
     import idl "AccessCondition.avdl";
     import idl "AlternativeIdentifier.avdl";
+    import idl "DistributionVector.avdl";
+    import idl "Picture.avdl";
     import idl "Provenance.avdl";
     import idl "Publisher.avdl";
 
@@ -20,6 +22,10 @@ protocol Channel {
         AccessCondition accessCondition = "Internal";
         /** The name of the channel. */
         string name;
+        /** Pictures associated with the channel. */
+        array<Picture> relatedPictures = [];
+        /** Specifies the distribution vector of a channel. */
+        DistributionVector distributionVector;
     }
 
 }
