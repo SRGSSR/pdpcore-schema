@@ -12,6 +12,7 @@ protocol Rights {
         timestamp_ms? availableTo = null;
     }
 
+    /** An agent (contact, person or organisation) having or managing the rights to an asset. */
     record RightsHolder {
         /** Name of the rights holder. */
         string name;
