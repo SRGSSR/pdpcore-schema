@@ -15,7 +15,7 @@ For records having both sourceId and alternativeIdentifiers fields, the PDP auto
         Provenance provenance;
         /** The alternative identifier. */
         string value;
-        /** The type of the alternative identifier. The identifier of the source system has the type 'SourceId'. */
+        /** The type of the alternative identifier. The identifier of the source system has the type 'sourceId'. */
         string type;
     }
 

@@ -83,7 +83,7 @@ protocol Clip {
         array<Topic> topics = [];
         /** A "Part" is used to describe and subdivide the clip in more detail. A clip is an intellectual unit which is published. A "Part", on the other hand, is (rather) a potentially independent selection (for content indexing and/or internal purposes) and is correspondingly less relevant for media consumers. */
         array<Part> parts = [];
-        /** Clips related to this clip. Use this field for example if you got multiple distribution-versions (like VOD and HbbTV) of the same clip in your source system. */
+        /** Clips related to this clip. Use this field if you have multiple distribution-versions (like VOD and HbbTV) of the same clip in your source system. */
         array<union{ClipSourceReference, ClipIdReference}> relatedClips = [];
         /** Media resources (digital files or physical medias) instantiating the clip. */
         array<MediaResource> instances = [];

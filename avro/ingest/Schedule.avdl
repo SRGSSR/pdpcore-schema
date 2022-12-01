@@ -1,7 +1,6 @@
 @namespace("ch.srgssr.pdp.domain.ingest")
 protocol Schedule {
 
-    import idl "AlternativeIdentifier.avdl";
     import idl "Calendar.avdl";
     import idl "ChannelReference.avdl";
     import idl "Frequency.avdl";

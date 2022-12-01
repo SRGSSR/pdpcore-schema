@@ -38,7 +38,7 @@ protocol Episode {
         AccessCondition accessCondition = "Internal";
         /** Defines the media type of the episode. */
         AssetType assetType;
-        /** Specifies the distribution type of an episode or a clip. */
+        /** Specifies the distribution type of the episode. */
         DistributionType? distributionType;
         /** Comments about the episode from the source system (not from a user). */
         array<Comment> comments = [];
@@ -78,7 +78,7 @@ protocol Episode {
         union{null, ShowSourceReference, ShowIdReference} memberOf = null;
         /** A part is used to describe and subdivide individual contributions ("Clip") or episodes ("Episode") in more detail. A clip is an intellectual unit which is published. A part, on the other hand, is (rather) a potentially independent selection (for content indexing and/or internal purposes) and is correspondingly less relevant for media consumers. */
         array<Part> parts = [];
-        /** Other episodes related to this episode. Use this field for example if you got multiple distribution-versions (like VOD and HbbTV) of the same episode in your source system. */
+        /** Other episodes related to this episode. Use this field if you have multiple distribution-versions (like VOD and HbbTV) of the same episode in your source system. */
         array<union{EpisodeSourceReference, EpisodeIdReference}> relatedEpisodes = [];
         /** Media resources (digital files or physical medias) instantiating the episode. */
         array<MediaResource> instances = [];

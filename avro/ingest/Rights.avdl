@@ -1,6 +1,7 @@
 @namespace("ch.srgssr.pdp.domain.ingest")
 protocol Rights {
 
+    /** Describes rights and restrictions associated with an asset. */
     record Rights {
         /** An agent (contact, person or organisation) having or managing the rights to an asset. */
         RightsHolder? rightsHolder = null;
