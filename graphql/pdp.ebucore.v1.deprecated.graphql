@@ -653,6 +653,7 @@ enum Provenance {
   Play
   PlaySuisse
   Unknown
+  WhatsOn
 }
 
 enum ProvenanceType {
