@@ -7,9 +7,9 @@ protocol Rights {
         RightsHolder? rightsHolder = null;
         /** Expresses usage rights. */
         array<string> usageRights = [];
-        /** The date and time from when the asset is available for public use. */
+        /** The date and time (expressed as timestamp) from when the asset is available for public use. */
         timestamp_ms? availableFrom = null;
-        /** The date and time until when the asset is available for public use. */
+        /** The date and time (expressed as timestamp) until when the asset is available for public use. */
         timestamp_ms? availableTo = null;
     }
 

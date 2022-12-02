@@ -12,9 +12,9 @@ protocol Part {
         Text? title = null;
         /** A general description of the part. */
         Text? description = null;
-        /** The date and time when the part was archived. */
+        /** The date and time (expressed as timestamp) when the part was archived. */
         timestamp_ms? archivedAt = null;
-        /** The date and time at which the part was modified. */
+        /** The date and time (expressed as timestamp) at which the part was modified. */
         timestamp_ms? modifiedAt = null;
         /** Start point relative to the episode's or clip's start in milliseconds. */
         long? start = null;

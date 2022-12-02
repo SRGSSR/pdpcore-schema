@@ -1,7 +1,7 @@
 @namespace("ch.srgssr.pdp.domain.ingest")
 protocol Channel {
 
-    import idl "AccessCondition.avdl";
+    import idl "ConfidentialityLevel.avdl";
     import idl "AlternativeIdentifier.avdl";
     import idl "DistributionVector.avdl";
     import idl "Picture.avdl";
@@ -19,7 +19,7 @@ protocol Channel {
         /** Alternative identifiers from other systems. */
         array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        AccessCondition accessCondition = "Internal";
+        ConfidentialityLevel confidentialityLevel = "C2_Internal";
         /** The name of the channel. */
         string name;
         /** Pictures associated with the channel. */

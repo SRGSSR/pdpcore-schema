@@ -1,7 +1,7 @@
 @namespace("ch.srgssr.pdp.domain.ingest")
 protocol Show {
 
-    import idl "AccessCondition.avdl";
+    import idl "ConfidentialityLevel.avdl";
     import idl "Provenance.avdl";
     import idl "Genre.avdl";
     import idl "Picture.avdl";
@@ -20,7 +20,7 @@ protocol Show {
         /** Alternative identifiers from other systems. */
         array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        AccessCondition accessCondition = "Internal";
+        ConfidentialityLevel confidentialityLevel = "C2_Internal";
         /** The title or name given to the show. */
         Text title;
         /** An abstract is a self-contained, brief, and meaningful description of a show. In contrast to the "description", the "abstract" is about a description of the asset that is as complete as possible. */

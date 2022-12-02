@@ -1,7 +1,7 @@
 @namespace("ch.srgssr.pdp.domain.ingest")
 protocol ClosedSubtitling {
 
-    import idl "AccessCondition.avdl";
+    import idl "ConfidentialityLevel.avdl";
     import idl "AlternativeIdentifier.avdl";
     import idl "ClipReference.avdl";
     import idl "Language.avdl";
@@ -20,7 +20,7 @@ protocol ClosedSubtitling {
         /** Alternative identifiers from the source system. */
         array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        AccessCondition accessCondition = "Internal";
+        ConfidentialityLevel confidentialityLevel = "C2_Internal";
         /** The URL from where the subtitles can be accessed. */
         URL url;
         /** An ISO 639-1 two character language code, e.g. de, fr, it, rm. */

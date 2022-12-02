@@ -17,9 +17,9 @@ protocol Schedule {
         array<int> byMonthWeek = [];
         /** The duration of a single episode in the show in milliseconds. */
         long? duration = null;
-        /** The start date and time of an episode of the show. */
+        /** The start date and time (expressed as timestamp) of an episode of the show. */
         timestamp_ms start;
-        /** The end date and time of an episode of the show. */
+        /** The end date and time (expressed as timestamp) of an episode of the show. */
         timestamp_ms? end = null;
         /** Defines timestamps during which a scheduled episode will not take place. The property allows exceptions to a schedule to be specified. The event that would have started at that specific date and time should be excluded from the schedule. */
         array<timestamp_ms> exceptions = [];

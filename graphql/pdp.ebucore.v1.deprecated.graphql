@@ -71,7 +71,7 @@ type AudioTrack {
 
 type Channel {
   "In the context of the PDP this field is used to indicate whether the data may be published publicly."
-  accessCondition: AccessCondition!
+  accessCondition: ConfidentialityLevel!
   "Alternative identifiers from other systems."
   alternativeIdentifiers: [AlternativeIdentifier]!
   "Specifies the distribution vector of a channel."
@@ -513,7 +513,7 @@ type Show {
   """
   abstract: Text
   "In the context of the PDP this field is used to indicate whether the data may be published publicly."
-  accessCondition: AccessCondition!
+  accessCondition: ConfidentialityLevel!
   "Alternative identifiers from other systems."
   alternativeIdentifiers: [AlternativeIdentifier]!
   "A general description of a show."
@@ -556,21 +556,6 @@ type URL {
   url: String!
 }
 
-"""
-Assets with the access condition "Intern" must be made available only to
-authenticated "SRG SSR" employees or services. Assets with the access condition
-"Public" can be made available to everyone.
-If you are unsure set the access condition to "Intern" and/or contact the PDP team for clarification.
-"""
-enum AccessCondition {
-  "Assets with this access condition must be made available only to authenticated SRG SSR employees or services."
-  Intern
-  "Assets with this access condition can be made available to everyone."
-  Public
-  "The access condition for this asset is unknown. Assume the most restrictive access condition applies."
-  Unknown
-}
-
 enum AccessConditionEbucore {
   "Assets with this access condition must be made available only to authenticated SRG SSR employees or services."
   GD_G_PDP_Intern
@@ -584,6 +569,12 @@ enum AssetType {
   Audio
   Unknown
   Video
+}
+
+enum ConfidentialityLevel {
+  C1_Public
+  C2_Internal
+  Unknown
 }
 
 "A day of the week."

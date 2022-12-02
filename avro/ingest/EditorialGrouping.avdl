@@ -1,7 +1,7 @@
 @namespace("ch.srgssr.pdp.domain.ingest")
 protocol EditorialGrouping {
 
-    import idl "AccessCondition.avdl";
+    import idl "ConfidentialityLevel.avdl";
     import idl "AlternativeIdentifier.avdl";
     import idl "Provenance.avdl";
     import idl "Publisher.avdl";
@@ -18,7 +18,7 @@ protocol EditorialGrouping {
         /** Alternative identifiers from other systems. */
         array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        AccessCondition accessCondition = "Internal";
+        ConfidentialityLevel confidentialityLevel = "C2_Internal";
         /** The title or name given to the EditorialGrouping. */
         Text title;
         /** This fields indicates the type of the editorial grouping. */

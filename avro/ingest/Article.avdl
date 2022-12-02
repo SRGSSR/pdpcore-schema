@@ -1,7 +1,7 @@
 @namespace("ch.srgssr.pdp.domain.ingest")
 protocol Article {
 
-    import idl "AccessCondition.avdl";
+    import idl "ConfidentialityLevel.avdl";
     import idl "AlternativeIdentifier.avdl";
     import idl "Agent.avdl";
     import idl "ArticleReference.avdl";
@@ -32,7 +32,7 @@ protocol Article {
         /** Alternative identifiers from other systems. */
         array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        AccessCondition accessCondition = "Internal";
+        ConfidentialityLevel confidentialityLevel = "C2_Internal";
         /** The title or name given to the article. */
         Text title;
         /** The topic(s) addressed by the article. */
@@ -61,11 +61,11 @@ protocol Article {
         ArticleFile? articlefile = null;
         /** An abstract is a self-contained, brief, and meaningful description of an article. In contrast to the "description", the "abstract" is about a description of the asset that is as complete as possible. */
         Text? abstract = null;
-        /** The date and time at which the article was modified. */
+        /** The date and time (expressed as timestamp) at which the article was modified. */
         timestamp_ms? modifiedAt = null;
-        /** The date and time at which the article was produced. */
+        /** The date and time (expressed as timestamp) at which the article was produced. */
         timestamp_ms? producedAt = null;
-        /** The date and time at which the article was released. */
+        /** The date and time (expressed as timestamp) at which the article was released. */
         timestamp_ms? releasedAt = null;
         /** Indicates if the website article has been published online. */
         PublicationStatus? publicationStatus = null;

@@ -1,7 +1,7 @@
 @namespace("ch.srgssr.pdp.domain.ingest")
 protocol Clip {
 
-    import idl "AccessCondition.avdl";
+    import idl "ConfidentialityLevel.avdl";
     import idl "AlternativeIdentifier.avdl";
     import idl "Agent.avdl";
     import idl "AssetType.avdl";
@@ -36,7 +36,7 @@ protocol Clip {
         /** Alternative identifiers from other systems. */
         array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        AccessCondition accessCondition = "Internal";
+        ConfidentialityLevel confidentialityLevel = "C2_Internal";
         /** Defines the media type of the clip. */
         AssetType assetType;
         /** Specifies the distribution type of the clip. */
@@ -49,11 +49,11 @@ protocol Clip {
         Text? abstract = null;
         /** A general description of the clip. */
         Text? description = null;
-        /** The date and time when the clip was archived. */
+        /** The date and time (expressed as timestamp) when the clip was archived. */
         timestamp_ms? archivedAt = null;
-        /** The date and time at which the clip has been modified. */
+        /** The date and time (expressed as timestamp) at which the clip has been modified. */
         timestamp_ms? modifiedAt = null;
-        /* The date and time when the clip was produced. */
+        /** The date and time (expressed as timestamp) when the clip was produced. */
         timestamp_ms? producedAt = null;
         /** Start point relative to the episode's start in milliseconds. */
         long? start = null;

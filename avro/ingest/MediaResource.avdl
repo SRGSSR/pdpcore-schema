@@ -12,11 +12,11 @@ protocol MediaResource {
         AspectRatio? aspectRatio = null;
         /** Comments about the media resource from the source system (not from a user). */
         array<Comment> comments = [];
-        /** The date and time at which the media resource was produced. */
+        /** The date and time (expressed as timestamp) at which the media resource was produced. */
         timestamp_ms? producedAt = null;
-        /** The date and time at which the media resource was modified. */
+        /** The date and time (expressed as timestamp) at which the media resource was modified. */
         timestamp_ms? modifiedAt = null;
-        /** The date and time at which the media resource was migrated. */
+        /** The date and time (expressed as timestamp) at which the media resource was migrated. */
         timestamp_ms? migratedAt = null;
         /** The audio tracks of the media resource. */
         array<AudioTrack> audioTracks = [];

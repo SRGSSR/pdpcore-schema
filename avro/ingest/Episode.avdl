@@ -1,7 +1,7 @@
 @namespace("ch.srgssr.pdp.domain.ingest")
 protocol Episode {
 
-    import idl "AccessCondition.avdl";
+    import idl "ConfidentialityLevel.avdl";
     import idl "Agent.avdl";
     import idl "AssetType.avdl";
     import idl "DistributionType.avdl";
@@ -35,7 +35,7 @@ protocol Episode {
         /** Alternative identifiers from other systems. */
         array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        AccessCondition accessCondition = "Internal";
+        ConfidentialityLevel confidentialityLevel = "C2_Internal";
         /** Defines the media type of the episode. */
         AssetType assetType;
         /** Specifies the distribution type of the episode. */
@@ -48,13 +48,13 @@ protocol Episode {
         Text? abstract = null;
         /** A general description of an episode. */
         Text? description = null;
-        /** The date and time when the episode was archived. */
+        /** The date and time (expressed as timestamp) when the episode was archived. */
         timestamp_ms? archivedAt = null;
-        /** The date and time at which the episode was modified. */
+        /** The date and time (expressed as timestamp) at which the episode was modified. */
         timestamp_ms? modifiedAt = null;
-        /* The date and time when the episode was first broadcast publicly on television, radio or via streaming. */
+        /** The date and time (expressed as timestamp) when the episode was first broadcast publicly on television, radio or via streaming. */
         timestamp_ms? broadcastAt = null;
-        /* The date and time when the episode was produced. */
+        /** The date and time (expressed as timestamp) when the episode was produced. */
         timestamp_ms? producedAt = null;
         /** The duration of the episode in milliseconds. */
         long? duration = null;
