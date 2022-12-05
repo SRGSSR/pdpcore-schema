@@ -6,7 +6,7 @@ protocol Agent {
         /** The role(s) the person takes in relation to the asset. */
         array<Role> roles = [];
         /** The full name of the person. */
-        string? name = null;
+        string name;
     }
 
     /** A role of a person in the context of an asset. */
@@ -18,13 +18,13 @@ protocol Agent {
     /** A team is a group of clearly identifiable and organizationally related actors who are jointly involved in the creation process of an editorial object. An example of a team is the editorial team of "Regionaljournal Ostschweiz". */
     record Team {
         /** The name of the team. */
-        string? name = null;
+        string name;
     }
 
     /** A department describes an organizational unit in the form of a department that is responsible for the editorial creation process of an audiovisual object. An example of an organizational unit is "Culture" or "Sports". */
     record Department {
         /** The name of the department. */
-        string? name = null;
+        string name;
     }
 
 }

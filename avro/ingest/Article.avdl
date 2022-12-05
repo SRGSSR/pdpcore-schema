@@ -5,7 +5,6 @@ protocol Article {
     import idl "AlternativeIdentifier.avdl";
     import idl "Agent.avdl";
     import idl "ArticleReference.avdl";
-    import idl "ArticleFile.avdl";
     import idl "EditorialGroupingReference.avdl";
     import idl "Event.avdl";
     import idl "Genre.avdl";
@@ -41,10 +40,6 @@ protocol Article {
         array<union{Person, Team, Department}> contributors = [];
         /** The genres this article belongs to. */
         array<Genre> genres = [];
-        /** Episodes related to this article. */
-        array<union{EpisodeSourceReference, EpisodeIdReference}> relatedEpisodes = [];
-        /** Clips related to the article. */
-        array<union{ClipSourceReference, ClipIdReference}> relatedClips = [];
         /** The locations, real or fictional, covered by the article. */
         array<Location> relatedLocations = [];
         /** The events, real or fictional, covered by the article. */
@@ -53,12 +48,8 @@ protocol Article {
         array<Picture> relatedPictures = [];
         /** The fulltext of the article. */
         ArticleContent? content = null;
-        /** Other articles related to this article. */
-        array<union{ArticleSourceReference, ArticleIdReference}> relatedArticles = [];
         /** The URL from where the article can be accessed. */
         URL? url = null;
-        /** The file containing the article. */
-        ArticleFile? articlefile = null;
         /** An abstract is a self-contained, brief, and meaningful description of an article. In contrast to the "description", the "abstract" is about a description of the asset that is as complete as possible. */
         Text? abstract = null;
         /** The date and time (expressed as timestamp) at which the article was modified. */
@@ -71,8 +62,6 @@ protocol Article {
         PublicationStatus? publicationStatus = null;
         /** A kicker is a short topic information, which is usually placed above the actual title and allows the user to see at a glance what an article is about. */
         Text? kicker = null;
-        /** Indicates whether user comments are allowed for this article. */
-        boolean? isCommentingAllowed = null;
         /** This field indicates whether the article is longer or more extensive. */
         boolean? isLongForm = null;
         /** An ISO 639-1 two character language code, e.g. de, fr, it, rm. */
