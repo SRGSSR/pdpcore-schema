@@ -512,10 +512,10 @@ type Show {
   the asset that is as complete as possible.
   """
   abstract: Text
-  "In the context of the PDP this field is used to indicate whether the data may be published publicly."
-  accessCondition: ConfidentialityLevel!
   "Alternative identifiers from other systems."
   alternativeIdentifiers: [AlternativeIdentifier]!
+  "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
+  confidentialityLevel: ConfidentialityLevel!
   "A general description of a show."
   description: Text
   "The genres this show belongs to."
