@@ -62,6 +62,25 @@ type AlternativeIdentifierEntity {
   identifierValue: String!
 }
 
+"An article is a website (CMS) article."
+type Article {
+  "Alternative identifiers from other systems."
+  alternativeIdentifiers: [AlternativeIdentifier]!
+  "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
+  confidentialityLevel: ConfidentialityLevel!
+  "The PDP id."
+  id: String!
+  "The source system publishing the metadata."
+  provenance: Provenance!
+  "The business unit or external organisation publishing the metadata."
+  publisher: Publisher!
+}
+
+type ArticlePage {
+  cursor: String
+  edges: [Article]!
+}
+
 type AudioTrack {
   hasLanguage: String
   hasType: String!
@@ -379,6 +398,19 @@ type PublicationEvent {
 
 "Query root"
 type Query {
+  "Returns articles matching the filter criteria."
+  articles(
+    "The cursor of the previous page. Set to null to get the first page."
+    after: String,
+    """
+    The returned page will contain only articles that match all filters. Only
+    filters with values affect the result. If you don't want to filter at all, then 
+    you can set this field to null.
+    """
+    filter: ArticleFilterInput,
+    "The number of articles per page."
+    first: Int! @constraint(max : 500) @constraint(min : 1)
+  ): ArticlePage!
   assets(identifiers: [String]!): [Asset]!
   collectionPage(
     "The cursor of the previous page."
@@ -395,7 +427,7 @@ type Query {
     "Deprecated: use filter.hasPublisher instead."
     hasPublisher: String @deprecated(reason : "Use filter.hasPublisher instead")
   ): CollectionPage! @deprecated(reason : "Use query shows() instead.")
-  documentPage(after: String, filter: DocumentFilterInput, first: Int! @constraint(max : 500) @constraint(min : 1)): DocumentPage!
+  documentPage(after: String, filter: DocumentFilterInput, first: Int! @constraint(max : 500) @constraint(min : 1)): DocumentPage! @deprecated(reason : "Use query articles() instead.")
   dopeSheetPage(after: String, filter: DopeSheetFilterInput, first: Int! @constraint(max : 500) @constraint(min : 1)): DopeSheetPage!
   programmePage(
     "The cursor of the previous page."
@@ -691,6 +723,19 @@ scalar BigInteger
 
 "Scalar for DateTime"
 scalar DateTime
+
+input ArticleFilterInput {
+  "Filters articles depending on their provenance."
+  provenance: Provenance
+  "Filters articles depending on their publisher."
+  publisher: Publisher
+  """
+  Filters articles depending on when they were updated. A show counts as
+  updated when either the source system changes its data or a relation to another
+  asset is modified.
+  """
+  updated: TemporalFilterInput
+}
 
 input CollectionFilterInput {
   hasProvenance: EbucoreProvenance
