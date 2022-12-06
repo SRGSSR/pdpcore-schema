@@ -26,5 +26,4 @@ protocol Agent {
         /** The name of the department. */
         string name;
     }
-
 }
