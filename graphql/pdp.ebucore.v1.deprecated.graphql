@@ -797,6 +797,8 @@ input ProgrammeFilterInput {
 }
 
 input ShowFilterInput {
+  "Filters shows that have an id or alternative identifier that match any of the provided identifiers."
+  identifiers: [String]
   "Filters shows depending on their provenance."
   provenance: Provenance
   "Filters shows depending on their publisher."
