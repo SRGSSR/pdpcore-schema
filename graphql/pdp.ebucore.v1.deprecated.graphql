@@ -445,6 +445,11 @@ type Query {
     "Deprecated: use filter.isMemberOf instead."
     isMemberOf: String @deprecated(reason : "use filter.isMemberOf instead")
   ): ProgrammePage!
+  "Returns the show with the provided PDP id or null if it does not exist."
+  show(
+    "A PDP id of a show."
+    id: String!
+  ): Show
   "Returns shows matching the filter criteria."
   shows(
     "The cursor of the previous page. Set to null to get the first page."
