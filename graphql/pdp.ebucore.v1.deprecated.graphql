@@ -398,6 +398,11 @@ type PublicationEvent {
 
 "Query root"
 type Query {
+  "Returns the article with the provided PDP id or null if it does not exist."
+  article(
+    "A PDP id of an article."
+    id: String!
+  ): Article
   "Returns articles matching the filter criteria."
   articles(
     "The cursor of the previous page. Set to null to get the first page."
