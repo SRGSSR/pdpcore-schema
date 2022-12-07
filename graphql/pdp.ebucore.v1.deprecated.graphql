@@ -729,13 +729,16 @@ scalar BigInteger
 "Scalar for DateTime"
 scalar DateTime
 
+"The returned page will contain only articles that match all filters. Only filters with values affect the result."
 input ArticleFilterInput {
+  "Filters articles with an id or alternative identifier matching any of the provided identifiers."
+  identifiers: [String]
   "Filters articles depending on their provenance."
   provenance: Provenance
   "Filters articles depending on their publisher."
   publisher: Publisher
   """
-  Filters articles depending on when they were updated. A show counts as
+  Filters articles depending on when they were updated. An article counts as
   updated when either the source system changes its data or a relation to another
   asset is modified.
   """
