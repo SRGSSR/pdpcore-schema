@@ -40,6 +40,10 @@ protocol Article {
         array<union{Person, Team, Department}> contributors = [];
         /** The genres this article belongs to. */
         array<Genre> genres = [];
+        /** Episodes related to this article. */
+        array<union{EpisodeSourceReference, EpisodeIdReference}> relatedEpisodes = [];
+        /** Clips related to the article. */
+        array<union{ClipSourceReference, ClipIdReference}> relatedClips = [];
         /** The locations, real or fictional, covered by the article. */
         array<Location> relatedLocations = [];
         /** The events, real or fictional, covered by the article. */
@@ -48,6 +52,8 @@ protocol Article {
         array<Picture> relatedPictures = [];
         /** The fulltext of the article. */
         ArticleContent? content = null;
+        /** Other articles related to this article. */
+        array<union{ArticleSourceReference, ArticleIdReference}> relatedArticles = [];
         /** The URL from where the article can be accessed. */
         URL? url = null;
         /** An abstract is a self-contained, brief, and meaningful description of an article. In contrast to the "description", the "abstract" is about a description of the asset that is as complete as possible. */
