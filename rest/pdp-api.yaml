@@ -1,0 +1,853 @@
+openapi: 3.0.0
+info:
+  title: PDP REST API
+  description: REST API for SRG SSR's Publication Data Platform.
+  version: 1
+externalDocs:
+  description: PDP Developer Hub
+  url: 'http://api.pdp.production.srgssr.ch'
+paths:
+  /articles:
+    post:
+      tags:
+        - article
+      summary: Upsert article asynchronously
+      operationId: writeArticle
+      responses:
+        '202':
+          description: Accepted request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+        '422':
+          description: Invalid input
+      security:
+        - azure_auth:
+          - 'write:all'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+        description: Article payload
+        required: true
+  /episodes:
+    post:
+      tags:
+        - episode
+      summary: Upsert episode asynchronously
+      operationId: writeEpisode
+      responses:
+        '202':
+          description: Accepted request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+        '422':
+          description: Invalid input
+      security:
+        - azure_auth:
+            - 'write:all'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Episode'
+        description: Episode payload
+        required: true
+components:
+  securitySchemes:
+    azureAuth:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/token'
+          authorizationUrl: 'https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/authorize'
+          scopes:
+            'write:all': 'https://api.pdp.production.srgssr.ch/api/.default'
+    apiKey:
+      type: apiKey
+      name: api_key
+      in: header
+  schemas:
+    Episode:
+      title: an Episode
+      description: 'An "episode" is a longer and clearly identifiable editorial broadcast which can consist of several individual contributions ("clips") (e.g.: Tagesschau of 20.04.2020) or has a thematically coherent context (e.g.: DOK film about the Generalsteik 1918).'
+      type: object
+      required:
+        - sourceId
+        - publisher
+        - provenance
+        - assetType
+        - title
+      properties:
+        publisher:
+          $ref: '#/components/schemas/Publisher'
+        provenance:
+          $ref: '#/components/schemas/Provenance'
+        sourceId:
+          type: string
+        alternativeIdentifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlternativeIdentifier'
+        confidentialityLevel:
+          $ref: '#/components/schemas/ConfidentialityLevel'
+        assetType:
+          $ref: '#/components/schemas/AssetType'
+        distributionType:
+          $ref: '#/components/schemas/DistributionType'
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+        title:
+          $ref: '#/components/schemas/Text'
+        abstract:
+          $ref: '#/components/schemas/Text'
+        description:
+          $ref: '#/components/schemas/Text'
+        archivedAt:
+          type: string
+          format: date-time
+        broadcastAt:
+          type: string
+          format: date-time
+        modifiedAt:
+          type: string
+          format: date-time
+        producedAt:
+          type: string
+          format: date-time
+        duration:
+          type: integer
+          format: int64
+        genres:
+          type: array
+          items:
+            $ref: '#/components/schemas/Genre'
+        productionTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductionType'
+        location:
+          type: array
+          items:
+            $ref: '#/components/schemas/Location'
+        relatedEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        relatedPictures:
+          type: array
+          items:
+            $ref: '#/components/schemas/Picture'
+        rights:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rights'
+        contributors:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/EpisodePerson'
+              - $ref: '#/components/schemas/EpisodeTeam'
+              - $ref: '#/components/schemas/EpisodeDepartment'
+        topics:
+          type: array
+          items:
+            $ref: '#/components/schemas/Topic'
+        memberOf:
+          type: object
+          anyOf:
+            - $ref: '#/components/schemas/ShowSourceReference'
+            - $ref: '#/components/schemas/ShowIdReference'
+        parts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Part'
+        relatedEpisodes:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/EpisodeSourceReference'
+              - $ref: '#/components/schemas/EpisodeIdReference'
+        scheduledOn:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicationEvent'
+        position:
+          type: integer
+          format: int32
+        seasonNumber:
+          type: integer
+          format: int32
+        episodeNumberInSeason:
+          type: integer
+          format: int32
+        tagline:
+          $ref: '#/components/schemas/Text'
+        language:
+          $ref: '#/components/schemas/Language'
+        url:
+          $ref: '#/components/schemas/URL'
+        includedIn:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/EditorialGroupingSourceReference'
+              - $ref: '#/components/schemas/EditorialGroupingIdReference'
+    Article:
+      title: an Article
+      description: A text content article
+      type: object
+      required:
+        - sourceId
+        - publisher
+        - provenance
+        - title
+      properties:
+        sourceId:
+          type: string
+        publisher:
+          $ref: '#/components/schemas/Publisher'
+        provenance:
+          $ref: '#/components/schemas/Provenance'
+        title:
+          $ref: '#/components/schemas/Text'
+        confidentialityLevel:
+          $ref: '#/components/schemas/ConfidentialityLevel'
+        topics:
+          type: array
+          items:
+            $ref: '#/components/schemas/Topic'
+        contributors:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/ArticlePerson'
+              - $ref: '#/components/schemas/ArticleTeam'
+              - $ref: '#/components/schemas/ArticleDepartment'
+        genres:
+          type: array
+          items:
+            $ref: '#/components/schemas/Genre'
+        relatedLocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Location'
+        relatedEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        relatedPictures:
+          type: array
+          items:
+            $ref: '#/components/schemas/Picture'
+        content:
+          $ref: '#/components/schemas/ArticleContent'
+        url:
+          $ref: '#/components/schemas/URL'
+        abstract:
+          $ref: '#/components/schemas/Text'
+        modifiedAt:
+          type: string
+          format: date-time
+        producedAt:
+          type: string
+          format: date-time
+        releasedAt:
+          type: string
+          format: date-time
+        publicationStatus:
+          $ref: '#/components/schemas/PublicationStatus'
+        kicker:
+          $ref: '#/components/schemas/Text'
+        isLongForm:
+          type: boolean
+        language:
+          $ref: '#/components/schemas/Language'
+    AcceptedResponse:
+      title: Accepted write operation response
+      type: object
+      properties:
+        id:
+          type: string
+    Provenance:
+      type: string
+      enum:
+        - Archive
+        - CMS
+        - Play
+        - PlaySuisse
+        - OfferPortfolio
+        - AIS
+        - Digas
+        - OpenMedia
+        - WhatsOn
+        - MOVEit
+    Publisher:
+      type: string
+      enum:
+        - SRF
+        - RTS
+        - RSI
+        - RTR
+        - SWI
+        - PZBundeshaus
+        - NZZ
+        - AP
+    ConfidentialityLevel:
+      type: string
+      enum:
+        - C1_Public
+        - C2_Internal
+    Topic:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          $ref: '#/components/schemas/Text'
+    Text:
+      type: object
+      required:
+        - content
+      properties:
+        content:
+          type: string
+    Role:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    AgentType:
+      type: string
+      enum:
+        - Person
+        - Team
+        - Department
+    ArticlePerson:
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+    ArticleTeam:
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+    ArticleDepartment:
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+    EpisodePerson:
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+    EpisodeTeam:
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+    EpisodeDepartment:
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+    Genre:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          $ref: '#/components/schemas/Text'
+        description:
+          $ref: '#/components/schemas/Text'
+    Location:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          $ref: '#/components/schemas/Text'
+    Event:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          $ref: '#/components/schemas/Text'
+    Picture:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          $ref: '#/components/schemas/URL'
+        title:
+          $ref: '#/components/schemas/Text'
+        rights:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rights'
+        width:
+          type: integer
+        height:
+          type: integer
+        aspectRatio:
+          $ref: '#/components/schemas/AspectRatio'
+    URL:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+    Rights:
+      type: object
+      properties:
+        rightsHolder:
+          $ref: '#/components/schemas/RightsHolder'
+        usageRights:
+          type: array
+          items:
+            type: string
+        availableFrom:
+          type: string
+          format: date-time
+        availableTo:
+          type: string
+          format: date-time
+    RightsHolder:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    AspectRatio:
+      type: object
+      required:
+        - ratio
+      properties:
+        ratio:
+          type: string
+    ArticleContent:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: array
+          items:
+            type: string
+    PublicationStatus:
+      type: string
+      enum:
+        - "Published"
+        - "Unpublished"
+    Language:
+      type: string
+      enum:
+        - "ab"
+        - "aa"
+        - "af"
+        - "ak"
+        - "sq"
+        - "am"
+        - "ar"
+        - "an"
+        - "hy"
+        - "as"
+        - "av"
+        - "ae"
+        - "ay"
+        - "az"
+        - "bm"
+        - "ba"
+        - "eu"
+        - "be"
+        - "bn"
+        - "bi"
+        - "bs"
+        - "br"
+        - "bg"
+        - "my"
+        - "ca"
+        - "ch"
+        - "ce"
+        - "ny"
+        - "zh"
+        - "cv"
+        - "kw"
+        - "co"
+        - "cr"
+        - "hr"
+        - "cs"
+        - "da"
+        - "dv"
+        - "nl"
+        - "dz"
+        - "en"
+        - "eo"
+        - "et"
+        - "ee"
+        - "fo"
+        - "fj"
+        - "fi"
+        - "fr"
+        - "ff"
+        - "gl"
+        - "ka"
+        - "de"
+        - "el"
+        - "gn"
+        - "gu"
+        - "ht"
+        - "ha"
+        - "he"
+        - "hz"
+        - "hi"
+        - "ho"
+        - "hu"
+        - "ia"
+        - "id"
+        - "ie"
+        - "ga"
+        - "ig"
+        - "ik"
+        - "io"
+        - "is"
+        - "it"
+        - "iu"
+        - "ja"
+        - "jv"
+        - "kl"
+        - "kn"
+        - "kr"
+        - "ks"
+        - "kk"
+        - "km"
+        - "ki"
+        - "rw"
+        - "ky"
+        - "kv"
+        - "kg"
+        - "ko"
+        - "ku"
+        - "kj"
+        - "la"
+        - "lb"
+        - "lg"
+        - "li"
+        - "ln"
+        - "lo"
+        - "lt"
+        - "lu"
+        - "lv"
+        - "gv"
+        - "mk"
+        - "mg"
+        - "ms"
+        - "ml"
+        - "mt"
+        - "mi"
+        - "mr"
+        - "mh"
+        - "mn"
+        - "na"
+        - "nv"
+        - "nd"
+        - "ne"
+        - "ng"
+        - "nb"
+        - "nn"
+        - "no"
+        - "ii"
+        - "nr"
+        - "oc"
+        - "oj"
+        - "cu"
+        - "om"
+        - "or"
+        - "os"
+        - "pa"
+        - "pi"
+        - "fa"
+        - "pl"
+        - "ps"
+        - "pt"
+        - "qu"
+        - "rm"
+        - "rn"
+        - "ro"
+        - "ru"
+        - "sa"
+        - "sc"
+        - "sd"
+        - "se"
+        - "sm"
+        - "sg"
+        - "sr"
+        - "gd"
+        - "sn"
+        - "si"
+        - "sk"
+        - "sl"
+        - "so"
+        - "st"
+        - "es"
+        - "su"
+        - "sw"
+        - "ss"
+        - "sv"
+        - "ta"
+        - "te"
+        - "tg"
+        - "th"
+        - "ti"
+        - "bo"
+        - "tk"
+        - "tl"
+        - "tn"
+        - "to"
+        - "tr"
+        - "ts"
+        - "tt"
+        - "tw"
+        - "ty"
+        - "ug"
+        - "uk"
+        - "ur"
+        - "uz"
+        - "ve"
+        - "vi"
+        - "vo"
+        - "wa"
+        - "cy"
+        - "wo"
+        - "fy"
+        - "xh"
+        - "yi"
+        - "yo"
+        - "za"
+        - "zu"
+    AlternativeIdentifier:
+      type: object
+      required:
+        - publisher
+        - provenance
+        - value
+        - type
+      properties:
+        publisher:
+          $ref: '#/components/schemas/Publisher'
+        provenance:
+          $ref: '#/components/schemas/Provenance'
+        value:
+          type: string
+        type:
+          type: string
+    AssetType:
+      type: string
+      enum:
+        - Audio
+        - Video
+    DistributionType:
+      type: string
+      enum:
+        - Broadcast
+        - HbbTV
+        - VideoOnDemand
+        - AudioOnDemand
+        - VideoPodcast
+        - AudioPodcast
+        - LiveStream
+    Comment:
+      description: 'A comment about an asset from the source system. Attention: these are not user comments!'
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: string
+    ProductionType:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+    Part:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/Text'
+        description:
+          $ref: '#/components/schemas/Text'
+        archivedAt:
+          $ref: '#/components/schemas/Date'
+        modifiedAt:
+          $ref: '#/components/schemas/Date'
+        start:
+          $ref: '#/components/schemas/Long'
+        duration:
+          $ref: '#/components/schemas/Long'
+        end:
+          $ref: '#/components/schemas/Long'
+        relatedLocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Location'
+        relatedEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+    Date:
+      type: string
+      format: date-time
+    Long:
+      type: integer
+      format: int64
+    ShowSourceReference:
+      type: object
+      required:
+        - publisher
+        - provenance
+        - sourceId
+      properties:
+        publisher:
+          $ref: '#/components/schemas/Publisher'
+        provenance:
+          $ref: '#/components/schemas/Provenance'
+        sourceId:
+          type: string
+    ShowIdReference:
+      type: object
+      required:
+        - id
+      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:{type}:{sourceId}"'
+      properties:
+        id:
+          type: string
+    EpisodeSourceReference:
+      type: object
+      required:
+        - publisher
+        - provenance
+        - sourceId
+      properties:
+        publisher:
+          $ref: '#/components/schemas/Publisher'
+        provenance:
+          $ref: '#/components/schemas/Provenance'
+        sourceId:
+          type: string
+    EpisodeIdReference:
+      type: object
+      required:
+        - id
+      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:{type}:{sourceId}"'
+      properties:
+        id:
+          type: string
+    PublicationEvent:
+      type: object
+      properties:
+        publicationStart:
+          $ref: '#/components/schemas/Date'
+        publicationEnd:
+          $ref: '#/components/schemas/Date'
+        publicationChannel:
+          type: object
+          anyOf:
+            - $ref: '#/components/schemas/ChannelSourceReference'
+            - $ref: '#/components/schemas/ChannelIdReference'
+
+    ChannelSourceReference:
+      type: object
+      required:
+        - publisher
+        - provenance
+        - sourceId
+      properties:
+        publisher:
+          $ref: '#/components/schemas/Publisher'
+        provenance:
+          $ref: '#/components/schemas/Provenance'
+        sourceId:
+          type: string
+    ChannelIdReference:
+      type: object
+      required:
+        - id
+      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:{type}:{sourceId}"'
+      properties:
+        id:
+          type: string
+    EditorialGroupingSourceReference:
+      type: object
+      required:
+        - publisher
+        - provenance
+        - sourceId
+      properties:
+        publisher:
+          $ref: '#/components/schemas/Publisher'
+        provenance:
+          $ref: '#/components/schemas/Provenance'
+        sourceId:
+          type: string
+    EditorialGroupingIdReference:
+      type: object
+      required:
+        - id
+      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:{type}:{sourceId}"'
+      properties:
+        id:
+          type: string
