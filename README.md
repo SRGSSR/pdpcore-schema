@@ -2,7 +2,7 @@
 
 This repository contains the Publication Data Platform schemas.
 
-The has four schemas types.
+The PDP offers four schemas types.
 
 - [REST OpenAPI](https://github.com/SRGSSR/pdpcore-schema/blob/main/rest/api.yaml)
 - [Avro Ingest](https://github.com/SRGSSR/pdpcore-schema/blob/main/avro/ingest/PDP.avdl)
