@@ -1,6 +1,6 @@
 # PDPCore MetaData Schema Specification
 
-This repository contains the schema of [The Publication Data Platform](http://api.pdp.production.srgssr.ch/).
+This repository contains the schema of the [Publication Data Platform](http://api.pdp.production.srgssr.ch/).
 
 The PDP offers four schemas types.
 
