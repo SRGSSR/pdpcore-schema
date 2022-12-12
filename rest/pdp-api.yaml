@@ -2,10 +2,10 @@ openapi: 3.0.0
 info:
   title: PDP REST API
   description: REST API for SRG SSR's Publication Data Platform.
-  version: 1
+  version: v1
 externalDocs:
-  description: PDP Developer Hub
-  url: 'http://api.pdp.production.srgssr.ch'
+  description: PDP Schema Documentation
+  url: 'https://api.pdp.production.srgssr.ch/docs-page.html#section-2'
 paths:
   /articles:
     post:
@@ -67,10 +67,6 @@ components:
           authorizationUrl: 'https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/authorize'
           scopes:
             'write:all': 'https://api.pdp.production.srgssr.ch/api/.default'
-    apiKey:
-      type: apiKey
-      name: api_key
-      in: header
   schemas:
     Episode:
       title: an Episode
