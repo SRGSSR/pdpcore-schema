@@ -32,16 +32,6 @@ interface Agent {
   name: String!
 }
 
-interface Asset {
-  hasType: String!
-  identifier: String!
-}
-
-interface EbucoreAgent {
-  agentName: String
-  hasType: String!
-}
-
 """
 An alternative identifier holds an identifier that is used in a system outside
 of PDP, usually the source system. For records having both sourceId and 
@@ -57,15 +47,6 @@ type AlternativeIdentifier {
   type: String!
   "The alternative identifier."
   value: String!
-}
-
-"The alternative identifier holds the value for different identifiers which the entities have in other systems"
-type AlternativeIdentifierEntity {
-  hasProvenance: EbucoreProvenance!
-  hasPublisher: String!
-  hasType: String!
-  identifierType: String!
-  identifierValue: String!
 }
 
 "An article is a website (CMS) article."
@@ -107,13 +88,6 @@ type AspectRatio {
   ratio: String!
 }
 
-type AudioTrack {
-  hasLanguage: String
-  hasType: String!
-  identifier: String!
-  trackName: String
-}
-
 type Channel {
   "In the context of the PDP this field is used to indicate whether the data may be published publicly."
   accessCondition: ConfidentialityLevel!
@@ -133,115 +107,10 @@ type Channel {
   relatedPictures: [Picture]!
 }
 
-type ClosedSubtitling implements Asset {
-  hasLanguage: String
-  hasLocator: String
-  "Always has the value \"ClosedSubtitling\""
-  hasType: String!
-  identifier: String!
-}
-
-"A group of Programmes, a.k.a 'show', 'émission', 'emissione', 'Sendung'. Examples: 'Mise au Point', 'Arena'."
-type Collection implements Asset {
-  abstract: String
-  description: String
-  hasGenre: [GenreEbucore]!
-  hasProvenance: EbucoreProvenance!
-  hasPublisher: String!
-  hasRelatedPicture: [PictureEbucore]!
-  "Always has the value \"Collection\""
-  hasType: String!
-  identifier: String!
-  title: String
-}
-
-type CollectionPage {
-  cursor: String
-  edges: [Collection]!
-}
-
 "A department describes an organizational unit in the form of a department that is responsible for the editorial creation process of an audiovisual object. An example of an organizational unit is \"Culture\" or \"Sports\"."
 type Department implements Agent {
   "The name of the department."
   name: String!
-}
-
-type Document implements Asset {
-  abstract: String
-  commentsAllowed: Boolean
-  "ISO-8601"
-  dateModified: DateTime
-  "ISO-8601"
-  dateProduced: DateTime
-  "ISO-8601"
-  dateReleased: DateTime
-  hasAccessConditions: AccessConditionEbucore
-  hasContributor: [EbucoreAgent]!
-  hasGenre: [GenreEbucore]!
-  hasProvenance: EbucoreProvenance
-  hasPublisher: String
-  hasRelatedEditorialObject: [Item]!
-  hasRelatedPicture: [PictureEbucore]!
-  hasRelatedResource: [Document]!
-  hasRelatedTextLine: [String]!
-  hasResourceLocator: String
-  hasType: String!
-  identifier: String!
-  isLongForm: Boolean
-  kicker: String
-  pubStatus: PubStatus
-  resourceFileSize: String
-  resourceFilename: String
-  tagline: String
-  title: String
-}
-
-type DocumentPage {
-  cursor: String
-  edges: [Document]!
-}
-
-type DopeSheet implements Asset {
-  alternativeIdentifiers: [AlternativeIdentifierEntity]!
-  assetType: String!
-  "ISO-8601"
-  dateExpires: DateTime!
-  "ISO-8601"
-  dateModified: DateTime!
-  "ISO-8601"
-  dateProduced: DateTime!
-  hasAccessCondition: AccessConditionEbucore!
-  hasLanguage: String!
-  hasProvenance: EbucoreProvenance!
-  hasPublisher: String
-  "Always has the value \"Dopesheet\""
-  hasType: String!
-  hasUsageRights: [String]!
-  identifier: String!
-  title: String
-}
-
-type DopeSheetPage {
-  cursor: String
-  edges: [DopeSheet]!
-}
-
-type EbucoreDepartment implements EbucoreAgent {
-  agentName: String
-  hasType: String!
-}
-
-type EbucorePerson implements EbucoreAgent {
-  agentName: String
-  familyName: String
-  givenName: String
-  hasRole: [String]!
-  hasType: String!
-}
-
-type EbucoreTeam implements EbucoreAgent {
-  agentName: String
-  hasType: String!
 }
 
 "An event, real or fictional, covered by an asset."
@@ -272,98 +141,10 @@ type Genre {
   name: Text!
 }
 
-type GenreEbucore {
-  description: String
-  example: String
-  hasProvenance: EbucoreProvenance!
-  "Always has the value \"Genre\""
-  hasType: String!
-  identifier: String!
-  prefLabel: String!
-}
-
-type Item implements Asset {
-  abstract: String
-  comments: [String]!
-  "ISO-8601"
-  dateArchived: DateTime
-  "ISO-8601"
-  dateModified: DateTime
-  description: String
-  duration: Int
-  end: String
-  hasAccessConditions: AccessConditionEbucore!
-  hasContributor: [EbucoreAgent]!
-  hasParentEditorialObject: Programme!
-  hasPart: [Part]!
-  hasProducer: [String]!
-  hasProductionType: [String]!
-  hasProvenance: EbucoreProvenance
-  hasRelatedEditorialObject: [Item]!
-  hasRelatedLocation: [String]!
-  hasRelatedPicture: [PictureEbucore]!
-  hasRelatedResource: [Document]!
-  hasTopic: [String]!
-  "Always has the value \"Item\""
-  hasType: String!
-  hasUsageRestrictions: String
-  hasUsageRights: [String]!
-  identifier: String!
-  isCoveredBy: [RightsEbucore]!
-  isInstantiatedBy: [MediaResource]!
-  position: String
-  start: String
-  tagline: String
-  title: String
-}
-
 "A geographical location, real or fictional, covered by an episode, clip or article."
 type Location {
   "The name of the location, e.g. \"Berne\" or \"Narnia\"."
   name: Text!
-}
-
-type MediaResource implements Asset {
-  aspectRatio: String
-  audioTrackConfiguration: String
-  comments: [String]!
-  "ISO-8601"
-  dateMigrated: DateTime
-  "ISO-8601"
-  dateModified: DateTime
-  "ISO-8601"
-  dateProduced: DateTime
-  end: String
-  hasAudioEncodingFormat: String
-  hasAudioTrack: [AudioTrack]!
-  hasColourSpace: String
-  hasFormat: FormatType
-  hasLanguage: String
-  hasLocator: String
-  hasMedium: String
-  hasParentMediaResource: MediaResource
-  hasSource: [MediaResource]!
-  hasType: String!
-  hasVideoEncodingFormat: String
-  identifier: String!
-  isParentOf: [MediaResource]!
-  start: String
-}
-
-type Part {
-  assetType: AssetType
-  "ISO-8601"
-  dateArchived: DateTime
-  "ISO-8601"
-  dateModified: DateTime
-  duration: String
-  end: String
-  hasPublisher: String
-  hasRelatedLocation: [String]!
-  hasType: String!
-  identifier: String!
-  start: String
-  title: String
 }
 
 "A person is a clearly identifiable human actor who is involved in the creation of an editorial object."
@@ -390,75 +171,6 @@ type Picture {
   width: Int
 }
 
-type PictureEbucore {
-  hasIdentifier: AlternativeIdentifierEntity
-  hasResourceLocator: String
-  hasType: String
-  identifier: String
-  title: String
-}
-
-type Programme implements Asset {
-  abstract: String
-  assetType: AssetType
-  comments: [String]!
-  "ISO-8601"
-  dateArchived: DateTime
-  "ISO-8601"
-  dateBroadcast: DateTime
-  "ISO-8601"
-  dateModified: DateTime
-  "ISO-8601"
-  dateProduced: DateTime
-  description: String
-  duration: Int
-  episodeNumberInSeason: Int
-  hasAccessConditions: AccessConditionEbucore
-  hasContributor: [EbucoreAgent]!
-  hasGenre: [GenreEbucore]!
-  hasIdentifier: [AlternativeIdentifierEntity]!
-  hasMember: [Item]!
-  hasPart: [Part]!
-  hasProducer: [String]!
-  hasProductionType: [String]!
-  hasProvenance: EbucoreProvenance
-  hasRelatedEditorialObject: [Programme]!
-  hasRelatedEvent: [String]!
-  hasRelatedLocation: [String]!
-  hasRelatedPicture: [PictureEbucore]!
-  hasRelatedResource: [Document]!
-  hasSubtitling: [ClosedSubtitling]!
-  hasTopic: [String]!
-  "Always has the value \"Programme\""
-  hasType: String!
-  hasUsageRights: [String]!
-  identifier: String!
-  isCoveredBy: [RightsEbucore]!
-  isInstantiatedBy: [MediaResource]!
-  isMemberOf: Collection
-  isScheduledOn: [PublicationEvent]!
-  position: Int
-  seasonNumber: Int
-  tagline: String
-  title: String
-}
-
-type ProgrammePage {
-  cursor: String
-  edges: [Programme]!
-}
-
-type PublicationEvent {
-  hasProvenance: EbucoreProvenance!
-  hasRelatedPublicationChannel: String
-  hasType: String!
-  identifier: String!
-  "ISO-8601"
-  publicationEndDateTime: DateTime
-  "ISO-8601"
-  publicationStartDateTime: DateTime
-}
-
 "Query root"
 type Query {
   "Returns the article with the provided PDP id or null if it does not exist."
@@ -479,40 +191,6 @@ type Query {
     "The number of articles per page."
     first: Int! @constraint(max : 500) @constraint(min : 1)
   ): ArticlePage!
-  assets(identifiers: [String]!): [Asset]!
-  collectionPage(
-    "The cursor of the previous page."
-    after: String,
-    """
-    The returned page will contain only collections that match all filters. Only
-    filters with values affect the result. If you don't want to filter at all, then
-    you can set this field to null.
-    """
-    filter: CollectionFilterInput,
-    first: Int! @constraint(max : 500) @constraint(min : 1),
-    "Deprecated: use filter.hasProvenance instead."
-    hasProvenance: EbucoreProvenance @deprecated(reason : "Use filter.hasProvenance instead"),
-    "Deprecated: use filter.hasPublisher instead."
-    hasPublisher: String @deprecated(reason : "Use filter.hasPublisher instead")
-  ): CollectionPage! @deprecated(reason : "Use query shows() instead.")
-  documentPage(after: String, filter: DocumentFilterInput, first: Int! @constraint(max : 500) @constraint(min : 1)): DocumentPage! @deprecated(reason : "Use query articles() instead.")
-  dopeSheetPage(after: String, filter: DopeSheetFilterInput, first: Int! @constraint(max : 500) @constraint(min : 1)): DopeSheetPage!
-  programmePage(
-    "The cursor of the previous page."
-    after: String,
-    """
-    The returned page will contain only programmes that match all filters. Only
-    filters with values affect the result. If you don't want to filter at all, then 
-    you can set this field to null.
-    """
-    filter: ProgrammeFilterInput,
-    "The number of programmes per page."
-    first: Int! @constraint(max : 500) @constraint(min : 1),
-    "Deprecated: use filter.hasProvenance instead."
-    hasProvenance: EbucoreProvenance @deprecated(reason : "use filter.hasProvenance instead"),
-    "Deprecated: use filter.isMemberOf instead."
-    isMemberOf: String @deprecated(reason : "use filter.isMemberOf instead")
-  ): ProgrammePage!
   "Returns the show with the provided PDP id or null if it does not exist."
   show(
     "A PDP id of a show."
@@ -543,10 +221,6 @@ type Rights {
   rightsHolder: RightsHolder
   "Expresses usage rights."
   usageRights: [String]!
-}
-
-type RightsEbucore {
-  hasRightsHolder: String
 }
 
 "An agent (contact, person or organisation) having or managing the rights to an asset."
@@ -678,21 +352,6 @@ type URL {
   url: String!
 }
 
-enum AccessConditionEbucore {
-  "Assets with this access condition must be made available only to authenticated SRG SSR employees or services."
-  GD_G_PDP_Intern
-  "Assets with this access condition can be made available to everyone."
-  GD_G_PDP_Public
-  "The access condition for this asset is unknown. Assume the most restrictive access condition applies."
-  Unknown
-}
-
-enum AssetType {
-  Audio
-  Unknown
-  Video
-}
-
 enum ConfidentialityLevel {
   C1_Public
   C2_Internal
@@ -715,25 +374,6 @@ enum DistributionVector {
   Online
   Radio
   TV
-  Unknown
-}
-
-enum EbucoreProvenance {
-  AIS
-  Archive
-  CMS
-  Digas
-  MOVEit
-  OfferPortfolio
-  OpenMedia
-  Play
-  PlaySuisse
-  Unknown
-}
-
-enum FormatType {
-  DigitalFile
-  PhysicalMedia
   Unknown
 }
 
@@ -767,26 +407,6 @@ enum Provenance {
   PlaySuisse
   Unknown
   WhatsOn
-}
-
-enum ProvenanceType {
-  AIS
-  Archive
-  CMS
-  Digas
-  MOVEit
-  MoveIT
-  OfferPortfolio
-  OpenMedia
-  Play
-  PlaySuisse
-  Unknown
-}
-
-enum PubStatus {
-  Published
-  Unknown
-  Unpublished
 }
 
 """
@@ -830,65 +450,6 @@ input ArticleFilterInput {
   updated: TemporalFilterInput
 }
 
-input CollectionFilterInput {
-  hasProvenance: EbucoreProvenance
-  hasPublisher: String
-}
-
-input DocumentFilterInput {
-  hasProvenance: EbucoreProvenance
-  hasPublisher: String
-  """
-  Filter documents depending on when they were updated. A document counts as
-  updated when either the source system changes its data or a relation to another
-  asset is modified. Note: the field "dateModified" is set by the source system 
-  and only changes when the source system changes the document's data, not when
-  PDP modifies a relation to another asset.
-  """
-  updated: TemporalFilterInputEbucore
-}
-
-input DopeSheetFilter {
-  "Possible types: Unknown, Archive, CMS, Play, PlaySuisse, MoveIT"
-  hasProvenance: ProvenanceType
-  hasPublisher: String
-  hasType: String
-  identifierType: String
-  identifierValue: String
-}
-
-input DopeSheetFilterInput {
-  "Filter by specific alternative identifiers and optionally specifier the alternative identifier type"
-  alternativeIdentifiers: [DopeSheetFilter]
-  hasProvenance: EbucoreProvenance
-  hasPublisher: String
-  "Filter for primary identifiers as well as alternative identifiers"
-  identifier: String
-  """
-  Filter DopeSheets depending on when they were updated. A DopeSheet counts as
-  updated when either the source system changes its data or a relation to another
-  asset is modified. Note: the field "dateModified" is set by the source system 
-  and only changes when the source system changes the document's data, not when
-  PDP modifies a relation to another asset.
-  """
-  updated: TemporalFilterInputEbucore
-}
-
-input ProgrammeFilterInput {
-  hasProvenance: EbucoreProvenance
-  hasPublisher: String
-  "Provide an identifier of a collection to filter for programmes belonging to that collection."
-  isMemberOf: String
-  """
-  Filter programmes depending on when they were updated. A programme counts as
-  updated when either the source system changes its data or a relation to another
-  asset is modified. Note: the field "dateModified" is set by the source system 
-  and only changes when the source system changes the programme's data, not when
-  PDP modifies a relation to another asset.
-  """
-  updated: TemporalFilterInputEbucore
-}
-
 input ShowFilterInput {
   "Filters shows that have an id or alternative identifier that match any of the provided identifiers."
   identifiers: [String]
@@ -913,27 +474,6 @@ date-time are exclusive, i.e. the result will not contain items with the exact
 same date-time.
 """
 input TemporalFilterInput {
-  """
-  Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as 
-  2022-07-18T10:15:30+02:00 to filter for items strictly after that date-time. (ISO-8601)
-  """
-  after: DateTime
-  """
-  Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as 
-  2022-07-18T10:15:30+02:00 to filter for items strictly before that date-time. (ISO-8601)
-  """
-  before: DateTime
-}
-
-"""
-A filter for a temporal field. If you provide a date-time for both the after and
-before fields, the result will only contain items between those two date-times.
-If you only provide one of the date-times, then the result  will contain all
-items before or after the respective date-time. Both the after and the before 
-date-time are exclusive, i.e. the result will not contain items with the exact 
-same date-time.
-"""
-input TemporalFilterInputEbucore {
   """
   Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as 
   2022-07-18T10:15:30+02:00 to filter for items strictly after that date-time. (ISO-8601)
