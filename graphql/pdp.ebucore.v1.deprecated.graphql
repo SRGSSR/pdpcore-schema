@@ -77,6 +77,7 @@ type Article {
   topics: [Topic]!
 }
 
+"A page containing articles matching the query filters."
 type ArticlePage {
   cursor: String
   edges: [Article]!
@@ -88,11 +89,12 @@ type AspectRatio {
   ratio: String!
 }
 
+"A channel is a linear and non-linear broadcast vector for episodes, such as SRF1, RTSUn or PlaySuisse."
 type Channel {
-  "In the context of the PDP this field is used to indicate whether the data may be published publicly."
-  accessCondition: ConfidentialityLevel!
   "Alternative identifiers from other systems."
   alternativeIdentifiers: [AlternativeIdentifier]!
+  "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
+  confidentialityLevel: ConfidentialityLevel!
   "Specifies the distribution vector of a channel."
   distributionVector: DistributionVector!
   "The PDP id."
@@ -323,6 +325,7 @@ type Show {
   title: Text!
 }
 
+"A page containing shows matching the query filters."
 type ShowPage {
   cursor: String
   edges: [Show]!
