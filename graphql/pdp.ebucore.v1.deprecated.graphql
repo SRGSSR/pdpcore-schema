@@ -55,6 +55,8 @@ type Article {
   alternativeIdentifiers: [AlternativeIdentifier]!
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
+  "The full text of the article."
+  content: ArticleContent
   "People, teams or departments who contributed to the article."
   contributors: [Agent]!
   "The genres this article belongs to."
@@ -65,6 +67,8 @@ type Article {
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
   publisher: Publisher!
+  "Other articles related to this article."
+  relatedArticles: [Article]!
   "The events, real or fictional, covered by the article."
   relatedEvents: [Event]!
   "The locations, real or fictional, covered by the article."
@@ -75,6 +79,12 @@ type Article {
   title: Text!
   "The topic(s) addressed by the article."
   topics: [Topic]!
+}
+
+"The text content of an article."
+type ArticleContent {
+  "The complete, unformatted text of the article. The text should not contain any HTML tags or similar."
+  text: [String]!
 }
 
 "A page containing articles matching the query filters."

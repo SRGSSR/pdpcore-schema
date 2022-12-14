@@ -50,7 +50,7 @@ protocol Article {
         array<Event> relatedEvents = [];
         /** Pictures related to the article. */
         array<Picture> relatedPictures = [];
-        /** The fulltext of the article. */
+        /** The full text of the article. */
         ArticleContent? content = null;
         /** Other articles related to this article. */
         array<union{ArticleSourceReference, ArticleIdReference}> relatedArticles = [];
@@ -76,6 +76,7 @@ protocol Article {
         array<union{EditorialGroupingSourceReference, EditorialGroupingIdReference}> includedIn = [];
     }
 
+    /** The text content of an article. */
     record ArticleContent {
         /** The complete, unformatted text of the article. The text should not contain any HTML tags or similar.*/
         array<string> text;
