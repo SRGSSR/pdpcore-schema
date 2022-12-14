@@ -52,10 +52,8 @@ type AlternativeIdentifier {
 "An article is a website (CMS) article."
 type Article {
   """
-  
-          An abstract is a self-contained, brief, and meaningful description of an article. In contrast to the 
-          "description", the "abstract" is about a description of the asset that is as complete as possible.
-          
+  An abstract is a self-contained, brief, and meaningful description of an article. In contrast to the 
+  "description", the "abstract" is about a description of the asset that is as complete as possible.
   """
   abstract: Text
   "Alternative identifiers from other systems."
@@ -73,10 +71,8 @@ type Article {
   "This field indicates whether the article is longer or more extensive."
   isLongForm: Boolean
   """
-  
-          A kicker is a short topic information, which is usually placed above the actual title and
-          allows the user to see at a glance what an article is about.
-          
+  A kicker is a short topic information, which is usually placed above the actual title and
+  allows the user to see at a glance what an article is about.
   """
   kicker: Text
   "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
@@ -673,14 +669,32 @@ scalar DateTime
 input ArticleFilterInput {
   "Filters articles with an id or alternative identifier matching any of the provided identifiers."
   identifiers: [String]
+  """
+  Filters articles depending on the value of the field `modifiedAt`. If
+  the source system did not set a timestamp, then the article will not be included
+  if this filter is set.
+  """
+  modified: TemporalFilterInput
+  """
+  Filters articles depending on the value of the field `producedAt`. If
+  the source system did not set a timestamp, then the article will not be included
+  if this filter is set.
+  """
+  produced: TemporalFilterInput
   "Filters articles depending on their provenance."
   provenance: Provenance
   "Filters articles depending on their publisher."
   publisher: Publisher
   """
+  Filters articles depending on the value of the field `releasedAt`. If
+  the source system did not set a timestamp, then the article will not be included
+  if this filter is set.
+  """
+  released: TemporalFilterInput
+  """
   Filters articles depending on when they were updated. An article counts as
   updated when either the source system changes its data or a relation to another
-  asset is modified.
+  asset is updated.
   """
   updated: TemporalFilterInput
 }
