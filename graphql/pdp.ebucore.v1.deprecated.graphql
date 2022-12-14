@@ -51,6 +51,13 @@ type AlternativeIdentifier {
 
 "An article is a website (CMS) article."
 type Article {
+  """
+  
+          An abstract is a self-contained, brief, and meaningful description of an article. In contrast to the 
+          "description", the "abstract" is about a description of the asset that is as complete as possible.
+          
+  """
+  abstract: Text
   "Alternative identifiers from other systems."
   alternativeIdentifiers: [AlternativeIdentifier]!
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
@@ -63,8 +70,25 @@ type Article {
   genres: [Genre]!
   "The PDP id."
   id: String!
+  "This field indicates whether the article is longer or more extensive."
+  isLongForm: Boolean
+  """
+  
+          A kicker is a short topic information, which is usually placed above the actual title and
+          allows the user to see at a glance what an article is about.
+          
+  """
+  kicker: Text
+  "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
+  language: Language
+  "The date and time (expressed as timestamp) at which the article was modified. (ISO-8601)"
+  modifiedAt: DateTime
+  "The date and time (expressed as timestamp) at which the article was produced. (ISO-8601)"
+  producedAt: DateTime
   "The source system publishing the metadata."
   provenance: Provenance!
+  "Indicates if the website article has been published online."
+  publicationStatus: PublicationStatus
   "The business unit or external organisation publishing the metadata."
   publisher: Publisher!
   "Other articles related to this article."
@@ -75,10 +99,14 @@ type Article {
   relatedLocations: [Location]!
   "Pictures related to the article."
   relatedPictures: [Picture]!
+  "The date and time (expressed as timestamp) at which the article was released. (ISO-8601)"
+  releasedAt: DateTime
   "The title or name given to the article."
   title: Text!
   "The topic(s) addressed by the article."
   topics: [Topic]!
+  "The URL from where the article can be accessed."
+  url: URL
 }
 
 "The text content of an article."
@@ -390,6 +418,193 @@ enum DistributionVector {
   Unknown
 }
 
+enum Language {
+  Unknown
+  aa
+  ab
+  ae
+  af
+  ak
+  am
+  an
+  ar
+  as
+  av
+  ay
+  az
+  ba
+  be
+  bg
+  bi
+  bm
+  bn
+  bo
+  br
+  bs
+  ca
+  ce
+  ch
+  co
+  cr
+  cs
+  cu
+  cv
+  cy
+  da
+  de
+  dv
+  dz
+  ee
+  el
+  en
+  eo
+  es
+  et
+  eu
+  fa
+  ff
+  fi
+  fj
+  fo
+  fr
+  fy
+  ga
+  gd
+  gl
+  gn
+  gu
+  gv
+  ha
+  he
+  hi
+  ho
+  hr
+  ht
+  hu
+  hy
+  hz
+  ia
+  id
+  ie
+  ig
+  ii
+  ik
+  io
+  is
+  it
+  iu
+  ja
+  jv
+  ka
+  kg
+  ki
+  kj
+  kk
+  kl
+  km
+  kn
+  ko
+  kr
+  ks
+  ku
+  kv
+  kw
+  ky
+  la
+  lb
+  lg
+  li
+  ln
+  lo
+  lt
+  lu
+  lv
+  mg
+  mh
+  mi
+  mk
+  ml
+  mn
+  mr
+  ms
+  mt
+  my
+  na
+  nb
+  nd
+  ne
+  ng
+  nl
+  nn
+  no
+  nr
+  nv
+  ny
+  oc
+  oj
+  om
+  or
+  os
+  pa
+  pi
+  pl
+  ps
+  pt
+  qu
+  rm
+  rn
+  ro
+  ru
+  rw
+  sa
+  sc
+  sd
+  se
+  sg
+  si
+  sk
+  sl
+  sm
+  sn
+  so
+  sq
+  sr
+  ss
+  st
+  su
+  sv
+  sw
+  ta
+  te
+  tg
+  th
+  ti
+  tk
+  tl
+  tn
+  to
+  tr
+  ts
+  tt
+  tw
+  ty
+  ug
+  uk
+  ur
+  uz
+  ve
+  vi
+  vo
+  wa
+  wo
+  xh
+  yi
+  yo
+  za
+  zh
+  zu
+}
+
 "A month of the year."
 enum Month {
   April
@@ -420,6 +635,13 @@ enum Provenance {
   PlaySuisse
   Unknown
   WhatsOn
+}
+
+"The publication state of an article."
+enum PublicationStatus {
+  Published
+  Unknown
+  Unpublished
 }
 
 """
