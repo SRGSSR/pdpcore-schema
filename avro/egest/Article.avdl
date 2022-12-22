@@ -1,0 +1,85 @@
+@namespace("ch.srgssr.pdp.domain.egest")
+protocol Article {
+
+    import idl "ConfidentialityLevel.avdl";
+    import idl "AlternativeIdentifier.avdl";
+    import idl "Agent.avdl";
+    import idl "ArticleReference.avdl";
+    import idl "EditorialGroupingReference.avdl";
+    import idl "Event.avdl";
+    import idl "Genre.avdl";
+    import idl "ClipReference.avdl";
+    import idl "Language.avdl";
+    import idl "Location.avdl";
+    import idl "Picture.avdl";
+    import idl "Provenance.avdl";
+    import idl "EpisodeReference.avdl";
+    import idl "PublicationStatus.avdl";
+    import idl "Publisher.avdl";
+    import idl "Text.avdl";
+    import idl "Topic.avdl";
+    import idl "URL.avdl";
+
+    /** In the context of the PDP an article is a (CMS) website article. */
+    record Article {
+        /**The PDP urn*/
+        string id;
+        /** The business unit or external organisation publishing the metadata. */
+        Publisher publisher;
+        /** The source system publishing the metadata. */
+        Provenance provenance;
+        /** Alternative identifiers from other systems. */
+        array<AlternativeIdentifier> alternativeIdentifiers = [];
+        /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
+        ConfidentialityLevel confidentialityLevel = "C2_Internal";
+        /** The title or name given to the article. */
+        Text title;
+        /** The topic(s) addressed by the article. */
+        array<Topic> topics = [];
+        /** People, teams or departments who contributed to the article. */
+        array<union{Person, Team, Department}> contributors = [];
+        /** The genres this article belongs to. */
+        array<Genre> genres = [];
+        /** Episodes related to this article. */
+        array<EpisodeIdReference> relatedEpisodes = [];
+        /** Clips related to the article. */
+        array<ClipIdReference> relatedClips = [];
+        /** The locations, real or fictional, covered by the article. */
+        array<Location> relatedLocations = [];
+        /** The events, real or fictional, covered by the article. */
+        array<Event> relatedEvents = [];
+        /** Pictures related to the article. */
+        array<Picture> relatedPictures = [];
+        /** The full text of the article. */
+        ArticleContent? content = null;
+        /** Other articles related to this article. */
+        array<ArticleIdReference> relatedArticles = [];
+        /** The URL from where the article can be accessed. */
+        URL? url = null;
+        /** An abstract is a self-contained, brief, and meaningful description of an article. In contrast to the "description", the "abstract" is about a description of the asset that is as complete as possible. */
+        Text? abstract = null;
+        /** The date and time (expressed as timestamp) at which the article was modified. */
+        timestamp_ms? modifiedAt = null;
+        /** The date and time (expressed as timestamp) at which the article was produced. */
+        timestamp_ms? producedAt = null;
+        /** The date and time (expressed as timestamp) at which the article was released. */
+        timestamp_ms? releasedAt = null;
+        /** Indicates if the website article has been published online. */
+        PublicationStatus? publicationStatus = null;
+        /** A kicker is a short topic information, which is usually placed above the actual title and allows the user to see at a glance what an article is about. */
+        Text? kicker = null;
+        /** This field indicates whether the article is longer or more extensive. */
+        boolean? isLongForm = null;
+        /** An ISO 639-1 two character language code, e.g. de, fr, it, rm. */
+        Language? language = null;
+        /** An EditorialGrouping is defined as a marketing tool to promote selected content to one or several audiences on a specific platform. */
+        array<EditorialGroupingIdReference> includedIn = [];
+    }
+
+    /** The text content of an article. */
+    record ArticleContent {
+        /** The complete, unformatted text of the article. The text should not contain any HTML tags or similar.*/
+        array<string> text;
+    }
+
+}

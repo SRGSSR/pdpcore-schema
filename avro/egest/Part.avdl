@@ -1,0 +1,31 @@
+@namespace("ch.srgssr.pdp.domain.egest")
+protocol Part {
+
+    import idl "AlternativeIdentifier.avdl";
+    import idl "Event.avdl";
+    import idl "Location.avdl";
+    import idl "Text.avdl";
+
+    /** A part is used to describe and subdivide individual contributions ("Clip") or episodes ("Episode") in more detail. A clip is an intellectual unit which is published. A part, on the other hand, is (rather) a potentially independent selection (for content indexing and/or internal purposes) and is correspondingly less relevant for media consumers. */
+    record Part {
+        /** The title or name given to the part. */
+        Text? title = null;
+        /** A general description of the part. */
+        Text? description = null;
+        /** The date and time (expressed as timestamp) when the part was archived. */
+        timestamp_ms? archivedAt = null;
+        /** The date and time (expressed as timestamp) at which the part was modified. */
+        timestamp_ms? modifiedAt = null;
+        /** Start point relative to the episode's or clip's start in milliseconds. */
+        long? start = null;
+        /** The duration of the part in milliseconds. */
+        long? duration = null;
+        /** End point relative to the episode's or clip's start in milliseconds. */
+        long? end = null;
+        /** The locations, real or fictional, covered by the part. */
+        array<Location> relatedLocations = [];
+        /** The events, real or fictional, covered by the part. */
+        array<Event> relatedEvents = [];
+    }
+
+}

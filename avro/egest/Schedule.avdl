@@ -1,0 +1,34 @@
+@namespace("ch.srgssr.pdp.domain.egest")
+protocol Schedule {
+
+    import idl "Calendar.avdl";
+    import idl "ChannelReference.avdl";
+    import idl "Frequency.avdl";
+
+    /** A schedule defines a repeating time period used to describe a regularly occurring episode. With the provided metadata fields, you are able to define the schedule. At a minimum you have to set the start (date and time) and afterwards you can define the schedule with the provided fields. */
+    record Schedule {
+        /** Defines the day(s) of the week on which episodes of the show are scheduled. */
+        array<DayOfWeek> byDay = [];
+        /** Defines the month(s) of the year on which episodes of the show are scheduled. */
+        array<Month> byMonth = [];
+        /** Defines the day(s) of the month on which episodes of the show are scheduled. Specified as an integer between 1-31. */
+        array<int> byMonthDay = [];
+        /** Defines the week(s) of the month on which episodes of the show are scheduled. Specified as an integer between 1-5. For clarity, byMonthWeek is best used in conjunction with byDay to indicate concepts like the first and third Mondays of a month. */
+        array<int> byMonthWeek = [];
+        /** The duration of a single episode in the show in milliseconds. */
+        long? duration = null;
+        /** The start date and time (expressed as timestamp) of an episode of the show. */
+        timestamp_ms start;
+        /** The end date and time (expressed as timestamp) of an episode of the show. */
+        timestamp_ms? end = null;
+        /** Defines timestamps during which a scheduled episode will not take place. The property allows exceptions to a schedule to be specified. The event that would have started at that specific date and time should be excluded from the schedule. */
+        array<timestamp_ms> exceptions = [];
+        /** Defines the frequency at which episodes will occur according to a schedule. The intervals between episodes should be defined as a duration of time. */
+        Frequency? repeatFrequency = null;
+        /** The channel on which the show was or will be published. */
+        ChannelIdReference? publicationChannel = null;
+        /** Set to true when the schedule contains first showings, set to false when it contains repeat showings. */
+        boolean isFirstShowing = true;
+    }
+
+}
