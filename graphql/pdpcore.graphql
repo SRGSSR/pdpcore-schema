@@ -8,6 +8,9 @@ directive @constraint(format: String, max: BigInteger, maxFloat: BigDecimal, max
 "Marks the definition as deprecated with an optional reason."
 directive @deprecated(reason: String) on QUERY | MUTATION | SUBSCRIPTION | FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
 
+"Marks the definition as deprecated with an optional reason."
+directive @deprecated(reason: String) on QUERY | MUTATION | SUBSCRIPTION | FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
+
 "Directs the executor to include this field or fragment only when the `if` argument is true"
 directive @include(
     "Included when true."
