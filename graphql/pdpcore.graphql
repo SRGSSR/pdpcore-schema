@@ -410,11 +410,19 @@ type Query {
     "The number of articles per page."
     first: Int! @constraint(max : 500) @constraint(min : 1)
   ): ArticlePage!
-  "Returns the clip with the provided PDP id or null if it does not exist."
+  "Returns clips matching the filter criteria."
   clips(
-    "A PDP id of a clip."
-    id: String!
-  ): Clip
+    "The cursor of the previous page. Set to null to get the first page."
+    after: String,
+    """
+    The returned page will contain only clips that match all filters. Only
+    filters with values affect the result. If you don't want to filter at all, then 
+    you can set this field to null.
+    """
+    filter: ClipFilterInput,
+    "The number of clips per page."
+    first: Int! @constraint(max : 500) @constraint(min : 1)
+  ): ClipPage!
   "Returns the show with the provided PDP id or null if it does not exist."
   episode(
     "A PDP id of an episode."
