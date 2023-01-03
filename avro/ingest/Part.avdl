@@ -1,7 +1,6 @@
 @namespace("ch.srgssr.pdp.domain.ingest")
 protocol Part {
 
-    import idl "AlternativeIdentifier.avdl";
     import idl "Event.avdl";
     import idl "Location.avdl";
     import idl "Text.avdl";
