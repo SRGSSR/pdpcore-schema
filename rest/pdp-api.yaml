@@ -259,6 +259,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Genre'
+        relatedEpisodes:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/EpisodeSourceReference'
+              - $ref: '#/components/schemas/EpisodeIdReference'
+        relatedClips:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/ClipSourceReference'
+              - $ref: '#/components/schemas/ClipIdReference'
+        relatedArticles:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/ArticleSourceReference'
+              - $ref: '#/components/schemas/ArticleIdReference'
         relatedLocations:
           type: array
           items:
@@ -294,6 +312,13 @@ components:
           type: boolean
         language:
           $ref: '#/components/schemas/Language'
+        includedIn:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/EditorialGroupingSourceReference'
+              - $ref: '#/components/schemas/EditorialGroupingIdReference'
+
     AcceptedResponse:
       title: Accepted write operation response
       type: object
@@ -869,6 +894,48 @@ components:
         sourceId:
           type: string
     EditorialGroupingIdReference:
+      type: object
+      required:
+        - id
+      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:{type}:{sourceId}"'
+      properties:
+        id:
+          type: string
+    ClipSourceReference:
+      type: object
+      required:
+        - publisher
+        - provenance
+        - sourceId
+      properties:
+        publisher:
+          $ref: '#/components/schemas/Publisher'
+        provenance:
+          $ref: '#/components/schemas/Provenance'
+        sourceId:
+          type: string
+    ClipIdReference:
+      type: object
+      required:
+        - id
+      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:{type}:{sourceId}"'
+      properties:
+        id:
+          type: string
+    ArticleSourceReference:
+      type: object
+      required:
+        - publisher
+        - provenance
+        - sourceId
+      properties:
+        publisher:
+          $ref: '#/components/schemas/Publisher'
+        provenance:
+          $ref: '#/components/schemas/Provenance'
+        sourceId:
+          type: string
+    ArticleIdReference:
       type: object
       required:
         - id
