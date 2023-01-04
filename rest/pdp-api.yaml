@@ -238,6 +238,10 @@ components:
           $ref: '#/components/schemas/Provenance'
         title:
           $ref: '#/components/schemas/Text'
+        alternativeIdentifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlternativeIdentifier'
         confidentialityLevel:
           $ref: '#/components/schemas/ConfidentialityLevel'
         topics:
