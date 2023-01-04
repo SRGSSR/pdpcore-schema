@@ -126,6 +126,22 @@ type AspectRatio {
   ratio: String!
 }
 
+"An audio recording format for a media resource."
+type AudioEncodingFormat {
+  "The name of the format."
+  name: String
+}
+
+"An audio track is the soundtrack that belongs to a digital or analog media object."
+type AudioTrack {
+  "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
+  language: Language
+  "The name of the track."
+  name: String
+  "The track type of the audio track, e.g. \"Stereo\", \"Mono\", \"Dolby\". "
+  trackType: String
+}
+
 "A channel is a linear and non-linear broadcast vector for episodes, such as SRF1, RTSUn or PlaySuisse."
 type Channel {
   "Alternative identifiers from other systems."
@@ -217,6 +233,12 @@ type Clip {
 type ClipPage {
   cursor: String
   edges: [Clip]!
+}
+
+"A colour space of a media resource."
+type ColourSpace {
+  "The name of the color space."
+  name: String
 }
 
 "A comment about an asset from the source system. Attention: these are not user comments!"
@@ -332,10 +354,42 @@ type Location {
 
 "A topic addressed by an episode, clip or article."
 type MediaResource {
+  "The aspect ratio of a video-asset, e.g. 16:9 or 4:3."
+  aspectRatio: AspectRatio
+  "The audio encoding format of the media resource."
+  audioEncodingFormat: AudioEncodingFormat
+  "Comments about the media resource from the source system (not from a user). "
+  audioTracks: [AudioTrack]!
+  "The colour space of the media resource."
+  colorSpace: ColourSpace
+  "Comments about the media resource from the source system (not from a user). "
+  comments: [Comment]!
   "End point relative to the episode's or clip's start in milliseconds."
   end: BigInteger
+  "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
+  language: Language
+  "Whether the media resource is digital or physical."
+  mediaResourceType: MediaResourceType
+  "The medium on which the media resource is stored."
+  medium: Medium
+  "The date and time (expressed as timestamp) at which the media resource was migrated. (ISO-8601)"
+  migratedAt: DateTime
+  "The date and time (expressed as timestamp) at which the media resource was modified. (ISO-8601)"
+  modifiedAt: DateTime
+  "The date and time (expressed as timestamp) at which the media resource was produced. (ISO-8601)"
+  producedAt: DateTime
   "Start point relative to the episode's or clip's start in milliseconds."
   start: BigInteger
+  "The URL from where the media resource can be accessed."
+  url: URL
+  "The video encoding format of the media resource."
+  videoEncodingFormat: VideoEncodingFormat
+}
+
+"A medium on which a media resource is stored."
+type Medium {
+  "The name of the medium, e.g. \"8mm film\" or \"mpeg file\"."
+  name: String
 }
 
 "A part is used to describe and subdivide individual contributions (\"Clip\") or episodes (\"Episode\") in more detail. A clip is an intellectual unit which is published. A part, on the other hand, is (rather) a potentially independent selection (for content indexing and/or internal purposes) and is correspondingly less relevant for media consumers."
@@ -410,19 +464,11 @@ type Query {
     "The number of articles per page."
     first: Int! @constraint(max : 500) @constraint(min : 1)
   ): ArticlePage!
-  "Returns clips matching the filter criteria."
+  "Returns the clip with the provided PDP id or null if it does not exist."
   clips(
-    "The cursor of the previous page. Set to null to get the first page."
-    after: String,
-    """
-    The returned page will contain only clips that match all filters. Only
-    filters with values affect the result. If you don't want to filter at all, then 
-    you can set this field to null.
-    """
-    filter: ClipFilterInput,
-    "The number of clips per page."
-    first: Int! @constraint(max : 500) @constraint(min : 1)
-  ): ClipPage!
+    "A PDP id of a clip."
+    id: String!
+  ): Clip
   "Returns the show with the provided PDP id or null if it does not exist."
   episode(
     "A PDP id of an episode."
@@ -601,6 +647,12 @@ type Topic {
 type URL {
   "The URL."
   url: String!
+}
+
+"An video recording format for a media resource."
+type VideoEncodingFormat {
+  "The name of the format."
+  name: String
 }
 
 "Specifies the type of an episode or a clip."
@@ -832,6 +884,13 @@ enum Language {
   za
   zh
   zu
+}
+
+"Specifies whether the media resource is digital or physical."
+enum MediaResourceType {
+  DigitalFile
+  PhysicalMedia
+  Unknown
 }
 
 "A month of the year."
