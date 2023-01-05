@@ -298,12 +298,16 @@ type Episode {
   distributionType: DistributionType
   "The duration of the episode in milliseconds."
   duration: BigInteger
+  "The episode number in a season."
+  episodeNumberInSeason: Int
   "The genres this episode belongs to."
   genres: [Genre]!
   "The PDP id."
   id: String!
   "Media resources (digital files or physical medias) instantiating the episode."
   instances: [MediaResource]!
+  "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
+  language: Language
   memberOf: Show
   "The date and time (expressed as timestamp) at which the episode was modified. (ISO-8601)"
   modifiedAt: DateTime
@@ -315,6 +319,8 @@ type Episode {
   correspondingly less relevant for media consumers.
   """
   parts: [Part]!
+  "The position of the episode in an ordered group (e.g. a show)."
+  position: Int
   "The date and time (expressed as timestamp) when the episode was produced. (ISO-8601)"
   producedAt: DateTime
   "This field indicates what type of production (e.g.: in-house production, third-party production) is involved."
@@ -332,10 +338,18 @@ type Episode {
   relatedPictures: [Picture]!
   "Rights and restrictions associated to the episode."
   rights: [Rights]!
+  "Specific publication events of the episode, either in the future or the past."
+  scheduledOn: [PublicationEvent]!
+  "Position of the season within an ordered group of seasons."
+  seasonNumber: Int
+  "A short piece of text used to illustrate a thought or dramatic effect."
+  tagline: Text
   "The title or name given to the episode."
   title: Text!
   "The topic(s) addressed by the episode."
   topics: [Topic]!
+  "The URL from where the episode can be accessed, e.g. the Play Suisse URL."
+  url: URL
 }
 
 "A page containing episodes matching the query filters."
@@ -468,6 +482,21 @@ type Picture {
 type ProductionType {
   "The name of the production type, e.g. \"in-house production\", \"third-party production\"."
   type: String
+}
+
+"Describes a specific date and time in which an episode was or will be published."
+type PublicationEvent {
+  publicationChannel: Channel
+  """
+  The date and time (expressed as timestamp) at which the episode is
+  scheduled to end or after which content is no longer available, accessible or consumable. (ISO-8601)
+  """
+  publicationEnd: DateTime
+  """
+  The date and time (expressed as timestamp) at which the episode is
+  scheduled to start or when content is made available, can be accessed or consumed. (ISO-8601)
+  """
+  publicationStart: DateTime
 }
 
 "Query root"
