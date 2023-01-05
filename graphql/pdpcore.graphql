@@ -131,7 +131,7 @@ type AspectRatio {
 "An audio recording format for a media resource."
 type AudioEncodingFormat {
   "The name of the format."
-  name: String
+  name: String!
 }
 
 "An audio track is the soundtrack that belongs to a digital or analog media object."
@@ -248,7 +248,7 @@ type ClipPage {
 "A colour space of a media resource."
 type ColourSpace {
   "The name of the color space."
-  name: String
+  name: String!
 }
 
 "A comment about an asset from the source system. Attention: these are not user comments!"
@@ -302,9 +302,19 @@ type Episode {
   genres: [Genre]!
   "The PDP id."
   id: String!
+  "Media resources (digital files or physical medias) instantiating the episode."
+  instances: [MediaResource]!
   memberOf: Show
   "The date and time (expressed as timestamp) at which the episode was modified. (ISO-8601)"
   modifiedAt: DateTime
+  """
+  A part is used to describe and subdivide individual contributions 
+  ("Clip") or episodes (\"Episode\") in more detail. A clip is an intellectual
+  unit which is published. A part, on the other hand, is (rather) a potentially
+  independent selection (for content indexing and/or internal purposes) and is
+  correspondingly less relevant for media consumers.
+  """
+  parts: [Part]!
   "The date and time (expressed as timestamp) when the episode was produced. (ISO-8601)"
   producedAt: DateTime
   "This field indicates what type of production (e.g.: in-house production, third-party production) is involved."
@@ -313,6 +323,7 @@ type Episode {
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
   publisher: Publisher!
+  relatedEpisodes: [Episode]!
   "The events, real or fictional, covered by the episode."
   relatedEvents: [Event]!
   "The locations, real or fictional, covered by the episode."
@@ -376,7 +387,7 @@ type MediaResource {
   "Comments about the media resource from the source system (not from a user). "
   audioTracks: [AudioTrack]!
   "The colour space of the media resource."
-  colorSpace: ColourSpace
+  colourSpace: ColourSpace
   "Comments about the media resource from the source system (not from a user). "
   comments: [Comment]!
   "End point relative to the episode's or clip's start in milliseconds."
@@ -404,7 +415,7 @@ type MediaResource {
 "A medium on which a media resource is stored."
 type Medium {
   "The name of the medium, e.g. \"8mm film\" or \"mpeg file\"."
-  name: String
+  name: String!
 }
 
 "A part is used to describe and subdivide individual contributions (\"Clip\") or episodes (\"Episode\") in more detail. A clip is an intellectual unit which is published. A part, on the other hand, is (rather) a potentially independent selection (for content indexing and/or internal purposes) and is correspondingly less relevant for media consumers."
@@ -680,7 +691,7 @@ type URL {
 "An video recording format for a media resource."
 type VideoEncodingFormat {
   "The name of the format."
-  name: String
+  name: String!
 }
 
 "Specifies the type of an episode or a clip."
