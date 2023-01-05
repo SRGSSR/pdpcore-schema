@@ -1105,8 +1105,31 @@ input ClipFilterInput {
 }
 
 input EpisodeFilterInput {
+  """
+  Filters episodes depending on when they were archived. Episodes 
+  without a value for this field will be excluded.
+  """
+  archived: TemporalFilterInput
+  """
+  Filters episodes depending on when they were broadcast. Episodes 
+  without a value for this field will be excluded.
+  """
+  broadcast: TemporalFilterInput
   "Filters episodes that have an id or alternative identifier that match any of the provided identifiers."
   identifiers: [String]
+  "Filters episodes depending on their show's id."
+  memberOf: String
+  """
+  Filters episodes depending on when they were modified in the source
+  system. Episodes without a value for this field will be excluded. Use the 
+  filter `updated` if you want a filter that includes all episodes.
+  """
+  modified: TemporalFilterInput
+  """
+  Filters episodes depending on when they were produced. Episodes 
+  without a value for this field will be excluded.
+  """
+  produced: TemporalFilterInput
   "Filters episodes depending on their provenance."
   provenance: Provenance
   "Filters episodes depending on their publisher."
