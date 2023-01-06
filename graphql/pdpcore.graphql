@@ -206,7 +206,7 @@ type Clip {
   "The date and time (expressed as timestamp) at which the clip was modified. (ISO-8601)"
   modifiedAt: DateTime
   "The episode this clip belongs to"
-  parentEpisode: String
+  parentEpisode: Episode
   "A \"Part\" is used to describe and subdivide the clip in more detail. A clip is an intellectual unit which is published. A \"Part\", on the other hand, is (rather) a potentially independent selection (for content indexing and/or internal purposes) and is correspondingly less relevant for media consumers."
   parts: [Part]!
   "The position of the clip in an ordered group (e.g. an episode)."
@@ -1086,6 +1086,7 @@ input ClipFilterInput {
   if this filter is set.
   """
   modified: TemporalFilterInput
+  parentEpisode: String
   """
   Filters articles depending on the value of the field `producedAt`. If
   the source system did not set a timestamp, then the clip will not be included
