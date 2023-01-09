@@ -264,6 +264,27 @@ type Department implements Agent {
 }
 
 """
+An EditorialGrouping is defined as a marketing tool to promote selected
+content to one or several audiences on a specific platform.
+"""
+type EditorialGrouping {
+  "Alternative identifiers from other systems."
+  alternativeIdentifiers: [AlternativeIdentifier]!
+  "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
+  confidentialityLevel: ConfidentialityLevel!
+  "The PDP id."
+  id: String!
+  "The source system publishing the metadata."
+  provenance: Provenance!
+  "The business unit or external organisation publishing the metadata."
+  publisher: Publisher!
+  "The title or name given to the editorial grouping."
+  title: Text!
+  "This fields indicates the type of the editorial grouping."
+  type: EditorialGroupingType!
+}
+
+"""
 An episode is a longer and clearly identifiable editorial broadcast which
 can consist of several individual contributions ("clips") (e.g.: Tagesschau of 
 20.04.2020) or has a thematically coherent context (e.g.: DOK film about the
@@ -304,6 +325,7 @@ type Episode {
   genres: [Genre]!
   "The PDP id."
   id: String!
+  includedIn: [EditorialGrouping]!
   "Media resources (digital files or physical medias) instantiating the episode."
   instances: [MediaResource]!
   "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
@@ -764,6 +786,13 @@ enum DistributionVector {
   Online
   Radio
   TV
+  Unknown
+}
+
+"If you need another editorial grouping type, please contact the PDP team."
+enum EditorialGroupingType {
+  Playlist
+  Swimlane
   Unknown
 }
 
