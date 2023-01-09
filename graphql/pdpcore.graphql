@@ -35,7 +35,8 @@ interface Agent {
   name: String!
 }
 
-union ClipOrEpisode = Clip | Episode
+"An asset that can be the source of a clip."
+union ClipSource = Clip | Episode
 
 """
 An alternative identifier holds an identifier that is used in a system outside
@@ -184,7 +185,7 @@ type Clip {
   "People, teams or departments who contributed to the clip."
   contributors: [Agent]!
   "The episode or clip from which this clip is derived."
-  derivedFrom: ClipOrEpisode
+  derivedFrom: ClipSource!
   "A general description of the clip."
   description: Text
   "The URL from where the article can be accessed."
