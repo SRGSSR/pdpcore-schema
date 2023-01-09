@@ -197,6 +197,11 @@ type Clip {
   genres: [Genre]!
   "The PDP id."
   id: String!
+  """
+  An EditorialGrouping is defined as a marketing tool to promote
+  selected content to one or several audiences on a specific platform.
+  """
+  includedIn: [EditorialGrouping]!
   "Media resources (digital files or physical medias) instantiating the clip."
   instances: [MediaResource]!
   "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
@@ -325,11 +330,16 @@ type Episode {
   genres: [Genre]!
   "The PDP id."
   id: String!
+  """
+  An EditorialGrouping is defined as a marketing tool to promote
+  selected content to one or several audiences on a specific platform.
+  """
   includedIn: [EditorialGrouping]!
   "Media resources (digital files or physical medias) instantiating the episode."
   instances: [MediaResource]!
   "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
   language: Language
+  "The broadcasting container to which a specific episode belongs."
   memberOf: Show
   "The date and time (expressed as timestamp) at which the episode was modified. (ISO-8601)"
   modifiedAt: DateTime
@@ -351,6 +361,11 @@ type Episode {
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
   publisher: Publisher!
+  """
+  Other episodes related to this episode. Use this field if you have
+  multiple distribution-versions (like VOD and HbbTV) of the same episode in your
+  source system.
+  """
   relatedEpisodes: [Episode]!
   "The events, real or fictional, covered by the episode."
   relatedEvents: [Event]!
@@ -508,6 +523,7 @@ type ProductionType {
 
 "Describes a specific date and time in which an episode was or will be published."
 type PublicationEvent {
+  "The channel on which the episode was or will be published."
   publicationChannel: Channel
   """
   The date and time (expressed as timestamp) at which the episode is
