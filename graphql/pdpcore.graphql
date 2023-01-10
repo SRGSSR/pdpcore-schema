@@ -95,6 +95,10 @@ type Article {
   publisher: Publisher!
   "Other articles related to this article."
   relatedArticles: [Article]!
+  "Clips related to the article."
+  relatedClips: [Clip]!
+  "Episodes related to this article."
+  relatedEpisodes: [Episode]!
   "The events, real or fictional, covered by the article."
   relatedEvents: [Event]!
   "The locations, real or fictional, covered by the article."
