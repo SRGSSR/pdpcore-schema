@@ -1123,7 +1123,7 @@ input ArticleFilterInput {
 "The returned page will contain only clips that match all filters. Only filters with values affect the result."
 input ClipFilterInput {
   """
-  Filters articles depending on the value of the field `archibedAt`. If
+  Filters articles depending on the value of the field `archivedAt`. If
   the source system did not set a timestamp, then the clip will not be included
   if this filter is set.
   """
@@ -1136,6 +1136,7 @@ input ClipFilterInput {
   if this filter is set.
   """
   modified: TemporalFilterInput
+  "Filters clips depending on their parent episode. Provide the PDP ID of an episode to activate this filter."
   parentEpisode: String
   """
   Filters articles depending on the value of the field `producedAt`. If
