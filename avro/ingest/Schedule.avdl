@@ -5,7 +5,7 @@ protocol Schedule {
     import idl "ChannelReference.avdl";
     import idl "Frequency.avdl";
 
-    /** A schedule defines a repeating time period used to describe a regularly occurring episode. With the provided metadata fields, you are able to define the schedule. At a minimum you have to set the start (date and time) and afterwards you can define the schedule with the provided fields. */
+    /** A schedule defines a repeating time period used to describe a regularly occurring episode. With the provided metadata fields, you are able to define the schedule. The section "Schema Concepts: Show Schedules" in the PDP API documentation goes into more details and provides a few example schedules. */
     record Schedule {
         /** Defines the day(s) of the week on which episodes of the show are scheduled. */
         array<DayOfWeek> byDay = [];
@@ -18,7 +18,7 @@ protocol Schedule {
         /** The duration of a single episode in the show in milliseconds. */
         long? duration = null;
         /** The start date and time (expressed as timestamp) of an episode of the show. */
-        timestamp_ms start;
+        timestamp_ms? start = null;
         /** The end date and time (expressed as timestamp) of an episode of the show. */
         timestamp_ms? end = null;
         /** Defines timestamps during which a scheduled episode will not take place. The property allows exceptions to a schedule to be specified. The event that would have started at that specific date and time should be excluded from the schedule. */
