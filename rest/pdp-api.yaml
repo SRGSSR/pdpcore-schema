@@ -264,19 +264,16 @@ components:
           items:
             anyOf:
               - $ref: '#/components/schemas/EpisodeSourceReference'
-              - $ref: '#/components/schemas/EpisodeIdReference'
         relatedClips:
           type: array
           items:
             anyOf:
               - $ref: '#/components/schemas/ClipSourceReference'
-              - $ref: '#/components/schemas/ClipIdReference'
         relatedArticles:
           type: array
           items:
             anyOf:
               - $ref: '#/components/schemas/ArticleSourceReference'
-              - $ref: '#/components/schemas/ArticleIdReference'
         relatedLocations:
           type: array
           items:
