@@ -262,18 +262,15 @@ components:
         relatedEpisodes:
           type: array
           items:
-            anyOf:
-              - $ref: '#/components/schemas/EpisodeSourceReference'
+            $ref: '#/components/schemas/EpisodeSourceReference'
         relatedClips:
           type: array
           items:
-            anyOf:
-              - $ref: '#/components/schemas/ClipSourceReference'
+            $ref: '#/components/schemas/ClipSourceReference'
         relatedArticles:
           type: array
           items:
-            anyOf:
-              - $ref: '#/components/schemas/ArticleSourceReference'
+            $ref: '#/components/schemas/ArticleSourceReference'
         relatedLocations:
           type: array
           items:
