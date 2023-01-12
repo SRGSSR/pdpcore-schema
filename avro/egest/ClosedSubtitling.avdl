@@ -2,10 +2,10 @@
 protocol ClosedSubtitling {
 
     import idl "ConfidentialityLevel.avdl";
-    import idl "AlternativeIdentifier.avdl";
     import idl "ClipReference.avdl";
     import idl "Language.avdl";
     import idl "EpisodeReference.avdl";
+    import idl "Provenance.avdl";
     import idl "Publisher.avdl";
     import idl "URL.avdl";
 
@@ -17,8 +17,6 @@ protocol ClosedSubtitling {
         Publisher publisher;
         /** The source system publishing the metadata. */
         Provenance provenance;
-        /** Alternative identifiers from the source system. */
-        array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
         ConfidentialityLevel confidentialityLevel = "C2_Internal";
         /** The URL from where the subtitles can be accessed. */

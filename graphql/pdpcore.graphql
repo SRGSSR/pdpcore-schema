@@ -62,8 +62,6 @@ type Article {
   "description", the "abstract" is about a description of the asset that is as complete as possible.
   """
   abstract: Text
-  "Alternative identifiers from other systems."
-  alternativeIdentifiers: [AlternativeIdentifier]!
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   "The full text of the article."
@@ -151,8 +149,6 @@ type AudioTrack {
 
 "A channel is a linear and non-linear broadcast vector for episodes, such as SRF1, RTSUn or PlaySuisse."
 type Channel {
-  "Alternative identifiers from other systems."
-  alternativeIdentifiers: [AlternativeIdentifier]!
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   "Specifies the distribution vector of a channel."
@@ -176,8 +172,6 @@ type Clip {
   "description", the "abstract" is about a description of the asset that is as complete as possible.
   """
   abstract: Text
-  "Alternative identifiers from other systems."
-  alternativeIdentifiers: [AlternativeIdentifier]!
   " The date and time (expressed as timestamp) when the clip was archived. (ISO-8601)"
   archivedAt: DateTime
   "Defines the media type of the clip."
@@ -278,8 +272,6 @@ An EditorialGrouping is defined as a marketing tool to promote selected
 content to one or several audiences on a specific platform.
 """
 type EditorialGrouping {
-  "Alternative identifiers from other systems."
-  alternativeIdentifiers: [AlternativeIdentifier]!
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   "The PDP id."
@@ -307,8 +299,6 @@ type Episode {
   description of the asset that is as complete as possible.
   """
   abstract: Text
-  "Alternative identifiers from other systems."
-  alternativeIdentifiers: [AlternativeIdentifier]!
   "The date and time (expressed as timestamp) when the episode was archived. (ISO-8601)"
   archivedAt: DateTime
   assetType: AssetType!
@@ -706,8 +696,6 @@ type Show {
   the asset that is as complete as possible.
   """
   abstract: Text
-  "Alternative identifiers from other systems."
-  alternativeIdentifiers: [AlternativeIdentifier]!
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   "A general description of a show."

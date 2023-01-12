@@ -32,8 +32,6 @@ protocol Episode {
         Publisher publisher;
         /** The source system publishing the metadata. */
         Provenance provenance;
-        /** Alternative identifiers from other systems. */
-        array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
         ConfidentialityLevel confidentialityLevel = "C2_Internal";
         /** Defines the media type of the episode. */

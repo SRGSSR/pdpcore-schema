@@ -2,7 +2,6 @@
 protocol ClosedSubtitling {
 
     import idl "ConfidentialityLevel.avdl";
-    import idl "AlternativeIdentifier.avdl";
     import idl "ClipReference.avdl";
     import idl "Language.avdl";
     import idl "EpisodeReference.avdl";
@@ -17,8 +16,6 @@ protocol ClosedSubtitling {
         Provenance provenance;
         /** The id of the closed subtitle in the source system. It has to be unique in the source system, but not globally. */
         string sourceId;
-        /** Alternative identifiers from the source system. */
-        array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
         ConfidentialityLevel confidentialityLevel = "C2_Internal";
         /** The URL from where the subtitles can be accessed. */

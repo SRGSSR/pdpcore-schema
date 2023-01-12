@@ -2,7 +2,6 @@
 protocol Channel {
 
     import idl "ConfidentialityLevel.avdl";
-    import idl "AlternativeIdentifier.avdl";
     import idl "DistributionVector.avdl";
     import idl "Picture.avdl";
     import idl "Provenance.avdl";
@@ -16,8 +15,6 @@ protocol Channel {
         Publisher publisher;
         /** The source system publishing the metadata. */
         Provenance provenance;
-        /** Alternative identifiers from other systems. */
-        array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
         ConfidentialityLevel confidentialityLevel = "C2_Internal";
         /** The name of the channel. */

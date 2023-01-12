@@ -2,7 +2,6 @@
 protocol Article {
 
     import idl "ConfidentialityLevel.avdl";
-    import idl "AlternativeIdentifier.avdl";
     import idl "Agent.avdl";
     import idl "ArticleReference.avdl";
     import idl "EditorialGroupingReference.avdl";
@@ -28,8 +27,6 @@ protocol Article {
         Provenance provenance;
         /** The id of the article in the source system. It has to be unique in the source system, but not globally. */
         string sourceId;
-        /** Alternative identifiers from other systems. */
-        array<AlternativeIdentifier> alternativeIdentifiers = [];
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
         ConfidentialityLevel confidentialityLevel = "C2_Internal";
         /** The title or name given to the article. */
