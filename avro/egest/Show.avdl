@@ -26,11 +26,11 @@ protocol Show {
         /** A general description of a show. */
         Text? description = null;
         /** The genres this show belongs to. */
-        array<Genre> genres = [];
+        union{null, array<Genre>} genres = null;
         /** Pictures associated with the show. */
-        array<Picture> relatedPictures = [];
+        union{null, array<Picture>} relatedPictures = null;
         /** A schedule defines a repeating time period used to describe a regularly occurring planned publication. */
-        array<Schedule> schedules = [];
+        union{null, array<Schedule>} schedules = null;
     }
 
 }

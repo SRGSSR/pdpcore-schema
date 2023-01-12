@@ -11,7 +11,7 @@ protocol MediaResource {
         /** The aspect ratio of a video-asset, e.g. 16:9 or 4:3. */
         AspectRatio? aspectRatio = null;
         /** Comments about the media resource from the source system (not from a user). */
-        array<Comment> comments = [];
+        union{null, array<Comment>} comments = null;
         /** The date and time (expressed as timestamp) at which the media resource was produced. */
         timestamp_ms? producedAt = null;
         /** The date and time (expressed as timestamp) at which the media resource was modified. */
@@ -19,7 +19,7 @@ protocol MediaResource {
         /** The date and time (expressed as timestamp) at which the media resource was migrated. */
         timestamp_ms? migratedAt = null;
         /** The audio tracks of the media resource. */
-        array<AudioTrack> audioTracks = [];
+        union{null, array<AudioTrack>} audioTracks = null;
         /** The audio encoding format of the media resource. */
         AudioEncodingFormat? audioEncodingFormat = null;
         /** The video encoding format of the media resource. */

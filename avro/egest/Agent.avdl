@@ -6,7 +6,7 @@ protocol Agent {
     /** A person is a clearly identifiable human actor who is involved in the creation of an editorial object. */
     record Person {
         /** The role(s) the person takes in relation to the asset. */
-        array<Role> roles = [];
+        union{null, array<Role>} roles = null;
         /** The full name of the person. */
         string name;
     }

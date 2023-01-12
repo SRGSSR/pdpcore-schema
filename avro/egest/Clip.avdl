@@ -59,31 +59,31 @@ protocol Clip {
         /** End point relative to the episode's start in milliseconds. */
         long? end = null;
         /** The genres this clip belongs to. */
-        array<Genre> genres = [];
+        union{null, array<Genre>} genres = null;
         /** Comments about the clip from the source system (not from a user). */
-        array<Comment> comments = [];
+        union{null, array<Comment>} comments = null;
         /** This field indicates what type of production (e.g.: in-house production, third-party production) is involved. */
-        array<ProductionType> productionTypes = [];
+        union{null, array<ProductionType>} productionTypes = null;
         /** The locations, real or fictional, covered by the clip. */
-        array<Location> relatedLocations = [];
+        union{null, array<Location>} relatedLocations = null;
         /** The events, real or fictional, covered by the clip. */
-        array<Event> relatedEvents = [];
+        union{null, array<Event>} relatedEvents = null;
         /** Pictures associated with the clip. */
-        array<Picture> relatedPictures = [];
+        union{null, array<Picture>} relatedPictures = null;
         /** The position of the clip in an ordered group (e.g. an episode). */
         int? position = null;
         /** Rights and restrictions associated to the clip. */
-        array<Rights> rights = [];
+        union{null, array<Rights>} rights = null;
         /** People, teams or departments who contributed to the clip. */
-        array<union{Person, Team, Department}> contributors = [];
+        union{null, array<union{Person, Team, Department}>} contributors = null;
         /** The topic(s) addressed by the clip. */
-        array<Topic> topics = [];
+        union{null, array<Topic>} topics = null;
         /** A "Part" is used to describe and subdivide the clip in more detail. A clip is an intellectual unit which is published. A "Part", on the other hand, is (rather) a potentially independent selection (for content indexing and/or internal purposes) and is correspondingly less relevant for media consumers. */
-        array<Part> parts = [];
+        union{null, array<Part>} parts = null;
         /** Clips related to this clip. Use this field if you have multiple distribution-versions (like VOD and HbbTV) of the same clip in your source system. */
-        array<ClipIdReference> relatedClips = [];
+        union{null, array<ClipIdReference>} relatedClips = null;
         /** Media resources (digital files or physical medias) instantiating the clip. */
-        array<MediaResource> instances = [];
+        union{null, array<MediaResource>} instances = null;
         /** Used to further specify the audiovisual asset type. */
         MediaType? mediaType = null;
         /** The episode or clip from which this clip is derived. */
@@ -94,7 +94,7 @@ protocol Clip {
         /** The URL from where the clip can be accessed, e.g. the Play URL. */
         URL? url = null;
         /** An EditorialGrouping is defined as a marketing tool to promote selected content to one or several audiences on a specific platform. */
-        array<EditorialGroupingIdReference> includedIn = [];
+        union{null, array<EditorialGroupingIdReference>} includedIn = null;
     }
 
 }

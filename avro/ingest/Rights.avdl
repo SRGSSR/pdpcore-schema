@@ -6,7 +6,7 @@ protocol Rights {
         /** An agent (contact, person or organisation) having or managing the rights to an asset. */
         RightsHolder? rightsHolder = null;
         /** Expresses usage rights. */
-        array<string> usageRights = [];
+        union{null, array<string>} usageRights = null;
         /** The date and time (expressed as timestamp) from when the asset is available for public use. */
         timestamp_ms? availableFrom = null;
         /** The date and time (expressed as timestamp) until when the asset is available for public use. */

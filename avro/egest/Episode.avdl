@@ -39,7 +39,7 @@ protocol Episode {
         /** Specifies the distribution type of the episode. */
         DistributionType? distributionType;
         /** Comments about the episode from the source system (not from a user). */
-        array<Comment> comments = [];
+        union{null, array<Comment>} comments = null;
         /** The title or name given to the episode. */
         Text title;
         /** An abstract is a self-contained, brief, and meaningful description of an episode. In contrast to the "description", the "abstract" is about a description of the asset that is as complete as possible. */
@@ -57,31 +57,31 @@ protocol Episode {
         /** The duration of the episode in milliseconds. */
         long? duration = null;
         /** The genres this episode belongs to. */
-        array<Genre> genres = [];
+        union{null, array<Genre>} genres = null;
         /** This field indicates what type of production (e.g.: in-house production, third-party production) is involved. */
-        array<ProductionType> productionTypes = [];
+        union{null, array<ProductionType>} productionTypes = null;
         /** The locations, real or fictional, covered by the episode. */
-        array<Location> relatedLocations = [];
+        union{null, array<Location>} relatedLocations = null;
         /** The events, real or fictional, covered by the episode. */
-        array<Event> relatedEvents = [];
+        union{null, array<Event>} relatedEvents = null;
         /** Pictures related to the episode. */
-        array<Picture> relatedPictures = [];
+        union{null, array<Picture>} relatedPictures = null;
         /** Rights and restrictions associated to the episode. */
-        array<Rights> rights = [];
+        union{null, array<Rights>} rights = null;
         /** People, teams or departments who contributed to the episode. */
-        array<union{Person, Team, Department}> contributors = [];
+        union{null, array<union{Person, Team, Department}>} contributors = null;
         /** The topic(s) addressed by the episode. */
-        array<Topic> topics = [];
+        union{null, array<Topic>} topics = null;
         /** The broadcasting container to which a specific episode belongs. */
         ShowIdReference? memberOf = null;
         /** A part is used to describe and subdivide individual contributions ("Clip") or episodes ("Episode") in more detail. A clip is an intellectual unit which is published. A part, on the other hand, is (rather) a potentially independent selection (for content indexing and/or internal purposes) and is correspondingly less relevant for media consumers. */
-        array<Part> parts = [];
+        union{null, array<Part>} parts = null;
         /** Other episodes related to this episode. Use this field if you have multiple distribution-versions (like VOD and HbbTV) of the same episode in your source system. */
-        array<EpisodeIdReference> relatedEpisodes = [];
+        union{null, array<EpisodeIdReference>} relatedEpisodes = null;
         /** Media resources (digital files or physical medias) instantiating the episode. */
-        array<MediaResource> instances = [];
+        union{null, array<MediaResource>} instances = null;
         /** Specific publication events of the episode, either in the future or the past. */
-        array<PublicationEvent> scheduledOn = [];
+        union{null, array<PublicationEvent>} scheduledOn = null;
         /** The position of the episode in an ordered group (e.g. a show). */
         int? position = null;
         /** Position of the season within an ordered group of seasons. */
@@ -95,7 +95,7 @@ protocol Episode {
         /** The URL from where the episode can be accessed, e.g. the Play Suisse URL. */
         URL? url = null;
         /** An EditorialGrouping is defined as a marketing tool to promote selected content to one or several audiences on a specific platform. */
-        array<EditorialGroupingIdReference> includedIn = [];
+        union{null, array<EditorialGroupingIdReference>} includedIn = null;
     }
 
 }

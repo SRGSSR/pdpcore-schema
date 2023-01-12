@@ -67,9 +67,9 @@ type Article {
   "The full text of the article."
   content: ArticleContent
   "People, teams or departments who contributed to the article."
-  contributors: [Agent]!
+  contributors: [Agent]
   "The genres this article belongs to."
-  genres: [Genre]!
+  genres: [Genre]
   "The PDP id."
   id: String!
   "This field indicates whether the article is longer or more extensive."
@@ -88,13 +88,13 @@ type Article {
   "The business unit or external organisation publishing the metadata."
   publisher: Publisher!
   "Other articles related to this article."
-  relatedArticles: [Article]!
+  relatedArticles: [Article]
   "Clips related to the article."
-  relatedClips: [Clip]!
+  relatedClips: [Clip]
   "Episodes related to this article."
-  relatedEpisodes: [Episode]!
+  relatedEpisodes: [Episode]
   "Pictures related to the article."
-  relatedPictures: [Picture]!
+  relatedPictures: [Picture]
   "The date and time (expressed as timestamp) at which the article was produced. (ISO-8601)"
   releasedAt: DateTime
   "The title or name given to the article."
@@ -167,13 +167,13 @@ type Clip {
   "Defines the media type of the clip."
   assetType: AssetType!
   "Comments about the clip from the source system (not from a user). "
-  comments: [Comment]!
+  comments: [Comment]
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   "People, teams or departments who contributed to the clip."
-  contributors: [Agent]!
+  contributors: [Agent]
   "The episode or clip from which this clip is derived."
-  derivedFrom: ClipSource!
+  derivedFrom: ClipSource
   "A general description of the clip."
   description: Text
   "The URL from where the article can be accessed."
@@ -183,16 +183,16 @@ type Clip {
   "End point relative to the episode's start in milliseconds."
   end: BigInteger
   "The genres this clip belongs to."
-  genres: [Genre]!
+  genres: [Genre]
   "The PDP id."
   id: String!
   """
   An EditorialGrouping is defined as a marketing tool to promote
   selected content to one or several audiences on a specific platform.
   """
-  includedIn: [EditorialGrouping]!
+  includedIn: [EditorialGrouping]
   "Media resources (digital files or physical medias) instantiating the clip."
-  instances: [MediaResource]!
+  instances: [MediaResource]
   "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
   language: Language
   "Used to further specify the audiovisual asset type."
@@ -202,33 +202,33 @@ type Clip {
   "The episode this clip belongs to"
   parentEpisode: Episode
   "A \"Part\" is used to describe and subdivide the clip in more detail. A clip is an intellectual unit which is published. A \"Part\", on the other hand, is (rather) a potentially independent selection (for content indexing and/or internal purposes) and is correspondingly less relevant for media consumers."
-  parts: [Part]!
+  parts: [Part]
   "The position of the clip in an ordered group (e.g. an episode)."
   position: Int
   "The date and time (expressed as timestamp) at which the clip was produced. (ISO-8601)"
   producedAt: DateTime
   "This field indicates what type of production (e.g.: in-house production, third-party production) is involved."
-  productionTypes: [ProductionType]!
+  productionTypes: [ProductionType]
   "The source system publishing the metadata."
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
   publisher: Publisher!
   "Other clips related to this clip."
-  relatedClips: [Clip]!
+  relatedClips: [Clip]
   "The events, real or fictional, covered by the clip."
-  relatedEvents: [Event]!
+  relatedEvents: [Event]
   "The locations, real or fictional, covered by the clip."
-  relatedLocations: [Location]!
+  relatedLocations: [Location]
   "Pictures related to the clip."
-  relatedPictures: [Picture]!
+  relatedPictures: [Picture]
   "Rights and restrictions associated to the clip."
-  rights: [Rights]!
+  rights: [Rights]
   "Start point relative to the episode's start in milliseconds."
   start: BigInteger
   "The title or name given to the clip."
   title: Text!
   "The topic(s) addressed by the clip."
-  topics: [Topic]!
+  topics: [Topic]
   "The URL from where the article can be accessed."
   url: URL
 }
@@ -298,11 +298,11 @@ type Episode {
   """
   broadcastAt: DateTime
   "Comments about the episode from the source system (not from a user)."
-  comments: [Comment]!
+  comments: [Comment]
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   "People, teams or departments who contributed to the episode."
-  contributors: [Agent]!
+  contributors: [Agent]
   "A general description of an episode."
   description: Text
   "Specifies the distribution type of the episode."
@@ -312,16 +312,16 @@ type Episode {
   "The episode number in a season."
   episodeNumberInSeason: Int
   "The genres this episode belongs to."
-  genres: [Genre]!
+  genres: [Genre]
   "The PDP id."
   id: String!
   """
   An EditorialGrouping is defined as a marketing tool to promote
   selected content to one or several audiences on a specific platform.
   """
-  includedIn: [EditorialGrouping]!
+  includedIn: [EditorialGrouping]
   "Media resources (digital files or physical medias) instantiating the episode."
-  instances: [MediaResource]!
+  instances: [MediaResource]
   "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
   language: Language
   "The broadcasting container to which a specific episode belongs."
@@ -335,13 +335,13 @@ type Episode {
   independent selection (for content indexing and/or internal purposes) and is
   correspondingly less relevant for media consumers.
   """
-  parts: [Part]!
+  parts: [Part]
   "The position of the episode in an ordered group (e.g. a show)."
   position: Int
   "The date and time (expressed as timestamp) when the episode was produced. (ISO-8601)"
   producedAt: DateTime
   "This field indicates what type of production (e.g.: in-house production, third-party production) is involved."
-  productionTypes: [ProductionType]!
+  productionTypes: [ProductionType]
   "The source system publishing the metadata."
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
@@ -351,17 +351,17 @@ type Episode {
   multiple distribution-versions (like VOD and HbbTV) of the same episode in your
   source system.
   """
-  relatedEpisodes: [Episode]!
+  relatedEpisodes: [Episode]
   "The events, real or fictional, covered by the episode."
-  relatedEvents: [Event]!
+  relatedEvents: [Event]
   "The locations, real or fictional, covered by the episode."
-  relatedLocations: [Location]!
+  relatedLocations: [Location]
   "Pictures related to the episode."
-  relatedPictures: [Picture]!
+  relatedPictures: [Picture]
   "Rights and restrictions associated to the episode."
-  rights: [Rights]!
+  rights: [Rights]
   "Specific publication events of the episode, either in the future or the past."
-  scheduledOn: [PublicationEvent]!
+  scheduledOn: [PublicationEvent]
   "Position of the season within an ordered group of seasons."
   seasonNumber: Int
   "A short piece of text used to illustrate a thought or dramatic effect."
@@ -369,7 +369,7 @@ type Episode {
   "The title or name given to the episode."
   title: Text!
   "The topic(s) addressed by the episode."
-  topics: [Topic]!
+  topics: [Topic]
   "The URL from where the episode can be accessed, e.g. the Play Suisse URL."
   url: URL
 }
@@ -422,11 +422,11 @@ type MediaResource {
   "The audio encoding format of the media resource."
   audioEncodingFormat: AudioEncodingFormat
   "Comments about the media resource from the source system (not from a user). "
-  audioTracks: [AudioTrack]!
+  audioTracks: [AudioTrack]
   "The colour space of the media resource."
   colourSpace: ColourSpace
   "Comments about the media resource from the source system (not from a user). "
-  comments: [Comment]!
+  comments: [Comment]
   "End point relative to the episode's or clip's start in milliseconds."
   end: BigInteger
   "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
@@ -468,9 +468,9 @@ type Part {
   "The date and time (expressed as timestamp) at which the part was modified. (ISO-8601)"
   modifiedAt: DateTime
   "The events, real or fictional, covered by the part."
-  relatedEvents: [Event]!
+  relatedEvents: [Event]
   "The locations, real or fictional, covered by the part."
-  relatedLocations: [Location]!
+  relatedLocations: [Location]
   "Start point relative to the episode's or clip's start in milliseconds."
   start: BigInteger
   "The name of the topic."
@@ -482,7 +482,7 @@ type Person implements Agent {
   "The full name of the person."
   name: String!
   "The role(s) the person takes in relation to the asset."
-  roles: [Role]!
+  roles: [Role]
 }
 
 "Describes visual material - such as logos, thumbnails or other visual elements - that belong to an asset."
@@ -492,7 +492,7 @@ type Picture {
   "The height of the picture in pixels."
   height: Int
   "Rights and restrictions associated to the picture."
-  rights: [Rights]!
+  rights: [Rights]
   "The title or name given to the picture."
   title: Text
   "The URL from where the picture can be accessed."
@@ -608,7 +608,7 @@ type Rights {
   "An agent (contact, person or organisation) having or managing the rights to an asset."
   rightsHolder: RightsHolder
   "Expresses usage rights."
-  usageRights: [String]!
+  usageRights: [String]
 }
 
 "An agent (contact, person or organisation) having or managing the rights to an asset."

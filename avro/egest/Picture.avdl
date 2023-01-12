@@ -13,7 +13,7 @@ protocol Picture {
         /** The title or name given to the picture. */
         Text? title = null;
         /** Rights and restrictions associated to the picture. */
-        array<Rights> rights = [];
+        union{null, array<Rights>} rights = null;
         /** The width of the picture in pixels. */
         int? width = null;
         /** The height of the picture in pixels. */

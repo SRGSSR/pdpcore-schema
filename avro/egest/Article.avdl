@@ -31,19 +31,19 @@ protocol Article {
         /** The title or name given to the article. */
         Text? title;
         /** People, teams or departments who contributed to the article. */
-        union{null, array<union{Person, Team, Department}>} contributors;
+        union{null, array<union{Person, Team, Department}>} contributors = null;
         /** The genres this article belongs to. */
-        union{null, array<Genre>} genres;
+        union{null, array<Genre>} genres = null;
         /** Episodes related to this article. */
-        union{null, array<EpisodeIdReference>} relatedEpisodes;
+        union{null, array<EpisodeIdReference>} relatedEpisodes = null;
         /** Clips related to the article. */
-        union{null, array<ClipIdReference>} relatedClips;
+        union{null, array<ClipIdReference>} relatedClips = null;
         /** Pictures related to the article. */
-        union{null, array<Picture>} relatedPictures;
+        union{null, array<Picture>} relatedPictures = null;
         /** The full text of the article. */
         ArticleContent? content = null;
         /** Other articles related to this article. */
-        union{null, array<ArticleIdReference>} relatedArticles;
+        union{null, array<ArticleIdReference>} relatedArticles = null;
         /** The URL from where the article can be accessed. */
         URL? url = null;
         /** An abstract is a self-contained, brief, and meaningful description of an article. In contrast to the "description", the "abstract" is about a description of the asset that is as complete as possible. */

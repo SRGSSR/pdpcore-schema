@@ -22,9 +22,9 @@ protocol Part {
         /** End point relative to the episode's or clip's start in milliseconds. */
         long? end = null;
         /** The locations, real or fictional, covered by the part. */
-        array<Location> relatedLocations = [];
+        union{null, array<Location>} relatedLocations = null;
         /** The events, real or fictional, covered by the part. */
-        array<Event> relatedEvents = [];
+        union{null, array<Event>} relatedEvents = null;
     }
 
 }

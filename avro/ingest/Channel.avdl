@@ -20,7 +20,7 @@ protocol Channel {
         /** The name of the channel. */
         string name;
         /** Pictures associated with the channel. */
-        array<Picture> relatedPictures = [];
+        union{null, array<Picture>} relatedPictures = null;
         /** Specifies the distribution vector of a channel. */
         DistributionVector distributionVector;
     }
