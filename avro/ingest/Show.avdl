@@ -18,7 +18,7 @@ protocol Show {
         /** The id of the show in the source system. It has to be unique in the source system, but not globally. */
         string sourceId;
         /** In the context of the PDP, this field is used to indicate whether the data may be published publicly. */
-        ConfidentialityLevel confidentialityLevel = "C2_Internal";
+        ConfidentialityLevel confidentialityLevel;
         /** The title or name given to the show. */
         Text title;
         /** An abstract is a self-contained, brief, and meaningful description of a show. In contrast to the "description", the "abstract" is about a description of the asset that is as complete as possible. */

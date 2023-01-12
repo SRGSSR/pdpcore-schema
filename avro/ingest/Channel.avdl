@@ -16,7 +16,7 @@ protocol Channel {
         /** The id of the channel in the source system. */
         string sourceId;
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        ConfidentialityLevel confidentialityLevel = "C2_Internal";
+        ConfidentialityLevel confidentialityLevel;
         /** The name of the channel. */
         string name;
         /** Pictures associated with the channel. */

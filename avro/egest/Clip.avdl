@@ -33,7 +33,7 @@ protocol Clip {
         /** The source system publishing the metadata. */
         Provenance provenance;
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        ConfidentialityLevel confidentialityLevel = "C2_Internal";
+        ConfidentialityLevel confidentialityLevel;
         /** Defines the media type of the clip. */
         AssetType assetType;
         /** Specifies the distribution type of the clip. */

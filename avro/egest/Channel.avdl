@@ -16,7 +16,7 @@ protocol Channel {
         /** The source system publishing the metadata. */
         Provenance provenance;
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        ConfidentialityLevel confidentialityLevel = "C2_Internal";
+        ConfidentialityLevel confidentialityLevel;
         /** The name of the channel. */
         string name;
         /** Pictures associated with the channel. */

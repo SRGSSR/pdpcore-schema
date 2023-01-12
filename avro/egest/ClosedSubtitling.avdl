@@ -18,7 +18,7 @@ protocol ClosedSubtitling {
         /** The source system publishing the metadata. */
         Provenance provenance;
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        ConfidentialityLevel confidentialityLevel = "C2_Internal";
+        ConfidentialityLevel confidentialityLevel;
         /** The URL from where the subtitles can be accessed. */
         URL url;
         /** An ISO 639-1 two character language code, e.g. de, fr, it, rm. */

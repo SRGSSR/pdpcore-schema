@@ -28,7 +28,7 @@ protocol Article {
         /** The id of the article in the source system. It has to be unique in the source system, but not globally. */
         string sourceId;
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        ConfidentialityLevel confidentialityLevel = "C2_Internal";
+        ConfidentialityLevel confidentialityLevel;
         /** The title or name given to the article. */
         Text title;
         /** The topic(s) addressed by the article. */
