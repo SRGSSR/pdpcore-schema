@@ -79,12 +79,8 @@ type Article {
   allows the user to see at a glance what an article is about.
   """
   kicker: Text
-  "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
-  language: Language
   "The date and time (expressed as timestamp) at which the article was modified. (ISO-8601)"
   modifiedAt: DateTime
-  "The date and time (expressed as timestamp) at which the article was produced. (ISO-8601)"
-  producedAt: DateTime
   "The source system publishing the metadata."
   provenance: Provenance!
   "Indicates if the website article has been published online."
@@ -97,18 +93,12 @@ type Article {
   relatedClips: [Clip]!
   "Episodes related to this article."
   relatedEpisodes: [Episode]!
-  "The events, real or fictional, covered by the article."
-  relatedEvents: [Event]!
-  "The locations, real or fictional, covered by the article."
-  relatedLocations: [Location]!
   "Pictures related to the article."
   relatedPictures: [Picture]!
-  "The date and time (expressed as timestamp) at which the article was released. (ISO-8601)"
+  "The date and time (expressed as timestamp) at which the article was produced. (ISO-8601)"
   releasedAt: DateTime
   "The title or name given to the article."
-  title: Text!
-  "The topic(s) addressed by the article."
-  topics: [Topic]!
+  title: Text
   "The URL from where the article can be accessed."
   url: URL
 }

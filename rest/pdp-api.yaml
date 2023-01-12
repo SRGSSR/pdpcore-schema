@@ -228,7 +228,6 @@ components:
         - sourceId
         - publisher
         - provenance
-        - title
       properties:
         sourceId:
           type: string
@@ -238,16 +237,8 @@ components:
           $ref: '#/components/schemas/Provenance'
         title:
           $ref: '#/components/schemas/Text'
-        alternativeIdentifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlternativeIdentifier'
         confidentialityLevel:
           $ref: '#/components/schemas/ConfidentialityLevel'
-        topics:
-          type: array
-          items:
-            $ref: '#/components/schemas/Topic'
         contributors:
           type: array
           items:
@@ -271,14 +262,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ArticleSourceReference'
-        relatedLocations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Location'
-        relatedEvents:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
         relatedPictures:
           type: array
           items:
@@ -292,9 +275,6 @@ components:
         modifiedAt:
           type: string
           format: date-time
-        producedAt:
-          type: string
-          format: date-time
         releasedAt:
           type: string
           format: date-time
@@ -304,15 +284,6 @@ components:
           $ref: '#/components/schemas/Text'
         isLongForm:
           type: boolean
-        language:
-          $ref: '#/components/schemas/Language'
-        includedIn:
-          type: array
-          items:
-            anyOf:
-              - $ref: '#/components/schemas/EditorialGroupingSourceReference'
-              - $ref: '#/components/schemas/EditorialGroupingIdReference'
-
     AcceptedResponse:
       title: Accepted write operation response
       type: object
