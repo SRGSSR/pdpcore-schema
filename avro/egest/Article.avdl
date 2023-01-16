@@ -20,8 +20,10 @@ protocol Article {
 
     /** In the context of the PDP an article is a (CMS) website article. */
     record Article {
-        /**The PDP urn*/
+        /** The PDP id of the article. */
         string id;
+        /** The id of the article in the source system. It is unique in the source system, but not globally. */
+        string sourceId;
         /** The business unit or external organisation publishing the metadata. */
         Publisher publisher;
         /** The source system publishing the metadata. */

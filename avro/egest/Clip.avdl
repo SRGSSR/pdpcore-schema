@@ -26,8 +26,10 @@ protocol Clip {
 
     /** A clip is a single editorial (audiovisual) contribution. A clip can be part of an episode or stand alone. */
     record Clip {
-        /**The PDP urn*/
+        /** The PDP id of the clip. */
         string id;
+        /** The id of the clip in the source system. It is unique in the source system, but not globally. */
+        string sourceId;
         /** The business unit or external organisation publishing the metadata. */
         Publisher publisher;
         /** The source system publishing the metadata. */

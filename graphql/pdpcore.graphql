@@ -70,7 +70,7 @@ type Article {
   contributors: [Agent]
   "The genres this article belongs to."
   genres: [Genre]
-  "The PDP id."
+  "The PDP id of the article."
   id: String!
   "This field indicates whether the article is longer or more extensive."
   isLongForm: Boolean
@@ -97,6 +97,8 @@ type Article {
   relatedPictures: [Picture]
   "The date and time (expressed as timestamp) at which the article was produced. (ISO-8601)"
   releasedAt: DateTime
+  "The id of the article in the source system. It is unique in the source system, but not globally."
+  sourceId: String!
   "The title or name given to the article."
   title: Text
   "The URL from where the article can be accessed."
@@ -143,7 +145,7 @@ type Channel {
   confidentialityLevel: ConfidentialityLevel!
   "Specifies the distribution vector of a channel."
   distributionVector: DistributionVector!
-  "The PDP id."
+  "The PDP id of the channel."
   id: String!
   "The name of the channel."
   name: String!
@@ -153,6 +155,8 @@ type Channel {
   publisher: Publisher!
   "Pictures associated with the channel."
   relatedPictures: [Picture]
+  "The id of the channel in the source system. It is unique in the source system, but not globally."
+  sourceId: String!
 }
 
 "A clip is a single editorial (audiovisual) contribution. A clip can be part of an episode or stand alone."
@@ -184,7 +188,7 @@ type Clip {
   end: BigInteger
   "The genres this clip belongs to."
   genres: [Genre]
-  "The PDP id."
+  "The PDP id of the clip."
   id: String!
   """
   An EditorialGrouping is defined as a marketing tool to promote
@@ -223,6 +227,8 @@ type Clip {
   relatedPictures: [Picture]
   "Rights and restrictions associated to the clip."
   rights: [Rights]
+  "The id of the clip in the source system. It is unique in the source system, but not globally."
+  sourceId: String!
   "Start point relative to the episode's start in milliseconds."
   start: BigInteger
   "The title or name given to the clip."
@@ -264,12 +270,14 @@ content to one or several audiences on a specific platform.
 type EditorialGrouping {
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
-  "The PDP id."
+  "The PDP id of the editorial grouping."
   id: String!
   "The source system publishing the metadata."
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
   publisher: Publisher!
+  "The id of the channel in the editorial grouping system. It is unique in the source system, but not globally."
+  sourceId: String!
   "The title or name given to the editorial grouping."
   title: Text!
   "This fields indicates the type of the editorial grouping."
@@ -313,7 +321,7 @@ type Episode {
   episodeNumberInSeason: Int
   "The genres this episode belongs to."
   genres: [Genre]
-  "The PDP id."
+  "The PDP id of the episode."
   id: String!
   """
   An EditorialGrouping is defined as a marketing tool to promote
@@ -364,6 +372,8 @@ type Episode {
   scheduledOn: [PublicationEvent]
   "Position of the season within an ordered group of seasons."
   seasonNumber: Int
+  "The id of the episode in the source system. It is unique in the source system, but not globally."
+  sourceId: String!
   "A short piece of text used to illustrate a thought or dramatic effect."
   tagline: Text
   "The title or name given to the episode."
@@ -692,7 +702,7 @@ type Show {
   description: Text
   "The genres this show belongs to."
   genres: [Genre]!
-  "The PDP id."
+  "The PDP id of the show."
   id: String!
   "The source system publishing the metadata."
   provenance: Provenance!
@@ -702,6 +712,8 @@ type Show {
   relatedPictures: [Picture]!
   "A schedule defines a repeating time period used to describe a regularly occurring planned publication."
   schedules: [Schedule]!
+  "The id of the show in the source system. It is unique in the source system, but not globally."
+  sourceId: String!
   "The title or name given to the show."
   title: Text!
 }

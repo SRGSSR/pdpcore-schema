@@ -11,8 +11,10 @@ protocol Show {
 
     /** A show is a broadcasting container to which a specific episode belongs and which is used to group individual broadcasts. An example of a show is "10 vor 10" or "Echo der Zeit". */
     record Show {
-        /**The PDP urn*/
+        /** The PDP id of the show. */
         string id;
+        /** The id of the show in the source system. It is unique in the source system, but not globally. */
+        string sourceId;
         /** The business unit or external organisation publishing the metadata. */
         Publisher publisher;
         /** The source system publishing the metadata. */

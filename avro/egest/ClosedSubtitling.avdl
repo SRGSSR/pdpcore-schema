@@ -11,8 +11,10 @@ protocol ClosedSubtitling {
 
     /** Contains a closed subtitle for audiovisual objects as separate content. */
     record ClosedSubtitling {
-        /**The PDP urn*/
+        /** The PDP id of the closed subtitle. */
         string id;
+        /** The id of the closed subtitle in the source system. It is unique in the source system, but not globally. */
+        string sourceId;
         /** The business unit or external organisation publishing the metadata. */
         Publisher publisher;
         /** The source system publishing the metadata. */

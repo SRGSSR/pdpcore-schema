@@ -26,8 +26,10 @@ protocol Episode {
 
     /** An "episode" is a longer and clearly identifiable editorial broadcast which can consist of several individual contributions ("clips") (e.g.: Tagesschau of 20.04.2020) or has a thematically coherent context (e.g.: DOK film about the Generalsteik 1918). */
     record Episode {
-        /**The PDP urn*/
+        /** The PDP id of the episode. */
         string id;
+        /** The id of the episode in the source system. It is unique in the source system, but not globally. */
+        string sourceId;
         /** The business unit or external organisation publishing the metadata. */
         Publisher publisher;
         /** The source system publishing the metadata. */

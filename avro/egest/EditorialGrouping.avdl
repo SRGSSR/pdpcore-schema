@@ -6,10 +6,12 @@ protocol EditorialGrouping {
     import idl "Publisher.avdl";
     import idl "Text.avdl";
 
-    /** An EditorialGrouping is defined as a marketing tool to promote selected content to one or several audiences on a specific platform. */
+    /** An editorial grouping is defined as a marketing tool to promote selected content to one or several audiences on a specific platform. */
     record EditorialGrouping {
-        /**The PDP urn*/
+        /** The PDP id of the editorial grouping. */
         string id;
+        /** The id of the editorial grouping in the source system. It is unique in the source system, but not globally. */
+        string sourceId;
         /** The business unit or external organisation publishing the metadata. */
         Publisher publisher;
         /** The source system publishing the metadata. */
