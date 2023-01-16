@@ -41,7 +41,7 @@ protocol Clip {
         /** Specifies the distribution type of the clip. */
         DistributionType? distributionType;
         /** The title or name given to the clip. */
-        Text title;
+        Text? title = null;
         /** The episode this clip belongs to. */
         EpisodeIdReference? parentEpisode = null;
         /** An abstract is a self-contained, brief, and meaningful description of a clip. In contrast to the "description", the "abstract" is about a description of the asset that is as complete as possible. */

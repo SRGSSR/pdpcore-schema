@@ -232,7 +232,7 @@ type Clip {
   "Start point relative to the episode's start in milliseconds."
   start: BigInteger
   "The title or name given to the clip."
-  title: Text!
+  title: Text
   "The topic(s) addressed by the clip."
   topics: [Topic]
   "The URL from where the article can be accessed."
@@ -279,7 +279,7 @@ type EditorialGrouping {
   "The id of the channel in the editorial grouping system. It is unique in the source system, but not globally."
   sourceId: String!
   "The title or name given to the editorial grouping."
-  title: Text!
+  title: Text
   "This fields indicates the type of the editorial grouping."
   type: EditorialGroupingType!
 }
@@ -377,7 +377,7 @@ type Episode {
   "A short piece of text used to illustrate a thought or dramatic effect."
   tagline: Text
   "The title or name given to the episode."
-  title: Text!
+  title: Text
   "The topic(s) addressed by the episode."
   topics: [Topic]
   "The URL from where the episode can be accessed, e.g. the Play Suisse URL."

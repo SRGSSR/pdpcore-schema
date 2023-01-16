@@ -20,7 +20,7 @@ protocol Show {
         /** In the context of the PDP, this field is used to indicate whether the data may be published publicly. */
         ConfidentialityLevel confidentialityLevel;
         /** The title or name given to the show. */
-        Text title;
+        Text? title = null;
         /** An abstract is a self-contained, brief, and meaningful description of a show. In contrast to the "description", the "abstract" is about a description of the asset that is as complete as possible. */
         Text? abstract = null;
         /** A general description of a show. */
