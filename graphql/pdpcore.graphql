@@ -152,7 +152,7 @@ type Channel {
   "The business unit or external organisation publishing the metadata."
   publisher: Publisher!
   "Pictures associated with the channel."
-  relatedPictures: [Picture]!
+  relatedPictures: [Picture]
 }
 
 "A clip is a single editorial (audiovisual) contribution. A clip can be part of an episode or stand alone."
