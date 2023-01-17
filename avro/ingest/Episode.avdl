@@ -37,7 +37,7 @@ protocol Episode {
         /** Defines the media type of the episode. */
         AssetType assetType;
         /** Specifies the distribution type of the episode. */
-        DistributionType? distributionType;
+        DistributionType? distributionType = null;
         /** Comments about the episode from the source system (not from a user). */
         union{null, array<Comment>} comments = null;
         /** The title or name given to the episode. */

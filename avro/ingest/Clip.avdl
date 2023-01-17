@@ -37,7 +37,7 @@ protocol Clip {
         /** Defines the media type of the clip. */
         AssetType assetType;
         /** Specifies the distribution type of the clip. */
-        DistributionType? distributionType;
+        DistributionType? distributionType = null;
         /** The title or name given to the clip. */
         Text? title = null;
         /** The episode this clip belongs to. */
