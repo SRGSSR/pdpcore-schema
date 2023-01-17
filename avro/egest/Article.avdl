@@ -31,7 +31,7 @@ protocol Article {
         /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
         ConfidentialityLevel confidentialityLevel;
         /** The title or name given to the article. */
-        Text? title;
+        Text? title = null;
         /** People, teams or departments who contributed to the article. */
         union{null, array<union{Person, Team, Department}>} contributors = null;
         /** The genres this article belongs to. */
