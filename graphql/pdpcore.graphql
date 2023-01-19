@@ -1127,7 +1127,8 @@ input ArticleFilterInput {
   """
   Filters articles depending on when they were updated. An article counts as
   updated when either the source system changes its data or a relation to another
-  asset is updated.
+  asset is updated. Updates to related assets like episodes or clips are not taken
+  into account.
   """
   updated: TemporalFilterInput
 }
@@ -1178,7 +1179,8 @@ input ClipFilterInput {
   """
   Filters clips depending on when they were updated. A clip counts as
   updated when either the source system changes its data or a relation to another
-  asset is updated.
+  asset is updated. Updates to related assets like the clip's parent episode or
+  its editorial groupings are not taken into account.
   """
   updated: TemporalFilterInput
 }
@@ -1216,7 +1218,8 @@ input EpisodeFilterInput {
   """
   Filters episodes depending on when they were updated. An episode
   counts as updated when either the source system changes its data or a relation
-  to another asset is modified.
+  to another asset is modified. Updates to related assets like the episode's show
+  or its editorial groupings are not taken into account.
   """
   updated: TemporalFilterInput
 }
@@ -1231,7 +1234,8 @@ input ShowFilterInput {
   """
   Filters shows depending on when they were updated. A show counts as
   updated when either the source system changes its data or a relation to another
-  asset is modified.
+  asset is modified. Updates to related assets like the show schedule's channel
+  are not taken into account.
   """
   updated: TemporalFilterInput
 }
