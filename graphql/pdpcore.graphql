@@ -1108,12 +1108,6 @@ input ArticleFilterInput {
   if this filter is set.
   """
   modified: TemporalFilterInput
-  """
-  Filters articles depending on the value of the field `producedAt`. If
-  the source system did not set a timestamp, then the article will not be included
-  if this filter is set.
-  """
-  produced: TemporalFilterInput
   "Filters articles depending on their provenance."
   provenance: Provenance
   "Filters articles depending on their publisher."
