@@ -33,7 +33,7 @@ paths:
           description: Invalid input
       security:
         - azure_auth:
-          - 'write:all'
+            - 'write:all'
       requestBody:
         content:
           application/json:
@@ -44,7 +44,7 @@ paths:
   /episodes:
     post:
       tags:
-        - episode
+        - episode (alpha)
       summary: Upsert episode
       operationId: writeEpisode
       responses:
