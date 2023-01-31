@@ -557,7 +557,9 @@ type Query {
     """
     filter: ArticleFilterInput,
     "The number of articles per page."
-    first: Int! @constraint(max : 500) @constraint(min : 1)
+    first: Int! @constraint(max : 500) @constraint(min : 1),
+    "Specifies the order in which the query returns matching articles."
+    sort: [ArticleSortInput] = []
   ): ArticlePage!
   "Returns the channel with the provided PDP id or null if it does not exist."
   channel(
@@ -776,6 +778,13 @@ type URL {
 type VideoEncodingFormat {
   "The name of the format."
   name: String!
+}
+
+"Specifies the fields that can be used to sort articles."
+enum ArticleSortField {
+  modifiedAt
+  releasedAt
+  updatedAt
 }
 
 "Specifies the type of an episode or a clip."
@@ -1089,6 +1098,14 @@ enum Publisher {
   Unknown
 }
 
+"Values for sorting."
+enum SortOrder {
+  "Sort ascending, nulls first."
+  ASC
+  "Sort descending, nulls last."
+  DESC
+}
+
 "Scalar for BigDecimal"
 scalar BigDecimal
 
@@ -1127,6 +1144,14 @@ input ArticleFilterInput {
   into account.
   """
   updated: TemporalFilterInput
+}
+
+"Defines a field and order to be used for sorting the articles."
+input ArticleSortInput {
+  "The field of the article you want to sort by."
+  field: ArticleSortField!
+  "The order in which want the articles sorted."
+  order: SortOrder!
 }
 
 input ChannelFilterInputInput {
