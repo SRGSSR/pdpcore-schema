@@ -1117,6 +1117,8 @@ scalar DateTime
 
 "The returned page will contain only articles that match all filters. Only filters with values affect the result."
 input ArticleFilterInput {
+  "Filters articles by genre."
+  genres: GenreFilterInput
   "Filters articles with an id or alternative identifier matching any of the provided identifiers."
   identifiers: [String]
   "Filters articles depending on the value of the field `isLongForm`."
@@ -1245,6 +1247,15 @@ input EpisodeFilterInput {
   updated: TemporalFilterInput
 }
 
+"""
+A filter for genres. If you provide a value for this filter, then the 
+result will contain any items that contains at least one matching genre.
+"""
+input GenreFilterInput {
+  "Filters items by genre name."
+  name: TextFilterInput
+}
+
 input ShowFilterInput {
   "Filters shows that have an id or alternative identifier that match any of the provided identifiers."
   identifiers: [String]
@@ -1280,4 +1291,10 @@ input TemporalFilterInput {
   2022-07-18T10:15:30+02:00 to filter for items strictly before that date-time. (ISO-8601)
   """
   before: DateTime
+}
+
+"A filter for a text field."
+input TextFilterInput {
+  "Filters texts by content. The result will only contain texts matching the entire content exactly."
+  content: String
 }
