@@ -66,6 +66,33 @@ paths:
               $ref: '#/components/schemas/Episode'
         description: Episode payload
         required: true
+  /correlations:
+    post:
+      tags:
+        - correlations
+      summary: Upsert Correlation
+      operationId: writeCorrelation
+      responses:
+        '202':
+          description: Accepted request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+        '400':
+          description: Invalid input
+        '422':
+          description: Invalid input
+      security:
+        - azure_auth:
+            - 'write:all'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Correlation'
+        description: Correlation payload
+        required: true
 components:
   securitySchemes:
     azureAuthDev:
@@ -283,6 +310,49 @@ components:
           $ref: '#/components/schemas/Text'
         isLongForm:
           type: boolean
+    Correlation:
+      title: a Correlation
+      description: A Correlation between two assets
+      type: object
+      required:
+        - publisher
+        - provenance
+        - left
+        - right
+      properties:
+        sourceId:
+          type: string
+        publisher:
+          $ref: '#/components/schemas/Publisher'
+        provenance:
+          $ref: '#/components/schemas/Provenance'
+        left:
+          $ref: '#/components/schemas/SourceReference'
+        right:
+          $ref: '#/components/schemas/SourceReference'
+    SourceReference:
+      title: a Correlation SourceReference
+      description: A SourceReference to an asset within a Correlation
+      type: object
+      required:
+        - publisher
+        - provenance
+        - sourceId
+        - type
+      properties:
+        sourceId:
+          type: string
+        publisher:
+          $ref: '#/components/schemas/Publisher'
+        provenance:
+          $ref: '#/components/schemas/Provenance'
+        type:
+          $ref: '#/components/schemas/ReferenceType'
+    ReferenceType:
+      type: string
+      enum:
+        - Episode
+        - Clip
     AcceptedResponse:
       title: Accepted write operation response
       type: object
