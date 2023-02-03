@@ -741,7 +741,7 @@ type Show {
   "The id of the show in the source system. It is unique in the source system, but not globally."
   sourceId: String!
   "The title or name given to the show."
-  title: Text!
+  title: Text
 }
 
 "A page containing shows matching the query filters."
