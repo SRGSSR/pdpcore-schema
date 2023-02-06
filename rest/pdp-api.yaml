@@ -353,6 +353,13 @@ components:
       enum:
         - Episode
         - Clip
+    CreatedResponse:
+      title: a CreatedResponse
+      description: A CreatedResponse which contains the pdp id of the persisted object
+      type: object
+      properties:
+        id:
+          type: string
     AcceptedResponse:
       title: Accepted write operation response
       type: object
