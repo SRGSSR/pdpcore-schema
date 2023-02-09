@@ -1095,6 +1095,7 @@ enum Publisher {
   RTS
   SRF
   SWI
+  SwissTXT
   Unknown
 }
 

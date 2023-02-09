@@ -14,6 +14,7 @@ protocol Publisher {
         PZBundeshaus,
         NZZ,
         AP,
+        SwissTXT,
         Unknown
     } = Unknown;
 

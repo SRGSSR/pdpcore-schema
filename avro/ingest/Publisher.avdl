@@ -13,7 +13,8 @@ protocol Publisher {
         SWI,
         PZBundeshaus,
         NZZ,
-        AP
+        AP,
+        SwissTXT
     }
 
 }

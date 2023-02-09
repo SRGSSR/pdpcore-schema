@@ -390,6 +390,7 @@ components:
         - PZBundeshaus
         - NZZ
         - AP
+        - SwissTXT
     ConfidentialityLevel:
       type: string
       enum:
