@@ -11,6 +11,13 @@ directive @deprecated(reason: String) on QUERY | MUTATION | SUBSCRIPTION | FIELD
 "Marks the definition as deprecated with an optional reason."
 directive @deprecated(reason: String) on QUERY | MUTATION | SUBSCRIPTION | FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
 
+"""
+Marks the definition as experimental with an optional reason.
+Experimental API must not be used for production use as it can change
+or be removed at any time without notice.
+"""
+directive @experimental(reason: String) on QUERY | MUTATION | SUBSCRIPTION
+
 "Directs the executor to include this field or fragment only when the `if` argument is true"
 directive @include(
     "Included when true."
@@ -615,6 +622,20 @@ type Query {
     "The number of episodes per page."
     first: Int! @constraint(max : 500) @constraint(min : 1)
   ): EpisodePage!
+  """
+  **Experimental, do not use in production!**
+  This query might be changed or removed at any time without notice.
+  
+  Full text search for articles.
+  """
+  searchArticles(
+    "The number of articles."
+    first: Int = 10 @constraint(max : 500) @constraint(min : 1),
+    "The language of the words used in the search query."
+    language: TextSearchLanguage = none,
+    "The search query."
+    query: String!
+  ): [Article]! @experimental
   "Returns the show with the provided PDP id or null if it does not exist."
   show(
     "A PDP id of a show."
@@ -1105,6 +1126,26 @@ enum SortOrder {
   ASC
   "Sort descending, nulls last."
   DESC
+}
+
+"The supported languages for a full text search."
+enum TextSearchLanguage {
+  da
+  de
+  en
+  es
+  fi
+  fr
+  hu
+  it
+  nb
+  nl
+  none
+  pt
+  ro
+  ru
+  sv
+  tr
 }
 
 "Scalar for BigDecimal"
