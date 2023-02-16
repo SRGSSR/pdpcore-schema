@@ -45,23 +45,6 @@ interface Agent {
 "An asset that can be the source of a clip."
 union ClipSource = Clip | Episode
 
-"""
-An alternative identifier holds an identifier that is used in a system outside
-of PDP, usually the source system. For records having both sourceId and 
-alternativeIdentifiers fields, the PDP automatically adds an entry with the
-sourceId to the alternativeIdentifiers when ingesting the record.
-"""
-type AlternativeIdentifier {
-  "The source system publishing the metadata."
-  provenance: Provenance!
-  "The business unit or external organisation publishing the metadata."
-  publisher: Publisher!
-  "The type of the alternative identifier. The identifier of the source system has the type 'sourceId'."
-  type: String!
-  "The alternative identifier."
-  value: String!
-}
-
 "An article is a website (CMS) article."
 type Article {
   """
@@ -687,24 +670,22 @@ schedule. The section "Schema Concepts: Show Schedules" in the PDP API
 documentation goes into more details and provides a few example schedules.
 """
 type Schedule {
-  "Alternative identifiers from the source system."
-  alternativeIdentifiers: [AlternativeIdentifier]!
   "Defines the day(s) of the week on which episodes of the show are scheduled."
-  byDay: [DayOfWeek]!
+  byDay: [DayOfWeek]
   "Defines the month(s) of the year on which episodes of the show are scheduled."
-  byMonth: [Month]!
+  byMonth: [Month]
   """
   Defines the day(s) of the month on which episodes of the show are scheduled.
   Specified as an Integer between 1-31.
   """
-  byMonthDay: [Int]!
+  byMonthDay: [Int]
   """
   Defines the week(s) of the month on which episodes of the show are scheduled.
   Specified as an Integer between 1-5. For clarity, byMonthWeek is best used in
   conjunction with byDay to indicate concepts like the first and third Mondays of
   a month.
   """
-  byMonthWeek: [Int]!
+  byMonthWeek: [Int]
   "The duration of a single episode in the show in milliseconds."
   duration: BigInteger
   "The end date and time of an episode of the show. (ISO-8601)"
@@ -718,7 +699,7 @@ type Schedule {
   should be excluded from the schedule. This allows a whole day to be excluded
   from the schedule without having to itemise every scheduled event. (ISO-8601)
   """
-  exceptions: [DateTime]!
+  exceptions: [DateTime]
   "Set to true when the schedule contains first showings, set to false when it contains repeat showings."
   isFirstShowing: Boolean!
   publicationChannel: Channel
@@ -728,7 +709,7 @@ type Schedule {
   """
   repeatFrequency: Frequency
   "The start date and time of an episode of the show. (ISO-8601)"
-  start: DateTime!
+  start: DateTime
 }
 
 """
@@ -748,7 +729,7 @@ type Show {
   "A general description of a show."
   description: Text
   "The genres this show belongs to."
-  genres: [Genre]!
+  genres: [Genre]
   "The PDP id of the show."
   id: String!
   "The source system publishing the metadata."
@@ -756,9 +737,9 @@ type Show {
   "The business unit or external organisation publishing the metadata."
   publisher: Publisher!
   "Pictures associated with the show."
-  relatedPictures: [Picture]!
+  relatedPictures: [Picture]
   "A schedule defines a repeating time period used to describe a regularly occurring planned publication."
-  schedules: [Schedule]!
+  schedules: [Schedule]
   "The id of the show in the source system. It is unique in the source system, but not globally."
   sourceId: String!
   "The title or name given to the show."
