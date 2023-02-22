@@ -8,9 +8,6 @@ directive @constraint(format: String, max: BigInteger, maxFloat: BigDecimal, max
 "Marks the definition as deprecated with an optional reason."
 directive @deprecated(reason: String) on QUERY | MUTATION | SUBSCRIPTION | FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
 
-"Marks the definition as deprecated with an optional reason."
-directive @deprecated(reason: String) on QUERY | MUTATION | SUBSCRIPTION | FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
-
 """
 Marks the definition as experimental with an optional reason.
 Experimental API must not be used for production use as it can change
