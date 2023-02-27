@@ -78,10 +78,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AcceptedResponse'
+                $ref: '#/components/schemas/CreatedResponse'
         '400':
-          description: Invalid input
-        '422':
           description: Invalid input
       security:
         - azure_auth:
