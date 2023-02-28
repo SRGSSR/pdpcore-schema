@@ -119,7 +119,6 @@ components:
             'write:all': 'https://graphql-api.pdp.production.srgssr.ch/api/.default'
   schemas:
     Episode:
-      title: an Episode
       description: 'An "episode" is a longer and clearly identifiable editorial broadcast which can consist of several individual contributions ("clips") (e.g.: Tagesschau of 20.04.2020) or has a thematically coherent context (e.g.: DOK film about the Generalsteik 1918).'
       type: object
       required:
@@ -245,8 +244,7 @@ components:
               - $ref: '#/components/schemas/EditorialGroupingSourceReference'
               - $ref: '#/components/schemas/EditorialGroupingIdReference'
     Article:
-      title: an Article
-      description: A text content article
+      description: 'A CMS website article.'
       type: object
       required:
         - sourceId
@@ -309,8 +307,7 @@ components:
         isLongForm:
           type: boolean
     Correlation:
-      title: a Correlation
-      description: A Correlation between two assets
+      description: 'A Correlation between two assets.'
       type: object
       required:
         - publisher
@@ -329,8 +326,7 @@ components:
         right:
           $ref: '#/components/schemas/SourceReference'
     SourceReference:
-      title: a Correlation SourceReference
-      description: A SourceReference to an asset within a Correlation
+      description: 'A SourceReference to an asset within a Correlation.'
       type: object
       required:
         - publisher
@@ -352,14 +348,13 @@ components:
         - Episode
         - Clip
     CreatedResponse:
-      title: a CreatedResponse
       description: A CreatedResponse which contains the pdp id of the persisted object
       type: object
       properties:
         id:
           type: string
     AcceptedResponse:
-      title: Accepted write operation response
+      description: Accepted write operation response
       type: object
       properties:
         id:
