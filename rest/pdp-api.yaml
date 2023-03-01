@@ -73,7 +73,7 @@ paths:
       summary: Upsert Correlation
       operationId: writeCorrelation
       responses:
-        '202':
+        '201':
           description: Accepted request
           content:
             application/json:
