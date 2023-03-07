@@ -403,6 +403,17 @@ components:
       properties:
         content:
           type: string
+        language:
+          $ref: '#/components/schemas/Language'
+    MultilingualText:
+      type: object
+      required:
+        - texts
+      properties:
+        texts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Text'
     Role:
       type: object
       required:
@@ -507,6 +518,52 @@ components:
       properties:
         name:
           $ref: '#/components/schemas/Text'
+
+    Image:
+      description: 'Describes visual material - such as logos, thumbnails or other visual elements - that belong to an asset.'
+      type: object
+      required:
+        - variants
+      properties:
+        title:
+          description: 'The title or name given to the image.'
+          $ref: '#/components/schemas/MultilingualText'
+        copyright:
+          description: 'Rights and restrictions associated to the image.'
+          type: string
+        usage:
+          description: 'The intended usage of the image, e.g. `TEASER` or `LOGO`.'
+          type: string
+        variants:
+          description: 'Variants of the image.'
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageVariant'
+
+    ImageVariant:
+      description: 'A variant of an image.'
+      type: object
+      required:
+        - url
+      properties:
+        usage:
+          description: 'The intended usage of the image variant.'
+          type: string
+        url:
+          description: 'The URL from where the image can be accessed.'
+          $ref: '#/components/schemas/URL'
+        width:
+          description: 'The width of the image in pixels.'
+          type: integer
+          format: int32
+        height:
+          description: 'The height of the image in pixels.'
+          type: integer
+          format: int32
+        aspectRatio:
+          description: 'The aspect ratio of the image, e.g. 16:9 or 4:3.'
+          $ref: '#/components/schemas/AspectRatio'
+
     Picture:
       type: object
       required:
