@@ -66,6 +66,27 @@ paths:
               $ref: '#/components/schemas/Channel'
         description: Channel payload
         required: true
+  /channels/{pdpId}:
+    delete:
+      tags:
+        - delete channel (not implemented yet - contract only)
+      summary: Delete channel by PDP Id
+      operationId: deleteChannel
+      parameters:
+        - name: pdpId
+          in: path
+          description: PDP Id of the channel that needs deleting
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Channel deleted
+        '404':
+          description: Not found
+      security:
+        - azure_auth:
+            - 'write:all'
   /episodes:
     post:
       tags:
