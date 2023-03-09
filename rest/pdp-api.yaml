@@ -4,7 +4,7 @@ info:
   description: REST API for SRG SSR's Publication Data Platform.
   version: v1
 servers:
-  - url: https://api.pdp.{environment}.srgssr.ch/v1
+  - url: https://api.pdp.{environment}.srgssr.ch/api
     variables:
       environment:
         default: production
@@ -12,9 +12,9 @@ servers:
           - dev
           - int
           - production
-externalDocs:
-  description: PDP Schema Documentation
-  url: 'https://api.pdp.production.srgssr.ch/docs-page.html#section-2'
+#externalDocs: ---> Wait until docs are up to date
+#  description: PDP Schema Documentation
+#  url: 'https://api.pdp.production.srgssr.ch/docs-page.html#section-2'
 paths:
   /articles:
     post:
@@ -49,7 +49,7 @@ paths:
       operationId: writeChannel
       responses:
         '201':
-          description: Accepted request
+          description: Channel created
           content:
             application/json:
               schema:
