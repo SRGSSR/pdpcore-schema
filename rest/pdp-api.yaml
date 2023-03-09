@@ -29,7 +29,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AcceptedResponse'
-        '422':
+        '400':
           description: Invalid input
       security:
         - azure_auth:
@@ -40,6 +40,31 @@ paths:
             schema:
               $ref: '#/components/schemas/Article'
         description: Article payload
+        required: true
+  /channels:
+    post:
+      tags:
+        - channel (not implemented yet - contract only)
+      summary: Upsert channel
+      operationId: writeChannel
+      responses:
+        '201':
+          description: Accepted request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedResponse'
+        '400':
+          description: Invalid input
+      security:
+        - azure_auth:
+            - 'write:all'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Channel'
+        description: Channel payload
         required: true
   /episodes:
     post:
@@ -118,6 +143,52 @@ components:
           scopes:
             'write:all': 'https://graphql-api.pdp.production.srgssr.ch/api/.default'
   schemas:
+
+    Channel:
+      description: 'A channel is a linear and non-linear broadcast vector for episodes, such as SRF1, RTSUn, RSI LA1.'
+      type: object
+      required:
+        - sourceId
+        - publisher
+        - provenance
+        - confidentialityLevel
+      properties:
+        publisher:
+          description: 'The business unit or external organisation publishing the metadata.'
+          allOf:
+            - $ref: '#/components/schemas/Publisher'
+        provenance:
+          description: 'The source system publishing the metadata.'
+          allOf:
+            - $ref: '#/components/schemas/Provenance'
+        sourceId:
+          description: 'The id of the show in the source system. It has to be unique in the source system, but not globally.'
+          type: string
+        confidentialityLevel:
+          description: 'In the context of the PDP, this field is used to indicate whether the data may be published publicly.'
+          allOf:
+            - $ref: '#/components/schemas/ConfidentialityLevel'
+        name:
+          description: 'The name of the channel.'
+          type: string
+        distributionVector:
+          description: 'Specifies the distribution vector of a channel.'
+          allOf:
+            - $ref: '#/components/schemas/DistributionVector'
+        relatedImages:
+          description: 'Images associated with the channel.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Image'
+
+    DistributionVector:
+      description: 'A method or platform used to distribute content to its intended audience.'
+      type: string
+      enum:
+        - TV
+        - Radio
+        - Online
+
     Episode:
       description: 'An "episode" is a longer and clearly identifiable editorial broadcast which can consist of several individual contributions ("clips") (e.g.: Tagesschau of 20.04.2020) or has a thematically coherent context (e.g.: DOK film about the Generalsteik 1918).'
       type: object
@@ -360,6 +431,7 @@ components:
         id:
           type: string
     Provenance:
+      description: 'The source system publishing the metadata.'
       type: string
       enum:
         - Archive
@@ -373,6 +445,7 @@ components:
         - WhatsOn
         - MOVEit
     Publisher:
+      description: 'The business unit or external organisation publishing the metadata. Please contact the PDP team if a publisher is missing.'
       type: string
       enum:
         - SRF
@@ -525,9 +598,11 @@ components:
       required:
         - variants
       properties:
-        title:
-          description: 'The title or name given to the image.'
-          $ref: '#/components/schemas/MultilingualText'
+        titles:
+          description: 'A list of localised titles given to the image.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Text'
         copyright:
           description: 'Rights and restrictions associated to the image.'
           type: string
@@ -550,7 +625,6 @@ components:
           description: 'The intended usage of the image variant.'
           type: string
         url:
-          description: 'The URL from where the image can be accessed.'
           $ref: '#/components/schemas/URL'
         width:
           description: 'The width of the image in pixels.'
@@ -561,7 +635,6 @@ components:
           type: integer
           format: int32
         aspectRatio:
-          description: 'The aspect ratio of the image, e.g. 16:9 or 4:3.'
           $ref: '#/components/schemas/AspectRatio'
 
     Picture:
@@ -613,11 +686,13 @@ components:
         name:
           type: string
     AspectRatio:
+      description: 'The aspect ratio of an image.'
       type: object
       required:
         - ratio
       properties:
         ratio:
+          description: 'The aspect ratio, e.g. 16:9 or 4:3.'
           type: string
     ArticleContent:
       type: object
@@ -950,7 +1025,6 @@ components:
           anyOf:
             - $ref: '#/components/schemas/ChannelSourceReference'
             - $ref: '#/components/schemas/ChannelIdReference'
-
     ChannelSourceReference:
       type: object
       required:
