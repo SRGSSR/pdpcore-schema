@@ -44,8 +44,8 @@ paths:
   /channels:
     post:
       tags:
-        - channel (not implemented yet - contract only)
-      summary: Upsert channel
+        - channel
+      summary: Upsert channel (contract only - not yet implemented)
       operationId: writeChannel
       responses:
         '201':
@@ -69,8 +69,8 @@ paths:
   /channels/{pdpId}:
     delete:
       tags:
-        - delete channel (not implemented yet - contract only)
-      summary: Delete channel by PDP Id
+        - channel
+      summary: Delete channel by PDP Id (contract only - not yet implemented)
       operationId: deleteChannel
       parameters:
         - name: pdpId
