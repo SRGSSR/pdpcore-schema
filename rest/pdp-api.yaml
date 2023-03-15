@@ -166,7 +166,7 @@ components:
   schemas:
 
     Channel:
-      description: 'A channel is a linear and non-linear broadcast vector for episodes, such as SRF1, RTSUn, RSI LA1.'
+      description: 'A channel is a linear and non-linear broadcast vector, such as SRF1, RTSUn, RSI LA1.'
       type: object
       required:
         - sourceId
@@ -183,7 +183,7 @@ components:
           allOf:
             - $ref: '#/components/schemas/Provenance'
         sourceId:
-          description: 'The id of the show in the source system. It has to be unique in the source system, but not globally.'
+          description: 'The id of the channel in the source system. It has to be unique in the source system, but not globally.'
           type: string
         confidentialityLevel:
           description: 'In the context of the PDP, this field is used to indicate whether the data may be published publicly.'
@@ -620,30 +620,37 @@ components:
         - variants
       properties:
         titles:
-          description: 'A list of localised titles given to the image.'
+          description: 'Titles for the image in potentially different languages.'
           type: array
           items:
             $ref: '#/components/schemas/Text'
         copyright:
-          description: 'Rights and restrictions associated to the image.'
+          description: 'The copyright holder of the image, e.g. "Keystone" or "Getty Images".'
           type: string
         usage:
-          description: 'The intended usage of the image, e.g. `TEASER` or `LOGO`.'
+          description: >
+            The intended usage of the image, e.g. `TEASER` or `LOGO`.
+            The source system should ensure the usage string remains the same 
+            over time so consumers can reliably use it to identify the image.
           type: string
         variants:
-          description: 'Variants of the image.'
+          description: 'Variants of the image, e.g. hi-res and low-res or with and without logo.'
           type: array
           items:
             $ref: '#/components/schemas/ImageVariant'
 
     ImageVariant:
-      description: 'A variant of an image.'
+      description: 'A variant of an image, e.g. hi-res and low-res or with and without logo.'
       type: object
       required:
         - url
       properties:
         usage:
-          description: 'The intended usage of the image variant.'
+          description: >
+            The intended usage of the image variant, e.g. different branding or
+            different resolutions.
+            The source system should ensure the usage string remains the same 
+            over time so consumers can reliably use it to identify the variant.
           type: string
         url:
           $ref: '#/components/schemas/URL'
