@@ -499,15 +499,6 @@ components:
           type: string
         language:
           $ref: '#/components/schemas/Language'
-    MultilingualText:
-      type: object
-      required:
-        - texts
-      properties:
-        texts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Text'
     Role:
       type: object
       required:
