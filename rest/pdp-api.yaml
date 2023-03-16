@@ -21,7 +21,7 @@ paths:
       tags:
         - article
       summary: Upsert article
-      operationId: writeArticle
+      operationId: postArticle
       responses:
         '202':
           description: Accepted request
@@ -46,7 +46,7 @@ paths:
       tags:
         - channel
       summary: Upsert channel (contract only - not yet implemented)
-      operationId: writeChannel
+      operationId: postChannel
       responses:
         '201':
           description: Channel created
@@ -92,7 +92,7 @@ paths:
       tags:
         - episode (alpha)
       summary: Upsert episode
-      operationId: writeEpisode
+      operationId: postEpisode
       responses:
         '202':
           description: Accepted request
@@ -117,7 +117,7 @@ paths:
       tags:
         - correlations
       summary: Upsert Correlation
-      operationId: writeCorrelation
+      operationId: postCorrelation
       responses:
         '201':
           description: Accepted request
