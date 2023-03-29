@@ -87,6 +87,33 @@ paths:
       security:
         - azure_auth:
             - 'write:all'
+
+  /shows:
+    post:
+      tags:
+        - show
+      summary: Upsert show (contract only - not yet implemented)
+      operationId: postShow
+      responses:
+        '201':
+          description: Show created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedResponse'
+        '400':
+          description: Invalid input
+      security:
+        - azure_auth:
+            - 'write:all'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Show'
+        description: Show payload
+        required: true
+
   /episodes:
     post:
       tags:
@@ -209,6 +236,172 @@ components:
         - TV
         - Radio
         - Online
+
+    Show:
+      description: >
+        A show is a broadcasting container to which a specific episode belongs
+        and which is used to group individual broadcasts. An example of a show
+        is "10 vor 10" or "Echo der Zeit".
+      type: object
+      required:
+        - sourceId
+        - publisher
+        - provenance
+        - confidentialityLevel
+      properties:
+        publisher:
+          description: 'The business unit or external organisation publishing the metadata.'
+          allOf:
+            - $ref: '#/components/schemas/Publisher'
+        provenance:
+          description: 'The source system publishing the metadata.'
+          allOf:
+            - $ref: '#/components/schemas/Provenance'
+        sourceId:
+          description: 'The id of the show in the source system. It has to be unique in the source system, but not globally.'
+          type: string
+        confidentialityLevel:
+          description: 'In the context of the PDP, this field is used to indicate whether the data may be published publicly.'
+          allOf:
+            - $ref: '#/components/schemas/ConfidentialityLevel'
+        titles:
+          description: 'The titles for the show in potentially different languages.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Text'
+        leads:
+          description: 'The brief descriptions of the show in potentially different languages.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Text'
+        descriptions:
+          description: 'The detailed descriptions of the show in potentially different languages.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Text'
+        websiteUrl:
+          description: 'The URL of the show''s website.'
+          $ref: '#/components/schemas/URL'
+        publications:
+          description: 'Defines the schedules describing the regularly occurring planned publications.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Publication'
+
+    Publication:
+      description: 'Describes how a show is planned to be published on a specific channel.'
+      type: object
+      properties:
+        channel:
+          description: 'The channel on which this show will be published.'
+          $ref: '#/components/schemas/ChannelReference'
+        schedules:
+          description: >
+            A schedule defines a repeating time period used to describe the
+            regularly occurring publications of a show's episodes.
+          type: array
+          items:
+            $ref: '#/components/schemas/Schedule'
+        exclusions:
+          description: >
+            Defines timestamps during which a scheduled episode will not take
+            place. The property allows to declare exceptions to the schedules.
+            The event that would have started at that specific date and time
+            should be excluded from the schedule. The timestamps have to be in
+            ISO 8601 format `YYYY-MM-DDThh:mm:ss.sss[Z|±hh:mm]`.
+          type: array
+          items:
+            type: string
+            format: date-time
+
+    Schedule:
+      description: 'A schedule defines a repeating time period used to describe a regularly occurring episode. With the provided metadata fields, you are able to define the schedule. The section "Schema Concepts: Show Schedules" in the PDP API documentation goes into more details and provides a few example schedules.'
+      type: object
+      properties:
+        byDay:
+          description: 'Defines the day(s) of the week on which episodes of the show are scheduled.'
+          type: string
+          enum:
+            - Monday
+            - Tuesday
+            - Wednesday
+            - Thursday
+            - Friday
+            - Saturday
+            - Sunday
+        byMonth:
+          description: 'Defines the month(s) of the year on which episodes of the show are scheduled.'
+          type: string
+          enum:
+            - January
+            - February
+            - March
+            - April
+            - May
+            - June
+            - July
+            - August
+            - September
+            - October
+            - November
+            - December
+        byMonthDay:
+          description: 'Defines the day(s) of the month on which episodes of the show are scheduled. Specified as an integer between 1-31.'
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 31
+        byMonthWeek:
+          description: 'Defines the week(s) of the month on which episodes of the show are scheduled. Specified as an integer between 1-5. For clarity, byMonthWeek is best used in conjunction with byDay to indicate concepts like the first and third Mondays of a month.'
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 5
+        duration:
+          description: 'The duration of a single episode in the show in milliseconds.'
+          type: integer
+          format: int64
+          minimum: 0
+        startDate:
+          description: 'The start date of an episode of the show in ISO 8601 calendar date format `YYYY-MM-DD`.'
+          type: string
+          format: date
+        startTime:
+          description: 'The start time of an episode of the show in ISO 8601 time format `hh:mm:ss.sss[Z|±hh:mm]`.'
+          type: string
+          pattern: '^\d{2}:\d{2}:\d{2}(\.\d{1,3})?(?:Z|[+-]\d{2}:\d{2})$'
+        end:
+          description: 'The start date and time of the last episode of the show in ISO 8601 format `YYYY-MM-DDThh:mm:ss.sss[Z|±hh:mm]`.'
+          type: string
+          format: date-time
+        repeatFrequency:
+          description: 'Defines the frequency at which episodes will occur according to a schedule. The intervals between episodes should be defined as a duration of time.'
+          type: object
+          properties:
+            months:
+              description: 'Repeat frequency in months. E.g. 1: every month, 2: every two months, etc.'
+              type: integer
+              format: int32
+              minimum: 1
+            weeks:
+              description: 'Repeat frequency in weeks. E.g. 1: every week, 2: every two weeks, etc.'
+              type: integer
+              format: int32
+              minimum: 1
+            days:
+              description: 'Repeat frequency in days. E.g. 1: every day, 2: every two days, etc.'
+              type: integer
+              format: int32
+              minimum: 1
+            minutes:
+              description: 'Repeat frequency in minutes. E.g. 30: every half hour, 60: every hour, 120: every two hours, etc.'
+              type: integer
+              format: int32
+              minimum: 1
+        isFirstShowing:
+          description: 'Set to true when the schedule contains first showings, set to false when it contains repeat showings.'
+          type: boolean
+          default: true
 
     Episode:
       description: 'An "episode" is a longer and clearly identifiable editorial broadcast which can consist of several individual contributions ("clips") (e.g.: Tagesschau of 20.04.2020) or has a thematically coherent context (e.g.: DOK film about the Generalsteik 1918).'
@@ -1044,6 +1237,19 @@ components:
           anyOf:
             - $ref: '#/components/schemas/ChannelSourceReference'
             - $ref: '#/components/schemas/ChannelIdReference'
+
+    ChannelReference:
+      description: 'A reference to a channel.'
+      oneOf:
+        - $ref: '#/components/schemas/ChannelSourceReference'
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              description: 'Must always be "source".'
+              type: string
+
     ChannelSourceReference:
       type: object
       required:
@@ -1057,6 +1263,7 @@ components:
           $ref: '#/components/schemas/Provenance'
         sourceId:
           type: string
+
     ChannelIdReference:
       type: object
       required:
@@ -1065,6 +1272,7 @@ components:
       properties:
         id:
           type: string
+
     EditorialGroupingSourceReference:
       type: object
       required:
