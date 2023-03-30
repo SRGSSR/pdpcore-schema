@@ -555,6 +555,20 @@ type Query {
     "A PDP id of an article."
     id: String!
   ): Article
+  """
+  **Experimental, do not use in production!**
+  This query might be changed or removed at any time without notice.
+  
+  Lists the available article genres.
+  """
+  articleGenres(
+    """
+    The returned list will contain only genres that match all filters. Only
+    filters with values affect the result. If you don't want to filter at all, then 
+    you can set this field to null.
+    """
+    filter: ArticleGenreFilterInput
+  ): [Genre]! @experimental
   "Returns articles matching the filter criteria."
   articles(
     "The cursor of the previous page. Set to null to get the first page."
@@ -1188,6 +1202,17 @@ input ArticleFilterInput {
   into account.
   """
   updated: TemporalFilterInput
+}
+
+"""
+The returned list will contain only article genres matching all filters.
+Only filters with values affect the result.
+"""
+input ArticleGenreFilterInput {
+  "Filters article genres depending on their provenance."
+  provenance: Provenance
+  "Filters article genres depending on their publisher."
+  publisher: Publisher
 }
 
 "Defines a field and order to be used for sorting the articles."
