@@ -19,5 +19,4 @@ protocol Picture {
         /** The aspect ratio of the picture, e.g. 16:9 or 4:3. */
         AspectRatio? aspectRatio = null;
     }
-
 }
