@@ -203,26 +203,22 @@ components:
       properties:
         publisher:
           description: 'The business unit or external organisation publishing the metadata.'
-          allOf:
-            - $ref: '#/components/schemas/Publisher'
+          $ref: '#/components/schemas/Publisher'
         provenance:
           description: 'The source system publishing the metadata.'
-          allOf:
-            - $ref: '#/components/schemas/Provenance'
+          $ref: '#/components/schemas/Provenance'
         sourceId:
           description: 'The id of the channel in the source system. It has to be unique in the source system, but not globally.'
           type: string
         confidentialityLevel:
           description: 'In the context of the PDP, this field is used to indicate whether the data may be published publicly.'
-          allOf:
-            - $ref: '#/components/schemas/ConfidentialityLevel'
+          $ref: '#/components/schemas/ConfidentialityLevel'
         name:
           description: 'The name of the channel.'
           type: string
         distributionVector:
           description: 'Specifies the distribution vector of a channel.'
-          allOf:
-            - $ref: '#/components/schemas/DistributionVector'
+          $ref: '#/components/schemas/DistributionVector'
         relatedImages:
           description: 'Images associated with the channel.'
           type: array
@@ -480,19 +476,13 @@ components:
         contributors:
           type: array
           items:
-            anyOf:
-              - $ref: '#/components/schemas/EpisodePerson'
-              - $ref: '#/components/schemas/EpisodeTeam'
-              - $ref: '#/components/schemas/EpisodeDepartment'
+            $ref: '#/components/schemas/Agent'
         topics:
           type: array
           items:
             $ref: '#/components/schemas/Topic'
         memberOf:
-          type: object
-          anyOf:
-            - $ref: '#/components/schemas/ShowSourceReference'
-            - $ref: '#/components/schemas/ShowIdReference'
+          $ref: '#/components/schemas/ShowReference'
         parts:
           type: array
           items:
@@ -500,9 +490,7 @@ components:
         relatedEpisodes:
           type: array
           items:
-            anyOf:
-              - $ref: '#/components/schemas/EpisodeSourceReference'
-              - $ref: '#/components/schemas/EpisodeIdReference'
+            $ref: '#/components/schemas/EpisodeReference'
         scheduledOn:
           type: array
           items:
@@ -525,9 +513,8 @@ components:
         includedIn:
           type: array
           items:
-            anyOf:
-              - $ref: '#/components/schemas/EditorialGroupingSourceReference'
-              - $ref: '#/components/schemas/EditorialGroupingIdReference'
+            $ref: '#/components/schemas/EditorialGroupingReference'
+
     Article:
       description: 'A CMS website article.'
       type: object
@@ -549,10 +536,7 @@ components:
         contributors:
           type: array
           items:
-            anyOf:
-              - $ref: '#/components/schemas/ArticlePerson'
-              - $ref: '#/components/schemas/ArticleTeam'
-              - $ref: '#/components/schemas/ArticleDepartment'
+            $ref: '#/components/schemas/Agent'
         genres:
           type: array
           items:
@@ -560,15 +544,15 @@ components:
         relatedEpisodes:
           type: array
           items:
-            $ref: '#/components/schemas/EpisodeSourceReference'
+            $ref: '#/components/schemas/EpisodeReference'
         relatedClips:
           type: array
           items:
-            $ref: '#/components/schemas/ClipSourceReference'
+            $ref: '#/components/schemas/ClipReference'
         relatedArticles:
           type: array
           items:
-            $ref: '#/components/schemas/ArticleSourceReference'
+            $ref: '#/components/schemas/ArticleReference'
         relatedPictures:
           type: array
           items:
@@ -591,6 +575,7 @@ components:
           $ref: '#/components/schemas/Text'
         isLongForm:
           type: boolean
+
     Correlation:
       description: 'A Correlation between two assets.'
       type: object
@@ -607,31 +592,63 @@ components:
         provenance:
           $ref: '#/components/schemas/Provenance'
         left:
-          $ref: '#/components/schemas/SourceReference'
+          $ref: '#/components/schemas/AssetReference'
         right:
-          $ref: '#/components/schemas/SourceReference'
-    SourceReference:
-      description: 'A SourceReference to an asset within a Correlation.'
-      type: object
+          $ref: '#/components/schemas/AssetReference'
+
+    AssetReference:
+      description: 'A reference to any asset.'
+      discriminator:
+        propertyName: type
+        mapping:
+          Source: '#/components/schemas/AssetSourceReference'
+          Id: '#/components/schemas/AssetIdReference'
       required:
-        - publisher
-        - provenance
-        - sourceId
         - type
       properties:
-        sourceId:
-          type: string
-        publisher:
-          $ref: '#/components/schemas/Publisher'
-        provenance:
-          $ref: '#/components/schemas/Provenance'
         type:
-          $ref: '#/components/schemas/ReferenceType'
-    ReferenceType:
+          $ref: '#/components/schemas/ReferenceDiscriminatorType'
+
+    AssetSourceReference:
+      description: 'A reference to an asset within a Correlation.'
+      allOf:
+        - $ref: '#/components/schemas/AssetReference'
+        - type: object
+          required:
+            - publisher
+            - provenance
+            - assetType
+            - sourceId
+          properties:
+            publisher:
+              $ref: '#/components/schemas/Publisher'
+            provenance:
+              $ref: '#/components/schemas/Provenance'
+            assetType:
+              $ref: '#/components/schemas/AssetReferenceType'
+            sourceId:
+              type: string
+
+    AssetIdReference:
+      description: 'A reference to an asset within a Correlation.'
+      allOf:
+        - $ref: '#/components/schemas/AssetReference'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:{type}:{sourceId}"'
+              type: string
+
+    AssetReferenceType:
       type: string
       enum:
+        - Channel
+        - Show
         - Episode
-        - Clip
+        - Article
+
     CreatedResponse:
       description: A CreatedResponse which contains the pdp id of the persisted object
       type: object
@@ -699,80 +716,49 @@ components:
       properties:
         name:
           type: string
-    AgentType:
+
+    Agent:
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          Person: '#/components/schemas/Person'
+          Team: '#/components/schemas/Team'
+          Department: '#/components/schemas/Department'
+      required:
+        - type
+        - name
+      properties:
+        type:
+          $ref: '#/components/schemas/AgentDiscriminatorType'
+        name:
+          type: string
+
+    AgentDiscriminatorType:
       type: string
       enum:
         - Person
         - Team
         - Department
-    ArticlePerson:
-      type: object
-      required:
-        - name
-        - type
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/Role'
-    ArticleTeam:
-      type: object
-      required:
-        - name
-        - type
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-    ArticleDepartment:
-      type: object
-      required:
-        - name
-        - type
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-    EpisodePerson:
-      type: object
-      required:
-        - name
-        - type
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/Role'
-    EpisodeTeam:
-      type: object
-      required:
-        - name
-        - type
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-    EpisodeDepartment:
-      type: object
-      required:
-        - name
-        - type
-      properties:
-        name:
-          type: string
-        type:
-          type: string
+
+    Person:
+      allOf:
+        - $ref: '#/components/schemas/Agent'
+        - type: object
+          properties:
+            roles:
+              type: array
+              items:
+                $ref: '#/components/schemas/Role'
+
+    Team:
+      allOf:
+        - $ref: '#/components/schemas/Agent'
+
+    Department:
+      allOf:
+        - $ref: '#/components/schemas/Agent'
+
     Genre:
       type: object
       required:
@@ -1183,48 +1169,8 @@ components:
     Long:
       type: integer
       format: int64
-    ShowSourceReference:
-      type: object
-      required:
-        - publisher
-        - provenance
-        - sourceId
-      properties:
-        publisher:
-          $ref: '#/components/schemas/Publisher'
-        provenance:
-          $ref: '#/components/schemas/Provenance'
-        sourceId:
-          type: string
-    ShowIdReference:
-      type: object
-      required:
-        - id
-      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:{type}:{sourceId}"'
-      properties:
-        id:
-          type: string
-    EpisodeSourceReference:
-      type: object
-      required:
-        - publisher
-        - provenance
-        - sourceId
-      properties:
-        publisher:
-          $ref: '#/components/schemas/Publisher'
-        provenance:
-          $ref: '#/components/schemas/Provenance'
-        sourceId:
-          type: string
-    EpisodeIdReference:
-      type: object
-      required:
-        - id
-      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:{type}:{sourceId}"'
-      properties:
-        id:
-          type: string
+
+
     PublicationEvent:
       type: object
       properties:
@@ -1233,106 +1179,250 @@ components:
         publicationEnd:
           $ref: '#/components/schemas/Date'
         publicationChannel:
-          type: object
-          anyOf:
-            - $ref: '#/components/schemas/ChannelSourceReference'
-            - $ref: '#/components/schemas/ChannelIdReference'
+          $ref: '#/components/schemas/ChannelReference'
+
+    ReferenceDiscriminatorType:
+      type: string
+      enum:
+        - Id
+        - Source
 
     ChannelReference:
       description: 'A reference to a channel.'
-      oneOf:
-        - $ref: '#/components/schemas/ChannelSourceReference'
-        - type: object
-          required:
-            - type
-          properties:
-            type:
-              description: 'Must always be "source".'
-              type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          Source: '#/components/schemas/ChannelSourceReference'
+          Id: '#/components/schemas/ChannelIdReference'
+      required:
+        - type
+      properties:
+        type:
+          $ref: '#/components/schemas/ReferenceDiscriminatorType'
 
     ChannelSourceReference:
-      type: object
-      required:
-        - publisher
-        - provenance
-        - sourceId
-      properties:
-        publisher:
-          $ref: '#/components/schemas/Publisher'
-        provenance:
-          $ref: '#/components/schemas/Provenance'
-        sourceId:
-          type: string
+      allOf:
+        - $ref: '#/components/schemas/ChannelReference'
+        - type: object
+          required:
+            - publisher
+            - provenance
+            - sourceId
+          properties:
+            publisher:
+              $ref: '#/components/schemas/Publisher'
+            provenance:
+              $ref: '#/components/schemas/Provenance'
+            sourceId:
+              type: string
 
     ChannelIdReference:
+      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:channel:{sourceId}"'
+      allOf:
+        - $ref: '#/components/schemas/ChannelReference'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+
+    ShowReference:
+      description: 'A reference to a show.'
+      discriminator:
+        propertyName: type
+        mapping:
+          Source: '#/components/schemas/ShowSourceReference'
+          Id: '#/components/schemas/ShowIdReference'
+      required:
+        - type
+      properties:
+        type:
+          $ref: '#/components/schemas/ReferenceDiscriminatorType'
+
+    ShowSourceReference:
+      allOf:
+        - $ref: '#/components/schemas/ShowReference'
+        - type: object
+          required:
+            - publisher
+            - provenance
+            - sourceId
+          properties:
+            publisher:
+              $ref: '#/components/schemas/Publisher'
+            provenance:
+              $ref: '#/components/schemas/Provenance'
+            sourceId:
+              type: string
+
+    ShowIdReference:
+      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:show:{sourceId}"'
+      allOf:
+        - $ref: '#/components/schemas/ShowReference'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+
+    EpisodeReference:
+      description: 'A reference to an episode.'
+      discriminator:
+        propertyName: type
+        mapping:
+          Source: '#/components/schemas/EpisodeSourceReference'
+          Id: '#/components/schemas/EpisodeIdReference'
+      required:
+        - type
+      properties:
+        type:
+          $ref: '#/components/schemas/ReferenceDiscriminatorType'
+
+    EpisodeSourceReference:
+      allOf:
+        - $ref: '#/components/schemas/EpisodeReference'
+        - type: object
+          required:
+            - publisher
+            - provenance
+            - sourceId
+          properties:
+            publisher:
+              $ref: '#/components/schemas/Publisher'
+            provenance:
+              $ref: '#/components/schemas/Provenance'
+            sourceId:
+              type: string
+
+    EpisodeIdReference:
+      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:episode:{sourceId}"'
+      allOf:
+        - $ref: '#/components/schemas/EpisodeReference'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+
+    EditorialGroupingReference:
       type: object
       required:
-        - id
-      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:{type}:{sourceId}"'
+        - type
+      discriminator:
+        propertyName: type
+        mapping:
+          Id: '#/components/schemas/EditorialGroupingIdReference'
+          Source: '#/components/schemas/EditorialGroupingSourceReference'
       properties:
-        id:
-          type: string
+        type:
+          $ref: '#/components/schemas/ReferenceDiscriminatorType'
 
     EditorialGroupingSourceReference:
-      type: object
-      required:
-        - publisher
-        - provenance
-        - sourceId
-      properties:
-        publisher:
-          $ref: '#/components/schemas/Publisher'
-        provenance:
-          $ref: '#/components/schemas/Provenance'
-        sourceId:
-          type: string
+      allOf:
+        - $ref: '#/components/schemas/EditorialGroupingReference'
+        - type: object
+          required:
+            - publisher
+            - provenance
+            - sourceId
+          properties:
+            publisher:
+              $ref: '#/components/schemas/Publisher'
+            provenance:
+              $ref: '#/components/schemas/Provenance'
+            sourceId:
+              type: string
+
     EditorialGroupingIdReference:
-      type: object
+      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:editorialgrouping:{sourceId}"'
+      allOf:
+        - $ref: '#/components/schemas/EditorialGroupingReference'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+
+    ClipReference:
+      description: 'A reference to a clip.'
+      discriminator:
+        propertyName: type
+        mapping:
+          Source: '#/components/schemas/ClipSourceReference'
+          Id: '#/components/schemas/ClipIdReference'
       required:
-        - id
-      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:{type}:{sourceId}"'
+        - type
       properties:
-        id:
-          type: string
+        type:
+          $ref: '#/components/schemas/ReferenceDiscriminatorType'
+
     ClipSourceReference:
-      type: object
-      required:
-        - publisher
-        - provenance
-        - sourceId
-      properties:
-        publisher:
-          $ref: '#/components/schemas/Publisher'
-        provenance:
-          $ref: '#/components/schemas/Provenance'
-        sourceId:
-          type: string
+      allOf:
+        - $ref: '#/components/schemas/ClipReference'
+        - type: object
+          required:
+            - publisher
+            - provenance
+            - sourceId
+          properties:
+            publisher:
+              $ref: '#/components/schemas/Publisher'
+            provenance:
+              $ref: '#/components/schemas/Provenance'
+            sourceId:
+              type: string
+
     ClipIdReference:
-      type: object
+      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:clip:{sourceId}"'
+      allOf:
+        - $ref: '#/components/schemas/ClipReference'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+
+    ArticleReference:
+      description: 'A reference to an article.'
+      discriminator:
+        propertyName: type
+        mapping:
+          Source: '#/components/schemas/ArticleSourceReference'
+          Id: '#/components/schemas/ArticleIdReference'
       required:
-        - id
-      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:{type}:{sourceId}"'
+        - type
       properties:
-        id:
-          type: string
+        type:
+          $ref: '#/components/schemas/ReferenceDiscriminatorType'
+
     ArticleSourceReference:
-      type: object
-      required:
-        - publisher
-        - provenance
-        - sourceId
-      properties:
-        publisher:
-          $ref: '#/components/schemas/Publisher'
-        provenance:
-          $ref: '#/components/schemas/Provenance'
-        sourceId:
-          type: string
+      allOf:
+        - $ref: '#/components/schemas/ArticleReference'
+        - type: object
+          required:
+            - publisher
+            - provenance
+            - sourceId
+          properties:
+            publisher:
+              $ref: '#/components/schemas/Publisher'
+            provenance:
+              $ref: '#/components/schemas/Provenance'
+            sourceId:
+              type: string
+
     ArticleIdReference:
-      type: object
-      required:
-        - id
-      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:{type}:{sourceId}"'
-      properties:
-        id:
-          type: string
+      allOf:
+        - $ref: '#/components/schemas/ArticleReference'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:article:{sourceId}"'
+              type: string
