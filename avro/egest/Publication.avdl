@@ -1,0 +1,19 @@
+@namespace("ch.srgssr.pdp.domain.egest")
+protocol Publication {
+
+    import idl "ChannelReference.avdl";
+    import idl "Schedule.avdl";
+
+
+    /** Describes how a show is planned to be published on a specific channel. */
+    record Publication {
+
+        /** A schedule defines a repeating time period used to describe the regularly occurring publications of a show's episodes.*/
+        union{null, array<Schedule>} schedules = null;
+        ChannelIdReference? channel = null;
+        /** Defines timestamps during which a scheduled episode will not take place. The property allows to declare exceptions to the schedules. The event that would have started at that specific date and time should be excluded from the schedule. The timestamps have to be in ISO 8601 format `YYYY-MM-DDThh:mm:ss.sss[Z|±hh:mm]`. */
+        union{null, array<string>} exclusions = null;
+
+    }
+
+}

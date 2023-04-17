@@ -246,20 +246,14 @@ components:
         - confidentialityLevel
       properties:
         publisher:
-          description: 'The business unit or external organisation publishing the metadata.'
-          allOf:
-            - $ref: '#/components/schemas/Publisher'
+          $ref: '#/components/schemas/Publisher'
         provenance:
-          description: 'The source system publishing the metadata.'
-          allOf:
-            - $ref: '#/components/schemas/Provenance'
+          $ref: '#/components/schemas/Provenance'
         sourceId:
           description: 'The id of the show in the source system. It has to be unique in the source system, but not globally.'
           type: string
         confidentialityLevel:
-          description: 'In the context of the PDP, this field is used to indicate whether the data may be published publicly.'
-          allOf:
-            - $ref: '#/components/schemas/ConfidentialityLevel'
+          $ref: '#/components/schemas/ConfidentialityLevel'
         titles:
           description: 'The titles for the show in potentially different languages.'
           type: array
@@ -316,43 +310,30 @@ components:
       properties:
         byDay:
           description: 'Defines the day(s) of the week on which episodes of the show are scheduled.'
-          type: string
-          enum:
-            - Monday
-            - Tuesday
-            - Wednesday
-            - Thursday
-            - Friday
-            - Saturday
-            - Sunday
+          type: array
+          items:
+            $ref: '#/components/schemas/DayOfWeek'
         byMonth:
           description: 'Defines the month(s) of the year on which episodes of the show are scheduled.'
-          type: string
-          enum:
-            - January
-            - February
-            - March
-            - April
-            - May
-            - June
-            - July
-            - August
-            - September
-            - October
-            - November
-            - December
+          type: array
+          items:
+            $ref: '#/components/schemas/Month'
         byMonthDay:
           description: 'Defines the day(s) of the month on which episodes of the show are scheduled. Specified as an integer between 1-31.'
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 31
+          type: array
+          items:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 31
         byMonthWeek:
           description: 'Defines the week(s) of the month on which episodes of the show are scheduled. Specified as an integer between 1-5. For clarity, byMonthWeek is best used in conjunction with byDay to indicate concepts like the first and third Mondays of a month.'
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 5
+          type: array
+          items:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 5
         duration:
           description: 'The duration of a single episode in the show in milliseconds.'
           type: integer
@@ -398,6 +379,35 @@ components:
           description: 'Set to true when the schedule contains first showings, set to false when it contains repeat showings.'
           type: boolean
           default: true
+
+    DayOfWeek:
+      description: 'Defines the day(s) of the week on which episodes of the show are scheduled.'
+      type: string
+      enum:
+        - Monday
+        - Tuesday
+        - Wednesday
+        - Thursday
+        - Friday
+        - Saturday
+        - Sunday
+
+    Month:
+      description: 'Defines the month(s) of the year on which episodes of the show are scheduled.'
+      type: string
+      enum:
+        - January
+        - February
+        - March
+        - April
+        - May
+        - June
+        - July
+        - August
+        - September
+        - October
+        - November
+        - December
 
     Episode:
       description: 'An "episode" is a longer and clearly identifiable editorial broadcast which can consist of several individual contributions ("clips") (e.g.: Tagesschau of 20.04.2020) or has a thematically coherent context (e.g.: DOK film about the Generalsteik 1918).'
