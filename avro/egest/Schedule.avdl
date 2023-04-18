@@ -18,11 +18,11 @@ protocol Schedule {
         /** The duration of a single episode in the show in milliseconds. */
         long? duration = null;
         /** The start date of an episode of the show in ISO 8601 calendar date format `YYYY-MM-DD`. */
-        string? startDate = null;
+        date? startDate = null;
         /** The start time of an episode of the show in ISO 8601 time format `hh:mm:ss.sss[Z|±hh:mm]`. */
-        string? startTime = null;
+        time_ms? startTime = null;
         /** The start date and time of the last episode of the show in ISO 8601 format `YYYY-MM-DDThh:mm:ss.sss[Z|±hh:mm]`. */
-        string? end = null;
+        timestamp_ms? end = null;
         /** The repeat frequency of the schedule. */
         ScheduleRepeatFrequency? repeatFrequency = null;
         /** Set to true when the schedule contains first showings, set to false when it contains repeat showings. */
