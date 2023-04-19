@@ -254,17 +254,17 @@ components:
           type: string
         confidentialityLevel:
           $ref: '#/components/schemas/ConfidentialityLevel'
-        titles:
+        title:
           description: 'The titles for the show in potentially different languages.'
           type: array
           items:
             $ref: '#/components/schemas/Text'
-        leads:
+        lead:
           description: 'The brief descriptions of the show in potentially different languages.'
           type: array
           items:
             $ref: '#/components/schemas/Text'
-        descriptions:
+        description:
           description: 'The detailed descriptions of the show in potentially different languages.'
           type: array
           items:

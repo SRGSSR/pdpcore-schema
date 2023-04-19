@@ -748,11 +748,11 @@ type Show {
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   "The detailed descriptions of the show in potentially different languages."
-  descriptions: [Text]
+  description: [Text]
   "The PDP id of the show."
   id: String!
   "The brief descriptions of the show in potentially different languages."
-  leads: [Text]
+  lead: [Text]
   "The source system publishing the metadata."
   provenance: Provenance!
   "Defines the schedules describing the regularly occurring planned publications."
@@ -762,7 +762,7 @@ type Show {
   "The id of the show in the source system. It is unique in the source system, but not globally."
   sourceId: String!
   "The titles for the show in potentially different languages."
-  titles: [Text]
+  title: [Text]
   "Website URL associated with the show."
   websiteUrl: URL
 }

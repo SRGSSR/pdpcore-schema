@@ -21,11 +21,11 @@ protocol Show {
         /** In the context of the PDP, this field is used to indicate whether the data may be published publicly. */
         ConfidentialityLevel confidentialityLevel;
         /** The titles for the show in potentially different languages. */
-        union{null, array<Text>} titles = null;
+        union{null, array<Text>} title = null;
         /** The brief descriptions of the show in potentially different languages. */
-        union{null, array<Text>} leads = null;
+        union{null, array<Text>} lead = null;
         /** The detailed descriptions of the show in potentially different languages. */
-        union{null, array<Text>} descriptions = null;
+        union{null, array<Text>} description = null;
         URL? websiteUrl = null;
         /** Defines the schedules describing the regularly occurring planned publications.*/
         union{null, array<Publication>} publications = null;
