@@ -247,6 +247,7 @@ components:
         - publisher
         - provenance
         - confidentialityLevel
+        - sourceData
       properties:
         publisher:
           $ref: '#/components/schemas/Publisher'
@@ -264,7 +265,7 @@ components:
             Optional correlations pointing to the origin of data.
           type: array
           items:
-            description: PDPId
+            description: PDP Id
             type: string
           default: []
 
