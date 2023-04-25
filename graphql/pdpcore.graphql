@@ -416,6 +416,8 @@ type ImageVariant {
   aspectRatio: AspectRatio
   "The height of the image in pixels."
   height: Int
+  "The URL of the image"
+  url: URL!
   "Rights and restrictions associated to the image."
   usage: String
   "The width of the image in pixels."
