@@ -41,6 +41,7 @@ paths:
               $ref: '#/components/schemas/Content'
         description: Article payload
         required: true
+  /contents/{pdpId}:
     delete:
       tags:
         - content
