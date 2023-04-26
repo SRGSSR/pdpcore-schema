@@ -283,6 +283,8 @@ components:
           type: string
         type:
           type: string
+          format: "[a-z_]"
+          minLength: 4
         version:
           description: "Source data version"
           type: string
