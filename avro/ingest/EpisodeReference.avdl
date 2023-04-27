@@ -5,8 +5,6 @@ protocol EpisodeReference {
     import idl "Publisher.avdl";
 
     record EpisodeSourceReference {
-        /** The business unit or external organisation publishing the metadata. */
-        Publisher publisher;
         /** The source system publishing the metadata. */
         Provenance provenance;
         /** The id of the episode in the source system. */

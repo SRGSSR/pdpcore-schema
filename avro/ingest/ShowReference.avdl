@@ -6,8 +6,6 @@ protocol ShowReference {
 
     /** A reference to a show. Use this when you do not have the show's PDP id. */
     record ShowSourceReference {
-        /** The business unit or external organisation publishing the metadata. */
-        Publisher publisher;
         /** The source system publishing the metadata. */
         Provenance provenance;
         /** The id of the show in the source system. */

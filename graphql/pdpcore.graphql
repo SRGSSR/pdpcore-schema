@@ -41,13 +41,8 @@ interface Agent {
 "An asset that can be the source of a clip."
 union ClipSource = Clip | Episode
 
-"An article is a website (CMS) article."
+"A CMS website article."
 type Article {
-  """
-  An abstract is a self-contained, brief, and meaningful description of an article. In contrast to the 
-  "description", the "abstract" is about a description of the asset that is as complete as possible.
-  """
-  abstract: Text
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   "The full text of the article."
@@ -58,13 +53,14 @@ type Article {
   genres: [Genre]
   "The PDP id of the article."
   id: String!
+  "The images of the article."
+  images: [Image]
   "This field indicates whether the article is longer or more extensive."
   isLongForm: Boolean
-  """
-  A kicker is a short topic information, which is usually placed above the actual title and
-  allows the user to see at a glance what an article is about.
-  """
-  kicker: Text
+  "A line of newspaper type set above a title usually in a different typeface and intended to provoke interest in, editorialize about, or provide orientation for the matter in the copy heads. The kicker may be available in different languages."
+  kicker: [Text]
+  "A lead is a self-contained, brief, and meaningful description of an article. The lead may be available in different languages."
+  lead: [Text]
   "The date and time (expressed as timestamp) at which the article was modified. (ISO-8601)"
   modifiedAt: DateTime
   "The source system publishing the metadata."
@@ -75,18 +71,12 @@ type Article {
   publisher: Publisher!
   "Other articles related to this article."
   relatedArticles: [Article]
-  "Clips related to the article."
-  relatedClips: [Clip]
-  "Episodes related to this article."
-  relatedEpisodes: [Episode]
-  "Pictures related to the article."
-  relatedPictures: [Picture]
   "The date and time (expressed as timestamp) at which the article was produced. (ISO-8601)"
   releasedAt: DateTime
   "The id of the article in the source system. It is unique in the source system, but not globally."
   sourceId: String!
-  "The title or name given to the article."
-  title: Text
+  "The title or headline of the article. The title may be available in different languages."
+  title: [Text]
   "The URL from where the article can be accessed."
   url: URL
 }
@@ -403,8 +393,8 @@ type Genre {
 type Image {
   "Copyright information"
   copyright: String
-  "The title or name given to the image."
-  titles: [Text]
+  "The title of the image in potentially different languages."
+  title: [Text]
   "Rights and restrictions associated to the image."
   usage: String
   "The various sizes available"
@@ -416,9 +406,9 @@ type ImageVariant {
   aspectRatio: AspectRatio
   "The height of the image in pixels."
   height: Int
-  "The URL of the image"
+  "The URL of the image."
   url: URL!
-  "Rights and restrictions associated to the image."
+  "The intended usage of the image variant. "
   usage: String
   "The width of the image in pixels."
   width: Int
@@ -1087,17 +1077,23 @@ enum MediaType {
 
 "The source system publishing the metadata."
 enum Provenance {
-  AIS
-  Archive
-  CMS
-  Digas
-  MOVEit
-  OfferPortfolio
-  OpenMedia
-  Play
-  PlaySuisse
+  AIS_SRF
+  CMS_SRF
+  CUE_RSI
+  Digas_SRF
+  Escenic_RSI
+  Faro_SRF
+  Gico_RTS
+  MOVEit_STXT
+  OfferPortfolio_SRF
+  OpenMedia_SRF
+  PlaySuisse_SRGSSR
+  Play_SRF
+  Siranau_RTS
   Unknown
-  WhatsOn
+  WhatsOn_RSI
+  WhatsOn_RTS
+  WhatsOn_SRF
 }
 
 "The publication state of an article."

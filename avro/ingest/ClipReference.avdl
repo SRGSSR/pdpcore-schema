@@ -6,8 +6,6 @@ protocol ClipReference {
 
     /** A reference to a clip. Use this when you do not have the clip's PDP id. */
     record ClipSourceReference {
-        /** The business unit or external organisation publishing the metadata. */
-        Publisher publisher;
         /** The source system publishing the metadata. */
         Provenance provenance;
         /** The id of the clip in the source system. */

@@ -6,8 +6,6 @@ protocol ChannelReference {
 
     /** A reference to a channel. Use this when you do not have the channel's PDP id. */
     record ChannelSourceReference {
-        /** The business unit or external organisation publishing the metadata. */
-        Publisher publisher;
         /** The source system publishing the metadata. */
         Provenance provenance;
         /** The id of the channel in the source system. */

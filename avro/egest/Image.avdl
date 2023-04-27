@@ -8,8 +8,8 @@ protocol image {
     record Image {
         /** The URL from where the image can be accessed. */
         array<ImageVariant> variants;
-        /** The title or name given to the image. */
-        union {null, array<Text>} titles = null;
+        /** The title of the image in potentially different languages. */
+        union{null, array<Text>} title = null;
         /** Rights and restrictions associated to the image. */
         string? copyright;
         /**The intended usage of the image, e.g. `TEASER` or `LOGO`. */

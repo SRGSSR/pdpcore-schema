@@ -694,6 +694,7 @@ components:
         - sourceId
         - publisher
         - provenance
+        - confidentialityLevel
       properties:
         sourceId:
           type: string
@@ -701,51 +702,68 @@ components:
           $ref: '#/components/schemas/Publisher'
         provenance:
           $ref: '#/components/schemas/Provenance'
-        title:
-          $ref: '#/components/schemas/Text'
         confidentialityLevel:
           $ref: '#/components/schemas/ConfidentialityLevel'
+        title:
+          description: |
+            The title of the article. The title may be available in different
+            languages.
+          type: array
+          items:
+            $ref: '#/components/schemas/Text'
+        kicker:
+          description: |
+            A line of newspaper type set above a title usually in a different
+            typeface and intended to provoke interest in, editorialize about, or
+            provide orientation for the matter in the copy heads. The kicker may
+            be available in different languages.
+          type: array
+          items:
+            $ref: '#/components/schemas/Text'
+        lead:
+          description: |
+            A lead is a self-contained, brief, and meaningful description of an
+            article. The lead may be available in different languages.
+          type: array
+          items:
+            $ref: '#/components/schemas/Text'
         contributors:
+          description: 'People, teams or departments who contributed to the article.'
           type: array
           items:
             $ref: '#/components/schemas/Agent'
         genres:
+          description: 'The genres this article belongs to.'
           type: array
           items:
             $ref: '#/components/schemas/Genre'
-        relatedEpisodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/EpisodeReference'
-        relatedClips:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClipReference'
         relatedArticles:
+          description: 'Other articles related to this article.'
           type: array
           items:
             $ref: '#/components/schemas/ArticleReference'
-        relatedPictures:
+        images:
+          description: 'The images of the article.'
           type: array
           items:
-            $ref: '#/components/schemas/Picture'
+            $ref: '#/components/schemas/Image'
         content:
           $ref: '#/components/schemas/ArticleContent'
         url:
+          description: 'The URL from where the article can be accessed.'
           $ref: '#/components/schemas/URL'
-        abstract:
-          $ref: '#/components/schemas/Text'
         modifiedAt:
+          description: 'The date and time at which the article was modified.'
           type: string
           format: date-time
         releasedAt:
+          description: 'The date and time at which the article was released.'
           type: string
           format: date-time
         publicationStatus:
           $ref: '#/components/schemas/PublicationStatus'
-        kicker:
-          $ref: '#/components/schemas/Text'
         isLongForm:
+          description: 'Indicates whether the article is longer or more extensive.'
           type: boolean
 
     Correlation:
@@ -787,13 +805,10 @@ components:
         - $ref: '#/components/schemas/AssetReference'
         - type: object
           required:
-            - publisher
             - provenance
             - assetType
             - sourceId
           properties:
-            publisher:
-              $ref: '#/components/schemas/Publisher'
             provenance:
               $ref: '#/components/schemas/Provenance'
             assetType:
@@ -843,16 +858,22 @@ components:
       description: 'The source system publishing the metadata.'
       type: string
       enum:
-        - Archive
-        - CMS
-        - Play
-        - PlaySuisse
-        - OfferPortfolio
-        - AIS
-        - Digas
-        - OpenMedia
-        - WhatsOn
-        - MOVEit
+        - Faro_SRF
+        - Siranau_RTS
+        - Gico_RTS
+        - CMS_SRF
+        - Escenic_RSI
+        - CUE_RSI
+        - Play_SRF
+        - PlaySuisse_SRGSSR
+        - OfferPortfolio_SRF
+        - AIS_SRF
+        - Digas_SRF
+        - OpenMedia_SRF
+        - WhatsOn_SRF
+        - WhatsOn_RTS
+        - WhatsOn_RSI
+        - MOVEit_STXT
     Publisher:
       description: 'The business unit or external organisation publishing the metadata. Please contact the PDP team if a publisher is missing.'
       type: string
@@ -867,6 +888,11 @@ components:
         - AP
         - SwissTXT
     ConfidentialityLevel:
+      description: |
+        The confidentiality level declares the sensitivity of the data and who
+        is allowed to access it.
+        - C1_Public: available to anyone
+        - C2_Internal: available to SRG SSR employees only
       type: string
       enum:
         - C1_Public
@@ -967,8 +993,8 @@ components:
       required:
         - variants
       properties:
-        titles:
-          description: 'Titles for the image in potentially different languages.'
+        title:
+          description: 'The title of the image in potentially different languages.'
           type: array
           items:
             $ref: '#/components/schemas/Text'
@@ -1071,6 +1097,7 @@ components:
           description: 'The aspect ratio, e.g. 16:9 or 4:3.'
           type: string
     ArticleContent:
+      description: 'The full text of the article.'
       type: object
       required:
         - text
@@ -1080,6 +1107,7 @@ components:
           items:
             type: string
     PublicationStatus:
+      description: 'Indicates if the website article has been published online.'
       type: string
       enum:
         - "Published"
@@ -1383,12 +1411,9 @@ components:
         - $ref: '#/components/schemas/ChannelReference'
         - type: object
           required:
-            - publisher
             - provenance
             - sourceId
           properties:
-            publisher:
-              $ref: '#/components/schemas/Publisher'
             provenance:
               $ref: '#/components/schemas/Provenance'
             sourceId:
@@ -1423,12 +1448,9 @@ components:
         - $ref: '#/components/schemas/ShowReference'
         - type: object
           required:
-            - publisher
             - provenance
             - sourceId
           properties:
-            publisher:
-              $ref: '#/components/schemas/Publisher'
             provenance:
               $ref: '#/components/schemas/Provenance'
             sourceId:
@@ -1463,12 +1485,9 @@ components:
         - $ref: '#/components/schemas/EpisodeReference'
         - type: object
           required:
-            - publisher
             - provenance
             - sourceId
           properties:
-            publisher:
-              $ref: '#/components/schemas/Publisher'
             provenance:
               $ref: '#/components/schemas/Provenance'
             sourceId:
@@ -1503,12 +1522,9 @@ components:
         - $ref: '#/components/schemas/EditorialGroupingReference'
         - type: object
           required:
-            - publisher
             - provenance
             - sourceId
           properties:
-            publisher:
-              $ref: '#/components/schemas/Publisher'
             provenance:
               $ref: '#/components/schemas/Provenance'
             sourceId:
@@ -1543,12 +1559,9 @@ components:
         - $ref: '#/components/schemas/ClipReference'
         - type: object
           required:
-            - publisher
             - provenance
             - sourceId
           properties:
-            publisher:
-              $ref: '#/components/schemas/Publisher'
             provenance:
               $ref: '#/components/schemas/Provenance'
             sourceId:
@@ -1583,12 +1596,9 @@ components:
         - $ref: '#/components/schemas/ArticleReference'
         - type: object
           required:
-            - publisher
             - provenance
             - sourceId
           properties:
-            publisher:
-              $ref: '#/components/schemas/Publisher'
             provenance:
               $ref: '#/components/schemas/Provenance'
             sourceId:

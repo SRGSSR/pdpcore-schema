@@ -6,8 +6,6 @@ protocol MessageKey {
 
     /** The schema for the key of a Kafka message in an ingest topic. */
     record MessageKey {
-        /** The business unit or external organisation publishing the metadata. */
-        Publisher publisher;
         /** The source system publishing the metadata. */
         Provenance provenance;
         /** The id of the asset in the source system. */

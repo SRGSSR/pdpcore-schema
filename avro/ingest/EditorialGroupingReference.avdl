@@ -6,8 +6,6 @@ protocol EditorialGroupingReference {
 
     /** A reference to an editorial grouping. Use this when you do not have the grouping's PDP id. */
     record EditorialGroupingSourceReference {
-        /** The business unit or external organisation publishing the metadata. */
-        Publisher publisher;
         /** The source system publishing the metadata. */
         Provenance provenance;
         /** The id of the editorial grouping in the source system. */

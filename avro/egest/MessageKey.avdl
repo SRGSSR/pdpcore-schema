@@ -8,8 +8,6 @@ protocol MessageKey {
     record MessageKey {
         /**The PDP urn*/
         string id;
-        /** The business unit or external organisation publishing the metadata. */
-        Publisher publisher;
         /** The source system publishing the metadata. */
         Provenance provenance;
         /** The id of the asset in the source system. */
