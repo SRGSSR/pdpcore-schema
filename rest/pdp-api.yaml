@@ -12,25 +12,35 @@ servers:
           - dev
           - int
           - production
-#externalDocs: ---> Wait until docs are up to date
-#  description: PDP Schema Documentation
-#  url: 'https://api.pdp.production.srgssr.ch/docs-page.html#section-2'
+externalDocs:
+  description: PDP Schema Documentation
+  url: 'https://api.pdp.production.srgssr.ch/docs-page.html#section-2'
 paths:
   /contents:
     post:
       tags:
         - content
-      summary: Upsert content (not yet implemented)
+      summary: 'Upsert content (not yet implemented)'
       operationId: postContent
       responses:
         '200':
-          description: Success Request
+          description: 'Success Request'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SuccessResponse'
         '400':
-          description: Invalid input
+          description: 'Invalid input'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: 'Server has a problem'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
       security:
         - azure_auth:
             - 'write:all'
@@ -41,24 +51,56 @@ paths:
               $ref: '#/components/schemas/Content'
         description: Article payload
         required: true
-  /contents/{pdpId}:
     delete:
       tags:
         - content
-      summary: Delete content by PDP Id (not yet implemented)
+      summary: 'Delete content by PDP Id (not yet implemented)'
       operationId: deleteContent
       parameters:
-        - name: pdpId
-          in: path
-          description: PDP Id of the channel that needs deleting
+        - name: sourceId
+          in: query
+          description: 'The id in the source system. It has to be unique in the source system, but not globally.'
           required: true
           schema:
             type: string
+        - name: provenance
+          in: query
+          description: 'The source system publishing the metadata.'
+          required: true
+          schema:
+            $ref: '#/components/schemas/Provenance'
+        - name: type
+          in: query
+          description: 'The source system type.'
+          required: true
+          schema:
+            $ref: '#/components/schemas/ContentEntityType'
       responses:
         '204':
           description: Channel deleted
         '404':
           description: Not found
+      security:
+        - azure_auth:
+            - 'write:all'
+  /contents/{pdpId}:
+    delete:
+      tags:
+        - content
+      summary: 'Delete content by PDP Id (not yet implemented)'
+      operationId: deleteContent
+      parameters:
+        - name: pdpId
+          in: path
+          description: 'PDP Id of the channel that needs deleting'
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: 'Channel deleted'
+        '404':
+          description: 'Not found'
       security:
         - azure_auth:
             - 'write:all'
@@ -238,17 +280,38 @@ components:
             'write:all': 'https://graphql-api.pdp.production.srgssr.ch/api/.default'
   schemas:
 
+    ApiError:
+      type: object
+      required:
+        - status
+        - errors
+      properties:
+        status:
+          type: integer
+        errors:
+          type: array
+          items:
+            - type: string
+
+    ContentEntityType:
+      description: ''
+      type: string
+      pattern: "^[a-z]{4,20}$"
+
     Content:
       description: >
         Content is an envelope around the input
       type: object
       required:
+        - type
         - sourceId
         - publisher
         - provenance
         - confidentialityLevel
         - sourceData
       properties:
+        type:
+          $ref: '#/components/schemas/ContentEntityType'
         publisher:
           $ref: '#/components/schemas/Publisher'
         provenance:
@@ -260,14 +323,6 @@ components:
           $ref: '#/components/schemas/ConfidentialityLevel'
         sourceData:
           $ref: '#/components/schemas/SourceData'
-        correlations:
-          description: >
-            Optional correlations pointing to the origin of data.
-          type: array
-          items:
-            description: PDP Id
-            type: string
-          default: []
 
     SourceData:
       description:
@@ -281,22 +336,23 @@ components:
         data:
           description: String of source data
           type: string
-        type:
-          type: string
-          format: "[a-z_]"
-          minLength: 4
         version:
-          description: "Source data version"
-          type: string
+          $ref: '#/components/schemas/SourceDataVersion'
         mimeType:
           description: "Source data mimetype"
           type: string
           default: "application/json"
-        encoding:
-          description: >
-            Source data encoding. https://w3techs.com/technologies/overview/character_encoding
+
+    SourceDataVersion:
+      description: "Source data version"
+      type: object
+      required:
+        - version
+      properties:
+        version:
           type: string
-          default: "UTF-8"
+          minLength: 1
+          maxLength: 256
 
     Channel:
       description: 'A channel is a linear and non-linear broadcast vector, such as SRF1, RTSUn, RSI LA1.'
