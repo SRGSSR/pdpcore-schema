@@ -38,9 +38,6 @@ interface Agent {
   name: String!
 }
 
-"An asset that can be the source of a clip."
-union ClipSource = Clip | Episode
-
 "A CMS website article."
 type Article {
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
@@ -99,22 +96,6 @@ type AspectRatio {
   ratio: String!
 }
 
-"An audio recording format for a media resource."
-type AudioEncodingFormat {
-  "The name of the format."
-  name: String!
-}
-
-"An audio track is the soundtrack that belongs to a digital or analog media object."
-type AudioTrack {
-  "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
-  language: Language
-  "The name of the track."
-  name: String
-  "The track type of the audio track, e.g. \"Stereo\", \"Mono\", \"Dolby\". "
-  trackType: String
-}
-
 "A channel is a linear and non-linear broadcast vector for episodes, such as SRF1, RTSUn or PlaySuisse."
 type Channel {
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
@@ -141,224 +122,10 @@ type ChannelPage {
   edges: [Channel]!
 }
 
-"A clip is a single editorial (audiovisual) contribution. A clip can be part of an episode or stand alone."
-type Clip {
-  """
-  An abstract is a self-contained, brief, and meaningful description of a clip. In contrast to the 
-  "description", the "abstract" is about a description of the asset that is as complete as possible.
-  """
-  abstract: Text
-  " The date and time (expressed as timestamp) when the clip was archived. (ISO-8601)"
-  archivedAt: DateTime
-  "Defines the media type of the clip."
-  assetType: AssetType!
-  "Comments about the clip from the source system (not from a user). "
-  comments: [Comment]
-  "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
-  confidentialityLevel: ConfidentialityLevel!
-  "People, teams or departments who contributed to the clip."
-  contributors: [Agent]
-  "A general description of the clip."
-  description: Text
-  "The URL from where the article can be accessed."
-  distributionType: DistributionType
-  "The duration of the clip in milliseconds."
-  duration: BigInteger
-  "End point relative to the episode's start in milliseconds."
-  end: BigInteger
-  "The genres this clip belongs to."
-  genres: [Genre]
-  "The PDP id of the clip."
-  id: String!
-  "Media resources (digital files or physical medias) instantiating the clip."
-  instances: [MediaResource]
-  "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
-  language: Language
-  "Used to further specify the audiovisual asset type."
-  mediaType: MediaType!
-  "The date and time (expressed as timestamp) at which the clip was modified. (ISO-8601)"
-  modifiedAt: DateTime
-  "A \"Part\" is used to describe and subdivide the clip in more detail. A clip is an intellectual unit which is published. A \"Part\", on the other hand, is (rather) a potentially independent selection (for content indexing and/or internal purposes) and is correspondingly less relevant for media consumers."
-  parts: [Part]
-  "The position of the clip in an ordered group (e.g. an episode)."
-  position: Int
-  "The date and time (expressed as timestamp) at which the clip was produced. (ISO-8601)"
-  producedAt: DateTime
-  "This field indicates what type of production (e.g.: in-house production, third-party production) is involved."
-  productionTypes: [ProductionType]
-  "The source system publishing the metadata."
-  provenance: Provenance!
-  "The business unit or external organisation publishing the metadata."
-  publisher: Publisher!
-  "The events, real or fictional, covered by the clip."
-  relatedEvents: [Event]
-  "The locations, real or fictional, covered by the clip."
-  relatedLocations: [Location]
-  "Pictures related to the clip."
-  relatedPictures: [Picture]
-  "Rights and restrictions associated to the clip."
-  rights: [Rights]
-  "The id of the clip in the source system. It is unique in the source system, but not globally."
-  sourceId: String!
-  "Start point relative to the episode's start in milliseconds."
-  start: BigInteger
-  "The title or name given to the clip."
-  title: Text
-  "The topic(s) addressed by the clip."
-  topics: [Topic]
-  "The URL from where the article can be accessed."
-  url: URL
-}
-
-"A colour space of a media resource."
-type ColourSpace {
-  "The name of the color space."
-  name: String!
-}
-
-"A comment about an asset from the source system. Attention: these are not user comments!"
-type Comment {
-  "The text of the comment."
-  text: String!
-}
-
 "A department describes an organizational unit in the form of a department that is responsible for the editorial creation process of an audiovisual object. An example of an organizational unit is \"Culture\" or \"Sports\"."
 type Department implements Agent {
   "The name of the department."
   name: String!
-}
-
-"""
-An EditorialGrouping is defined as a marketing tool to promote selected
-content to one or several audiences on a specific platform.
-"""
-type EditorialGrouping {
-  "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
-  confidentialityLevel: ConfidentialityLevel!
-  "The PDP id of the editorial grouping."
-  id: String!
-  "The source system publishing the metadata."
-  provenance: Provenance!
-  "The business unit or external organisation publishing the metadata."
-  publisher: Publisher!
-  "The id of the channel in the editorial grouping system. It is unique in the source system, but not globally."
-  sourceId: String!
-  "The title or name given to the editorial grouping."
-  title: Text
-  "This fields indicates the type of the editorial grouping."
-  type: EditorialGroupingType!
-}
-
-"""
-An episode is a longer and clearly identifiable editorial broadcast which
-can consist of several individual contributions ("clips") (e.g.: Tagesschau of 
-20.04.2020) or has a thematically coherent context (e.g.: DOK film about the
-Generalsteik 1918).
-"""
-type Episode {
-  """
-  An abstract is a self-contained, brief, and meaningful description of
-  an episode. In contrast to the "description", the "abstract" is about a
-  description of the asset that is as complete as possible.
-  """
-  abstract: Text
-  "The date and time (expressed as timestamp) when the episode was archived. (ISO-8601)"
-  archivedAt: DateTime
-  assetType: AssetType!
-  """
-  The date and time (expressed as timestamp) when the episode was first
-  broadcast publicly on television, radio or via streaming. (ISO-8601)
-  """
-  broadcastAt: DateTime
-  "Comments about the episode from the source system (not from a user)."
-  comments: [Comment]
-  "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
-  confidentialityLevel: ConfidentialityLevel!
-  "People, teams or departments who contributed to the episode."
-  contributors: [Agent]
-  "A general description of an episode."
-  description: Text
-  "Specifies the distribution type of the episode."
-  distributionType: DistributionType
-  "The duration of the episode in milliseconds."
-  duration: BigInteger
-  "The episode number in a season."
-  episodeNumberInSeason: Int
-  "The genres this episode belongs to."
-  genres: [Genre]
-  "The PDP id of the episode."
-  id: String!
-  """
-  An EditorialGrouping is defined as a marketing tool to promote
-  selected content to one or several audiences on a specific platform.
-  """
-  includedIn: [EditorialGrouping]
-  "Media resources (digital files or physical medias) instantiating the episode."
-  instances: [MediaResource]
-  "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
-  language: Language
-  "The broadcasting container to which a specific episode belongs."
-  memberOf: Show
-  "The date and time (expressed as timestamp) at which the episode was modified. (ISO-8601)"
-  modifiedAt: DateTime
-  """
-  A part is used to describe and subdivide individual contributions 
-  ("Clip") or episodes (\"Episode\") in more detail. A clip is an intellectual
-  unit which is published. A part, on the other hand, is (rather) a potentially
-  independent selection (for content indexing and/or internal purposes) and is
-  correspondingly less relevant for media consumers.
-  """
-  parts: [Part]
-  "The position of the episode in an ordered group (e.g. a show)."
-  position: Int
-  "The date and time (expressed as timestamp) when the episode was produced. (ISO-8601)"
-  producedAt: DateTime
-  "This field indicates what type of production (e.g.: in-house production, third-party production) is involved."
-  productionTypes: [ProductionType]
-  "The source system publishing the metadata."
-  provenance: Provenance!
-  "The business unit or external organisation publishing the metadata."
-  publisher: Publisher!
-  """
-  Other episodes related to this episode. Use this field if you have
-  multiple distribution-versions (like VOD and HbbTV) of the same episode in your
-  source system.
-  """
-  relatedEpisodes: [Episode]
-  "The events, real or fictional, covered by the episode."
-  relatedEvents: [Event]
-  "The locations, real or fictional, covered by the episode."
-  relatedLocations: [Location]
-  "Pictures related to the episode."
-  relatedPictures: [Picture]
-  "Rights and restrictions associated to the episode."
-  rights: [Rights]
-  "Specific publication events of the episode, either in the future or the past."
-  scheduledOn: [PublicationEvent]
-  "Position of the season within an ordered group of seasons."
-  seasonNumber: Int
-  "The id of the episode in the source system. It is unique in the source system, but not globally."
-  sourceId: String!
-  "A short piece of text used to illustrate a thought or dramatic effect."
-  tagline: Text
-  "The title or name given to the episode."
-  title: Text
-  "The topic(s) addressed by the episode."
-  topics: [Topic]
-  "The URL from where the episode can be accessed, e.g. the Play Suisse URL."
-  url: URL
-}
-
-"A page containing episodes matching the query filters."
-type EpisodePage {
-  cursor: String
-  edges: [Episode]!
-}
-
-"An event, real or fictional, covered by an asset."
-type Event {
-  "The name of the event, e.g. \"1. August celebration\" or \"Fête des vignerons 2019\"."
-  name: Text!
 }
 
 """
@@ -397,74 +164,6 @@ type ImageVariant {
   width: Int
 }
 
-"A geographical location, real or fictional, covered by an episode, clip or article."
-type Location {
-  "The name of the location, e.g. \"Berne\" or \"Narnia\"."
-  name: Text!
-}
-
-"A topic addressed by an episode, clip or article."
-type MediaResource {
-  "The aspect ratio of a video-asset, e.g. 16:9 or 4:3."
-  aspectRatio: AspectRatio
-  "The audio encoding format of the media resource."
-  audioEncodingFormat: AudioEncodingFormat
-  "Comments about the media resource from the source system (not from a user). "
-  audioTracks: [AudioTrack]
-  "The colour space of the media resource."
-  colourSpace: ColourSpace
-  "Comments about the media resource from the source system (not from a user). "
-  comments: [Comment]
-  "End point relative to the episode's or clip's start in milliseconds."
-  end: BigInteger
-  "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
-  language: Language
-  "Whether the media resource is digital or physical."
-  mediaResourceType: MediaResourceType
-  "The medium on which the media resource is stored."
-  medium: Medium
-  "The date and time (expressed as timestamp) at which the media resource was migrated. (ISO-8601)"
-  migratedAt: DateTime
-  "The date and time (expressed as timestamp) at which the media resource was modified. (ISO-8601)"
-  modifiedAt: DateTime
-  "The date and time (expressed as timestamp) at which the media resource was produced. (ISO-8601)"
-  producedAt: DateTime
-  "Start point relative to the episode's or clip's start in milliseconds."
-  start: BigInteger
-  "The URL from where the media resource can be accessed."
-  url: URL
-  "The video encoding format of the media resource."
-  videoEncodingFormat: VideoEncodingFormat
-}
-
-"A medium on which a media resource is stored."
-type Medium {
-  "The name of the medium, e.g. \"8mm film\" or \"mpeg file\"."
-  name: String!
-}
-
-"A part is used to describe and subdivide individual contributions (\"Clip\") or episodes (\"Episode\") in more detail. A clip is an intellectual unit which is published. A part, on the other hand, is (rather) a potentially independent selection (for content indexing and/or internal purposes) and is correspondingly less relevant for media consumers."
-type Part {
-  "The date and time (expressed as timestamp) when the part was archived. (ISO-8601)"
-  archivedAt: DateTime
-  "A general description of the part."
-  description: Text
-  "The duration of the part in milliseconds."
-  duration: BigInteger
-  "End point relative to the episode's or clip's start in milliseconds."
-  end: BigInteger
-  "The date and time (expressed as timestamp) at which the part was modified. (ISO-8601)"
-  modifiedAt: DateTime
-  "The events, real or fictional, covered by the part."
-  relatedEvents: [Event]
-  "The locations, real or fictional, covered by the part."
-  relatedLocations: [Location]
-  "Start point relative to the episode's or clip's start in milliseconds."
-  start: BigInteger
-  "The name of the topic."
-  title: Text
-}
-
 "A person is a clearly identifiable human actor who is involved in the creation of an editorial object."
 type Person implements Agent {
   "The full name of the person."
@@ -473,50 +172,12 @@ type Person implements Agent {
   roles: [Role]
 }
 
-"Describes visual material - such as logos, thumbnails or other visual elements - that belong to an asset."
-type Picture {
-  "The aspect ratio of the picture, e.g. 16:9 or 4:3."
-  aspectRatio: AspectRatio
-  "The height of the picture in pixels."
-  height: Int
-  "Rights and restrictions associated to the picture."
-  rights: [Rights]
-  "The title or name given to the picture."
-  title: Text
-  "The URL from where the picture can be accessed."
-  url: URL!
-  "The width of the picture in pixels."
-  width: Int
-}
-
-"The type of the production."
-type ProductionType {
-  "The name of the production type, e.g. \"in-house production\", \"third-party production\"."
-  type: String
-}
-
 "Describes how a show is planned to be published on a specific channel"
 type Publication {
   "The brief descriptions of the show in potentially different languages."
   exclusions: [String]
   "The brief descriptions of the show in potentially different languages."
   schedules: [Schedule]
-}
-
-"Describes a specific date and time in which an episode was or will be published."
-type PublicationEvent {
-  "The channel on which the episode was or will be published."
-  publicationChannel: Channel
-  """
-  The date and time (expressed as timestamp) at which the episode is
-  scheduled to end or after which content is no longer available, accessible or consumable. (ISO-8601)
-  """
-  publicationEnd: DateTime
-  """
-  The date and time (expressed as timestamp) at which the episode is
-  scheduled to start or when content is made available, can be accessed or consumed. (ISO-8601)
-  """
-  publicationStart: DateTime
 }
 
 "Query root"
@@ -573,24 +234,6 @@ type Query {
     "The channels of channels per page."
     first: Int! @constraint(max : 500) @constraint(min : 1)
   ): ChannelPage!
-  "Returns the show with the provided PDP id or null if it does not exist."
-  episode(
-    "A PDP id of an episode."
-    id: String!
-  ): Episode
-  "Returns episodes matching the filter criteria."
-  episodes(
-    "The cursor of the previous page. Set to null to get the first page."
-    after: String,
-    """
-    The returned page will contain only episodes that match all filters. Only
-    filters with values affect the result. If you don't want to filter at all, then 
-    you can set this field to null.
-    """
-    filter: EpisodeFilterInput,
-    "The number of episodes per page."
-    first: Int! @constraint(max : 500) @constraint(min : 1)
-  ): EpisodePage!
   """
   **Experimental, do not use in production!**
   This query might be changed or removed at any time without notice.
@@ -623,24 +266,6 @@ type Query {
     "The number of shows per page."
     first: Int! @constraint(max : 500) @constraint(min : 1)
   ): ShowPage!
-}
-
-"Describes rights and restrictions associated with an asset."
-type Rights {
-  "The date and time (expressed as timestamp) from when the asset is available for public use. (ISO-8601)"
-  availableFrom: DateTime
-  "The date and time (expressed as timestamp) until when the asset is available for public use. (ISO-8601)"
-  availableTo: DateTime
-  "An agent (contact, person or organisation) having or managing the rights to an asset."
-  rightsHolder: RightsHolder
-  "Expresses usage rights."
-  usageRights: [String]
-}
-
-"An agent (contact, person or organisation) having or managing the rights to an asset."
-type RightsHolder {
-  "Name of the rights holder."
-  name: String!
 }
 
 "A role of a person in the context of an asset."
@@ -742,22 +367,10 @@ type Text {
   content: String!
 }
 
-"A topic addressed by an episode, clip or article."
-type Topic {
-  "The name of the topic."
-  name: Text!
-}
-
 "A Uniform Resource Locator referencing a resource."
 type URL {
   "The URL."
   url: String!
-}
-
-"An video recording format for a media resource."
-type VideoEncodingFormat {
-  "The name of the format."
-  name: String!
 }
 
 "Specifies the fields that can be used to sort articles."
@@ -765,13 +378,6 @@ enum ArticleSortField {
   modifiedAt
   releasedAt
   updatedAt
-}
-
-"Specifies the type of an episode or a clip."
-enum AssetType {
-  Audio
-  Unknown
-  Video
 }
 
 "A day of the week."
@@ -809,234 +415,10 @@ enum ConfidentialityLevel {
   Unknown
 }
 
-"Specifies the type of an episode or a clip."
-enum DistributionType {
-  AudioOnDemand
-  AudioPodcast
-  Broadcast
-  HbbTV
-  LiveStream
-  Unknown
-  VideoOnDemand
-  VideoPodcast
-}
-
 enum DistributionVector {
   Online
   Radio
   TV
-  Unknown
-}
-
-"If you need another editorial grouping type, please contact the PDP team."
-enum EditorialGroupingType {
-  Playlist
-  Swimlane
-  Unknown
-}
-
-enum Language {
-  Unknown
-  aa
-  ab
-  ae
-  af
-  ak
-  am
-  an
-  ar
-  as
-  av
-  ay
-  az
-  ba
-  be
-  bg
-  bi
-  bm
-  bn
-  bo
-  br
-  bs
-  ca
-  ce
-  ch
-  co
-  cr
-  cs
-  cu
-  cv
-  cy
-  da
-  de
-  dv
-  dz
-  ee
-  el
-  en
-  eo
-  es
-  et
-  eu
-  fa
-  ff
-  fi
-  fj
-  fo
-  fr
-  fy
-  ga
-  gd
-  gl
-  gn
-  gu
-  gv
-  ha
-  he
-  hi
-  ho
-  hr
-  ht
-  hu
-  hy
-  hz
-  ia
-  id
-  ie
-  ig
-  ii
-  ik
-  io
-  is
-  it
-  iu
-  ja
-  jv
-  ka
-  kg
-  ki
-  kj
-  kk
-  kl
-  km
-  kn
-  ko
-  kr
-  ks
-  ku
-  kv
-  kw
-  ky
-  la
-  lb
-  lg
-  li
-  ln
-  lo
-  lt
-  lu
-  lv
-  mg
-  mh
-  mi
-  mk
-  ml
-  mn
-  mr
-  ms
-  mt
-  my
-  na
-  nb
-  nd
-  ne
-  ng
-  nl
-  nn
-  no
-  nr
-  nv
-  ny
-  oc
-  oj
-  om
-  or
-  os
-  pa
-  pi
-  pl
-  ps
-  pt
-  qu
-  rm
-  rn
-  ro
-  ru
-  rw
-  sa
-  sc
-  sd
-  se
-  sg
-  si
-  sk
-  sl
-  sm
-  sn
-  so
-  sq
-  sr
-  ss
-  st
-  su
-  sv
-  sw
-  ta
-  te
-  tg
-  th
-  ti
-  tk
-  tl
-  tn
-  to
-  tr
-  ts
-  tt
-  tw
-  ty
-  ug
-  uk
-  ur
-  uz
-  ve
-  vi
-  vo
-  wa
-  wo
-  xh
-  yi
-  yo
-  za
-  zh
-  zu
-}
-
-"Specifies whether the media resource is digital or physical."
-enum MediaResourceType {
-  DigitalFile
-  PhysicalMedia
-  Unknown
-}
-
-"Used to further specify the audiovisual asset type."
-enum MediaType {
-  Broadcast
-  LiveStream
-  Movie
-  Podcast
-  Series
-  Trailer
   Unknown
 }
 
@@ -1185,45 +567,6 @@ input ChannelFilterInputInput {
   Filters channels depending on when they were updated. A channel counts as
   updated when either the source system changes its data or a relation to another
   asset is updated.
-  """
-  updated: TemporalFilterInput
-}
-
-input EpisodeFilterInput {
-  """
-  Filters episodes depending on when they were archived. Episodes 
-  without a value for this field will be excluded.
-  """
-  archived: TemporalFilterInput
-  """
-  Filters episodes depending on when they were broadcast. Episodes 
-  without a value for this field will be excluded.
-  """
-  broadcast: TemporalFilterInput
-  "Filters episodes that have an id or alternative identifier that match any of the provided identifiers."
-  identifiers: [String]
-  "Filters episodes depending on their show's id."
-  memberOf: String
-  """
-  Filters episodes depending on when they were modified in the source
-  system. Episodes without a value for this field will be excluded. Use the 
-  filter `updated` if you want a filter that includes all episodes.
-  """
-  modified: TemporalFilterInput
-  """
-  Filters episodes depending on when they were produced. Episodes 
-  without a value for this field will be excluded.
-  """
-  produced: TemporalFilterInput
-  "Filters episodes depending on their provenance."
-  provenance: Provenance
-  "Filters episodes depending on their publisher."
-  publisher: Publisher
-  """
-  Filters episodes depending on when they were updated. An episode
-  counts as updated when either the source system changes its data or a relation
-  to another asset is modified. Updates to related assets like the episode's show
-  or its editorial groupings are not taken into account.
   """
   updated: TemporalFilterInput
 }
