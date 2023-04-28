@@ -158,8 +158,6 @@ type Clip {
   confidentialityLevel: ConfidentialityLevel!
   "People, teams or departments who contributed to the clip."
   contributors: [Agent]
-  "The episode or clip from which this clip is derived."
-  derivedFrom: ClipSource
   "A general description of the clip."
   description: Text
   "The URL from where the article can be accessed."
@@ -172,11 +170,6 @@ type Clip {
   genres: [Genre]
   "The PDP id of the clip."
   id: String!
-  """
-  An EditorialGrouping is defined as a marketing tool to promote
-  selected content to one or several audiences on a specific platform.
-  """
-  includedIn: [EditorialGrouping]
   "Media resources (digital files or physical medias) instantiating the clip."
   instances: [MediaResource]
   "An ISO 639-1 two character language code, e.g. de, fr, it, rm."
@@ -185,8 +178,6 @@ type Clip {
   mediaType: MediaType!
   "The date and time (expressed as timestamp) at which the clip was modified. (ISO-8601)"
   modifiedAt: DateTime
-  "The episode this clip belongs to"
-  parentEpisode: Episode
   "A \"Part\" is used to describe and subdivide the clip in more detail. A clip is an intellectual unit which is published. A \"Part\", on the other hand, is (rather) a potentially independent selection (for content indexing and/or internal purposes) and is correspondingly less relevant for media consumers."
   parts: [Part]
   "The position of the clip in an ordered group (e.g. an episode)."
@@ -199,8 +190,6 @@ type Clip {
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
   publisher: Publisher!
-  "Other clips related to this clip."
-  relatedClips: [Clip]
   "The events, real or fictional, covered by the clip."
   relatedEvents: [Event]
   "The locations, real or fictional, covered by the clip."
@@ -219,12 +208,6 @@ type Clip {
   topics: [Topic]
   "The URL from where the article can be accessed."
   url: URL
-}
-
-"A page containing clips matching the query filters."
-type ClipPage {
-  cursor: String
-  edges: [Clip]!
 }
 
 "A colour space of a media resource."
@@ -590,24 +573,6 @@ type Query {
     "The channels of channels per page."
     first: Int! @constraint(max : 500) @constraint(min : 1)
   ): ChannelPage!
-  "Returns the clip with the provided PDP id or null if it does not exist."
-  clip(
-    "A PDP id of a clip."
-    id: String!
-  ): Clip
-  "Returns clips matching the filter criteria."
-  clips(
-    "The cursor of the previous page. Set to null to get the first page."
-    after: String,
-    """
-    The returned page will contain only clips that match all filters. Only
-    filters with values affect the result. If you don't want to filter at all, then 
-    you can set this field to null.
-    """
-    filter: ClipFilterInput,
-    "The number of clips per page."
-    first: Int! @constraint(max : 500) @constraint(min : 1)
-  ): ClipPage!
   "Returns the show with the provided PDP id or null if it does not exist."
   episode(
     "A PDP id of an episode."
@@ -1220,43 +1185,6 @@ input ChannelFilterInputInput {
   Filters channels depending on when they were updated. A channel counts as
   updated when either the source system changes its data or a relation to another
   asset is updated.
-  """
-  updated: TemporalFilterInput
-}
-
-"The returned page will contain only clips that match all filters. Only filters with values affect the result."
-input ClipFilterInput {
-  """
-  Filters articles depending on the value of the field `archivedAt`. If
-  the source system did not set a timestamp, then the clip will not be included
-  if this filter is set.
-  """
-  archived: TemporalFilterInput
-  "Filters clips with an id or alternative identifier matching any of the provided identifiers."
-  identifiers: [String]
-  """
-  Filters clips depending on the value of the field `modifiedAt`. If
-  the source system did not set a timestamp, then the clip will not be included
-  if this filter is set.
-  """
-  modified: TemporalFilterInput
-  "Filters clips depending on their parent episode. Provide the PDP ID of an episode to activate this filter."
-  parentEpisode: String
-  """
-  Filters articles depending on the value of the field `producedAt`. If
-  the source system did not set a timestamp, then the clip will not be included
-  if this filter is set.
-  """
-  produced: TemporalFilterInput
-  "Filters clips depending on their provenance."
-  provenance: Provenance
-  "Filters clips depending on their publisher."
-  publisher: Publisher
-  """
-  Filters clips depending on when they were updated. A clip counts as
-  updated when either the source system changes its data or a relation to another
-  asset is updated. Updates to related assets like the clip's parent episode or
-  its editorial groupings are not taken into account.
   """
   updated: TemporalFilterInput
 }
