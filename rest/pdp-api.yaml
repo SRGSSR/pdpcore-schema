@@ -294,9 +294,15 @@ components:
             - type: string
 
     ContentEntityType:
-      description: ''
+      description: |
+        The type of the content. Contact the PDP team if you have data that does
+        not fit any of these types.
       type: string
-      pattern: "^[a-z]{4,20}$"
+      enum:
+        - Article
+        - Channel
+        - Show
+        - Episode
 
     Content:
       description: >
