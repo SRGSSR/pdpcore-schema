@@ -1,0 +1,59 @@
+@namespace("ch.srgssr.pdp.domain.egest")
+protocol Content {
+
+	import idl "ConfidentialityLevel.avdl";
+	import idl "Agent.avdl";
+	import idl "ArticleReference.avdl";
+	import idl "EditorialGroupingReference.avdl";
+	import idl "Event.avdl";
+	import idl "Genre.avdl";
+	import idl "ClipReference.avdl";
+	import idl "Language.avdl";
+	import idl "Location.avdl";
+	import idl "Image.avdl";
+	import idl "Provenance.avdl";
+	import idl "EpisodeReference.avdl";
+	import idl "PublicationStatus.avdl";
+	import idl "Publisher.avdl";
+	import idl "Text.avdl";
+	import idl "URL.avdl";
+
+	/** In the context of the PDP content is the raw data in the schema of the source system. */
+	record Content {
+		/** The PDP id of the article. */
+		string id;
+		/** The id of the article in the source system. It is unique in the source system, but not globally. */
+		string sourceId;
+		/** The business unit or external organisation publishing the metadata. */
+		Publisher publisher;
+		/** The source system publishing the metadata. */
+		Provenance provenance;
+		/** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
+		ConfidentialityLevel confidentialityLevel;
+		/** The type of the content (e.g. Article, Shows, Episode, Channel) */
+		DomainType type;
+		/** The raw data and schema version */
+		SourceData sourceData;
+
+	}
+
+	enum DomainType {
+		Article, Show, Episode, Channel
+	}
+
+	record SourceData {
+		/** Raw JSON Data */
+		string data;
+		/** e.g. application/json. See https://en.wikipedia.org/wiki/Media_type#Common_examples */
+		string mimeType;
+		/** The version of the source data schema*/
+		SourceSchema? `schema`;
+	}
+
+	record SourceSchema {
+		/** Max length 256 */
+		string version;
+		/** URL to the schema*/
+		string? url;
+	}
+}
