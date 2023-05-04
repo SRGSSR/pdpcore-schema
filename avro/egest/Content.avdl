@@ -53,7 +53,5 @@ protocol Content {
 	record SourceSchema {
 		/** Max length 256 */
 		string version;
-		/** URL to the schema*/
-		string? url;
 	}
 }
