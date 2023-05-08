@@ -20,7 +20,7 @@ paths:
     post:
       tags:
         - content
-      summary: 'Upsert content (not yet implemented)'
+      summary: 'Upsert content'
       operationId: postContent
       responses:
         '200':
