@@ -577,7 +577,7 @@ result will contain any items that contains at least one matching genre.
 """
 input GenreFilterInput {
   "Filters items by genre name."
-  name: TextFilterInput
+  names: [TextFilterInput]
 }
 
 input ShowFilterInput {
