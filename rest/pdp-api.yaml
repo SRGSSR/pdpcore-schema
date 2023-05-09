@@ -828,16 +828,20 @@ components:
             - id
           properties:
             id:
-              description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:{type}:{sourceId}"'
+              description: 'PDP id, format: "urn:pdp:{provenance}:{type}:{sourceId}"'
               type: string
 
     AssetReferenceType:
       type: string
       enum:
+        - Article
         - Channel
         - Show
         - Episode
-        - Article
+        - Content_Article
+        - Content_Channel
+        - Content_Show
+        - Content_Episode
 
     CreatedResponse:
       description: A CreatedResponse which contains the pdp id of the persisted object
@@ -1423,7 +1427,7 @@ components:
               type: string
 
     ChannelIdReference:
-      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:channel:{sourceId}"'
+      description: 'PDP id, format: "urn:pdp:{provenance}:channel:{sourceId}"'
       allOf:
         - $ref: '#/components/schemas/ChannelReference'
         - type: object
@@ -1460,7 +1464,7 @@ components:
               type: string
 
     ShowIdReference:
-      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:show:{sourceId}"'
+      description: 'PDP id, format: "urn:pdp:{provenance}:show:{sourceId}"'
       allOf:
         - $ref: '#/components/schemas/ShowReference'
         - type: object
@@ -1497,7 +1501,7 @@ components:
               type: string
 
     EpisodeIdReference:
-      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:episode:{sourceId}"'
+      description: 'PDP id, format: "urn:pdp:{provenance}:episode:{sourceId}"'
       allOf:
         - $ref: '#/components/schemas/EpisodeReference'
         - type: object
@@ -1534,7 +1538,7 @@ components:
               type: string
 
     EditorialGroupingIdReference:
-      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:editorialgrouping:{sourceId}"'
+      description: 'PDP id, format: "urn:pdp:{provenance}:editorialgrouping:{sourceId}"'
       allOf:
         - $ref: '#/components/schemas/EditorialGroupingReference'
         - type: object
@@ -1571,7 +1575,7 @@ components:
               type: string
 
     ClipIdReference:
-      description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:clip:{sourceId}"'
+      description: 'PDP id, format: "urn:pdp:{provenance}:clip:{sourceId}"'
       allOf:
         - $ref: '#/components/schemas/ClipReference'
         - type: object
@@ -1615,5 +1619,5 @@ components:
             - id
           properties:
             id:
-              description: 'PDP id, format: "urn:pdp:{publisher}:{provenance}:article:{sourceId}"'
+              description: 'PDP id, format: "urn:pdp:{provenance}:article:{sourceId}"'
               type: string
