@@ -507,7 +507,7 @@ scalar DateTime
 "The returned page will contain only articles that match all filters. Only filters with values affect the result."
 input ArticleFilterInput {
   "Filters articles by genre."
-  genres: GenreFilterInput
+  genres: [GenreFilterInput]
   "Filters articles with an id or alternative identifier matching any of the provided identifiers."
   identifiers: [String]
   "Filters articles depending on the value of the field `isLongForm`."
@@ -577,7 +577,7 @@ result will contain any items that contains at least one matching genre.
 """
 input GenreFilterInput {
   "Filters items by genre name."
-  names: [TextFilterInput]
+  name: TextFilterInput
 }
 
 input ShowFilterInput {
