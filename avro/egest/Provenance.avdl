@@ -4,22 +4,12 @@ protocol Provenance {
 	/** The source system publishing the metadata. */
 	enum Provenance {
 		Unknown,
-		Faro_SRF,
-		Siranau_RTS,
-		Gico_RTS,
 		CMS_SRF,
 		Escenic_RSI,
-		CUE_RSI,
+		Escenic_RTS,
 		Play_SRF,
-		PlaySuisse_SRGSSR,
 		OfferPortfolio_SRF,
-		AIS_SRF,
-		Digas_SRF,
-		OpenMedia_SRF,
-		MOVEit_STXT,
-		WhatsOn_SRF,
-		WhatsOn_RTS,
-		WhatsOn_RSI
+		AIS_SRF
 	} = Unknown;
 
 }

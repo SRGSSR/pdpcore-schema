@@ -865,22 +865,12 @@ components:
       description: 'The source system publishing the metadata.'
       type: string
       enum:
-        - Faro_SRF
-        - Siranau_RTS
-        - Gico_RTS
         - CMS_SRF
         - Escenic_RSI
-        - CUE_RSI
+        - Escenic_RTS
         - Play_SRF
-        - PlaySuisse_SRGSSR
-        - OfferPortfolio_SRF
         - AIS_SRF
-        - Digas_SRF
-        - OpenMedia_SRF
-        - WhatsOn_SRF
-        - WhatsOn_RTS
-        - WhatsOn_RSI
-        - MOVEit_STXT
+        - OfferPortfolio_SRF
     Publisher:
       description: 'The business unit or external organisation publishing the metadata. Please contact the PDP team if a publisher is missing.'
       type: string

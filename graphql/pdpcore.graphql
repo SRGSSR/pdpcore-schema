@@ -426,21 +426,11 @@ enum DistributionVector {
 enum Provenance {
   AIS_SRF
   CMS_SRF
-  CUE_RSI
-  Digas_SRF
   Escenic_RSI
-  Faro_SRF
-  Gico_RTS
-  MOVEit_STXT
+  Escenic_RTS
   OfferPortfolio_SRF
-  OpenMedia_SRF
-  PlaySuisse_SRGSSR
   Play_SRF
-  Siranau_RTS
   Unknown
-  WhatsOn_RSI
-  WhatsOn_RTS
-  WhatsOn_SRF
 }
 
 "The publication state of an article."
