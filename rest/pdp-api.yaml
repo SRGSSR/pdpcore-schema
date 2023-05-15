@@ -54,15 +54,10 @@ paths:
     delete:
       tags:
         - content
-      summary: 'Delete content by PDP Id (not yet implemented)'
+      summary: |
+        Delete content by provenance, domain type and sourceId. If no source Id is provided, all content of the given type and provenance will be deleted.
       operationId: deleteContent
       parameters:
-        - name: sourceId
-          in: query
-          description: 'The id in the source system. It has to be unique in the source system, but not globally.'
-          required: true
-          schema:
-            type: string
         - name: provenance
           in: query
           description: 'The source system publishing the metadata.'
@@ -75,11 +70,21 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/DomainType'
+        - name: sourceId
+          in: query
+          description: 'The id in the source system. It has to be unique in the source system, but not globally.'
+          required: true
+          schema:
+            type: string
       responses:
         '204':
-          description: Channel deleted
-        '404':
-          description: Not found
+          description: Content deleted
+        '400':
+          description: 'Bad request, e.g. invalid parameter values.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
       security:
         - azure_auth:
             - 'write:all'
@@ -87,7 +92,7 @@ paths:
     delete:
       tags:
         - content
-      summary: 'Delete content by PDP Id (not yet implemented)'
+      summary: 'Delete content by PDP Id'
       operationId: deleteContent
       parameters:
         - name: pdpId
@@ -98,8 +103,8 @@ paths:
             type: string
       responses:
         '204':
-          description: 'Channel deleted'
-        '404':
+          description: 'Content deleted'
+        '400':
           description: 'Not found'
       security:
         - azure_auth:
@@ -284,14 +289,12 @@ components:
       type: object
       required:
         - status
-        - errors
+        - message
       properties:
         status:
           type: integer
-        errors:
-          type: array
-          items:
-            - type: string
+        message:
+          type: string
 
     DomainType:
       description: |
