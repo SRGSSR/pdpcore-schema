@@ -20,23 +20,27 @@ paths:
     post:
       tags:
         - content
-      summary: 'Upsert content'
+      summary: 'Create or update content and its extracted domain object.'
       operationId: postContent
       responses:
         '200':
-          description: 'Success Request'
+          description: >
+            The content is successfully stored in the PDP and available in the
+            Kafka topics "contents". The source data is extracted asynchronously
+            and should be available as the appropriate domain object in the
+            GraphQL API and Kafka topic shortly.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SuccessResponse'
         '400':
-          description: 'Invalid input'
+          description: 'Bad Request'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiError'
         '500':
-          description: 'Server has a problem'
+          description: 'Internal Server Error'
           content:
             application/json:
               schema:
@@ -54,9 +58,10 @@ paths:
     delete:
       tags:
         - content
-      summary: |
-        Delete content by provenance, domain type and sourceId. If no source Id is provided, all content of the given type and provenance will be deleted.
-      operationId: deleteContent
+      summary: >
+        Delete content by provenance, domain type and sourceId. This also 
+        deletes the domain object that was extracted from this content.
+      operationId: deleteContentByQuery
       parameters:
         - name: provenance
           in: query
@@ -66,19 +71,22 @@ paths:
             $ref: '#/components/schemas/Provenance'
         - name: type
           in: query
-          description: 'The source system type.'
+          description: 'The domain type of the content.'
           required: true
           schema:
             $ref: '#/components/schemas/DomainType'
         - name: sourceId
           in: query
-          description: 'The id in the source system. It has to be unique in the source system, but not globally.'
+          description: 'The id in the source system. It has to be unique for the domain type in the source system, but not globally.'
           required: true
           schema:
             type: string
       responses:
         '204':
-          description: Content deleted
+          description: >
+            The content is deleted. Extracted domain objects are deleted 
+            asynchronously, i.e. it will be unavailable in GraphQL API and the 
+            appropriate Kafka topic will receive a tombstone record shortly.
         '400':
           description: 'Bad request, e.g. invalid parameter values.'
           content:
@@ -92,18 +100,23 @@ paths:
     delete:
       tags:
         - content
-      summary: 'Delete content by PDP Id'
-      operationId: deleteContent
+      summary: >
+        Delete content by PDP ID. This also deletes the domain object that was
+        extracted from this content.
+      operationId: deleteContentById
       parameters:
         - name: pdpId
           in: path
-          description: 'PDP Id of the channel that needs deleting'
+          description: 'A PDP ID of a content.'
           required: true
           schema:
             type: string
       responses:
         '204':
-          description: 'Content deleted'
+          description: >
+            The content is deleted. Extracted domain objects are deleted 
+            asynchronously, i.e. it will be unavailable in GraphQL API and the 
+            appropriate Kafka topic will receive a tombstone record shortly.
         '400':
           description: 'Not found'
       security:
@@ -163,12 +176,12 @@ paths:
     delete:
       tags:
         - channel
-      summary: Delete channel by PDP Id (contract only - not yet implemented)
+      summary: Delete channel by PDP ID (contract only - not yet implemented)
       operationId: deleteChannel
       parameters:
         - name: pdpId
           in: path
-          description: PDP Id of the channel that needs deleting
+          description: PDP ID of the channel that needs deleting
           required: true
           schema:
             type: string
