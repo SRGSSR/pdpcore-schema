@@ -21,7 +21,7 @@ protocol MessageKey {
 		/** The source system publishing the metadata. */
 		Provenance provenance;
 		/** The domain type of the source data. */
-		DomainType type;
+		DomainType domainType;
 		/** The id of the asset in the source system. */
 		string sourceId;
 	}

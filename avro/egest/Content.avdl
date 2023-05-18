@@ -18,11 +18,11 @@ protocol Content {
 	import idl "Text.avdl";
 	import idl "URL.avdl";
 
-	/** In the context of the PDP content is the raw data in the schema of the source system. */
+	/** A content contains the raw data of a domain object from a source system. */
 	record Content {
-		/** The PDP id of the article. */
+		/** The PDP id of the content. */
 		string id;
-		/** The id of the article in the source system. It is unique in the source system, but not globally. */
+		/** The id of the content in the source system. It must be unique for the domain type in the source system, but not globally. */
 		string sourceId;
 		/** The business unit or external organisation publishing the metadata. */
 		Publisher publisher;
@@ -30,28 +30,31 @@ protocol Content {
 		Provenance provenance;
 		/** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
 		ConfidentialityLevel confidentialityLevel;
-		/** The type of the content (e.g. Article, Shows, Episode, Channel) */
-		DomainType type;
-		/** The raw data and schema version */
+		/** The domain type of the content. */
+		DomainType domainType;
+		/** The raw data from the source object including information bout its schema. */
 		SourceData sourceData;
-
 	}
 
 	enum DomainType {
-		Article, Show, Episode, Channel
-	}
+		Unknown,
+		Article,
+		Channel,
+		Show,
+		Episode
+	} = Unknown;
 
 	record SourceData {
-		/** Raw JSON Data */
+		/** Raw source data. */
 		string data;
-		/** e.g. application/json. See https://en.wikipedia.org/wiki/Media_type#Common_examples */
+		/** E.g. application/json. See https://en.wikipedia.org/wiki/Media_type#Common_examples. */
 		string mimeType;
-		/** The version of the source data schema*/
+		/** Information about the source data schema. */
 		SourceSchema? `schema`;
 	}
 
 	record SourceSchema {
-		/** Max length 256 */
+		/** The version of the schema. */
 		string version;
 	}
 }
