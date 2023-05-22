@@ -15,7 +15,9 @@ servers:
 externalDocs:
   description: PDP Schema Documentation
   url: 'https://api.pdp.production.srgssr.ch/docs-page.html#section-2'
+
 paths:
+
   /contents:
     post:
       tags:
@@ -96,6 +98,7 @@ paths:
       security:
         - azure_auth:
             - 'write:all'
+
   /contents/{pdpId}:
     delete:
       tags:
@@ -122,6 +125,7 @@ paths:
       security:
         - azure_auth:
             - 'write:all'
+
   /articles:
     post:
       tags:
@@ -147,104 +151,7 @@ paths:
               $ref: '#/components/schemas/Article'
         description: Article payload
         required: true
-  /channels:
-    post:
-      tags:
-        - channel
-      summary: Upsert channel (contract only - not yet implemented)
-      operationId: postChannel
-      responses:
-        '201':
-          description: Channel created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreatedResponse'
-        '400':
-          description: Invalid input
-      security:
-        - azure_auth:
-            - 'write:all'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Channel'
-        description: Channel payload
-        required: true
-  /channels/{pdpId}:
-    delete:
-      tags:
-        - channel
-      summary: Delete channel by PDP ID (contract only - not yet implemented)
-      operationId: deleteChannel
-      parameters:
-        - name: pdpId
-          in: path
-          description: PDP ID of the channel that needs deleting
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: Channel deleted
-        '404':
-          description: Not found
-      security:
-        - azure_auth:
-            - 'write:all'
 
-  /shows:
-    post:
-      tags:
-        - show
-      summary: Upsert show (contract only - not yet implemented)
-      operationId: postShow
-      responses:
-        '201':
-          description: Show created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreatedResponse'
-        '400':
-          description: Invalid input
-      security:
-        - azure_auth:
-            - 'write:all'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Show'
-        description: Show payload
-        required: true
-
-  /episodes:
-    post:
-      tags:
-        - episode (alpha)
-      summary: Upsert episode
-      operationId: postEpisode
-      responses:
-        '202':
-          description: Accepted request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AcceptedResponse'
-        '422':
-          description: Invalid input
-      security:
-        - azure_auth:
-            - 'write:all'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Episode'
-        description: Episode payload
-        required: true
   /correlations:
     post:
       tags:
@@ -270,6 +177,7 @@ paths:
               $ref: '#/components/schemas/Correlation'
         description: Correlation payload
         required: true
+
 components:
   securitySchemes:
     azureAuthDev:
@@ -296,6 +204,7 @@ components:
           authorizationUrl: 'https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/authorize'
           scopes:
             'write:all': 'https://graphql-api.pdp.production.srgssr.ch/api/.default'
+
   schemas:
 
     ApiError:
@@ -316,9 +225,6 @@ components:
       type: string
       enum:
         - Article
-        - Channel
-        - Show
-        - Episode
 
     Content:
       description: >
@@ -339,7 +245,9 @@ components:
         provenance:
           $ref: '#/components/schemas/Provenance'
         sourceId:
-          description: 'The id of the show in the source system. It has to be unique in the source system, but not globally.'
+          description: >
+            The id of the content in the source system. It must be unique for
+            the domain type in the source system, but not globally.
           type: string
         confidentialityLevel:
           $ref: '#/components/schemas/ConfidentialityLevel'
@@ -372,339 +280,6 @@ components:
       properties:
         version:
           type: string
-
-    Channel:
-      description: 'A channel is a linear and non-linear broadcast vector, such as SRF1, RTSUn, RSI LA1.'
-      type: object
-      required:
-        - sourceId
-        - publisher
-        - provenance
-        - confidentialityLevel
-      properties:
-        publisher:
-          description: 'The business unit or external organisation publishing the metadata.'
-          $ref: '#/components/schemas/Publisher'
-        provenance:
-          description: 'The source system publishing the metadata.'
-          $ref: '#/components/schemas/Provenance'
-        sourceId:
-          description: 'The id of the channel in the source system. It has to be unique in the source system, but not globally.'
-          type: string
-        confidentialityLevel:
-          description: 'In the context of the PDP, this field is used to indicate whether the data may be published publicly.'
-          $ref: '#/components/schemas/ConfidentialityLevel'
-        name:
-          description: 'The name of the channel.'
-          type: string
-        distributionVector:
-          description: 'Specifies the distribution vector of a channel.'
-          $ref: '#/components/schemas/DistributionVector'
-        relatedImages:
-          description: 'Images associated with the channel.'
-          type: array
-          items:
-            $ref: '#/components/schemas/Image'
-
-    DistributionVector:
-      description: 'A method or platform used to distribute content to its intended audience.'
-      type: string
-      enum:
-        - TV
-        - Radio
-        - Online
-
-    Show:
-      description: >
-        A show is a broadcasting container to which a specific episode belongs
-        and which is used to group individual broadcasts. An example of a show
-        is "10 vor 10" or "Echo der Zeit".
-      type: object
-      required:
-        - sourceId
-        - publisher
-        - provenance
-        - confidentialityLevel
-      properties:
-        publisher:
-          $ref: '#/components/schemas/Publisher'
-        provenance:
-          $ref: '#/components/schemas/Provenance'
-        sourceId:
-          description: 'The id of the show in the source system. It has to be unique in the source system, but not globally.'
-          type: string
-        confidentialityLevel:
-          $ref: '#/components/schemas/ConfidentialityLevel'
-        title:
-          description: 'The titles for the show in potentially different languages.'
-          type: array
-          items:
-            $ref: '#/components/schemas/Text'
-        lead:
-          description: 'The brief descriptions of the show in potentially different languages.'
-          type: array
-          items:
-            $ref: '#/components/schemas/Text'
-        description:
-          description: 'The detailed descriptions of the show in potentially different languages.'
-          type: array
-          items:
-            $ref: '#/components/schemas/Text'
-        websiteUrl:
-          description: 'The URL of the show''s website.'
-          $ref: '#/components/schemas/URL'
-        publications:
-          description: 'Defines the schedules describing the regularly occurring planned publications.'
-          type: array
-          items:
-            $ref: '#/components/schemas/Publication'
-
-    Publication:
-      description: 'Describes how a show is planned to be published on a specific channel.'
-      type: object
-      properties:
-        channel:
-          description: 'The channel on which this show will be published.'
-          $ref: '#/components/schemas/ChannelReference'
-        schedules:
-          description: >
-            A schedule defines a repeating time period used to describe the
-            regularly occurring publications of a show's episodes.
-          type: array
-          items:
-            $ref: '#/components/schemas/Schedule'
-        exclusions:
-          description: >
-            Defines timestamps during which a scheduled episode will not take
-            place. The property allows to declare exceptions to the schedules.
-            The event that would have started at that specific date and time
-            should be excluded from the schedule. The timestamps have to be in
-            ISO 8601 format `YYYY-MM-DDThh:mm:ss.sss[Z|±hh:mm]`.
-          type: array
-          items:
-            type: string
-            format: date-time
-
-    Schedule:
-      description: 'A schedule defines a repeating time period used to describe a regularly occurring episode. With the provided metadata fields, you are able to define the schedule. The section "Schema Concepts: Show Schedules" in the PDP API documentation goes into more details and provides a few example schedules.'
-      type: object
-      properties:
-        byDay:
-          description: 'Defines the day(s) of the week on which episodes of the show are scheduled.'
-          type: array
-          items:
-            $ref: '#/components/schemas/DayOfWeek'
-        byMonth:
-          description: 'Defines the month(s) of the year on which episodes of the show are scheduled.'
-          type: array
-          items:
-            $ref: '#/components/schemas/Month'
-        byMonthDay:
-          description: 'Defines the day(s) of the month on which episodes of the show are scheduled. Specified as an integer between 1-31.'
-          type: array
-          items:
-            type: integer
-            format: int32
-            minimum: 1
-            maximum: 31
-        byMonthWeek:
-          description: 'Defines the week(s) of the month on which episodes of the show are scheduled. Specified as an integer between 1-5. For clarity, byMonthWeek is best used in conjunction with byDay to indicate concepts like the first and third Mondays of a month.'
-          type: array
-          items:
-            type: integer
-            format: int32
-            minimum: 1
-            maximum: 5
-        duration:
-          description: 'The duration of a single episode in the show in milliseconds.'
-          type: integer
-          format: int64
-          minimum: 0
-        startDate:
-          description: 'The start date of an episode of the show in ISO 8601 calendar date format `YYYY-MM-DD`.'
-          type: string
-          format: date
-        startTime:
-          description: 'The start time of an episode of the show in ISO 8601 time format `hh:mm:ss.sss[Z|±hh:mm]`.'
-          type: string
-          pattern: '^\d{2}:\d{2}:\d{2}(\.\d{1,3})?(?:Z|[+-]\d{2}:\d{2})$'
-        end:
-          description: 'The start date and time of the last episode of the show in ISO 8601 format `YYYY-MM-DDThh:mm:ss.sss[Z|±hh:mm]`.'
-          type: string
-          format: date-time
-        repeatFrequency:
-          description: 'Defines the frequency at which episodes will occur according to a schedule. The intervals between episodes should be defined as a duration of time.'
-          type: object
-          properties:
-            months:
-              description: 'Repeat frequency in months. E.g. 1: every month, 2: every two months, etc.'
-              type: integer
-              format: int32
-              minimum: 1
-            weeks:
-              description: 'Repeat frequency in weeks. E.g. 1: every week, 2: every two weeks, etc.'
-              type: integer
-              format: int32
-              minimum: 1
-            days:
-              description: 'Repeat frequency in days. E.g. 1: every day, 2: every two days, etc.'
-              type: integer
-              format: int32
-              minimum: 1
-            minutes:
-              description: 'Repeat frequency in minutes. E.g. 30: every half hour, 60: every hour, 120: every two hours, etc.'
-              type: integer
-              format: int32
-              minimum: 1
-        isFirstShowing:
-          description: 'Set to true when the schedule contains first showings, set to false when it contains repeat showings.'
-          type: boolean
-          default: true
-
-    DayOfWeek:
-      description: 'Defines the day(s) of the week on which episodes of the show are scheduled.'
-      type: string
-      enum:
-        - Monday
-        - Tuesday
-        - Wednesday
-        - Thursday
-        - Friday
-        - Saturday
-        - Sunday
-
-    Month:
-      description: 'Defines the month(s) of the year on which episodes of the show are scheduled.'
-      type: string
-      enum:
-        - January
-        - February
-        - March
-        - April
-        - May
-        - June
-        - July
-        - August
-        - September
-        - October
-        - November
-        - December
-
-    Episode:
-      description: 'An "episode" is a longer and clearly identifiable editorial broadcast which can consist of several individual contributions ("clips") (e.g.: Tagesschau of 20.04.2020) or has a thematically coherent context (e.g.: DOK film about the Generalsteik 1918).'
-      type: object
-      required:
-        - sourceId
-        - publisher
-        - provenance
-        - assetType
-      properties:
-        publisher:
-          $ref: '#/components/schemas/Publisher'
-        provenance:
-          $ref: '#/components/schemas/Provenance'
-        sourceId:
-          type: string
-        alternativeIdentifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlternativeIdentifier'
-        confidentialityLevel:
-          $ref: '#/components/schemas/ConfidentialityLevel'
-        assetType:
-          $ref: '#/components/schemas/AssetType'
-        distributionType:
-          $ref: '#/components/schemas/DistributionType'
-        comments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Comment'
-        title:
-          $ref: '#/components/schemas/Text'
-        abstract:
-          $ref: '#/components/schemas/Text'
-        description:
-          $ref: '#/components/schemas/Text'
-        archivedAt:
-          type: string
-          format: date-time
-        broadcastAt:
-          type: string
-          format: date-time
-        modifiedAt:
-          type: string
-          format: date-time
-        producedAt:
-          type: string
-          format: date-time
-        duration:
-          type: integer
-          format: int64
-        genres:
-          type: array
-          items:
-            $ref: '#/components/schemas/Genre'
-        productionTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductionType'
-        location:
-          type: array
-          items:
-            $ref: '#/components/schemas/Location'
-        relatedEvents:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-        relatedPictures:
-          type: array
-          items:
-            $ref: '#/components/schemas/Picture'
-        rights:
-          type: array
-          items:
-            $ref: '#/components/schemas/Rights'
-        contributors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Agent'
-        topics:
-          type: array
-          items:
-            $ref: '#/components/schemas/Topic'
-        memberOf:
-          $ref: '#/components/schemas/ShowReference'
-        parts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Part'
-        relatedEpisodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/EpisodeReference'
-        scheduledOn:
-          type: array
-          items:
-            $ref: '#/components/schemas/PublicationEvent'
-        position:
-          type: integer
-          format: int32
-        seasonNumber:
-          type: integer
-          format: int32
-        episodeNumberInSeason:
-          type: integer
-          format: int32
-        tagline:
-          $ref: '#/components/schemas/Text'
-        language:
-          $ref: '#/components/schemas/Language'
-        url:
-          $ref: '#/components/schemas/URL'
-        includedIn:
-          type: array
-          items:
-            $ref: '#/components/schemas/EditorialGroupingReference'
 
     Article:
       description: 'A CMS website article.'
@@ -852,12 +427,7 @@ components:
       enum:
         - Article
         - Channel
-        - Show
-        - Episode
         - Content_Article
-        - Content_Channel
-        - Content_Show
-        - Content_Episode
 
     CreatedResponse:
       description: A CreatedResponse which contains the pdp id of the persisted object
@@ -865,18 +435,21 @@ components:
       properties:
         id:
           type: string
+
     AcceptedResponse:
       description: Accepted write operation response
       type: object
       properties:
         id:
           type: string
+
     SuccessResponse:
       description: Created or updated resource response
       type: object
       properties:
         id:
           type: string
+
     Provenance:
       description: 'The source system publishing the metadata.'
       type: string
@@ -887,6 +460,7 @@ components:
         - Play_SRF
         - AIS_SRF
         - OfferPortfolio_SRF
+
     Publisher:
       description: 'The business unit or external organisation publishing the metadata. Please contact the PDP team if a publisher is missing.'
       type: string
@@ -900,6 +474,7 @@ components:
         - NZZ
         - AP
         - SwissTXT
+
     ConfidentialityLevel:
       description: |
         The confidentiality level declares the sensitivity of the data and who
@@ -910,13 +485,7 @@ components:
       enum:
         - C1_Public
         - C2_Internal
-    Topic:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          $ref: '#/components/schemas/Text'
+
     Text:
       type: object
       required:
@@ -926,6 +495,7 @@ components:
           type: string
         language:
           $ref: '#/components/schemas/Language'
+
     Role:
       type: object
       required:
@@ -985,20 +555,6 @@ components:
           $ref: '#/components/schemas/Text'
         description:
           $ref: '#/components/schemas/Text'
-    Location:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          $ref: '#/components/schemas/Text'
-    Event:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          $ref: '#/components/schemas/Text'
 
     Image:
       description: 'Describes visual material - such as logos, thumbnails or other visual elements - that belong to an asset.'
@@ -1052,25 +608,6 @@ components:
         aspectRatio:
           $ref: '#/components/schemas/AspectRatio'
 
-    Picture:
-      type: object
-      required:
-        - url
-      properties:
-        url:
-          $ref: '#/components/schemas/URL'
-        title:
-          $ref: '#/components/schemas/Text'
-        rights:
-          type: array
-          items:
-            $ref: '#/components/schemas/Rights'
-        width:
-          type: integer
-        height:
-          type: integer
-        aspectRatio:
-          $ref: '#/components/schemas/AspectRatio'
     URL:
       type: object
       required:
@@ -1078,28 +615,7 @@ components:
       properties:
         url:
           type: string
-    Rights:
-      type: object
-      properties:
-        rightsHolder:
-          $ref: '#/components/schemas/RightsHolder'
-        usageRights:
-          type: array
-          items:
-            type: string
-        availableFrom:
-          type: string
-          format: date-time
-        availableTo:
-          type: string
-          format: date-time
-    RightsHolder:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
+
     AspectRatio:
       description: 'The aspect ratio of an image.'
       type: object
@@ -1109,6 +625,7 @@ components:
         ratio:
           description: 'The aspect ratio, e.g. 16:9 or 4:3.'
           type: string
+
     ArticleContent:
       description: 'The full text of the article.'
       type: object
@@ -1119,12 +636,14 @@ components:
           type: array
           items:
             type: string
+
     PublicationStatus:
       description: 'Indicates if the website article has been published online.'
       type: string
       enum:
         - "Published"
         - "Unpublished"
+
     Language:
       type: string
       enum:
@@ -1311,285 +830,12 @@ components:
         - "yo"
         - "za"
         - "zu"
-    AlternativeIdentifier:
-      type: object
-      required:
-        - publisher
-        - provenance
-        - value
-        - type
-      properties:
-        publisher:
-          $ref: '#/components/schemas/Publisher'
-        provenance:
-          $ref: '#/components/schemas/Provenance'
-        value:
-          type: string
-        type:
-          type: string
-    AssetType:
-      type: string
-      enum:
-        - Audio
-        - Video
-    DistributionType:
-      type: string
-      enum:
-        - Broadcast
-        - HbbTV
-        - VideoOnDemand
-        - AudioOnDemand
-        - VideoPodcast
-        - AudioPodcast
-        - LiveStream
-    Comment:
-      description: 'A comment about an asset from the source system. Attention: these are not user comments!'
-      type: object
-      required:
-        - text
-      properties:
-        text:
-          type: string
-    ProductionType:
-      type: object
-      required:
-        - type
-      properties:
-        type:
-          type: string
-    Part:
-      type: object
-      properties:
-        title:
-          $ref: '#/components/schemas/Text'
-        description:
-          $ref: '#/components/schemas/Text'
-        archivedAt:
-          $ref: '#/components/schemas/Date'
-        modifiedAt:
-          $ref: '#/components/schemas/Date'
-        start:
-          $ref: '#/components/schemas/Long'
-        duration:
-          $ref: '#/components/schemas/Long'
-        end:
-          $ref: '#/components/schemas/Long'
-        relatedLocations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Location'
-        relatedEvents:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-    Date:
-      type: string
-      format: date-time
-    Long:
-      type: integer
-      format: int64
-
-
-    PublicationEvent:
-      type: object
-      properties:
-        publicationStart:
-          $ref: '#/components/schemas/Date'
-        publicationEnd:
-          $ref: '#/components/schemas/Date'
-        publicationChannel:
-          $ref: '#/components/schemas/ChannelReference'
 
     ReferenceDiscriminatorType:
       type: string
       enum:
         - Id
         - Source
-
-    ChannelReference:
-      description: 'A reference to a channel.'
-      discriminator:
-        propertyName: type
-        mapping:
-          Source: '#/components/schemas/ChannelSourceReference'
-          Id: '#/components/schemas/ChannelIdReference'
-      required:
-        - type
-      properties:
-        type:
-          $ref: '#/components/schemas/ReferenceDiscriminatorType'
-
-    ChannelSourceReference:
-      allOf:
-        - $ref: '#/components/schemas/ChannelReference'
-        - type: object
-          required:
-            - provenance
-            - sourceId
-          properties:
-            provenance:
-              $ref: '#/components/schemas/Provenance'
-            sourceId:
-              type: string
-
-    ChannelIdReference:
-      description: 'PDP id, format: "urn:pdp:{provenance}:channel:{sourceId}"'
-      allOf:
-        - $ref: '#/components/schemas/ChannelReference'
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              type: string
-
-    ShowReference:
-      description: 'A reference to a show.'
-      discriminator:
-        propertyName: type
-        mapping:
-          Source: '#/components/schemas/ShowSourceReference'
-          Id: '#/components/schemas/ShowIdReference'
-      required:
-        - type
-      properties:
-        type:
-          $ref: '#/components/schemas/ReferenceDiscriminatorType'
-
-    ShowSourceReference:
-      allOf:
-        - $ref: '#/components/schemas/ShowReference'
-        - type: object
-          required:
-            - provenance
-            - sourceId
-          properties:
-            provenance:
-              $ref: '#/components/schemas/Provenance'
-            sourceId:
-              type: string
-
-    ShowIdReference:
-      description: 'PDP id, format: "urn:pdp:{provenance}:show:{sourceId}"'
-      allOf:
-        - $ref: '#/components/schemas/ShowReference'
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              type: string
-
-    EpisodeReference:
-      description: 'A reference to an episode.'
-      discriminator:
-        propertyName: type
-        mapping:
-          Source: '#/components/schemas/EpisodeSourceReference'
-          Id: '#/components/schemas/EpisodeIdReference'
-      required:
-        - type
-      properties:
-        type:
-          $ref: '#/components/schemas/ReferenceDiscriminatorType'
-
-    EpisodeSourceReference:
-      allOf:
-        - $ref: '#/components/schemas/EpisodeReference'
-        - type: object
-          required:
-            - provenance
-            - sourceId
-          properties:
-            provenance:
-              $ref: '#/components/schemas/Provenance'
-            sourceId:
-              type: string
-
-    EpisodeIdReference:
-      description: 'PDP id, format: "urn:pdp:{provenance}:episode:{sourceId}"'
-      allOf:
-        - $ref: '#/components/schemas/EpisodeReference'
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              type: string
-
-    EditorialGroupingReference:
-      type: object
-      required:
-        - type
-      discriminator:
-        propertyName: type
-        mapping:
-          Id: '#/components/schemas/EditorialGroupingIdReference'
-          Source: '#/components/schemas/EditorialGroupingSourceReference'
-      properties:
-        type:
-          $ref: '#/components/schemas/ReferenceDiscriminatorType'
-
-    EditorialGroupingSourceReference:
-      allOf:
-        - $ref: '#/components/schemas/EditorialGroupingReference'
-        - type: object
-          required:
-            - provenance
-            - sourceId
-          properties:
-            provenance:
-              $ref: '#/components/schemas/Provenance'
-            sourceId:
-              type: string
-
-    EditorialGroupingIdReference:
-      description: 'PDP id, format: "urn:pdp:{provenance}:editorialgrouping:{sourceId}"'
-      allOf:
-        - $ref: '#/components/schemas/EditorialGroupingReference'
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              type: string
-
-    ClipReference:
-      description: 'A reference to a clip.'
-      discriminator:
-        propertyName: type
-        mapping:
-          Source: '#/components/schemas/ClipSourceReference'
-          Id: '#/components/schemas/ClipIdReference'
-      required:
-        - type
-      properties:
-        type:
-          $ref: '#/components/schemas/ReferenceDiscriminatorType'
-
-    ClipSourceReference:
-      allOf:
-        - $ref: '#/components/schemas/ClipReference'
-        - type: object
-          required:
-            - provenance
-            - sourceId
-          properties:
-            provenance:
-              $ref: '#/components/schemas/Provenance'
-            sourceId:
-              type: string
-
-    ClipIdReference:
-      description: 'PDP id, format: "urn:pdp:{provenance}:clip:{sourceId}"'
-      allOf:
-        - $ref: '#/components/schemas/ClipReference'
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              type: string
 
     ArticleReference:
       description: 'A reference to an article.'

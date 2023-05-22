@@ -39,9 +39,7 @@ protocol Content {
 	enum DomainType {
 		Unknown,
 		Article,
-		Channel,
-		Show,
-		Episode
+		Channel
 	} = Unknown;
 
 	record SourceData {
