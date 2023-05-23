@@ -152,32 +152,6 @@ paths:
         description: Article payload
         required: true
 
-  /correlations:
-    post:
-      tags:
-        - correlations
-      summary: Upsert Correlation
-      operationId: postCorrelation
-      responses:
-        '201':
-          description: Accepted request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreatedResponse'
-        '400':
-          description: Invalid input
-      security:
-        - azure_auth:
-            - 'write:all'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Correlation'
-        description: Correlation payload
-        required: true
-
 components:
   securitySchemes:
     azureAuthDev:
@@ -359,82 +333,6 @@ components:
         isLongForm:
           description: 'Indicates whether the article is longer or more extensive.'
           type: boolean
-
-    Correlation:
-      description: 'A Correlation between two assets.'
-      type: object
-      required:
-        - publisher
-        - provenance
-        - left
-        - right
-      properties:
-        sourceId:
-          type: string
-        publisher:
-          $ref: '#/components/schemas/Publisher'
-        provenance:
-          $ref: '#/components/schemas/Provenance'
-        left:
-          $ref: '#/components/schemas/AssetReference'
-        right:
-          $ref: '#/components/schemas/AssetReference'
-
-    AssetReference:
-      description: 'A reference to any asset.'
-      discriminator:
-        propertyName: type
-        mapping:
-          Source: '#/components/schemas/AssetSourceReference'
-          Id: '#/components/schemas/AssetIdReference'
-      required:
-        - type
-      properties:
-        type:
-          $ref: '#/components/schemas/ReferenceDiscriminatorType'
-
-    AssetSourceReference:
-      description: 'A reference to an asset within a Correlation.'
-      allOf:
-        - $ref: '#/components/schemas/AssetReference'
-        - type: object
-          required:
-            - provenance
-            - assetType
-            - sourceId
-          properties:
-            provenance:
-              $ref: '#/components/schemas/Provenance'
-            assetType:
-              $ref: '#/components/schemas/AssetReferenceType'
-            sourceId:
-              type: string
-
-    AssetIdReference:
-      description: 'A reference to an asset within a Correlation.'
-      allOf:
-        - $ref: '#/components/schemas/AssetReference'
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              description: 'PDP id, format: "urn:pdp:{provenance}:{type}:{sourceId}"'
-              type: string
-
-    AssetReferenceType:
-      type: string
-      enum:
-        - Article
-        - Channel
-        - Content_Article
-
-    CreatedResponse:
-      description: A CreatedResponse which contains the pdp id of the persisted object
-      type: object
-      properties:
-        id:
-          type: string
 
     AcceptedResponse:
       description: Accepted write operation response
