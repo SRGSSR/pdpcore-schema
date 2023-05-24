@@ -355,6 +355,7 @@ components:
         - CMS_SRF
         - Escenic_RSI
         - Escenic_RTS
+        - CMS_SWI
         - Play_SRF
         - AIS_SRF
         - OfferPortfolio_SRF

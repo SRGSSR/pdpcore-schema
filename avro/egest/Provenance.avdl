@@ -9,7 +9,8 @@ protocol Provenance {
 		Escenic_RTS,
 		Play_SRF,
 		OfferPortfolio_SRF,
-		AIS_SRF
+		AIS_SRF,
+		CMS_SWI
 	} = Unknown;
 
 }
