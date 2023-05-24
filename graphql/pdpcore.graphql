@@ -230,7 +230,7 @@ type Query {
     filters with values affect the result. If you don't want to filter at all, then 
     you can set this field to null.
     """
-    filter: ChannelFilterInputInput,
+    filter: ChannelFilterInput,
     "The channels of channels per page."
     first: Int! @constraint(max : 500) @constraint(min : 1)
   ): ChannelPage!
@@ -547,7 +547,8 @@ input ArticleSortInput {
   order: SortOrder!
 }
 
-input ChannelFilterInputInput {
+"The returned page will contain only channels that match all filters. Only filters with values affect the result."
+input ChannelFilterInput {
   "Filters channels matching any of the provided identifiers."
   identifiers: [String]
   "Filters channels depending on their provenance."
