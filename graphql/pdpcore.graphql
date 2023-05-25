@@ -122,6 +122,28 @@ type ChannelPage {
   edges: [Channel]!
 }
 
+"A content contains the raw data of a domain object from a source system."
+type Content {
+  "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
+  confidentialityLevel: ConfidentialityLevel!
+  "The PDP id of the content."
+  id: String!
+  "The source system publishing the metadata."
+  provenance: Provenance!
+  "The business unit or external organisation publishing the metadata."
+  publisher: Publisher!
+  "The data of the content in source schema"
+  sourceData: SourceData!
+  "The id of the content in the source system. It is unique in the source system, but not globally."
+  sourceId: String!
+}
+
+"A page containing contents matching the query filters."
+type ContentPage {
+  cursor: String
+  edges: [Content]!
+}
+
 "A department describes an organizational unit in the form of a department that is responsible for the editorial creation process of an audiovisual object. An example of an organizational unit is \"Culture\" or \"Sports\"."
 type Department implements Agent {
   "The name of the department."
@@ -234,6 +256,24 @@ type Query {
     "The channels of channels per page."
     first: Int! @constraint(max : 500) @constraint(min : 1)
   ): ChannelPage!
+  "Returns the content with the provided PDP id or null if it does not exist."
+  content(
+    "A PDP id of a content."
+    id: String!
+  ): Content
+  "Returns contents matching the filter criteria."
+  contents(
+    "The cursor of the previous page. Set to null to get the first page."
+    after: String,
+    """
+    The returned page will contain only contents that match all filters. Only
+    filters with values affect the result. If you don't want to filter at all, then 
+    you can set this field to null.
+    """
+    filter: ContentFilterInput,
+    "The number of contents per page."
+    first: Int! @constraint(max : 500) @constraint(min : 1)
+  ): ContentPage!
   """
   **Experimental, do not use in production!**
   This query might be changed or removed at any time without notice.
@@ -353,6 +393,20 @@ type Show {
 type ShowPage {
   cursor: String
   edges: [Show]!
+}
+
+type SourceData {
+  "Serialized source data (e.g. a JSON object as string)."
+  data: String!
+  "Mime type of the data (e.g. 'application/json')."
+  mimeType: String!
+  "Source schema information."
+  schema: SourceSchema
+}
+
+type SourceSchema {
+  "Schema version of the data. Should be changed in case of major schema changes."
+  version: String!
 }
 
 "A team is a group of clearly identifiable and organizationally related actors who are jointly involved in the creation process of an editorial object. An example of a team is the editorial team of \"Regionaljournal Ostschweiz\"."
@@ -559,6 +613,23 @@ input ChannelFilterInput {
   Filters channels depending on when they were updated. A channel counts as
   updated when either the source system changes its data or a relation to another
   asset is updated.
+  """
+  updated: TemporalFilterInput
+}
+
+"The returned page will contain only contents that match all filters. Only filters with values affect the result."
+input ContentFilterInput {
+  "Filters contents with an id or alternative identifier matching any of the provided identifiers."
+  identifiers: [String]
+  "Filters contents depending on their provenance."
+  provenance: Provenance
+  "Filters contents depending on their publisher."
+  publisher: Publisher
+  """
+  Filters contents depending on when they were updated. An content counts as
+  updated when either the source system changes its data or a relation to another
+  asset is updated. Updates to related assets like episodes or clips are not taken
+  into account.
   """
   updated: TemporalFilterInput
 }
