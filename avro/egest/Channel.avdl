@@ -24,8 +24,8 @@ protocol Channel {
         string name;
         /** Specifies the distribution vector of a channel. */
         DistributionVector distributionVector;
-        /** Pictures associated with the channel. */
-        union{null, array<Image>} relatedImages = null;
+        /** Images associated with the channel. */
+        union{null, array<Image>} images = null;
     }
 
 }

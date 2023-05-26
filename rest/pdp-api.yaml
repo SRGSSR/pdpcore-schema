@@ -199,6 +199,7 @@ components:
       type: string
       enum:
         - Article
+        - Channel
 
     Content:
       description: >

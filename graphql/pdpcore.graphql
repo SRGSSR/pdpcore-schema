@@ -104,14 +104,14 @@ type Channel {
   distributionVector: DistributionVector
   "The PDP id of the channel."
   id: String!
+  "Images associated with the channel."
+  images: [Image]
   "The name of the channel."
   name: String
   "The source system publishing the metadata."
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
   publisher: Publisher!
-  "Images associated with the channel."
-  relatedImages: [Image]
   "The id of the channel in the source system. It is unique in the source system, but not globally."
   sourceId: String!
 }
