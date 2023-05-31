@@ -172,7 +172,7 @@ type Image {
   "Rights and restrictions associated to the image."
   usage: String
   "The various sizes available"
-  variants: [ImageVariant]!
+  variants: [ImageVariant]
 }
 
 type ImageVariant {
