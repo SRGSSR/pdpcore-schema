@@ -72,6 +72,8 @@ type Article {
   releasedAt: DateTime
   "The id of the article in the source system. It is unique in the source system, but not globally."
   sourceId: String!
+  "The source URL from where the article can be accessed in raw format."
+  sourceUrl: URL
   "The title or headline of the article. The title may be available in different languages."
   title: [Text]
   "The URL from where the article can be accessed."
