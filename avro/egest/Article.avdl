@@ -44,6 +44,8 @@ protocol Article {
         union{null, array<ArticleIdReference>} relatedArticles = null;
         /** The URL from where the article can be accessed. */
         URL? url = null;
+        /** The source URL from where the article can be accessed. */
+        URL? sourceUrl = null;
         /** A lead is a self-contained, brief, and meaningful description of an article. The lead may be available in different languages. */
         union{null, array<Text>} lead = null;
         /** The date and time (expressed as timestamp) at which the article was modified. */
