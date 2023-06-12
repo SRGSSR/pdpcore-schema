@@ -1,58 +1,64 @@
 @namespace("ch.srgssr.pdp.domain.egest")
 protocol Content {
 
-	import idl "ConfidentialityLevel.avdl";
-	import idl "Agent.avdl";
-	import idl "ArticleReference.avdl";
-	import idl "EditorialGroupingReference.avdl";
-	import idl "Event.avdl";
-	import idl "Genre.avdl";
-	import idl "ClipReference.avdl";
-	import idl "Language.avdl";
-	import idl "Location.avdl";
-	import idl "Image.avdl";
-	import idl "Provenance.avdl";
-	import idl "EpisodeReference.avdl";
-	import idl "PublicationStatus.avdl";
-	import idl "Publisher.avdl";
-	import idl "Text.avdl";
-	import idl "URL.avdl";
+    import idl "ConfidentialityLevel.avdl";
+    import idl "Agent.avdl";
+    import idl "ArticleReference.avdl";
+    import idl "EditorialGroupingReference.avdl";
+    import idl "Event.avdl";
+    import idl "Genre.avdl";
+    import idl "ClipReference.avdl";
+    import idl "Language.avdl";
+    import idl "Location.avdl";
+    import idl "Image.avdl";
+    import idl "Provenance.avdl";
+    import idl "EpisodeReference.avdl";
+    import idl "PublicationStatus.avdl";
+    import idl "Publisher.avdl";
+    import idl "Text.avdl";
+    import idl "URL.avdl";
 
-	/** A content contains the raw data of a domain object from a source system. */
-	record Content {
-		/** The PDP id of the content. */
-		string id;
-		/** The id of the content in the source system. It must be unique for the domain type in the source system, but not globally. */
-		string sourceId;
-		/** The business unit or external organisation publishing the metadata. */
-		Publisher publisher;
-		/** The source system publishing the metadata. */
-		Provenance provenance;
-		/** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-		ConfidentialityLevel confidentialityLevel;
-		/** The domain type of the content. */
-		DomainType domainType;
-		/** The raw data from the source object including information bout its schema. */
-		SourceData sourceData;
-	}
+    /** A content contains the raw data of a domain object from a source system. */
+    record Content {
+        /** The PDP id of the content. */
+        string id;
+        /** The id of the content in the source system. It must be unique for the domain type in the source system, but not globally. */
+        string sourceId;
+        /** The business unit or external organisation publishing the metadata. */
+        Publisher publisher;
+        /** The source system publishing the metadata. */
+        Provenance provenance;
+        /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
+        ConfidentialityLevel confidentialityLevel;
+        /** The domain type of the content. */
+        DomainType domainType;
+        /** The raw data from the source object including information bout its schema. */
+        SourceData sourceData;
+    }
 
-	enum DomainType {
-		Unknown,
-		Article,
-		Channel
-	} = Unknown;
+    /**
+     * The type of the content.
+     * Article: an editorial work consisting of text, graphic, sometimes video or audio, created for publication on web-sites, blogs and other channels similar to the more traditional paper-based publications.
+     * Programme: an editorial work as a stand-alone piece or an episode of a series, intended to be consumed as a whole.
+     */
+    enum DomainType {
+        Unknown,
+        Article,
+        Channel,
+        Programme
+    } = Unknown;
 
-	record SourceData {
-		/** Raw source data. */
-		string data;
-		/** E.g. application/json. See https://en.wikipedia.org/wiki/Media_type#Common_examples. */
-		string mimeType;
-		/** Information about the source data schema. */
-		SourceSchema? `schema`;
-	}
+    record SourceData {
+        /** Raw source data. */
+        string data;
+        /** E.g. application/json. See https://en.wikipedia.org/wiki/Media_type#Common_examples. */
+        string mimeType;
+        /** Information about the source data schema. */
+        SourceSchema? `schema`;
+    }
 
-	record SourceSchema {
-		/** The version of the schema. */
-		string version;
-	}
+    record SourceSchema {
+        /** The version of the schema. */
+        string version;
+    }
 }

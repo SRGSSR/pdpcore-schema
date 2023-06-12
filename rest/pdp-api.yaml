@@ -196,10 +196,18 @@ components:
       description: |
         The type of the content. Contact the PDP team if you have data that does
         not fit any of these types.
+        - Article  
+          An editorial work consisting of text, graphic, sometimes
+          video or audio, created for publication on web-sites, blogs and other
+          channels similar to the more traditional paper-based publications.
+        - Programme  
+          An editorial work as a stand-alone piece or an episode of a
+          series, intended to be consumed as a whole.
       type: string
       enum:
         - Article
         - Channel
+        - Programme
 
     Content:
       description: >
