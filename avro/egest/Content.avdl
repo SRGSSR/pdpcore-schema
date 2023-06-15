@@ -46,7 +46,8 @@ protocol Content {
         Article,
         Channel,
         Correlation,
-        Programme
+        Programme,
+        Campaign
     } = Unknown;
 
     record SourceData {

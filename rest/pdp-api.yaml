@@ -203,11 +203,19 @@ components:
         - Programme  
           An editorial work as a stand-alone piece or an episode of a
           series, intended to be consumed as a whole.
+        - Campaign
+          A Campaign defines a strategy for publishing content to a targeted
+          Audience according to a PublicationPlan. Campaign strategies can be
+          refined taking into account the analysis of the Resonance of related
+          ConsumptionEvents (e.g. likes, downloads, etc). Campaigns can apply to a
+          variety of broadcasting strategies e.g. advertising campaigns,
+          promotional campaigns or else.
       type: string
       enum:
         - Article
         - Channel
         - Programme
+        - Campaign
 
     Content:
       description: >
@@ -368,6 +376,9 @@ components:
         - Play_SRF
         - AIS_SRF
         - OfferPortfolio_SRF
+        - WhatsOn_SRF
+        - OpenMedia_SRF
+        - OpenMedia_RTR
 
     Publisher:
       description: 'The business unit or external organisation publishing the metadata. Please contact the PDP team if a publisher is missing.'

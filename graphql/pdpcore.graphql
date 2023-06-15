@@ -484,6 +484,8 @@ enum DistributionVector {
 enum DomainType {
   "An editorial work consisting of text, graphic, sometimes video or audio, created for publication on web-sites, blogs and other channels similar to the more traditional paper-based publications."
   Article
+  "A Campaign defines a strategy for publishing content to a targeted Audience according to a PublicationPlan. Campaign strategies can be refined taking into account the analysis of the Resonance of related ConsumptionEvents (e.g. likes, downloads, etc). Campaigns can apply to a variety of broadcasting strategies e.g. advertising campaigns, promotional campaigns or else."
+  Campaign
   Channel
   Correlation
   "An editorial work as a stand-alone piece or an episode of a series, intended to be consumed as a whole."
@@ -498,8 +500,11 @@ enum Provenance {
   Escenic_RSI
   Escenic_RTS
   OfferPortfolio_SRF
+  OpenMedia_RTR
+  OpenMedia_SRF
   Play_SRF
   Unknown
+  WhatsOn_SRF
 }
 
 "The publication state of an article."

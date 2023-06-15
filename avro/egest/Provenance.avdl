@@ -10,7 +10,10 @@ protocol Provenance {
 		Play_SRF,
 		OfferPortfolio_SRF,
 		AIS_SRF,
-		CMS_SWI
+		CMS_SWI,
+		WhatsOn_SRF,
+		OpenMedia_SRF,
+		OpenMedia_RTR
 	} = Unknown;
 
 }
