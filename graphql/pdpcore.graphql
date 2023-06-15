@@ -485,6 +485,7 @@ enum DomainType {
   "An editorial work consisting of text, graphic, sometimes video or audio, created for publication on web-sites, blogs and other channels similar to the more traditional paper-based publications."
   Article
   Channel
+  Correlation
   "An editorial work as a stand-alone piece or an episode of a series, intended to be consumed as a whole."
   Programme
 }

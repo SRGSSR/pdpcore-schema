@@ -45,6 +45,7 @@ protocol Content {
         Unknown,
         Article,
         Channel,
+        Correlation,
         Programme
     } = Unknown;
 
