@@ -200,6 +200,10 @@ components:
           An editorial work consisting of text, graphic, sometimes
           video or audio, created for publication on web-sites, blogs and other
           channels similar to the more traditional paper-based publications.
+        - PublicationService  
+          A service by which a publishing organisation or person publishes its
+          content and offers access to consumers, e.g. "SRF Info" or
+          "RSI Rete Uno".
         - Programme  
           An editorial work as a stand-alone piece or an episode of a
           series, intended to be consumed as a whole.
@@ -213,7 +217,7 @@ components:
       type: string
       enum:
         - Article
-        - Channel
+        - PublicationService
         - Programme
         - Campaign
 

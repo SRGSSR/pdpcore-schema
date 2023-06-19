@@ -1,5 +1,5 @@
 @namespace("ch.srgssr.pdp.domain.egest")
-protocol Channel {
+protocol PublicationService {
 
     import idl "ConfidentialityLevel.avdl";
     import idl "DistributionVector.avdl";
@@ -8,8 +8,8 @@ protocol Channel {
     import idl "Publisher.avdl";
     import idl "Image.avdl";
 
-    /** A channel is a linear and non-linear broadcast vector for episodes, such as SRF1, RTSUn or PlaySuisse. */
-    record Channel {
+    /** A service by which a publishing organisation or person publishes its content and offers access to consumers, e.g. "SRF Info" or "RSI Rete Uno". */
+    record PublicationService {
         /** The PDP id of the channel. */
         string id;
         /** The business unit or external organisation publishing the metadata. */

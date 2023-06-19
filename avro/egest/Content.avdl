@@ -39,12 +39,13 @@ protocol Content {
     /**
      * The type of the content.
      * Article: an editorial work consisting of text, graphic, sometimes video or audio, created for publication on web-sites, blogs and other channels similar to the more traditional paper-based publications.
+     * PublicationService: a service by which a publishing organisation or person publishes its content and offers access to consumers, e.g. "SRF Info" or "RSI Rete Uno".
      * Programme: an editorial work as a stand-alone piece or an episode of a series, intended to be consumed as a whole.
      */
     enum DomainType {
         Unknown,
         Article,
-        Channel,
+        PublicationService,
         Correlation,
         Programme,
         Campaign

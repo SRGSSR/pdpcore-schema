@@ -3,7 +3,7 @@
 protocol PDP {
 
     import idl "Article.avdl";
-    import idl "Channel.avdl";
+    import idl "PublicationService.avdl";
     import idl "Clip.avdl";
     import idl "ClosedSubtitling.avdl";
     import idl "EditorialGrouping.avdl";

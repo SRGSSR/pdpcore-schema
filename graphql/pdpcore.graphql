@@ -98,32 +98,6 @@ type AspectRatio {
   ratio: String!
 }
 
-"A channel is a linear and non-linear broadcast vector for episodes, such as SRF1, RTSUn or PlaySuisse."
-type Channel {
-  "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
-  confidentialityLevel: ConfidentialityLevel!
-  "Specifies the distribution vector of a channel."
-  distributionVector: DistributionVector
-  "The PDP id of the channel."
-  id: String!
-  "Images associated with the channel."
-  images: [Image]
-  "The name of the channel."
-  name: String
-  "The source system publishing the metadata."
-  provenance: Provenance!
-  "The business unit or external organisation publishing the metadata."
-  publisher: Publisher!
-  "The id of the channel in the source system. It is unique in the source system, but not globally."
-  sourceId: String!
-}
-
-"A page containing clips matching the query filters."
-type ChannelPage {
-  cursor: String
-  edges: [Channel]!
-}
-
 "A content contains the raw data of a domain object from a source system."
 type Content {
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
@@ -206,6 +180,32 @@ type Publication {
   schedules: [Schedule]
 }
 
+"A service by which a publishing organisation or person publishes its content and offers access to consumers, e.g. \"SRF Info\" or \"RSI Rete Uno\"."
+type PublicationService {
+  "Indicates whether the data may be published publicly."
+  confidentialityLevel: ConfidentialityLevel!
+  "Specifies the distribution vector of a publication service."
+  distributionVector: DistributionVector
+  "The PDP id of the publication service."
+  id: String!
+  "Images associated with the publication service."
+  images: [Image]
+  "The name of the publication service."
+  name: String
+  "The source system publishing the metadata."
+  provenance: Provenance!
+  "The business unit or external organisation publishing the metadata."
+  publisher: Publisher!
+  "The id of the publication service in the source system. It is unique in the source system, but not globally."
+  sourceId: String!
+}
+
+"A page containing clips matching the query filters."
+type PublicationServicePage {
+  cursor: String
+  edges: [PublicationService]!
+}
+
 "Query root"
 type Query {
   "Returns the article with the provided PDP id or null if it does not exist."
@@ -242,24 +242,6 @@ type Query {
     "Specifies the order in which the query returns matching articles."
     sort: [ArticleSortInput] = []
   ): ArticlePage!
-  "Returns the channel with the provided PDP id or null if it does not exist."
-  channel(
-    "A PDP id of a channel."
-    id: String!
-  ): Channel
-  "Returns channels matching the filter criteria."
-  channels(
-    "The cursor of the previous page. Set to null to get the first page."
-    after: String,
-    """
-    The returned page will contain only channels that match all filters. Only
-    filters with values affect the result. If you don't want to filter at all, then 
-    you can set this field to null.
-    """
-    filter: ChannelFilterInput,
-    "The channels of channels per page."
-    first: Int! @constraint(max : 500) @constraint(min : 1)
-  ): ChannelPage!
   "Returns the content with the provided PDP id or null if it does not exist."
   content(
     "A PDP id of a content."
@@ -278,6 +260,20 @@ type Query {
     "The number of contents per page."
     first: Int! @constraint(max : 500) @constraint(min : 1)
   ): ContentPage!
+  "Returns the publication service with the provided PDP id or null if it does not exist."
+  publicationService(
+    "A PDP id of a publication service."
+    id: String!
+  ): PublicationService
+  "Returns publication services matching the filter criteria."
+  publicationServices(
+    "The cursor of the previous page. Set to null to get the first page."
+    after: String,
+    "The returned page will contain only publication services that match all filters. Only filters with values affect the result. If you don't want to filter at all, then you can set this field to null."
+    filter: PublicationServiceFilterInput,
+    "The number of publication services per page."
+    first: Int! @constraint(max : 500) @constraint(min : 1)
+  ): PublicationServicePage!
   """
   **Experimental, do not use in production!**
   This query might be changed or removed at any time without notice.
@@ -486,10 +482,11 @@ enum DomainType {
   Article
   "A Campaign defines a strategy for publishing content to a targeted Audience according to a PublicationPlan. Campaign strategies can be refined taking into account the analysis of the Resonance of related ConsumptionEvents (e.g. likes, downloads, etc). Campaigns can apply to a variety of broadcasting strategies e.g. advertising campaigns, promotional campaigns or else."
   Campaign
-  Channel
   Correlation
   "An editorial work as a stand-alone piece or an episode of a series, intended to be consumed as a whole."
   Programme
+  "A service by which a publishing organisation or person publishes its content and offers access to consumers, e.g. \"SRF Info\" or \"RSI Rete Uno\"."
+  PublicationService
 }
 
 "The source system publishing the metadata."
@@ -620,22 +617,6 @@ input ArticleSortInput {
   order: SortOrder!
 }
 
-"The returned page will contain only channels that match all filters. Only filters with values affect the result."
-input ChannelFilterInput {
-  "Filters channels matching any of the provided identifiers."
-  identifiers: [String]
-  "Filters channels depending on their provenance."
-  provenance: Provenance
-  "Filters channels depending on their publisher."
-  publisher: Publisher
-  """
-  Filters channels depending on when they were updated. A channel counts as
-  updated when either the source system changes its data or a relation to another
-  asset is updated.
-  """
-  updated: TemporalFilterInput
-}
-
 "The returned page will contain only contents that match all filters. Only filters with values affect the result."
 input ContentFilterInput {
   "Filters contents depending on their domain type."
@@ -662,6 +643,18 @@ result will contain any items that contains at least one matching genre.
 input GenreFilterInput {
   "Filters items by genre name."
   name: TextFilterInput
+}
+
+"The returned page will contain only publication services that match all filters. Only filters with values affect the result."
+input PublicationServiceFilterInput {
+  "Filters publication services matching any of the provided identifiers."
+  identifiers: [String]
+  "Filters publication services depending on their provenance."
+  provenance: Provenance
+  "Filters publication services depending on their publisher."
+  publisher: Publisher
+  "Filters publication services depending on when they were updated. A channel counts as updated when either the source systemchanges its data or a relation to another asset is updated."
+  updated: TemporalFilterInput
 }
 
 input ShowFilterInput {
