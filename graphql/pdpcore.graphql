@@ -129,7 +129,7 @@ type Department implements Agent {
 }
 
 """
-The genre is used to classify audiovisual objects depending on their 
+The genre is used to classify audiovisual objects depending on their
 content into subject areas such as "Culture", "Sports", "News" or "Economy".
 """
 type Genre {
@@ -222,7 +222,7 @@ type Query {
   articleGenres(
     """
     The returned list will contain only genres that match all filters. Only
-    filters with values affect the result. If you don't want to filter at all, then 
+    filters with values affect the result. If you don't want to filter at all, then
     you can set this field to null.
     """
     filter: ArticleGenreFilterInput
@@ -233,7 +233,7 @@ type Query {
     after: String,
     """
     The returned page will contain only articles that match all filters. Only
-    filters with values affect the result. If you don't want to filter at all, then 
+    filters with values affect the result. If you don't want to filter at all, then
     you can set this field to null.
     """
     filter: ArticleFilterInput,
@@ -253,7 +253,7 @@ type Query {
     after: String,
     """
     The returned page will contain only contents that match all filters. Only
-    filters with values affect the result. If you don't want to filter at all, then 
+    filters with values affect the result. If you don't want to filter at all, then
     you can set this field to null.
     """
     filter: ContentFilterInput,
@@ -299,7 +299,7 @@ type Query {
     after: String,
     """
     The returned page will contain only shows that match all filters. Only
-    filters with values affect the result. If you don't want to filter at all, then 
+    filters with values affect the result. If you don't want to filter at all, then
     you can set this field to null.
     """
     filter: ShowFilterInput,
@@ -326,15 +326,15 @@ type Schedule {
   "Defines the month(s) of the year on which episodes of the show are scheduled."
   byMonth: [ByMonth]
   """
-  Defines the day(s) of the month on which episodes of the show are scheduled. 
-              |Specified as an integer between 1-31.
+  Defines the day(s) of the month on which episodes of the show are scheduled.
+  Specified as an integer between 1-31.
   """
   byMonthDay: [Int]
   """
-  Defines the week(s) of the month on which episodes of the show are scheduled. 
-              |Specified as an integer between 1-5. For clarity, 
-              |byMonthWeek is best used in conjunction with byDay to indicate concepts like 
-              |the first and third Mondays of a month.
+  Defines the week(s) of the month on which episodes of the show are scheduled.
+  Specified as an integer between 1-5. For clarity, byMonthWeek is best used in
+  conjunction with byDay to indicate concepts like the first and third Mondays of
+  a month.
   """
   byMonthWeek: [Int]
   "The duration of a single episode in the show in milliseconds."
@@ -351,8 +351,8 @@ type Schedule {
 }
 
 """
-Defines the frequency at which episodes will occur according to a schedule. 
-        |The intervals between episodes should be defined as a duration of time.".
+Defines the frequency at which episodes will occur according to a schedule.
+The intervals between episodes should be defined as a duration of time.
 """
 type ScheduleRepeatFrequency {
   days: Int
@@ -637,7 +637,7 @@ input ContentFilterInput {
 }
 
 """
-A filter for genres. If you provide a value for this filter, then the 
+A filter for genres. If you provide a value for this filter, then the
 result will contain any items that contains at least one matching genre.
 """
 input GenreFilterInput {
@@ -677,18 +677,18 @@ input ShowFilterInput {
 A filter for a temporal field. If you provide a date-time for both the after and
 before fields, the result will only contain items between those two date-times.
 If you only provide one of the date-times, then the result  will contain all
-items before or after the respective date-time. Both the after and the before 
-date-time are exclusive, i.e. the result will not contain items with the exact 
+items before or after the respective date-time. Both the after and the before
+date-time are exclusive, i.e. the result will not contain items with the exact
 same date-time.
 """
 input TemporalFilterInput {
   """
-  Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as 
+  Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as
   2022-07-18T10:15:30+02:00 to filter for items strictly after that date-time. (ISO-8601)
   """
   after: DateTime
   """
-  Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as 
+  Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as
   2022-07-18T10:15:30+02:00 to filter for items strictly before that date-time. (ISO-8601)
   """
   before: DateTime
