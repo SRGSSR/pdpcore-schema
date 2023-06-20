@@ -482,7 +482,6 @@ enum DomainType {
   Article
   "A Campaign defines a strategy for publishing content to a targeted Audience according to a PublicationPlan. Campaign strategies can be refined taking into account the analysis of the Resonance of related ConsumptionEvents (e.g. likes, downloads, etc). Campaigns can apply to a variety of broadcasting strategies e.g. advertising campaigns, promotional campaigns or else."
   Campaign
-  Correlation
   "An editorial work as a stand-alone piece or an episode of a series, intended to be consumed as a whole."
   Programme
   "A service by which a publishing organisation or person publishes its content and offers access to consumers, e.g. \"SRF Info\" or \"RSI Rete Uno\"."

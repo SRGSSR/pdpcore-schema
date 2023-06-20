@@ -46,7 +46,6 @@ protocol Content {
         Unknown,
         Article,
         PublicationService,
-        Correlation,
         Programme,
         Campaign
     } = Unknown;
