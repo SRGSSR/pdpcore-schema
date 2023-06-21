@@ -56,7 +56,7 @@ protocol Content {
         /** E.g. application/json. See https://en.wikipedia.org/wiki/Media_type#Common_examples. */
         string mimeType;
         /** Information about the source data schema. */
-        SourceSchema? `schema`;
+        SourceSchema `schema`;
     }
 
     record SourceSchema {
