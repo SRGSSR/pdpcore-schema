@@ -258,7 +258,9 @@ type Query {
     """
     filter: ContentFilterInput,
     "The number of contents per page."
-    first: Int! @constraint(max : 500) @constraint(min : 1)
+    first: Int! @constraint(max : 500) @constraint(min : 1),
+    "Specifies the order in which the query returns matching contents."
+    sort: [ContentSortInput] = []
   ): ContentPage!
   "Returns the publication service with the provided PDP id or null if it does not exist."
   publicationService(
@@ -469,6 +471,11 @@ enum ConfidentialityLevel {
   Unknown
 }
 
+"Specifies the fields that can be used to sort contents."
+enum ContentSortField {
+  updatedAt
+}
+
 enum DistributionVector {
   Online
   Radio
@@ -636,6 +643,14 @@ input ContentFilterInput {
   into account.
   """
   updated: TemporalFilterInput
+}
+
+"Defines a field and order to be used for sorting the contents."
+input ContentSortInput {
+  "The field of the content you want to sort by."
+  field: ContentSortField!
+  "The order in which want the contents sorted."
+  order: SortOrder!
 }
 
 """
