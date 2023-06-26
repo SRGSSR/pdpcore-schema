@@ -47,7 +47,8 @@ protocol Content {
         Article,
         PublicationService,
         Programme,
-        Campaign
+        Campaign,
+        Speaker
     } = Unknown;
 
     record SourceData {

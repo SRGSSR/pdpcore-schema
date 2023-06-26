@@ -181,19 +181,26 @@ components:
         - Programme  
           An editorial work as a stand-alone piece or an episode of a
           series, intended to be consumed as a whole.
-        - Campaign
+        - Campaign  
           A Campaign defines a strategy for publishing content to a targeted
           Audience according to a PublicationPlan. Campaign strategies can be
           refined taking into account the analysis of the Resonance of related
           ConsumptionEvents (e.g. likes, downloads, etc). Campaigns can apply to a
           variety of broadcasting strategies e.g. advertising campaigns,
           promotional campaigns or else.
+        - Speaker  
+          An AI-powered data enrichment that provides essential information about
+          the speaking-times of different individuals, primarily public figures,
+          within audiovisual assets. This AI-generated data enables in-depth analysis
+          and better understanding of the speaker's contribution, aiding journalistic
+          research, content discovery, and fact-checking.
       type: string
       enum:
         - Article
         - PublicationService
         - Programme
         - Campaign
+        - Speaker
 
     Content:
       description: >
