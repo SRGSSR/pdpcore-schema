@@ -13,7 +13,8 @@ protocol Provenance {
 		CMS_SWI,
 		WhatsOn_SRF,
 		OpenMedia_SRF,
-		OpenMedia_RTR
+		OpenMedia_RTR,
+		AIBOX_SRGSSR
 	} = Unknown;
 
 }

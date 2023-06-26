@@ -492,6 +492,7 @@ enum DomainType {
 
 "The source system publishing the metadata."
 enum Provenance {
+  AIBOX_SRGSSR
   AIS_SRF
   CMS_SRF
   CMS_SWI
