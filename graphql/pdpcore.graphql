@@ -274,7 +274,9 @@ type Query {
     "The returned page will contain only publication services that match all filters. Only filters with values affect the result. If you don't want to filter at all, then you can set this field to null."
     filter: PublicationServiceFilterInput,
     "The number of publication services per page."
-    first: Int! @constraint(max : 500) @constraint(min : 1)
+    first: Int! @constraint(max : 500) @constraint(min : 1),
+    "Specifies the order in which the query returns matching publication services."
+    sort: [PublicationServiceSortInput] = []
   ): PublicationServicePage!
   """
   **Experimental, do not use in production!**
@@ -306,7 +308,9 @@ type Query {
     """
     filter: ShowFilterInput,
     "The number of shows per page."
-    first: Int! @constraint(max : 500) @constraint(min : 1)
+    first: Int! @constraint(max : 500) @constraint(min : 1),
+    "Specifies the order in which the query returns matching shows."
+    sort: [ShowSortInput] = []
   ): ShowPage!
 }
 
@@ -513,6 +517,11 @@ enum Provenance {
   WhatsOn_SRF
 }
 
+"Specifies the fields that can be used to sort contents."
+enum PublicationServiceSortField {
+  updatedAt
+}
+
 "The publication state of an article."
 enum PublicationStatus {
   Published
@@ -535,6 +544,11 @@ enum Publisher {
   SWI
   SwissTXT
   Unknown
+}
+
+"Specifies the fields that can be used to sort shows."
+enum ShowSortField {
+  updatedAt
 }
 
 "Values for sorting."
@@ -674,6 +688,14 @@ input PublicationServiceFilterInput {
   updated: TemporalFilterInput
 }
 
+"Defines a field and order to be used for sorting the contents."
+input PublicationServiceSortInput {
+  "The field of the publication service you want to sort by."
+  field: PublicationServiceSortField!
+  "The order in which want the publication services sorted."
+  order: SortOrder!
+}
+
 input ShowFilterInput {
   "Filters shows that have an id or alternative identifier that match any of the provided identifiers."
   identifiers: [String]
@@ -688,6 +710,14 @@ input ShowFilterInput {
   are not taken into account.
   """
   updated: TemporalFilterInput
+}
+
+"Defines a field and order to be used for sorting the shows."
+input ShowSortInput {
+  "The field of the show you want to sort by."
+  field: ShowSortField!
+  "The order in which want the shows sorted."
+  order: SortOrder!
 }
 
 """
