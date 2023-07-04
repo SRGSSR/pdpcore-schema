@@ -172,14 +172,6 @@ type Person implements Agent {
   roles: [Role]
 }
 
-"Describes how a show is planned to be published on a specific channel"
-type Publication {
-  "The brief descriptions of the show in potentially different languages."
-  exclusions: [String]
-  "The brief descriptions of the show in potentially different languages."
-  schedules: [Schedule]
-}
-
 "A service by which a publishing organisation or person publishes its content and offers access to consumers, e.g. \"SRF Info\" or \"RSI Rete Uno\"."
 type PublicationService {
   "Indicates whether the data may be published publicly."
@@ -292,113 +284,12 @@ type Query {
     "The search query."
     query: String!
   ): [Article]! @experimental
-  "Returns the show with the provided PDP id or null if it does not exist."
-  show(
-    "A PDP id of a show."
-    id: String!
-  ): Show
-  "Returns shows matching the filter criteria."
-  shows(
-    "The cursor of the previous page. Set to null to get the first page."
-    after: String,
-    """
-    The returned page will contain only shows that match all filters. Only
-    filters with values affect the result. If you don't want to filter at all, then
-    you can set this field to null.
-    """
-    filter: ShowFilterInput,
-    "The number of shows per page."
-    first: Int! @constraint(max : 500) @constraint(min : 1),
-    "Specifies the order in which the query returns matching shows."
-    sort: [ShowSortInput] = []
-  ): ShowPage!
 }
 
 "A role of a person in the context of an asset."
 type Role {
   "The type of the role, e.g. \"Producer\" or \"Editor\"."
   name: String!
-}
-
-"""
-A schedule defines a repeating time period used to describe a regularly
-occurring episode. With the provided metadata fields, you are able to define the
-schedule. The section "Schema Concepts: Show Schedules" in the PDP API
-documentation goes into more details and provides a few example schedules.
-"""
-type Schedule {
-  "Defines the day(s) of the week on which episodes of the show are scheduled."
-  byDay: [ByDay]
-  "Defines the month(s) of the year on which episodes of the show are scheduled."
-  byMonth: [ByMonth]
-  """
-  Defines the day(s) of the month on which episodes of the show are scheduled.
-  Specified as an integer between 1-31.
-  """
-  byMonthDay: [Int]
-  """
-  Defines the week(s) of the month on which episodes of the show are scheduled.
-  Specified as an integer between 1-5. For clarity, byMonthWeek is best used in
-  conjunction with byDay to indicate concepts like the first and third Mondays of
-  a month.
-  """
-  byMonthWeek: [Int]
-  "The duration of a single episode in the show in milliseconds."
-  duration: BigInteger
-  "The start date and time of the last episode of the show in ISO 8601 format `YYYY-MM-DDThh:mm:ss.sss[Z|±hh:mm]`."
-  end: String
-  firstShowing: Boolean
-  "Defines the frequency at which episodes will occur according to a schedule. The intervals between episodes should be defined as a duration of time"
-  repeatFrequency: ScheduleRepeatFrequency
-  "The start date of an episode of the show in ISO 8601 calendar date format `YYYY-MM-DD`."
-  startDate: String
-  "The start time of an episode of the show in ISO 8601 time format `hh:mm:ss.sss[Z|±hh:mm]`."
-  startTime: String
-}
-
-"""
-Defines the frequency at which episodes will occur according to a schedule.
-The intervals between episodes should be defined as a duration of time.
-"""
-type ScheduleRepeatFrequency {
-  days: Int
-  minutes: Int
-  months: Int
-  weeks: Int
-}
-
-"""
-A show is a broadcasting container to which a specific episode belongs and
-which is used to group individual broadcasts. An example of a show is
-"10 vor 10" or "Echo der Zeit".
-"""
-type Show {
-  "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
-  confidentialityLevel: ConfidentialityLevel!
-  "The detailed descriptions of the show in potentially different languages."
-  description: [Text]
-  "The PDP id of the show."
-  id: String!
-  "The brief descriptions of the show in potentially different languages."
-  lead: [Text]
-  "The source system publishing the metadata."
-  provenance: Provenance!
-  "Defines the schedules describing the regularly occurring planned publications."
-  publications: [Publication]
-  "The business unit or external organisation publishing the metadata."
-  publisher: Publisher!
-  "The id of the show in the source system. It is unique in the source system, but not globally."
-  sourceId: String!
-  "The titles for the show in potentially different languages."
-  title: [Text]
-  "Website URL associated with the show."
-  websiteUrl: URL
-}
-
-"A page containing shows matching the query filters."
-type ShowPage {
-  cursor: String
-  edges: [Show]!
 }
 
 type SourceData {
@@ -438,35 +329,6 @@ enum ArticleSortField {
   modifiedAt
   releasedAt
   updatedAt
-}
-
-"A day of the week."
-enum ByDay {
-  Friday
-  Monday
-  Saturday
-  Sunday
-  Thursday
-  Tuesday
-  Unknown
-  Wednesday
-}
-
-"A month of the year."
-enum ByMonth {
-  April
-  August
-  December
-  February
-  January
-  July
-  June
-  March
-  May
-  November
-  October
-  September
-  Unknown
 }
 
 enum ConfidentialityLevel {
@@ -544,11 +406,6 @@ enum Publisher {
   SWI
   SwissTXT
   Unknown
-}
-
-"Specifies the fields that can be used to sort shows."
-enum ShowSortField {
-  updatedAt
 }
 
 "Values for sorting."
@@ -693,30 +550,6 @@ input PublicationServiceSortInput {
   "The field of the publication service you want to sort by."
   field: PublicationServiceSortField!
   "The order in which want the publication services sorted."
-  order: SortOrder!
-}
-
-input ShowFilterInput {
-  "Filters shows that have an id or alternative identifier that match any of the provided identifiers."
-  identifiers: [String]
-  "Filters shows depending on their provenance."
-  provenance: Provenance
-  "Filters shows depending on their publisher."
-  publisher: Publisher
-  """
-  Filters shows depending on when they were updated. A show counts as
-  updated when either the source system changes its data or a relation to another
-  asset is modified. Updates to related assets like the show schedule's channel
-  are not taken into account.
-  """
-  updated: TemporalFilterInput
-}
-
-"Defines a field and order to be used for sorting the shows."
-input ShowSortInput {
-  "The field of the show you want to sort by."
-  field: ShowSortField!
-  "The order in which want the shows sorted."
   order: SortOrder!
 }
 

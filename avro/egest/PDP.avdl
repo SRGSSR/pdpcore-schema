@@ -9,6 +9,5 @@ protocol PDP {
     import idl "EditorialGrouping.avdl";
     import idl "Episode.avdl";
     import idl "MessageKey.avdl";
-    import idl "Show.avdl";
 
 }
