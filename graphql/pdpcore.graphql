@@ -192,7 +192,7 @@ type PublicationService {
   sourceId: String!
 }
 
-"A page containing clips matching the query filters."
+"A page containing publication services matching the query filters."
 type PublicationServicePage {
   cursor: String
   edges: [PublicationService]!
