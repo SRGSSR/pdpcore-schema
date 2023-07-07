@@ -194,6 +194,9 @@ components:
           within audiovisual assets. This AI-generated data enables in-depth analysis
           and better understanding of the speaker's contribution, aiding journalistic
           research, content discovery, and fact-checking.
+        - Collection
+          A collection aggregates related editorial objects into a common, higher-level
+          container, thereby enhancing their organization and accessibility.
       type: string
       enum:
         - Article
@@ -201,6 +204,7 @@ components:
         - Programme
         - Campaign
         - Speaker
+        - Collection
 
     Content:
       description: >
