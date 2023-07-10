@@ -8,7 +8,7 @@ protocol Provenance {
 		Escenic_RSI,
 		Escenic_RTS,
 		Play_SRF,
-		OfferPortfolio_SRF,
+		Angebotsportfolio_SRF,
 		AIS_SRF,
 		CMS_SWI,
 		WhatsOn_SRF,

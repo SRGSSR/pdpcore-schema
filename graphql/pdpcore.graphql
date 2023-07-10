@@ -369,11 +369,11 @@ enum DomainType {
 enum Provenance {
   AIBOX_SRGSSR
   AIS_SRF
+  Angebotsportfolio_SRF
   CMS_SRF
   CMS_SWI
   Escenic_RSI
   Escenic_RTS
-  OfferPortfolio_SRF
   OpenMedia_RTR
   OpenMedia_SRF
   Play_SRF

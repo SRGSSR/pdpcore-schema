@@ -285,7 +285,7 @@ components:
         - CMS_SWI
         - Play_SRF
         - AIS_SRF
-        - OfferPortfolio_SRF
+        - Angebotsportfolio_SRF
         - WhatsOn_SRF
         - OpenMedia_SRF
         - OpenMedia_RTR
