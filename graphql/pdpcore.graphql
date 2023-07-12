@@ -128,6 +128,10 @@ type Department implements Agent {
   name: String!
 }
 
+type EpgItem {
+  title: String!
+}
+
 """
 The genre is used to classify audiovisual objects depending on their
 content into subject areas such as "Culture", "Sports", "News" or "Economy".
@@ -254,6 +258,18 @@ type Query {
     "Specifies the order in which the query returns matching contents."
     sort: [ContentSortInput] = []
   ): ContentPage!
+  """
+  **Experimental, do not use in production!**
+  This query might be changed or removed at any time without notice.
+  
+  Returns electronic programme guide.
+  """
+  epg_experimental(
+    "The date of the programme guide. (ISO-8601)"
+    date: Date!,
+    "Filter by PublicationChannel."
+    publicationChannel: PublicationChannel!
+  ): [EpgItem]!
   "Returns the publication service with the provided PDP id or null if it does not exist."
   publicationService(
     "A PDP id of a publication service."
@@ -381,6 +397,10 @@ enum Provenance {
   WhatsOn_SRF
 }
 
+enum PublicationChannel {
+  SRF1_RADIO
+}
+
 "Specifies the fields that can be used to sort contents."
 enum PublicationServiceSortField {
   updatedAt
@@ -443,6 +463,9 @@ scalar BigDecimal
 
 "Scalar for BigInteger"
 scalar BigInteger
+
+"Scalar for Date"
+scalar Date
 
 "Scalar for DateTime"
 scalar DateTime
