@@ -399,6 +399,7 @@ enum Provenance {
 
 enum PublicationChannel {
   SRF1_RADIO
+  SRF2_RADIO
 }
 
 "Specifies the fields that can be used to sort contents."
