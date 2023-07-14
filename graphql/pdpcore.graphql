@@ -1,6 +1,607 @@
-<html>
-<head><title>502 Bad Gateway</title></head>
-<body>
-<center><h1>502 Bad Gateway</h1></center>
-</body>
-</html>
+schema {
+  query: Query
+}
+
+"Indicates a Bean Validation constraint"
+directive @constraint(format: String, max: BigInteger, maxFloat: BigDecimal, maxLength: Int, min: BigInteger, minFloat: BigDecimal, minLength: Int, pattern: String) repeatable on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @deprecated(reason: String) on FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
+
+"""
+Marks the definition as experimental with an optional reason.
+Experimental API must not be used for production use as it can change
+or be removed at any time without notice.
+"""
+directive @experimental(reason: String) on QUERY | MUTATION | SUBSCRIPTION
+
+"Directs the executor to include this field or fragment only when the `if` argument is true"
+directive @include(
+    "Included when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Directs the executor to skip this field or fragment when the `if` argument is true."
+directive @skip(
+    "Skipped when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Exposes a URL that specifies the behaviour of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behaviour of this scalar."
+    url: String!
+  ) on SCALAR
+
+"An agent represents a person, team or department."
+interface Agent {
+  "The name of the agent."
+  name: String!
+}
+
+"A CMS website article."
+type Article {
+  "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
+  confidentialityLevel: ConfidentialityLevel!
+  "The full text of the article."
+  content: ArticleContent
+  "People, teams or departments who contributed to the article."
+  contributors: [Agent]
+  "The genres this article belongs to."
+  genres: [Genre]
+  "The PDP id of the article."
+  id: String!
+  "The images of the article."
+  images: [Image]
+  "This field indicates whether the article is longer or more extensive."
+  isLongForm: Boolean
+  "A line of newspaper type set above a title usually in a different typeface and intended to provoke interest in, editorialize about, or provide orientation for the matter in the copy heads. The kicker may be available in different languages."
+  kicker: [Text]
+  "A lead is a self-contained, brief, and meaningful description of an article. The lead may be available in different languages."
+  lead: [Text]
+  "The date and time (expressed as timestamp) at which the article was modified. (ISO-8601)"
+  modifiedAt: DateTime
+  "The source system publishing the metadata."
+  provenance: Provenance!
+  "Indicates if the website article has been published online."
+  publicationStatus: PublicationStatus
+  "The business unit or external organisation publishing the metadata."
+  publisher: Publisher!
+  "Other articles related to this article."
+  relatedArticles: [Article]
+  "The date and time (expressed as timestamp) at which the article was produced. (ISO-8601)"
+  releasedAt: DateTime
+  "The id of the article in the source system. It is unique in the source system, but not globally."
+  sourceId: String!
+  "The source URL from where the article can be accessed in raw format."
+  sourceUrl: URL
+  "The title or headline of the article. The title may be available in different languages."
+  title: [Text]
+  "The URL from where the article can be accessed."
+  url: URL
+}
+
+"The text content of an article."
+type ArticleContent {
+  "The complete, unformatted text of the article. The text should not contain any HTML tags or similar."
+  text: [String]!
+}
+
+"A page containing articles matching the query filters."
+type ArticlePage {
+  cursor: String
+  edges: [Article]!
+}
+
+"The aspect ratio of an asset."
+type AspectRatio {
+  "The aspect ratio, e.g. 16:9 or 4:3."
+  ratio: String!
+}
+
+"A content contains the raw data of a domain object from a source system."
+type Content {
+  "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
+  confidentialityLevel: ConfidentialityLevel!
+  "The domain type of the content."
+  domainType: DomainType!
+  "The PDP id of the content."
+  id: String!
+  "The source system publishing the metadata."
+  provenance: Provenance!
+  "The business unit or external organisation publishing the metadata."
+  publisher: Publisher!
+  "The data of the content in source schema."
+  sourceData: SourceData!
+  "The id of the content in the source system. It is unique in the source system, but not globally."
+  sourceId: String!
+}
+
+"A page containing contents matching the query filters."
+type ContentPage {
+  cursor: String
+  edges: [Content]!
+}
+
+"A department describes an organizational unit in the form of a department that is responsible for the editorial creation process of an audiovisual object. An example of an organizational unit is \"Culture\" or \"Sports\"."
+type Department implements Agent {
+  "The name of the department."
+  name: String!
+}
+
+type EpgItem {
+  title: String!
+}
+
+"""
+The genre is used to classify audiovisual objects depending on their
+content into subject areas such as "Culture", "Sports", "News" or "Economy".
+"""
+type Genre {
+  "A general description of the genre."
+  description: Text
+  "The preferred lexical label for a genre, in a given language."
+  name: Text!
+}
+
+"Describes visual material - such as logos, thumbnails or other visual elements - that belong to an asset."
+type Image {
+  "Copyright information"
+  copyright: String
+  "The title of the image in potentially different languages."
+  title: [Text]
+  "Rights and restrictions associated to the image."
+  usage: String
+  "The various sizes available"
+  variants: [ImageVariant]
+}
+
+type ImageVariant {
+  "The aspect ratio of the image, e.g. 16:9 or 4:3."
+  aspectRatio: AspectRatio
+  "The height of the image in pixels."
+  height: Int
+  "The URL of the image."
+  url: URL!
+  "The intended usage of the image variant. "
+  usage: String
+  "The width of the image in pixels."
+  width: Int
+}
+
+"A person is a clearly identifiable human actor who is involved in the creation of an editorial object."
+type Person implements Agent {
+  "The full name of the person."
+  name: String!
+  "The role(s) the person takes in relation to the asset."
+  roles: [Role]
+}
+
+"A service by which a publishing organisation or person publishes its content and offers access to consumers, e.g. \"SRF Info\" or \"RSI Rete Uno\"."
+type PublicationService {
+  "Indicates whether the data may be published publicly."
+  confidentialityLevel: ConfidentialityLevel!
+  "Specifies the distribution vector of a publication service."
+  distributionVector: DistributionVector
+  "The PDP id of the publication service."
+  id: String!
+  "Images associated with the publication service."
+  images: [Image]
+  "The name of the publication service."
+  name: String
+  "The source system publishing the metadata."
+  provenance: Provenance!
+  "The business unit or external organisation publishing the metadata."
+  publisher: Publisher!
+  "The id of the publication service in the source system. It is unique in the source system, but not globally."
+  sourceId: String!
+}
+
+"A page containing publication services matching the query filters."
+type PublicationServicePage {
+  cursor: String
+  edges: [PublicationService]!
+}
+
+"Query root"
+type Query {
+  "Returns the article with the provided PDP id or null if it does not exist."
+  article(
+    "A PDP id of an article."
+    id: String!
+  ): Article
+  """
+  **Experimental, do not use in production!**
+  This query might be changed or removed at any time without notice.
+  
+  Lists the available article genres.
+  """
+  articleGenres(
+    """
+    The returned list will contain only genres that match all filters. Only
+    filters with values affect the result. If you don't want to filter at all, then
+    you can set this field to null.
+    """
+    filter: ArticleGenreFilterInput
+  ): [Genre]! @experimental
+  "Returns articles matching the filter criteria."
+  articles(
+    "The cursor of the previous page. Set to null to get the first page."
+    after: String,
+    """
+    The returned page will contain only articles that match all filters. Only
+    filters with values affect the result. If you don't want to filter at all, then
+    you can set this field to null.
+    """
+    filter: ArticleFilterInput,
+    "The number of articles per page."
+    first: Int! @constraint(max : 500) @constraint(min : 1),
+    "Specifies the order in which the query returns matching articles."
+    sort: [ArticleSortInput] = []
+  ): ArticlePage!
+  "Returns the content with the provided PDP id or null if it does not exist."
+  content(
+    "A PDP id of a content."
+    id: String!
+  ): Content
+  "Returns contents matching the filter criteria."
+  contents(
+    "The cursor of the previous page. Set to null to get the first page."
+    after: String,
+    """
+    The returned page will contain only contents that match all filters. Only
+    filters with values affect the result. If you don't want to filter at all, then
+    you can set this field to null.
+    """
+    filter: ContentFilterInput,
+    "The number of contents per page."
+    first: Int! @constraint(max : 500) @constraint(min : 1),
+    "Specifies the order in which the query returns matching contents."
+    sort: [ContentSortInput] = []
+  ): ContentPage!
+  """
+  **Experimental, do not use in production!**
+  This query might be changed or removed at any time without notice.
+  
+  Returns electronic programme guide.
+  """
+  epg_experimental(
+    "The date of the programme guide. (ISO-8601)"
+    date: Date!,
+    "Filter by PublicationChannel."
+    publicationChannel: PublicationChannel!
+  ): [EpgItem]!
+  "Returns the publication service with the provided PDP id or null if it does not exist."
+  publicationService(
+    "A PDP id of a publication service."
+    id: String!
+  ): PublicationService
+  "Returns publication services matching the filter criteria."
+  publicationServices(
+    "The cursor of the previous page. Set to null to get the first page."
+    after: String,
+    "The returned page will contain only publication services that match all filters. Only filters with values affect the result. If you don't want to filter at all, then you can set this field to null."
+    filter: PublicationServiceFilterInput,
+    "The number of publication services per page."
+    first: Int! @constraint(max : 500) @constraint(min : 1),
+    "Specifies the order in which the query returns matching publication services."
+    sort: [PublicationServiceSortInput] = []
+  ): PublicationServicePage!
+  """
+  **Experimental, do not use in production!**
+  This query might be changed or removed at any time without notice.
+  
+  Full text search for articles.
+  """
+  searchArticles(
+    "The number of articles."
+    first: Int = 10 @constraint(max : 500) @constraint(min : 1),
+    "The language of the words used in the search query."
+    language: TextSearchLanguage = none,
+    "The search query."
+    query: String!
+  ): [Article]! @experimental
+}
+
+"A role of a person in the context of an asset."
+type Role {
+  "The type of the role, e.g. \"Producer\" or \"Editor\"."
+  name: String!
+}
+
+type SourceData {
+  "Serialized source data (e.g. a JSON object as string)."
+  data: String!
+  "Mime type of the data (e.g. 'application/json')."
+  mimeType: String!
+  "Source schema information."
+  schema: SourceSchema
+}
+
+type SourceSchema {
+  "Schema version of the data. Should be changed in case of major schema changes."
+  version: String!
+}
+
+"A team is a group of clearly identifiable and organizationally related actors who are jointly involved in the creation process of an editorial object. An example of a team is the editorial team of \"Regionaljournal Ostschweiz\"."
+type Team implements Agent {
+  "The name of the team."
+  name: String!
+}
+
+"Represents a human readable text for a corresponding asset."
+type Text {
+  "The content of the text."
+  content: String!
+}
+
+"A Uniform Resource Locator referencing a resource."
+type URL {
+  "The URL."
+  url: String!
+}
+
+"Specifies the fields that can be used to sort articles."
+enum ArticleSortField {
+  modifiedAt
+  releasedAt
+  updatedAt
+}
+
+enum ConfidentialityLevel {
+  C1_Public
+  C2_Internal
+  Unknown
+}
+
+"Specifies the fields that can be used to sort contents."
+enum ContentSortField {
+  updatedAt
+}
+
+enum DistributionVector {
+  Online
+  Radio
+  TV
+  Unknown
+}
+
+"The type of the content."
+enum DomainType {
+  "An editorial work consisting of text, graphic, sometimes video or audio, created for publication on web-sites, blogs and other channels similar to the more traditional paper-based publications."
+  Article
+  "A Campaign defines a strategy for publishing content to a targeted Audience according to a PublicationPlan. Campaign strategies can be refined taking into account the analysis of the Resonance of related ConsumptionEvents (e.g. likes, downloads, etc). Campaigns can apply to a variety of broadcasting strategies e.g. advertising campaigns, promotional campaigns or else."
+  Campaign
+  "A collection aggregates related editorial objects into a common, higher-level container, thereby enhancing their organization and accessibility."
+  Collection
+  "An editorial work as a stand-alone piece or an episode of a series, intended to be consumed as a whole."
+  Programme
+  "A service by which a publishing organisation or person publishes its content and offers access to consumers, e.g. \"SRF Info\" or \"RSI Rete Uno\"."
+  PublicationService
+  "An AI-powered data enrichment that provides essential information about the speaking-times of different individuals, primarily public figures, within audiovisual assets. This AI-generated data enables in-depth analysis and better understanding of the speaker's contribution, aiding journalistic research, content discovery, and fact-checking."
+  Speaker
+}
+
+"The source system publishing the metadata."
+enum Provenance {
+  AIBOX_SRGSSR
+  AIS_SRF
+  Angebotsportfolio_SRF
+  CMS_SRF
+  CMS_SWI
+  Escenic_RSI
+  Escenic_RTS
+  OpenMedia_RTR
+  OpenMedia_SRF
+  Play_SRF
+  Unknown
+  WhatsOn_SRF
+}
+
+enum PublicationChannel {
+  SRF1_RADIO
+  SRF2_RADIO
+}
+
+"Specifies the fields that can be used to sort contents."
+enum PublicationServiceSortField {
+  updatedAt
+}
+
+"The publication state of an article."
+enum PublicationStatus {
+  Published
+  Unknown
+  Unpublished
+}
+
+"""
+The business unit or external organisation publishing the metadata.
+Please contact the PDP team if a publisher is missing.
+"""
+enum Publisher {
+  AP
+  NZZ
+  PZBundeshaus
+  RSI
+  RTR
+  RTS
+  SRF
+  SWI
+  SwissTXT
+  Unknown
+}
+
+"Values for sorting."
+enum SortOrder {
+  "Sort ascending, nulls first."
+  ASC
+  "Sort descending, nulls last."
+  DESC
+}
+
+"The supported languages for a full text search."
+enum TextSearchLanguage {
+  da
+  de
+  en
+  es
+  fi
+  fr
+  hu
+  it
+  nb
+  nl
+  none
+  pt
+  ro
+  ru
+  sv
+  tr
+}
+
+"Scalar for BigDecimal"
+scalar BigDecimal
+
+"Scalar for BigInteger"
+scalar BigInteger
+
+"Scalar for Date"
+scalar Date
+
+"Scalar for DateTime"
+scalar DateTime
+
+"The returned page will contain only articles that match all filters. Only filters with values affect the result."
+input ArticleFilterInput {
+  "Filters articles by genre."
+  genres: [GenreFilterInput]
+  "Filters articles with an id or alternative identifier matching any of the provided identifiers."
+  identifiers: [String]
+  "Filters articles depending on the value of the field `isLongForm`."
+  isLongForm: Boolean
+  """
+  Filters articles depending on the value of the field `modifiedAt`. If
+  the source system did not set a timestamp, then the article will not be included
+  if this filter is set.
+  """
+  modified: TemporalFilterInput
+  "Filters articles depending on their provenance."
+  provenance: Provenance
+  "Filters articles depending on their publisher."
+  publisher: Publisher
+  """
+  Filters articles depending on the value of the field `releasedAt`. If
+  the source system did not set a timestamp, then the article will not be included
+  if this filter is set.
+  """
+  released: TemporalFilterInput
+  """
+  Filters articles depending on when they were updated. An article counts as
+  updated when either the source system changes its data or a relation to another
+  asset is updated. Updates to related assets like episodes or clips are not taken
+  into account.
+  """
+  updated: TemporalFilterInput
+}
+
+"""
+The returned list will contain only article genres matching all filters.
+Only filters with values affect the result.
+"""
+input ArticleGenreFilterInput {
+  "Filters article genres depending on their provenance."
+  provenance: Provenance
+  "Filters article genres depending on their publisher."
+  publisher: Publisher
+}
+
+"Defines a field and order to be used for sorting the articles."
+input ArticleSortInput {
+  "The field of the article you want to sort by."
+  field: ArticleSortField!
+  "The order in which want the articles sorted."
+  order: SortOrder!
+}
+
+"The returned page will contain only contents that match all filters. Only filters with values affect the result."
+input ContentFilterInput {
+  "Filters contents depending on their domain type."
+  domainType: DomainType
+  "Filters contents with an id or alternative identifier matching any of the provided identifiers."
+  identifiers: [String]
+  "Filters contents depending on their provenance."
+  provenance: Provenance
+  "Filters contents depending on their publisher."
+  publisher: Publisher
+  """
+  Filters contents depending on when they were updated. An content counts as
+  updated when either the source system changes its data or a relation to another
+  asset is updated. Updates to related assets like episodes or clips are not taken
+  into account.
+  """
+  updated: TemporalFilterInput
+}
+
+"Defines a field and order to be used for sorting the contents."
+input ContentSortInput {
+  "The field of the content you want to sort by."
+  field: ContentSortField!
+  "The order in which want the contents sorted."
+  order: SortOrder!
+}
+
+"""
+A filter for genres. If you provide a value for this filter, then the
+result will contain any items that contains at least one matching genre.
+"""
+input GenreFilterInput {
+  "Filters items by genre name."
+  name: TextFilterInput
+}
+
+"The returned page will contain only publication services that match all filters. Only filters with values affect the result."
+input PublicationServiceFilterInput {
+  "Filters publication services matching any of the provided identifiers."
+  identifiers: [String]
+  "Filters publication services depending on their provenance."
+  provenance: Provenance
+  "Filters publication services depending on their publisher."
+  publisher: Publisher
+  "Filters publication services depending on when they were updated. A channel counts as updated when either the source systemchanges its data or a relation to another asset is updated."
+  updated: TemporalFilterInput
+}
+
+"Defines a field and order to be used for sorting the contents."
+input PublicationServiceSortInput {
+  "The field of the publication service you want to sort by."
+  field: PublicationServiceSortField!
+  "The order in which want the publication services sorted."
+  order: SortOrder!
+}
+
+"""
+A filter for a temporal field. If you provide a date-time for both the after and
+before fields, the result will only contain items between those two date-times.
+If you only provide one of the date-times, then the result  will contain all
+items before or after the respective date-time. Both the after and the before
+date-time are exclusive, i.e. the result will not contain items with the exact
+same date-time.
+"""
+input TemporalFilterInput {
+  """
+  Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as
+  2022-07-18T10:15:30+02:00 to filter for items strictly after that date-time. (ISO-8601)
+  """
+  after: DateTime
+  """
+  Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as
+  2022-07-18T10:15:30+02:00 to filter for items strictly before that date-time. (ISO-8601)
+  """
+  before: DateTime
+}
+
+"A filter for a text field."
+input TextFilterInput {
+  "Filters texts by content. The result will only contain texts matching the entire content exactly."
+  content: String
+}
