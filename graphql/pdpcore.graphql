@@ -129,6 +129,10 @@ type Department implements Agent {
 }
 
 type EpgItem {
+  "ISO-8601"
+  end: DateTime!
+  "ISO-8601"
+  start: DateTime!
   title: String!
 }
 
