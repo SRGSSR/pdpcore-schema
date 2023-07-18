@@ -379,6 +379,8 @@ enum DomainType {
   Collection
   "An editorial work as a stand-alone piece or an episode of a series, intended to be consumed as a whole."
   Programme
+  "Specific conduits or pathways through which content is delivered from publication services. Operated on a publication platform, e.g. \"Radio SRF 1 on Radio\" or \"Radio SRF 1 on srf.ch\"."
+  PublicationChannel
   "A service by which a publishing organisation or person publishes its content and offers access to consumers, e.g. \"SRF Info\" or \"RSI Rete Uno\"."
   PublicationService
   "An AI-powered data enrichment that provides essential information about the speaking-times of different individuals, primarily public figures, within audiovisual assets. This AI-generated data enables in-depth analysis and better understanding of the speaker's contribution, aiding journalistic research, content discovery, and fact-checking."

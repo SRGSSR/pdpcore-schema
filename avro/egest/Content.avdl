@@ -46,6 +46,7 @@ protocol Content {
         Unknown,
         Article,
         PublicationService,
+        PublicationChannel,
         Programme,
         Campaign,
         Speaker,

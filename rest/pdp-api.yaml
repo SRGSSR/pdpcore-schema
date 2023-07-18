@@ -178,6 +178,10 @@ components:
           A service by which a publishing organisation or person publishes its
           content and offers access to consumers, e.g. "SRF Info" or
           "RSI Rete Uno".
+        - PublicationChannel  
+          Specific conduits or pathways through which content is delivered from 
+          publication services. Operated on a publication platform, e.g. 
+          "Radio SRF 1 on Radio" or "Radio SRF 1 on srf.ch".
         - Programme  
           An editorial work as a stand-alone piece or an episode of a
           series, intended to be consumed as a whole.
@@ -201,6 +205,7 @@ components:
       enum:
         - Article
         - PublicationService
+        - PublicationChannel
         - Programme
         - Campaign
         - Speaker
