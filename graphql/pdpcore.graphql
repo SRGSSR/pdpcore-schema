@@ -145,6 +145,8 @@ type Genre {
   description: Text
   "The preferred lexical label for a genre, in a given language."
   name: Text!
+  "The source identifier of the genre."
+  sourceId: String
 }
 
 "Describes visual material - such as logos, thumbnails or other visual elements - that belong to an asset."
