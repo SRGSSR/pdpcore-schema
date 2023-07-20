@@ -10,6 +10,8 @@ protocol Genre {
         Text name;
         /** A general description of the genre. */
         Text? description = null;
+        /** The source identifier of the genre. */
+        string? sourceId = null;
     }
 
 }
