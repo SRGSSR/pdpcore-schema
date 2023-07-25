@@ -76,8 +76,10 @@ type Article {
   sourceUrl: URL
   "The title or headline of the article. The title may be available in different languages."
   title: [Text]
-  "The URL from where the article can be accessed."
+  "The permanent URL from where the article can be accessed."
   url: URL
+  "The web or seo URL from where the article can be accessed"
+  webUrl: URL
 }
 
 "The text content of an article."
