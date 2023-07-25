@@ -270,13 +270,13 @@ type Query {
   **Experimental, do not use in production!**
   This query might be changed or removed at any time without notice.
   
-  Returns electronic programme guide.
+  Returns the electronic programme guide (EPG) for the given publication channel and date.
   """
   epg_experimental(
-    "The date of the programme guide. (ISO-8601)"
+    "The date (YYYY-MM-DD) of the programme guide. (ISO-8601)"
     date: Date!,
-    "Filter by PublicationChannel."
-    publicationChannel: PublicationChannel!
+    "The publication channel of the programme guide."
+    publicationChannel: EpgPublicationChannel!
   ): [EpgItem]!
   "Returns the publication service with the provided PDP id or null if it does not exist."
   publicationService(
@@ -391,6 +391,13 @@ enum DomainType {
   Speaker
 }
 
+enum EpgPublicationChannel {
+  "Radio SRF 1"
+  RADIO_SRF_1
+  "Radio SRF 2 Kultur"
+  RADIO_SRF_2
+}
+
 "The source system publishing the metadata."
 enum Provenance {
   AIBOX_SRGSSR
@@ -405,11 +412,6 @@ enum Provenance {
   Play_SRF
   Unknown
   WhatsOn_SRF
-}
-
-enum PublicationChannel {
-  SRF1_RADIO
-  SRF2_RADIO
 }
 
 "Specifies the fields that can be used to sort contents."
