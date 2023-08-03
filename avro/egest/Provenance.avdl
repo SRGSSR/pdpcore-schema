@@ -14,7 +14,8 @@ protocol Provenance {
 		WhatsOn_SRF,
 		OpenMedia_SRF,
 		OpenMedia_RTR,
-		AIBOX_SRGSSR
+		AIBOX_SRGSSR,
+        Faro_SRF
 	} = Unknown;
 
 }

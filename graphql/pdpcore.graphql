@@ -407,6 +407,7 @@ enum Provenance {
   CMS_SWI
   Escenic_RSI
   Escenic_RTS
+  Faro_SRF
   OpenMedia_RTR
   OpenMedia_SRF
   Play_SRF
