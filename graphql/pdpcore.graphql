@@ -130,12 +130,22 @@ type Department implements Agent {
   name: String!
 }
 
-type EpgItem {
-  "ISO-8601"
+"The available information for a programme of an EPG schedule."
+type EpgProgramme {
+  "The end of the programme. (ISO-8601)"
   end: DateTime!
-  "ISO-8601"
+  "The start of the programme. (ISO-8601)"
   start: DateTime!
+  "The title of the programme."
   title: String!
+}
+
+"A publication channel's EPG schedule for a single day."
+type EpgSchedule {
+  "The date of the schedule. (ISO-8601)"
+  date: Date!
+  "The programmes published on the respective publication channel and date."
+  programmes: [EpgProgramme]!
 }
 
 """
@@ -277,7 +287,7 @@ type Query {
     date: Date!,
     "The publication channel of the programme guide."
     publicationChannel: EpgPublicationChannel!
-  ): [EpgItem]!
+  ): EpgSchedule!
   "Returns the publication service with the provided PDP id or null if it does not exist."
   publicationService(
     "A PDP id of a publication service."
