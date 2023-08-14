@@ -401,11 +401,26 @@ enum DomainType {
   Speaker
 }
 
+"The channels available for the EPG."
 enum EpgPublicationChannel {
   "Radio SRF 1"
   RADIO_SRF_1
   "Radio SRF 2 Kultur"
   RADIO_SRF_2
+  "Radio SRF 3"
+  RADIO_SRF_3
+  "Radio SRF 4 News"
+  RADIO_SRF_4
+  "Radio SRF Musikwelle"
+  RADIO_SRF_Musikwelle
+  "Radio SRF Virus"
+  RADIO_SRF_Virus
+  "Radio Swiss Classic"
+  RADIO_SWISS_CLASSIC
+  "Radio Swiss Jazz"
+  RADIO_SWISS_JAZZ
+  "Radio Swiss Pop"
+  RADIO_SWISS_POP
 }
 
 "The source system publishing the metadata."
