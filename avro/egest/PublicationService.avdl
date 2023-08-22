@@ -3,7 +3,6 @@ protocol PublicationService {
 
     import idl "ConfidentialityLevel.avdl";
     import idl "DistributionVector.avdl";
-    import idl "Picture.avdl";
     import idl "Provenance.avdl";
     import idl "Publisher.avdl";
     import idl "Image.avdl";

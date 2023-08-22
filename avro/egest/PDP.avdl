@@ -4,10 +4,6 @@ protocol PDP {
 
     import idl "Article.avdl";
     import idl "PublicationService.avdl";
-    import idl "Clip.avdl";
-    import idl "ClosedSubtitling.avdl";
-    import idl "EditorialGrouping.avdl";
-    import idl "Episode.avdl";
     import idl "MessageKey.avdl";
 
 }

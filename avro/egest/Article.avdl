@@ -4,15 +4,10 @@ protocol Article {
     import idl "ConfidentialityLevel.avdl";
     import idl "Agent.avdl";
     import idl "ArticleReference.avdl";
-    import idl "EditorialGroupingReference.avdl";
-    import idl "Event.avdl";
     import idl "Genre.avdl";
-    import idl "ClipReference.avdl";
     import idl "Language.avdl";
-    import idl "Location.avdl";
     import idl "Image.avdl";
     import idl "Provenance.avdl";
-    import idl "EpisodeReference.avdl";
     import idl "PublicationStatus.avdl";
     import idl "Publisher.avdl";
     import idl "Text.avdl";
