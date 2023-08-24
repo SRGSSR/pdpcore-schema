@@ -20,6 +20,9 @@ directive @include(
     if: Boolean!
   ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
 
+"Used to specify the role required to execute a given field or operation."
+directive @rolesAllowed(value: String) on FIELD_DEFINITION
+
 "Directs the executor to skip this field or fragment when the `if` argument is true."
 directive @skip(
     "Skipped when true."
@@ -226,7 +229,7 @@ type Query {
   article(
     "A PDP id of an article."
     id: String!
-  ): Article
+  ): Article @rolesAllowed(value : "Resource.ReadInternal")
   """
   **Experimental, do not use in production!**
   This query might be changed or removed at any time without notice.
@@ -255,12 +258,12 @@ type Query {
     first: Int! @constraint(max : 500) @constraint(min : 1),
     "Specifies the order in which the query returns matching articles."
     sort: [ArticleSortInput] = []
-  ): ArticlePage!
+  ): ArticlePage! @rolesAllowed(value : "Resource.ReadInternal")
   "Returns the content with the provided PDP id or null if it does not exist."
   content(
     "A PDP id of a content."
     id: String!
-  ): Content
+  ): Content @rolesAllowed(value : "Resource.ReadInternal")
   "Returns contents matching the filter criteria."
   contents(
     "The cursor of the previous page. Set to null to get the first page."
@@ -275,7 +278,7 @@ type Query {
     first: Int! @constraint(max : 500) @constraint(min : 1),
     "Specifies the order in which the query returns matching contents."
     sort: [ContentSortInput] = []
-  ): ContentPage!
+  ): ContentPage! @rolesAllowed(value : "Resource.ReadInternal")
   """
   **Experimental, do not use in production!**
   This query might be changed or removed at any time without notice.
@@ -292,7 +295,7 @@ type Query {
   publicationService(
     "A PDP id of a publication service."
     id: String!
-  ): PublicationService
+  ): PublicationService @rolesAllowed(value : "Resource.ReadInternal")
   "Returns publication services matching the filter criteria."
   publicationServices(
     "The cursor of the previous page. Set to null to get the first page."
@@ -303,7 +306,7 @@ type Query {
     first: Int! @constraint(max : 500) @constraint(min : 1),
     "Specifies the order in which the query returns matching publication services."
     sort: [PublicationServiceSortInput] = []
-  ): PublicationServicePage!
+  ): PublicationServicePage! @rolesAllowed(value : "Resource.ReadInternal")
   """
   **Experimental, do not use in production!**
   This query might be changed or removed at any time without notice.
@@ -317,7 +320,7 @@ type Query {
     language: TextSearchLanguage = none,
     "The search query."
     query: String!
-  ): [Article]! @experimental
+  ): [Article]! @experimental @rolesAllowed(value : "Resource.ReadInternal")
 }
 
 "A role of a person in the context of an asset."
