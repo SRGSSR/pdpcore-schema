@@ -151,6 +151,10 @@ type EpgSchedule {
   programmes: [EpgProgramme]!
 }
 
+type Essence {
+  sourceId: String!
+}
+
 """
 The genre is used to classify audiovisual objects depending on their
 content into subject areas such as "Culture", "Sports", "News" or "Economy".
@@ -189,12 +193,49 @@ type ImageVariant {
   width: Int
 }
 
+type Item {
+  contributors: [ProgrammeRole]
+  sourceId: String!
+}
+
 "A person is a clearly identifiable human actor who is involved in the creation of an editorial object."
 type Person implements Agent {
   "The full name of the person."
   name: String!
   "The role(s) the person takes in relation to the asset."
   roles: [Role]
+}
+
+type Programme {
+  "Indicates whether the data may be published publicly."
+  confidentialityLevel: ConfidentialityLevel!
+  contributors: [ProgrammeRole]
+  existsAs: [String]!
+  "The PDP id of the programme."
+  id: String!
+  instantiatedBy: [Essence]
+  items: [Item]
+  "The source system publishing the metadata."
+  provenance: Provenance!
+  "The business unit or external organisation publishing the metadata."
+  publisher: Publisher!
+  "The id of the programme in the source system. It is unique in the source system, but not globally."
+  sourceId: String!
+  title: [Text]
+}
+
+type ProgrammeAgent {
+  name: String!
+}
+
+type ProgrammePage {
+  cursor: String
+  edges: [Programme]!
+}
+
+type ProgrammeRole {
+  agent: ProgrammeAgent!
+  name: String!
 }
 
 "A service by which a publishing organisation or person publishes its content and offers access to consumers, e.g. \"SRF Info\" or \"RSI Rete Uno\"."
@@ -291,6 +332,22 @@ type Query {
     "The publication channel of the programme guide."
     publicationChannel: EpgPublicationChannel!
   ): EpgSchedule!
+  "Returns the programme with the provided PDP id or null if it does not exist."
+  programme_experimental(
+    "A PDP id of a programme."
+    id: String!
+  ): Programme @experimental @rolesAllowed(value : "Resource.ReadInternal")
+  "Returns programmes matching the filter criteria."
+  programmes_experimental(
+    "The cursor of the previous page. Set to null to get the first page."
+    after: String,
+    "The returned page will contain only programmes that match all filters. Only filters with values affect the result. If you don't want to filter at all, then you can set this field to null."
+    filter: ProgrammeFilterInput,
+    "The number of programmes per page."
+    first: Int! @constraint(max : 500) @constraint(min : 1),
+    "Specifies the order in which the query returns matching programmes."
+    sort: [ProgrammeSortInput] = []
+  ): ProgrammePage! @experimental @rolesAllowed(value : "Resource.ReadInternal")
   "Returns the publication service with the provided PDP id or null if it does not exist."
   publicationService(
     "A PDP id of a publication service."
@@ -424,6 +481,11 @@ enum EpgPublicationChannel {
   RadioSwissJazz
   "Radio Swiss Pop"
   RadioSwissPop
+}
+
+"Specifies the fields that can be used to sort contents."
+enum ProgrammeSortField {
+  updatedAt
 }
 
 "The source system publishing the metadata."
@@ -598,6 +660,26 @@ result will contain any items that contains at least one matching genre.
 input GenreFilterInput {
   "Filters items by genre name."
   name: TextFilterInput
+}
+
+"The returned page will contain only programmes that match all filters. Only filters with values affect the result."
+input ProgrammeFilterInput {
+  "Filters programmes matching any of the provided identifiers."
+  identifiers: [String]
+  "Filters programmes depending on their provenance."
+  provenance: Provenance
+  "Filters programmes depending on their publisher."
+  publisher: Publisher
+  "Filters programmes depending on when they were updated. A channel counts as updated when either the source systemchanges its data or a relation to another asset is updated."
+  updated: TemporalFilterInput
+}
+
+"Defines a field and order to be used for sorting the contents."
+input ProgrammeSortInput {
+  "The field of the programme you want to sort by."
+  field: ProgrammeSortField!
+  "The order in which want the programmes sorted."
+  order: SortOrder!
 }
 
 "The returned page will contain only publication services that match all filters. Only filters with values affect the result."
