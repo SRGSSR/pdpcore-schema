@@ -41,6 +41,15 @@ interface Agent {
   name: String!
 }
 
+interface ProgrammeAgent {
+  name: String!
+}
+
+type AccessCondition {
+  description: [Text]!
+  name: String!
+}
+
 "A CMS website article."
 type Article {
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
@@ -154,6 +163,13 @@ type Department implements Agent {
   name: String!
 }
 
+type EditorialSegment {
+  contentDescription: [Text]!
+  coversLocations: [Location]!
+  identifiers: [Identifier]!
+  segmentNumber: Int!
+}
+
 "The available information for a programme of an EPG schedule."
 type EpgProgramme {
   "The end of the programme. (ISO-8601)"
@@ -173,7 +189,7 @@ type EpgSchedule {
 }
 
 type Essence {
-  sourceId: String!
+  identifiers: [Identifier]!
 }
 
 """
@@ -187,6 +203,11 @@ type Genre {
   name: Text!
   "The source identifier of the genre."
   sourceId: String
+}
+
+type Identifier {
+  type: IdentifierType!
+  value: String!
 }
 
 "Describes visual material - such as logos, thumbnails or other visual elements - that belong to an asset."
@@ -215,8 +236,25 @@ type ImageVariant {
 }
 
 type Item {
+  abstract: [Text]!
+  accessConditions: [AccessCondition]!
   contributors: [ProgrammeRole]
-  sourceId: String!
+  coversLocations: [Location]!
+  durationMs: BigInteger!
+  identifiers: [Identifier]!
+  instantiatedBy: [Essence]
+  keywords: [String]!
+  mediaType: ProgrammeMediaType!
+  parts: [EditorialSegment]
+}
+
+type Location {
+  country: [Text]
+  name: [Text]!
+}
+
+type Occupation {
+  name: [Text]!
 }
 
 "A person is a clearly identifiable human actor who is involved in the creation of an editorial object."
@@ -228,14 +266,19 @@ type Person implements Agent {
 }
 
 type Programme {
+  accessConditions: [AccessCondition]!
   "Indicates whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   contributors: [ProgrammeRole]
+  durationMs: BigInteger
   existsAs: [String]!
   "The PDP id of the programme."
   id: String!
+  identifiers: [Identifier]!
   instantiatedBy: [Essence]
   items: [Item]
+  keywords: [String]!
+  mediaType: ProgrammeMediaType!
   "The source system publishing the metadata."
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
@@ -245,7 +288,7 @@ type Programme {
   title: [Text]
 }
 
-type ProgrammeAgent {
+type ProgrammeDepartment implements ProgrammeAgent {
   name: String!
 }
 
@@ -254,8 +297,17 @@ type ProgrammePage {
   edges: [Programme]!
 }
 
+type ProgrammePerson implements ProgrammeAgent {
+  name: String!
+  occupations: [Occupation]!
+}
+
 type ProgrammeRole {
   agent: ProgrammeAgent!
+  name: String!
+}
+
+type ProgrammeTeam implements ProgrammeAgent {
   name: String!
 }
 
@@ -525,6 +577,17 @@ enum EpgPublicationChannel {
   RadioSwissPop
 }
 
+enum IdentifierType {
+  ANR
+  PdpId
+  SourceId
+}
+
+enum ProgrammeMediaType {
+  Audio
+  Video
+}
+
 "Specifies the fields that can be used to sort contents."
 enum ProgrammeSortField {
   updatedAt
@@ -728,6 +791,7 @@ input GenreFilterInput {
 input ProgrammeFilterInput {
   "Filters programmes matching any of the provided identifiers."
   identifiers: [String]
+  keywords: [String]
   "Filters programmes depending on their provenance."
   provenance: Provenance
   "Filters programmes depending on their publisher."
