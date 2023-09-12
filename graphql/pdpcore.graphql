@@ -266,7 +266,7 @@ type Person implements Agent {
 }
 
 type Programme {
-  accessConditions: [AccessCondition]!
+  accessConditions: [AccessCondition]
   "Indicates whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   contributors: [ProgrammeRole]
@@ -274,11 +274,11 @@ type Programme {
   existsAs: [String]!
   "The PDP id of the programme."
   id: String!
-  identifiers: [Identifier]!
+  identifiers: [Identifier]
   instantiatedBy: [Essence]
   items: [Item]
-  keywords: [String]!
-  mediaType: ProgrammeMediaType!
+  keywords: [String]
+  mediaType: ProgrammeMediaType
   "The source system publishing the metadata."
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
