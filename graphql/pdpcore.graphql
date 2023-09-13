@@ -244,7 +244,7 @@ type Item {
   identifiers: [Identifier]!
   instantiatedBy: [Essence]
   keywords: [String]!
-  mediaType: ProgrammeMediaType!
+  mediaType: ProgrammeMediaType
   parts: [EditorialSegment]
 }
 
