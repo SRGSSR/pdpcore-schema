@@ -15,7 +15,9 @@ protocol Provenance {
 		OpenMedia_SRF,
 		OpenMedia_RTR,
 		AIBOX_SRGSSR,
-        Faro_SRF
+        Faro_SRF,
+        Siranau_RTS,
+        Gico_RTS
 	} = Unknown;
 
 }

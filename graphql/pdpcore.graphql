@@ -603,9 +603,11 @@ enum Provenance {
   Escenic_RSI
   Escenic_RTS
   Faro_SRF
+  Gico_RTS
   OpenMedia_RTR
   OpenMedia_SRF
   Play_SRF
+  Siranau_RTS
   Unknown
   WhatsOn_SRF
 }
