@@ -240,7 +240,7 @@ type Item {
   accessConditions: [AccessCondition]!
   contributors: [ProgrammeRole]
   coversLocations: [Location]!
-  durationMs: BigInteger!
+  durationMs: BigInteger
   identifiers: [Identifier]!
   instantiatedBy: [Essence]
   keywords: [String]!
