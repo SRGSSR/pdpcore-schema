@@ -296,6 +296,8 @@ components:
         - OpenMedia_RTR
         - AIBOX_SRGSSR
         - Faro_SRF
+        - Siranau_RTS
+        - Gico_RTS
 
     Publisher:
       description: 'The business unit or external organisation publishing the metadata. Please contact the PDP team if a publisher is missing.'
