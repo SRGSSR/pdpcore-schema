@@ -358,7 +358,7 @@ type Query {
     you can set this field to null.
     """
     filter: ArticleGenreFilterInput
-  ): [Genre]! @experimental
+  ): [Genre]!
   "Returns articles matching the filter criteria."
   articles(
     "The cursor of the previous page. Set to null to get the first page."
@@ -378,7 +378,7 @@ type Query {
   collection_experimental(
     "A PDP id of a collection."
     id: String!
-  ): Collection @experimental @rolesAllowed(value : "Resource.ReadInternal")
+  ): Collection @rolesAllowed(value : "Resource.ReadInternal")
   "Returns collections matching the filter criteria."
   collections_experimental(
     "The cursor of the previous page. Set to null to get the first page."
@@ -389,7 +389,7 @@ type Query {
     first: Int! @constraint(max : 500) @constraint(min : 1),
     "Specifies the order in which the query returns matching collections."
     sort: [CollectionSortInput] = []
-  ): CollectionPage! @experimental @rolesAllowed(value : "Resource.ReadInternal")
+  ): CollectionPage! @rolesAllowed(value : "Resource.ReadInternal")
   "Returns the content with the provided PDP id or null if it does not exist."
   content(
     "A PDP id of a content."
@@ -426,7 +426,7 @@ type Query {
   programme_experimental(
     "A PDP id of a programme."
     id: String!
-  ): Programme @experimental @rolesAllowed(value : "Resource.ReadInternal")
+  ): Programme @rolesAllowed(value : "Resource.ReadInternal")
   "Returns programmes matching the filter criteria."
   programmes_experimental(
     "The cursor of the previous page. Set to null to get the first page."
@@ -437,7 +437,7 @@ type Query {
     first: Int! @constraint(max : 500) @constraint(min : 1),
     "Specifies the order in which the query returns matching programmes."
     sort: [ProgrammeSortInput] = []
-  ): ProgrammePage! @experimental @rolesAllowed(value : "Resource.ReadInternal")
+  ): ProgrammePage! @rolesAllowed(value : "Resource.ReadInternal")
   "Returns the publication service with the provided PDP id or null if it does not exist."
   publicationService(
     "A PDP id of a publication service."
@@ -467,7 +467,7 @@ type Query {
     language: TextSearchLanguage = none,
     "The search query."
     query: String!
-  ): [Article]! @experimental @rolesAllowed(value : "Resource.ReadInternal")
+  ): [Article]! @rolesAllowed(value : "Resource.ReadInternal")
 }
 
 "A role of a person in the context of an asset."
