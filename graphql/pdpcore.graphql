@@ -236,16 +236,18 @@ type ImageVariant {
 }
 
 type Item {
-  abstract: [Text]!
+  abstract: [Text]
   accessConditions: [AccessCondition]!
   contributors: [ProgrammeRole]
   coversLocations: [Location]!
+  description: [Text]
   durationMs: BigInteger
   identifiers: [Identifier]!
   instantiatedBy: [Essence]
   keywords: [String]!
   mediaType: ProgrammeMediaType
   parts: [EditorialSegment]
+  title: [Text]
 }
 
 type Location {
@@ -272,7 +274,7 @@ type Programme {
   contributors: [ProgrammeRole]
   description: [Text]
   durationMs: BigInteger
-  existsAs: [String]!
+  existsAs: [String]
   "The PDP id of the programme."
   id: String!
   identifiers: [Identifier]
@@ -280,6 +282,7 @@ type Programme {
   items: [Item]
   keywords: [String]
   mediaType: ProgrammeMediaType
+  memberOf: [String]
   "The source system publishing the metadata."
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
