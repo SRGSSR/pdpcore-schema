@@ -56,8 +56,8 @@ type Article {
   confidentialityLevel: ConfidentialityLevel!
   "The full text of the article."
   content: ArticleContent
-  "People, teams or departments who contributed to the article."
-  contributors: [Agent]
+  "Involvements of People, teams or departments who contributed to the article."
+  contributors: [Involvement]
   "The genres this article belongs to."
   genres: [Genre]
   "The PDP id of the article."
@@ -235,6 +235,14 @@ type ImageVariant {
   width: Int
 }
 
+"An Agent's participation in the creation of publication of a MediaResource (e.g. Article)"
+type Involvement {
+  "The Person, Department, or Team involved."
+  agent: Agent!
+  "The description of the involvement (e.g. author)."
+  name: String!
+}
+
 type Item {
   abstract: [Text]
   accessConditions: [AccessCondition]!
@@ -264,7 +272,7 @@ type Person implements Agent {
   "The full name of the person."
   name: String!
   "The role(s) the person takes in relation to the asset."
-  roles: [Role]
+  occupations: [Occupation]
 }
 
 type Programme {
@@ -471,12 +479,6 @@ type Query {
     "The search query."
     query: String!
   ): [Article]! @rolesAllowed(value : "Resource.ReadInternal")
-}
-
-"A role of a person in the context of an asset."
-type Role {
-  "The type of the role, e.g. \"Producer\" or \"Editor\"."
-  name: String!
 }
 
 type SourceData {
