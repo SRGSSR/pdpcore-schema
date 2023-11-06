@@ -41,10 +41,6 @@ interface Agent {
   name: String!
 }
 
-interface ProgrammeAgent {
-  name: String!
-}
-
 type AccessCondition {
   description: [Text]!
   name: String!
@@ -249,7 +245,7 @@ type Item {
   accessConditions: [AccessCondition]!
   "ISO-8601"
   broadcastDate: DateTime
-  contributors: [ProgrammeRole]
+  contributors: [Involvement]
   coversLocations: [Location]!
   description: [Text]
   durationMs: BigInteger
@@ -302,7 +298,7 @@ type Programme {
   broadcastDate: DateTime
   "Indicates whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
-  contributors: [ProgrammeRole]
+  contributors: [Involvement]
   description: [Text]
   durationMs: BigInteger
   existsAs: [String]
@@ -328,27 +324,9 @@ type Programme {
   title: [Text]
 }
 
-type ProgrammeDepartment implements ProgrammeAgent {
-  name: String!
-}
-
 type ProgrammePage {
   cursor: String
   edges: [Programme]!
-}
-
-type ProgrammePerson implements ProgrammeAgent {
-  name: String!
-  occupations: [Occupation]!
-}
-
-type ProgrammeRole {
-  agent: ProgrammeAgent!
-  name: String!
-}
-
-type ProgrammeTeam implements ProgrammeAgent {
-  name: String!
 }
 
 type PublicationEvent {
