@@ -190,6 +190,7 @@ type EpgSchedule {
 
 type Essence {
   identifiers: [Identifier]!
+  locator: String
 }
 
 """
@@ -246,15 +247,25 @@ type Involvement {
 type Item {
   abstract: [Text]
   accessConditions: [AccessCondition]!
+  "ISO-8601"
+  broadcastDate: DateTime
   contributors: [ProgrammeRole]
   coversLocations: [Location]!
   description: [Text]
   durationMs: BigInteger
+  endMs: BigInteger
   identifiers: [Identifier]!
   instantiatedBy: [Essence]
   keywords: [String]!
   mediaType: ProgrammeMediaType
+  "ISO-8601"
+  modificationDate: DateTime
   parts: [EditorialSegment]
+  producers: [Producer]
+  "ISO-8601"
+  productionDate: DateTime
+  productionTypes: [ProductionType]
+  startMs: BigInteger
   title: [Text]
 }
 
@@ -275,8 +286,20 @@ type Person implements Agent {
   occupations: [Occupation]
 }
 
+type Producer {
+  sourceValue: String!
+}
+
+type ProductionType {
+  sourceValue: String!
+}
+
 type Programme {
-  accessConditions: [AccessCondition]
+  abstract: [Text]
+  "Indicates whether the data may be published publicly."
+  accessConditions: [AccessCondition]!
+  "ISO-8601"
+  broadcastDate: DateTime
   "Indicates whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   contributors: [ProgrammeRole]
@@ -291,10 +314,15 @@ type Programme {
   keywords: [String]
   mediaType: ProgrammeMediaType
   memberOf: [String]
+  "ISO-8601"
+  modificationDate: DateTime
+  "ISO-8601"
+  productionDate: DateTime
   "The source system publishing the metadata."
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
   publisher: Publisher!
+  scheduledOn: [PublicationEvent]
   "The id of the programme in the source system. It is unique in the source system, but not globally."
   sourceId: String!
   title: [Text]
@@ -321,6 +349,12 @@ type ProgrammeRole {
 
 type ProgrammeTeam implements ProgrammeAgent {
   name: String!
+}
+
+type PublicationEvent {
+  identifiers: [Identifier]!
+  "ISO-8601"
+  scheduleDate: DateTime
 }
 
 "A service by which a publishing organisation or person publishes its content and offers access to consumers, e.g. \"SRF Info\" or \"RSI Rete Uno\"."
@@ -505,6 +539,8 @@ type Team implements Agent {
 type Text {
   "The content of the text."
   content: String!
+  "The language of the text."
+  language: Language
 }
 
 "A Uniform Resource Locator referencing a resource."
@@ -588,6 +624,193 @@ enum IdentifierType {
   PdpId
   ProductId
   SourceId
+}
+
+enum Language {
+  Unknown
+  aa
+  ab
+  ae
+  af
+  ak
+  am
+  an
+  ar
+  as
+  av
+  ay
+  az
+  ba
+  be
+  bg
+  bi
+  bm
+  bn
+  bo
+  br
+  bs
+  ca
+  ce
+  ch
+  co
+  cr
+  cs
+  cu
+  cv
+  cy
+  da
+  de
+  dv
+  dz
+  ee
+  el
+  en
+  eo
+  es
+  et
+  eu
+  fa
+  ff
+  fi
+  fj
+  fo
+  fr
+  fy
+  ga
+  gd
+  gl
+  gn
+  gu
+  gv
+  ha
+  he
+  hi
+  ho
+  hr
+  ht
+  hu
+  hy
+  hz
+  ia
+  id
+  ie
+  ig
+  ii
+  ik
+  io
+  is
+  it
+  iu
+  ja
+  jv
+  ka
+  kg
+  ki
+  kj
+  kk
+  kl
+  km
+  kn
+  ko
+  kr
+  ks
+  ku
+  kv
+  kw
+  ky
+  la
+  lb
+  lg
+  li
+  ln
+  lo
+  lt
+  lu
+  lv
+  mg
+  mh
+  mi
+  mk
+  ml
+  mn
+  mr
+  ms
+  mt
+  my
+  na
+  nb
+  nd
+  ne
+  ng
+  nl
+  nn
+  no
+  nr
+  nv
+  ny
+  oc
+  oj
+  om
+  or
+  os
+  pa
+  pi
+  pl
+  ps
+  pt
+  qu
+  rm
+  rn
+  ro
+  ru
+  rw
+  sa
+  sc
+  sd
+  se
+  sg
+  si
+  sk
+  sl
+  sm
+  sn
+  so
+  sq
+  sr
+  ss
+  st
+  su
+  sv
+  sw
+  ta
+  te
+  tg
+  th
+  ti
+  tk
+  tl
+  tn
+  to
+  tr
+  ts
+  tt
+  tw
+  ty
+  ug
+  uk
+  ur
+  uz
+  ve
+  vi
+  vo
+  wa
+  wo
+  xh
+  yi
+  yo
+  za
+  zh
+  zu
 }
 
 enum ProgrammeMediaType {
