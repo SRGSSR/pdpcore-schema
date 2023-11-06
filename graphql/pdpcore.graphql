@@ -309,7 +309,7 @@ type Programme {
   items: [Item]
   keywords: [String]
   mediaType: ProgrammeMediaType
-  memberOf: [String]
+  memberOf: [Collection]!
   "ISO-8601"
   modificationDate: DateTime
   "ISO-8601"
