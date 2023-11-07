@@ -12,6 +12,7 @@ protocol Article {
     import idl "Publisher.avdl";
     import idl "Text.avdl";
     import idl "URL.avdl";
+    import idl "Involvement.avdl";
 
     /** In the context of the PDP an article is a (CMS) website article. */
     record Article {
@@ -28,7 +29,7 @@ protocol Article {
         /** The title or headline of the article. The title may be available in different languages. */
         union{null, array<Text>} title = null;
         /** People, teams or departments who contributed to the article. */
-        union{null, array<union{Person, Team, Department}>} contributors = null;
+        union{null, array<Involvement>} contributors = null;
         /** The genres this article belongs to. */
         union{null, array<Genre>} genres = null;
         /** The images of the article. */
