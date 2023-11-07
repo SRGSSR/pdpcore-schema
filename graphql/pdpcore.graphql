@@ -301,7 +301,7 @@ type Programme {
   contributors: [Involvement]
   description: [Text]
   durationMs: BigInteger
-  existsAs: [String]
+  existsAs: [Programme]!
   "The PDP id of the programme."
   id: String!
   identifiers: [Identifier]
