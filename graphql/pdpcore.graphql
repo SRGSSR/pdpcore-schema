@@ -48,6 +48,8 @@ type AccessCondition {
 
 "A CMS website article."
 type Article {
+  "The conditions under which content can be accessed."
+  accessConditions: [AccessCondition]!
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   "The full text of the article."
