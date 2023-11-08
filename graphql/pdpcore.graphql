@@ -539,6 +539,12 @@ enum CollectionSortField {
   updatedAt
 }
 
+"""
+Assets intended to be made widely available outside of the SRG-SSR must be classified as "C1_Public".
+Assets not (anymore) openly published by the SRG-SSR to the public may be classified as "C2_Internal".
+In the context of the PDP "C2_Internal" applies e.g. for assets with data protection or copyright issues.
+If you are unsure set the confidentiality level to "C2_Internal" and/or check our Dev-Hub for more information on this topic.
+"""
 enum ConfidentialityLevel {
   C1_Public
   C2_Internal
