@@ -133,6 +133,8 @@ type CampaignPage {
 }
 
 type Collection {
+  "The conditions under which content can be accessed."
+  accessConditions: [AccessCondition]
   "Indicates whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   description: [Text]
