@@ -42,7 +42,7 @@ interface Agent {
 }
 
 type AccessCondition {
-  description: [Text]!
+  description: [Text]
   name: String!
 }
 

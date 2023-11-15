@@ -13,6 +13,7 @@ protocol Article {
     import idl "Text.avdl";
     import idl "URL.avdl";
     import idl "Involvement.avdl";
+    import idl "AccessConditions.avdl";
 
     /** In the context of the PDP an article is a (CMS) website article. */
     record Article {
@@ -56,6 +57,8 @@ protocol Article {
         union{null, array<Text>} kicker = null;
         /** This field indicates whether the article is longer or more extensive. */
         boolean? isLongForm = null;
+        /** The access conditions for this article. */
+        union{null, array<AccessCondition>} accessCondition = null;
     }
 
     /** The text content of an article. */

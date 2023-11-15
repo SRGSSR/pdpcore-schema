@@ -1,0 +1,13 @@
+@namespace("ch.srgssr.pdp.domain.egest")
+protocol AccessCondition {
+
+    import idl "Text.avdl";
+
+    /** The conditions under which content can be accessed. */
+    record AccessCondition {
+        /** The name of the access condition. */
+        string name;
+        /** The description of the access condition. */
+        union{null, array<Text>} description = null;
+    }
+}
