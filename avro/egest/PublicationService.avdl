@@ -6,6 +6,7 @@ protocol PublicationService {
     import idl "Provenance.avdl";
     import idl "Publisher.avdl";
     import idl "Image.avdl";
+    import idl "AccessConditions.avdl";
 
     /** A service by which a publishing organisation or person publishes its content and offers access to consumers, e.g. "SRF Info" or "RSI Rete Uno". */
     record PublicationService {
@@ -25,6 +26,8 @@ protocol PublicationService {
         DistributionVector distributionVector;
         /** Images associated with the channel. */
         union{null, array<Image>} images = null;
+        /** The access conditions for this article. */
+        union{null, array<AccessCondition>} accessConditions = null;
     }
 
 }

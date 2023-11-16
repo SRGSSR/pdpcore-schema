@@ -58,7 +58,7 @@ protocol Article {
         /** This field indicates whether the article is longer or more extensive. */
         boolean? isLongForm = null;
         /** The access conditions for this article. */
-        union{null, array<AccessCondition>} accessCondition = null;
+        union{null, array<AccessCondition>} accessConditions = null;
     }
 
     /** The text content of an article. */
