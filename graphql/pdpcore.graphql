@@ -361,8 +361,6 @@ type PublicationEvent {
 type PublicationService {
   "The conditions under which content can be accessed."
   accessConditions: [AccessCondition]
-  "Indicates whether the data may be published publicly."
-  confidentialityLevel: ConfidentialityLevel!
   "Specifies the distribution vector of a publication service."
   distributionVector: DistributionVector
   "The PDP id of the publication service."
