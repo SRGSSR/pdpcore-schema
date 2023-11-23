@@ -112,6 +112,7 @@ type AspectRatio {
 type Campaign {
   "The conditions under which content can be accessed."
   accessConditions: [AccessCondition]
+  description: [Text]
   "The PDP id of the campaign."
   id: String!
   "The source system publishing the metadata."
@@ -120,6 +121,8 @@ type Campaign {
   publisher: Publisher!
   "The id of the campaign in the source system. It is unique in the source system, but not globally."
   sourceId: String!
+  "The title or headline of the article. The title may be available in different languages."
+  title: [Text]
 }
 
 "A page containing campaigns matching the query filters."
