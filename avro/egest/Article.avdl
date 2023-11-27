@@ -1,7 +1,6 @@
 @namespace("ch.srgssr.pdp.domain.egest")
 protocol Article {
 
-    import idl "ConfidentialityLevel.avdl";
     import idl "Agent.avdl";
     import idl "ArticleReference.avdl";
     import idl "Genre.avdl";
@@ -25,8 +24,6 @@ protocol Article {
         Publisher publisher;
         /** The source system publishing the metadata. */
         Provenance provenance;
-        /** In the context of the PDP this field is used to indicate whether the data may be published publicly. */
-        ConfidentialityLevel confidentialityLevel;
         /** The title or headline of the article. The title may be available in different languages. */
         union{null, array<Text>} title = null;
         /** People, teams or departments who contributed to the article. */
