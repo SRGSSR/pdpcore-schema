@@ -319,6 +319,7 @@ type Programme {
   accessConditions: [AccessCondition]!
   "ISO-8601"
   broadcastDate: DateTime
+  campaigns: [Campaign]!
   "Indicates whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   contributors: [Involvement]
