@@ -317,9 +317,9 @@ type Programme {
   abstract: [Text]
   "Indicates whether the data may be published publicly."
   accessConditions: [AccessCondition]!
+  associatedCampaigns: [Campaign]
   "ISO-8601"
   broadcastDate: DateTime
-  campaigns: [Campaign]!
   "Indicates whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   contributors: [Involvement]
