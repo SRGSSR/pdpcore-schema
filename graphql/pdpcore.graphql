@@ -320,8 +320,6 @@ type Programme {
   associatedCampaigns: [Campaign]
   "ISO-8601"
   broadcastDate: DateTime
-  "Indicates whether the data may be published publicly."
-  confidentialityLevel: ConfidentialityLevel!
   contributors: [Involvement]
   description: [Text]
   durationMs: BigInteger
