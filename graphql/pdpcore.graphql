@@ -328,7 +328,7 @@ type Programme {
   existsAs: [Programme]!
   "The PDP id of the programme."
   id: String!
-  identifiers: [Identifier]
+  identifiers: [Identifier]!
   instantiatedBy: [Essence]
   items: [Item]
   keywords: [String]
