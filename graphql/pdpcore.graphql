@@ -1071,6 +1071,7 @@ input GenreFilterInput {
 
 "The returned page will contain only programmes that match all filters. Only filters with values affect the result."
 input ProgrammeFilterInput {
+  broadcastDate: TemporalFilterInput
   "Filters programmes matching any of the provided identifiers."
   identifiers: [String]
   keywords: [String]
