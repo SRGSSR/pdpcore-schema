@@ -330,6 +330,7 @@ type Programme {
   instantiatedBy: [Essence]
   items: [Item]
   keywords: [String]
+  lead: [Text]
   mediaType: ProgrammeMediaType
   memberOf: [Collection]!
   "ISO-8601"
