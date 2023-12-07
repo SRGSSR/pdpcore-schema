@@ -108,6 +108,10 @@ type AspectRatio {
   ratio: String!
 }
 
+type AudioTrack {
+  name: String!
+}
+
 "A Campaign defines a strategy for publishing content to a targeted Audience according to a PublicationPlan. Campaign strategies can be refined taking into account the analysis of the Resonance of related ConsumptionEvents (e.g. likes, downloads, etc). Campaigns can apply to a variety of broadcasting strategies e.g. advertising campaigns, promotional campaigns or else."
 type Campaign {
   "The conditions under which content can be accessed."
@@ -150,6 +154,10 @@ type Collection {
 type CollectionPage {
   cursor: String
   edges: [Collection]!
+}
+
+type ColourSpace {
+  sourceValue: String!
 }
 
 "A content contains the raw data of a domain object from a source system."
@@ -208,8 +216,13 @@ type EpgSchedule {
 }
 
 type Essence {
+  aspectRatio: AspectRatio
+  audioTracks: [AudioTrack]
+  colourSpace: ColourSpace
+  comment: [Text]
   identifiers: [Identifier]!
   locator: String
+  mediumType: MediumType
 }
 
 """
@@ -290,7 +303,12 @@ type Item {
 
 type Location {
   country: [Text]
+  identifiers: [Identifier]
   name: [Text]!
+}
+
+type MediumType {
+  sourceValue: String!
 }
 
 type Occupation {
@@ -299,6 +317,7 @@ type Occupation {
 
 "A person is a clearly identifiable human actor who is involved in the creation of an editorial object."
 type Person implements Agent {
+  identifiers: [Identifier]
   "The full name of the person."
   name: String!
   "The role(s) the person takes in relation to the asset."
