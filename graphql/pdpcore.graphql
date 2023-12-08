@@ -12,7 +12,7 @@ Marks the definition as experimental with an optional reason.
 Experimental API must not be used for production use as it can change
 or be removed at any time without notice.
 """
-directive @experimental(reason: String) on QUERY | MUTATION | SUBSCRIPTION
+directive @experimental(reason: String) on QUERY | MUTATION | SUBSCRIPTION | FIELD_DEFINITION
 
 "Directs the executor to include this field or fragment only when the `if` argument is true"
 directive @include(
@@ -423,7 +423,7 @@ type Query {
     you can set this field to null.
     """
     filter: ArticleGenreFilterInput
-  ): [Genre]!
+  ): [Genre]! @experimental
   "Returns articles matching the filter criteria."
   articles(
     "The cursor of the previous page. Set to null to get the first page."
@@ -459,7 +459,7 @@ type Query {
   collection_experimental(
     "A PDP id of a collection."
     id: String!
-  ): Collection @rolesAllowed(value : "Resource.ReadInternal")
+  ): Collection @experimental @rolesAllowed(value : "Resource.ReadInternal")
   "Returns collections matching the filter criteria."
   collections_experimental(
     "The cursor of the previous page. Set to null to get the first page."
@@ -470,7 +470,7 @@ type Query {
     first: Int! @constraint(max : 500) @constraint(min : 1),
     "Specifies the order in which the query returns matching collections."
     sort: [CollectionSortInput] = []
-  ): CollectionPage! @rolesAllowed(value : "Resource.ReadInternal")
+  ): CollectionPage! @experimental @rolesAllowed(value : "Resource.ReadInternal")
   "Returns the content with the provided PDP id or null if it does not exist."
   content(
     "A PDP id of a content."
@@ -507,7 +507,7 @@ type Query {
   programme_experimental(
     "A PDP id of a programme."
     id: String!
-  ): Programme @rolesAllowed(value : "Resource.ReadInternal")
+  ): Programme @experimental @rolesAllowed(value : "Resource.ReadInternal")
   "Returns programmes matching the filter criteria."
   programmes_experimental(
     "The cursor of the previous page. Set to null to get the first page."
@@ -518,7 +518,7 @@ type Query {
     first: Int! @constraint(max : 500) @constraint(min : 1),
     "Specifies the order in which the query returns matching programmes."
     sort: [ProgrammeSortInput] = []
-  ): ProgrammePage! @rolesAllowed(value : "Resource.ReadInternal")
+  ): ProgrammePage! @experimental @rolesAllowed(value : "Resource.ReadInternal")
   "Returns the publication service with the provided PDP id or null if it does not exist."
   publicationService(
     "A PDP id of a publication service."
@@ -548,7 +548,7 @@ type Query {
     language: TextSearchLanguage = none,
     "The search query."
     query: String!
-  ): [Article]! @rolesAllowed(value : "Resource.ReadInternal")
+  ): [Article]! @experimental @rolesAllowed(value : "Resource.ReadInternal")
 }
 
 type SourceData {
