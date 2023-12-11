@@ -1,0 +1,18 @@
+@namespace("ch.srgssr.pdp.domain.egest")
+protocol Identifier {
+
+    record Identifier {
+        string value;
+        IdentifierType type;
+    }
+
+    enum IdentifierType {
+        Unknown,
+        PdpId,
+        SourceId,
+        ANR,
+        ProductId,
+        ProductElementId
+    } = Unknown;
+
+}

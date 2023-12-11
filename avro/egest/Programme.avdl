@@ -6,6 +6,7 @@ protocol Programme {
     import idl "PublicationStatus.avdl";
     import idl "Publisher.avdl";
     import idl "Text.avdl";
+    import idl "Identifier.avdl";
 
     /** In the context of the PDP a programme is an episode. */
     record Programme {
@@ -17,6 +18,8 @@ protocol Programme {
         Publisher publisher;
         /** The source system publishing the metadata. */
         Provenance provenance;
+        /** Additional ids. */
+        array<Identifier> identifiers;
         /** The title or headline of the programme. The title may be available in different languages. */
         union{null, array<Text>} title = null;
     }
