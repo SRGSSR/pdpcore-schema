@@ -41,6 +41,12 @@ interface Agent {
   name: String!
 }
 
+interface Resource {
+  description: [Text]
+  name: [Text]
+  url: URL
+}
+
 type AccessCondition {
   description: [Text]
   name: String!
@@ -190,6 +196,12 @@ type Department implements Agent {
   name: String!
 }
 
+type Document implements Resource {
+  description: [Text]
+  name: [Text]
+  url: URL
+}
+
 type EditorialSegment {
   contentDescription: [Text]!
   coversLocations: [Location]!
@@ -297,6 +309,7 @@ type Item {
   "ISO-8601"
   productionDate: DateTime
   productionTypes: [ProductionType]
+  resources: [Resource]
   startMs: BigInteger
   title: [Text]
 }
@@ -322,6 +335,12 @@ type Person implements Agent {
   name: String!
   "The role(s) the person takes in relation to the asset."
   occupations: [Occupation]
+}
+
+type Picture implements Resource {
+  description: [Text]
+  name: [Text]
+  url: URL
 }
 
 type Producer {
@@ -360,6 +379,7 @@ type Programme {
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
   publisher: Publisher!
+  resources: [Resource]
   scheduledOn: [PublicationEvent]
   "The id of the programme in the source system. It is unique in the source system, but not globally."
   sourceId: String!
