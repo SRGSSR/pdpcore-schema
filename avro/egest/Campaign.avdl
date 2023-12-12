@@ -1,0 +1,58 @@
+@namespace("ch.srgssr.pdp.domain.egest")
+protocol Campaign {
+
+    import idl "Text.avdl";
+    import idl "AccessConditions.avdl";
+
+    record Campaign {
+        string id;
+        union{null, array<Text>} title = null;
+        union{null, array<PublicationPlan>} publicationPlans = null;
+        array<AccessCondition> accessConditions;
+    }
+
+    record PublicationPlan {
+        string publicationChannelName;
+        union{null, array<PublicationSchedule>} publicationSchedules = null;
+    }
+
+    record RepeatDaily {
+        int repeatEvery;
+    }
+
+    record RepeatWeekly {
+        int repeatEvery;
+        array<DayOfWeek> onDayOfWeek;
+    }
+
+    record RepeatMonthlyOnDayOfMonth {
+        int repeatEvery;
+        array<int> onDayOfMonth;
+    }
+
+    record RepeatMonthlyOnDayOfWeek {
+        int repeatEvery;
+        array<int> onWeekOfMonth;
+        array<DayOfWeek> onDayOfWeek;
+    }
+
+    record PublicationSchedule {
+        long? durationMs = null;
+        timestamp_ms? start = null;
+        timestamp_ms? end = null;
+        boolean? isFirstShowing = null;
+        // records need to be defined BEFORE this union in order to generate java source files
+        union{null, RepeatDaily, RepeatWeekly, RepeatMonthlyOnDayOfMonth, RepeatMonthlyOnDayOfWeek} repeat = null;
+        union{null, array<timestamp_ms>} exclusions = null;
+    }
+
+    enum DayOfWeek {
+        Monday,
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday,
+        Sunday
+    }
+}
