@@ -316,7 +316,7 @@ type Item {
 
 type Location {
   country: [Text]
-  identifiers: [Identifier]
+  identifiers: [Identifier]!
   name: [Text]!
 }
 
