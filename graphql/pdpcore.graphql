@@ -331,7 +331,7 @@ type Occupation {
 "A person is a clearly identifiable human actor who is involved in the creation of an editorial object."
 type Person implements Agent {
   "Identifiers for this person."
-  identifiers: [Identifier]
+  identifiers: [Identifier]!
   "The full name of the person."
   name: String!
   "The role(s) the person takes in relation to the asset."
