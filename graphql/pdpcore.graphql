@@ -294,13 +294,13 @@ type Item {
   "ISO-8601"
   broadcastDate: DateTime
   contributors: [Involvement]
-  coversLocations: [Location]!
+  coversLocations: [Location]
   description: [Text]
   durationMs: BigInteger
   endMs: BigInteger
   identifiers: [Identifier]!
   instantiatedBy: [Essence]
-  keywords: [String]!
+  keywords: [String]
   mediaType: ProgrammeMediaType
   "ISO-8601"
   modificationDate: DateTime
