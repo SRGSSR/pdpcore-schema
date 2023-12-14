@@ -55,7 +55,7 @@ type AccessCondition {
 "A CMS website article."
 type Article {
   "The conditions under which content can be accessed."
-  accessConditions: [AccessCondition]
+  accessConditions: [AccessCondition]!
   "The full text of the article."
   content: ArticleContent
   "Involvements of People, teams or departments who contributed to the article."
