@@ -401,7 +401,7 @@ type PublicationEvent {
 "A service by which a publishing organisation or person publishes its content and offers access to consumers, e.g. \"SRF Info\" or \"RSI Rete Uno\"."
 type PublicationService {
   "The conditions under which content can be accessed."
-  accessConditions: [AccessCondition]
+  accessConditions: [AccessCondition]!
   "Specifies the distribution vector of a publication service."
   distributionVector: DistributionVector
   "The PDP id of the publication service."
