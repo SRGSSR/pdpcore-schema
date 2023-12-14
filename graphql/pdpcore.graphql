@@ -121,7 +121,7 @@ type AudioTrack {
 "A Campaign defines a strategy for publishing content to a targeted Audience according to a PublicationPlan. Campaign strategies can be refined taking into account the analysis of the Resonance of related ConsumptionEvents (e.g. likes, downloads, etc). Campaigns can apply to a variety of broadcasting strategies e.g. advertising campaigns, promotional campaigns or else."
 type Campaign {
   "The conditions under which content can be accessed."
-  accessConditions: [AccessCondition]
+  accessConditions: [AccessCondition]!
   description: [Text]
   "The PDP id of the campaign."
   id: String!
