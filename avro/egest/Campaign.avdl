@@ -38,7 +38,9 @@ protocol Campaign {
 
     record PublicationSchedule {
         long? durationMs = null;
-        timestamp_ms? start = null;
+        date? startDate = null;
+        /** The start time of the publication at timezone Europe/Zurich */
+        time_ms? startTime = null;
         timestamp_ms? end = null;
         boolean? isFirstShowing = null;
         // records need to be defined BEFORE this union in order to generate java source files
