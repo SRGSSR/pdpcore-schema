@@ -9,6 +9,13 @@ protocol Text {
         string content;
         /** The language of the text. */
         Language? language;
+        /** The formatted content.  */
+        FormattedContent? formatted;
+    }
+
+    record FormattedContent {
+        string content;
+        string contentType;
     }
 
 }
