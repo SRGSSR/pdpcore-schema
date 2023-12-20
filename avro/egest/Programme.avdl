@@ -25,6 +25,13 @@ protocol Programme {
         union{null, array<Text>} title = null;
         /** The title or headline of the programme. The title may be available in different languages. */
         union{null, array<Essence>} instantiatedBy = null;
+        union{null, array<PublicationEvent>} scheduledOn = null;
+        long? durationMs = null;
+        union {null, array<string>} associatedCampaigns = null;
     }
 
+    record PublicationEvent {
+        array<Identifier> identifiers;
+        timestamp_ms? scheduleDate = null;
+    }
 }
