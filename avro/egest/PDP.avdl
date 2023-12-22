@@ -5,5 +5,6 @@ protocol PDP {
     import idl "Article.avdl";
     import idl "PublicationService.avdl";
     import idl "MessageKey.avdl";
+    import idl "Programme.avdl";
 
 }
