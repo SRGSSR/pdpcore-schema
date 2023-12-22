@@ -10,7 +10,7 @@ protocol Text {
         /** The language of the text. */
         Language? language;
         /** The formatted content.  */
-        FormattedContent? formatted;
+        FormattedContent? formatted = null;
     }
 
     record FormattedContent {
