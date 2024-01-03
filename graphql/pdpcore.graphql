@@ -1153,24 +1153,28 @@ input PublicationServiceSortInput {
 }
 
 """
-A filter for a temporal field. If you provide a date-time for both the after and
-before fields, the result will only contain items between those two date-times.
+A filter for a temporal field. If you provide a date-time for both the from and
+to fields, the result will only contain items between those two date-times.
 If you only provide one of the date-times, then the result  will contain all
-items before or after the respective date-time. Both the after and the before
+items starting from or until the respective date-time. Both the from and the to
 date-time are exclusive, i.e. the result will not contain items with the exact
 same date-time.
 """
 input TemporalFilterInput {
+  "Deprecated. Please use 'from'. (ISO-8601)"
+  after: DateTime
+  "Deprecated. Please use 'to'. (ISO-8601)"
+  before: DateTime
   """
   Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as
   2022-07-18T10:15:30+02:00 to filter for items strictly after that date-time. (ISO-8601)
   """
-  after: DateTime
+  from: DateTime
   """
   Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as
   2022-07-18T10:15:30+02:00 to filter for items strictly before that date-time. (ISO-8601)
   """
-  before: DateTime
+  to: DateTime
 }
 
 "A filter for a text field."
