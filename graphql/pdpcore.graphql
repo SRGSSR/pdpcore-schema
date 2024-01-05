@@ -663,6 +663,8 @@ enum DomainType {
   PublicationService
   "An AI-powered data enrichment that provides essential information about the speaking-times of different individuals, primarily public figures, within audiovisual assets. This AI-generated data enables in-depth analysis and better understanding of the speaker's contribution, aiding journalistic research, content discovery, and fact-checking."
   Speaker
+  "Subtitles are text representing the contents of the audio in a film, television show or other audiovisual media. Subtitles might provide a transcription or translation of spoken dialogue."
+  Subtitles
 }
 
 "The channels available for the EPG."
