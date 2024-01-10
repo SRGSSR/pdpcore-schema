@@ -38,7 +38,7 @@ protocol Content {
         Campaign,
         Speaker,
         Collection,
-        Subtitles
+        Subtitling
     } = Unknown;
 
     record SourceData {

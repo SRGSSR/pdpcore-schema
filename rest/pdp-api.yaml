@@ -201,9 +201,9 @@ components:
         - Collection
           A collection aggregates related editorial objects into a common, higher-level
           container, thereby enhancing their organization and accessibility.
-        - Subtitles
-          Subtitles are text representing the contents of the audio in a film, television 
-          show or other audiovisual media. Subtitles might provide a transcription or translation of spoken dialogue.
+        - Subtitling
+          Subtitling are text representing the contents of the audio in a film, television 
+          show or other audiovisual media. Subtitling might provide a transcription or translation of spoken dialogue.
       type: string
       enum:
         - Article
@@ -213,7 +213,7 @@ components:
         - Campaign
         - Speaker
         - Collection
-        - Subtitles
+        - Subtitling
 
     Content:
       description: >
