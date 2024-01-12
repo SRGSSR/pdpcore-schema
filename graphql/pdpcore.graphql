@@ -47,8 +47,11 @@ interface Resource {
   url: URL
 }
 
+"The conditions under which content can be accessed."
 type AccessCondition {
+  "The description of the access condition."
   description: [Text]
+  "The name of the access condition."
   name: String!
 }
 
@@ -168,6 +171,8 @@ type ColourSpace {
 
 "A content contains the raw data of a domain object from a source system."
 type Content {
+  "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
+  accessConditions: [AccessCondition]!
   "In the context of the PDP, this field is used to indicate whether the data may be published publicly."
   confidentialityLevel: ConfidentialityLevel!
   "The domain type of the content."
