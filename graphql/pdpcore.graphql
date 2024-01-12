@@ -906,6 +906,7 @@ enum Provenance {
   Angebotsportfolio_SRF
   CMS_SRF
   CMS_SWI
+  CUE_RSI
   DigAS_RTR
   DigAS_SRF
   Escenic_RSI

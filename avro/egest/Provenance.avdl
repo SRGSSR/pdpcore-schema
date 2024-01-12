@@ -19,7 +19,8 @@ protocol Provenance {
         Siranau_RTS,
         Gico_RTS,
         DigAS_SRF,
-        DigAS_RTR
+        DigAS_RTR,
+        CUE_RSI
     } = Unknown;
 
 }

@@ -304,6 +304,7 @@ components:
         - Gico_RTS
         - DigAS_SRF
         - DigAS_RTR
+        - CUE_RSI
 
     Publisher:
       description: 'The business unit or external organisation publishing the metadata. Please contact the PDP team if a publisher is missing.'
