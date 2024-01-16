@@ -68,7 +68,10 @@ type Article {
   genres: [Genre]
   "The PDP id of the article."
   id: String!
-  "The images of the article."
+  """
+  The images of the article.
+  **Deprecated**: use `resources` with type `Picture` instead.
+  """
   images: [Image] @deprecated(reason : "Images are available as resources of type `Picture`.")
   "This field indicates whether the article is longer or more extensive."
   isLongForm: Boolean
@@ -416,14 +419,19 @@ type PublicationService {
   distributionVector: DistributionVector
   "The PDP id of the publication service."
   id: String!
-  "Images associated with the publication service."
-  images: [Image]
+  """
+  Images associated with the publication service.
+  **Deprecated**: use `resources` with type `Picture` instead.
+  """
+  images: [Image] @deprecated(reason : "Images are available as resources of type `Picture`.")
   "The name of the publication service."
   name: String
   "The source system publishing the metadata."
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
   publisher: Publisher!
+  "Resources such as pictures (e.g. a logo) to this publication service."
+  resources: [Resource]
   "The id of the publication service in the source system. It is unique in the source system, but not globally."
   sourceId: String!
 }
