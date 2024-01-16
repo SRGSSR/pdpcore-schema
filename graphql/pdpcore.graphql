@@ -41,6 +41,7 @@ interface Agent {
   name: String!
 }
 
+"A resource used by an editorial object, e.g. a preview image for a programme or a document attached to an article."
 interface Resource {
   description: [Text]
   name: [Text]
@@ -68,7 +69,7 @@ type Article {
   "The PDP id of the article."
   id: String!
   "The images of the article."
-  images: [Image]
+  images: [Image] @deprecated(reason : "Images are available as resources of type `Picture`.")
   "This field indicates whether the article is longer or more extensive."
   isLongForm: Boolean
   "A line of newspaper type set above a title usually in a different typeface and intended to provoke interest in, editorialize about, or provide orientation for the matter in the copy heads. The kicker may be available in different languages."
@@ -87,6 +88,8 @@ type Article {
   relatedArticles: [Article]
   "The date and time (expressed as timestamp) at which the article was produced. (ISO-8601)"
   releasedAt: DateTime
+  "Resources such as pictures or documents related to this article."
+  resources: [Resource]
   "The id of the article in the source system. It is unique in the source system, but not globally."
   sourceId: String!
   "The source URL from where the article can be accessed in raw format."
@@ -201,6 +204,7 @@ type Department implements Agent {
   name: String!
 }
 
+"A publication in the form of a document used by an editorial object, e.g. a PDF attached to an article."
 type Document implements Resource {
   description: [Text]
   name: [Text]
@@ -343,6 +347,7 @@ type Person implements Agent {
   occupations: [Occupation]
 }
 
+"A picture used by an editorial object, e.g. a channel's logo or a photo embedded into an article."
 type Picture implements Resource {
   description: [Text]
   name: [Text]
