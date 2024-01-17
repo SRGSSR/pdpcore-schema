@@ -352,6 +352,7 @@ type Person implements Agent {
 
 "A picture used by an editorial object, e.g. a channel's logo or a photo embedded into an article."
 type Picture implements Resource {
+  copyright: String
   description: [Text]
   height: Int
   name: [Text]
