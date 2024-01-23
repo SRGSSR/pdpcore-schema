@@ -387,7 +387,7 @@ type Programme {
   keywords: [String]
   lead: [Text]
   mediaType: ProgrammeMediaType
-  memberOf: [Collection]!
+  memberOf: [Collection]
   "ISO-8601"
   modificationDate: DateTime
   "ISO-8601"
