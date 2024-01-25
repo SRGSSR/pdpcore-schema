@@ -1,0 +1,33 @@
+@namespace("ch.srgssr.pdp.domain.egest")
+protocol Resource {
+
+    import idl "Text.avdl";
+    import idl "URL.avdl";
+
+    /** The job or occupation of a Person*/
+    record Document {
+        /** The name of the document. This can be a filename or a title. */
+        union{null, array<Text>} name = null;
+        /** The description of the document. */
+        union{null, array<Text>} description = null;
+        /** The permanent URL from where the document can be accessed. */
+        URL? url = null;
+    }
+
+    /** A picture used by an editorial object, e.g. a channel's logo or a photo embedded into an article. */
+    record Picture {
+        /** The name of the picture. This can be a filename or a title. */
+        union{null, array<Text>} name = null;
+        /** The description of the picture. This can be a caption or alternative text of the picture. */
+        union{null, array<Text>} description = null;
+        /** The permanent URL from where the picture can be accessed. */
+        URL? url = null;
+        /** The width of the picture in pixels. */
+        int? width = null;
+        /** The height of the picture in pixels. */
+        int? height = null;
+        /** The copyright statement. */
+        string? copyright = null;
+    }
+
+}
