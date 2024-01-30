@@ -68,11 +68,6 @@ type Article {
   genres: [Genre]
   "The PDP id of the article."
   id: String!
-  """
-  The images of the article.
-  **Deprecated**: use `resources` with type `Picture` instead.
-  """
-  images: [Image] @deprecated(reason : "Images are available as resources of type `Picture`.")
   "This field indicates whether the article is longer or more extensive."
   isLongForm: Boolean
   "A line of newspaper type set above a title usually in a different typeface and intended to provoke interest in, editorialize about, or provide orientation for the matter in the copy heads. The kicker may be available in different languages."
@@ -267,31 +262,6 @@ type Identifier {
   value: String!
 }
 
-"Describes visual material - such as logos, thumbnails or other visual elements - that belong to an asset."
-type Image {
-  "Copyright information"
-  copyright: String
-  "The title of the image in potentially different languages."
-  title: [Text]
-  "Rights and restrictions associated to the image."
-  usage: String
-  "The various sizes available"
-  variants: [ImageVariant]
-}
-
-type ImageVariant {
-  "The aspect ratio of the image, e.g. 16:9 or 4:3."
-  aspectRatio: AspectRatio
-  "The height of the image in pixels."
-  height: Int
-  "The URL of the image."
-  url: URL!
-  "The intended usage of the image variant. "
-  usage: String
-  "The width of the image in pixels."
-  width: Int
-}
-
 "An Agent's participation in the creation of publication of a MediaResource (e.g. Article)"
 type Involvement {
   "The Person, Department, or Team involved."
@@ -422,11 +392,6 @@ type PublicationService {
   distributionVector: DistributionVector
   "The PDP id of the publication service."
   id: String!
-  """
-  Images associated with the publication service.
-  **Deprecated**: use `resources` with type `Picture` instead.
-  """
-  images: [Image] @deprecated(reason : "Images are available as resources of type `Picture`.")
   "The name of the publication service."
   name: String
   "The source system publishing the metadata."
