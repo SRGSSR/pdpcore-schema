@@ -23,11 +23,6 @@ protocol PublicationService {
         string name;
         /** Specifies the distribution vector of a channel. */
         DistributionVector distributionVector;
-        /**
-         * Images associated with the channel.
-         * Deprecated: use resources with type Picture instead.
-         */
-        union{null, array<Image>} images = null;
         /** Resources such as pictures or documents related to this article. */
         union{null, array<union{Picture, Document}>} resources = null;
         /** The access conditions for this article. */
