@@ -48,6 +48,12 @@ interface Resource {
   url: URL
 }
 
+"Rights held by a rights holder"
+interface Rights {
+  "A person or entity holding the right"
+  rightsHolder: RightsHolder
+}
+
 "The conditions under which content can be accessed."
 type AccessCondition {
   "The description of the access condition."
@@ -276,6 +282,7 @@ type Item {
   "ISO-8601"
   broadcastDate: DateTime
   contributors: [Involvement]
+  coveredBy: [Rights]
   coversLocations: [Location]
   description: [Text]
   durationMs: BigInteger
@@ -346,6 +353,7 @@ type Programme {
   "ISO-8601"
   broadcastDate: DateTime
   contributors: [Involvement]
+  coveredBy: [Rights]
   description: [Text]
   durationMs: BigInteger
   existsAs: [Programme]!
@@ -558,6 +566,12 @@ type Query {
   ): [Article]! @experimental @rolesAllowed(value : "Resource.ReadInternal")
 }
 
+"A person or entity holding the right"
+type RightsHolder {
+  "Name of the rights holder as provided by the source system."
+  sourceValue: String!
+}
+
 type SourceData {
   "Serialized source data (e.g. a JSON object as string)."
   data: String!
@@ -590,6 +604,13 @@ type Text {
 type URL {
   "The URL."
   url: String!
+}
+
+"A usage right given to the rights holder"
+type UsageRights implements Rights {
+  rightsHolder: RightsHolder
+  "Name or description of the usage rights as provided by the source system"
+  sourceValue: String!
 }
 
 "Specifies the fields that can be used to sort articles."

@@ -2,7 +2,6 @@
 protocol Picture {
 
     import idl "AspectRatio.avdl";
-    import idl "Rights.avdl";
     import idl "Text.avdl";
     import idl "URL.avdl";
 
