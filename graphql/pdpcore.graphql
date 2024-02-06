@@ -56,8 +56,18 @@ interface Rights {
 
 "The conditions under which content can be accessed."
 type AccessCondition {
+  "Indicates that the content can only be viewed after the given date and time. (ISO-8601)"
+  availableFrom: DateTime
+  "Indicates that the content can only be viewed until the given date and time. (ISO-8601)"
+  availableTo: DateTime
+  "Indicates that the content is blocked and why. (e.g. for legal reasons)"
+  blockReason: String
   "The description of the access condition."
   description: [Text]
+  "Indicates that the content cannot be embedded."
+  embeddingDisabled: Boolean
+  "Indicates that the content can only be viewed in the listed locations."
+  geoBlockingWhitelist: [GeoBlockingLocation]
   "The name of the access condition."
   name: String!
 }
@@ -261,6 +271,11 @@ type Genre {
   name: Text!
   "The source identifier of the genre."
   sourceId: String
+}
+
+type GeoBlockingLocation {
+  "The location to which the content is restricted (e.g. 'Switzerland')"
+  sourceValue: String!
 }
 
 type Identifier {
