@@ -126,6 +126,35 @@ paths:
         - azure_auth:
             - 'write:all'
 
+  /api/subtitlings:
+    get:
+      tags:
+        - subtitling
+      summary: 'Read subtitling by programme Id.'
+      parameters:
+        - name: programmeId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subtitling'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+        - azureAuthDev:
+            - Resource.ReadInternal
+            - Resource.ReadPublic
+
 components:
   securitySchemes:
     azureAuthDev:
@@ -330,3 +359,295 @@ components:
       enum:
         - C1_Public
         - C2_Internal
+
+    Subtitling:
+      required:
+        - id
+        - sourceId
+        - publisher
+        - provenance
+        - confidentialityLevel
+        - accessConditions
+        - updatedAt
+        - locator
+        - identifiers
+      type: object
+      properties:
+        id:
+          type: string
+        contentId:
+          type: string
+          nullable: true
+        sourceId:
+          type: string
+        publisher:
+          $ref: '#/components/schemas/Publisher'
+        provenance:
+          $ref: '#/components/schemas/Provenance'
+        confidentialityLevel:
+          $ref: '#/components/schemas/ConfidentialityLevel'
+        accessConditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessCondition'
+        locator:
+          type: string
+        identifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Identifier'
+        schemaVersion:
+          format: int64
+          type: integer
+
+    AccessCondition:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: array
+          items:
+            $ref: '#/components/schemas/Text'
+          nullable: true
+
+    Text:
+      required:
+        - content
+      type: object
+      properties:
+        content:
+          type: string
+        language:
+          type: string
+          allOf:
+            - $ref: '#/components/schemas/Language'
+          nullable: true
+        formatted:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/FormattedContent'
+          nullable: true
+
+
+    Language:
+      enum:
+        - Unknown
+        - ab
+        - aa
+        - af
+        - ak
+        - sq
+        - am
+        - ar
+        - an
+        - hy
+        - as
+        - av
+        - ae
+        - ay
+        - az
+        - bm
+        - ba
+        - eu
+        - be
+        - bn
+        - bi
+        - bs
+        - br
+        - bg
+        - my
+        - ca
+        - ch
+        - ce
+        - ny
+        - zh
+        - cv
+        - kw
+        - co
+        - cr
+        - hr
+        - cs
+        - da
+        - dv
+        - nl
+        - dz
+        - en
+        - eo
+        - et
+        - ee
+        - fo
+        - fj
+        - fi
+        - fr
+        - ff
+        - gl
+        - ka
+        - de
+        - el
+        - gn
+        - gu
+        - ht
+        - ha
+        - he
+        - hz
+        - hi
+        - ho
+        - hu
+        - ia
+        - id
+        - ie
+        - ga
+        - ig
+        - ik
+        - io
+        - is
+        - it
+        - iu
+        - ja
+        - jv
+        - kl
+        - kn
+        - kr
+        - ks
+        - kk
+        - km
+        - ki
+        - rw
+        - ky
+        - kv
+        - kg
+        - ko
+        - ku
+        - kj
+        - la
+        - lb
+        - lg
+        - li
+        - ln
+        - lo
+        - lt
+        - lu
+        - lv
+        - gv
+        - mk
+        - mg
+        - ms
+        - ml
+        - mt
+        - mi
+        - mr
+        - mh
+        - mn
+        - na
+        - nv
+        - nd
+        - ne
+        - ng
+        - nb
+        - nn
+        - "no"
+        - ii
+        - nr
+        - oc
+        - oj
+        - cu
+        - om
+        - or
+        - os
+        - pa
+        - pi
+        - fa
+        - pl
+        - ps
+        - pt
+        - qu
+        - rm
+        - rn
+        - ro
+        - ru
+        - sa
+        - sc
+        - sd
+        - se
+        - sm
+        - sg
+        - sr
+        - gd
+        - sn
+        - si
+        - sk
+        - sl
+        - so
+        - st
+        - es
+        - su
+        - sw
+        - ss
+        - sv
+        - ta
+        - te
+        - tg
+        - th
+        - ti
+        - bo
+        - tk
+        - tl
+        - tn
+        - to
+        - tr
+        - ts
+        - tt
+        - tw
+        - ty
+        - ug
+        - uk
+        - ur
+        - uz
+        - ve
+        - vi
+        - vo
+        - wa
+        - cy
+        - wo
+        - fy
+        - xh
+        - yi
+        - yo
+        - za
+        - zu
+      type: string
+
+
+    FormattedContent:
+      required:
+        - content
+        - contentType
+      type: object
+      properties:
+        content:
+          type: string
+        contentType:
+          type: string
+
+    Identifier:
+      required:
+        - value
+        - type
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          $ref: '#/components/schemas/IdentifierType'
+
+    IdentifierType:
+      enum:
+        - PdpId
+        - SourceId
+        - ANR
+        - ProductId
+        - ProductElementId
+      type: string
