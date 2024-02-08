@@ -421,10 +421,7 @@ components:
         content:
           type: string
         language:
-          type: string
-          allOf:
-            - $ref: '#/components/schemas/Language'
-          nullable: true
+          $ref: '#/components/schemas/Language'
         formatted:
           type: object
           allOf:
@@ -619,6 +616,7 @@ components:
         - za
         - zu
       type: string
+      nullable: true
 
 
     FormattedContent:
