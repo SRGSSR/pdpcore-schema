@@ -366,7 +366,6 @@ components:
         - sourceId
         - publisher
         - provenance
-        - confidentialityLevel
         - accessConditions
         - updatedAt
         - locator
@@ -375,30 +374,23 @@ components:
       properties:
         id:
           type: string
-        contentId:
-          type: string
-          nullable: true
         sourceId:
           type: string
+        identifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Identifier'
         publisher:
           $ref: '#/components/schemas/Publisher'
         provenance:
           $ref: '#/components/schemas/Provenance'
-        confidentialityLevel:
-          $ref: '#/components/schemas/ConfidentialityLevel'
         accessConditions:
           type: array
           items:
             $ref: '#/components/schemas/AccessCondition'
         locator:
           type: string
-        identifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Identifier'
-        schemaVersion:
-          format: int64
-          type: integer
+
 
     AccessCondition:
       required:
