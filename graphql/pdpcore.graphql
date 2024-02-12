@@ -309,6 +309,7 @@ type Item {
   "ISO-8601"
   modificationDate: DateTime
   parts: [EditorialSegment]
+  position: Int
   producers: [Producer]
   "ISO-8601"
   productionDate: DateTime
