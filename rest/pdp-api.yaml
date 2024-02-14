@@ -126,35 +126,6 @@ paths:
         - azure_auth:
             - 'write:all'
 
-  /api/subtitlings:
-    get:
-      tags:
-        - subtitling
-      summary: 'Read subtitling by programme Id.'
-      parameters:
-        - name: programmeId
-          in: query
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Subtitling'
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-        - azureAuthDev:
-            - Resource.ReadInternal
-            - Resource.ReadPublic
-
 components:
   securitySchemes:
     azureAuthDev:
