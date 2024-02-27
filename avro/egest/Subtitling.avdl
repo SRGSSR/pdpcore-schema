@@ -1,0 +1,27 @@
+@namespace("ch.srgssr.pdp.domain.egest")
+protocol Subtitling {
+
+    import idl "AccessConditions.avdl";
+    import idl "Identifier.avdl";
+    import idl "Provenance.avdl";
+    import idl "Publisher.avdl";
+
+    /** In the context of the PDP an article is a (CMS) website article. */
+    record Subtitling {
+        /** The PDP id of the article. */
+        string id;
+        /** The id of the article in the source system. It is unique in the source system, but not globally. */
+        string sourceId;
+        /** The business unit or external organisation publishing the metadata. */
+        Publisher publisher;
+        /** The source system publishing the metadata. */
+        Provenance provenance;
+        /** The access conditions for this article. */
+        array<AccessCondition> accessConditions;
+        /** Additional ids. */
+        array<Identifier> identifiers;
+        /** The URL to the subtitling file. */
+        string locator;
+    }
+
+}
