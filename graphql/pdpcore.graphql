@@ -929,8 +929,10 @@ enum Provenance {
   CUE_RSI
   DigAS_RTR
   DigAS_SRF
+  EntityRecognitionDD24_SRF
   Escenic_RSI
   Escenic_RTS
+  FaceRecognitionDD24_SRF
   Faro_SRF
   Gico_RTS
   OpenMedia_RTR
