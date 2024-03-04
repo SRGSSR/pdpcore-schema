@@ -6,17 +6,17 @@ protocol Subtitling {
     import idl "Provenance.avdl";
     import idl "Publisher.avdl";
 
-    /** In the context of the PDP an article is a (CMS) website article. */
+    /** In the context of the PDP a subtitling is a subtitling to a programme. */
     record Subtitling {
-        /** The PDP id of the article. */
+        /** The PDP id of the subtitling. */
         string id;
-        /** The id of the article in the source system. It is unique in the source system, but not globally. */
+        /** The id of the subtitling in the source system. It is unique in the source system, but not globally. */
         string sourceId;
         /** The business unit or external organisation publishing the metadata. */
         Publisher publisher;
         /** The source system publishing the metadata. */
         Provenance provenance;
-        /** The access conditions for this article. */
+        /** The access conditions for this subtitling. */
         array<AccessCondition> accessConditions;
         /** Additional ids. */
         array<Identifier> identifiers;
