@@ -303,9 +303,6 @@ type Item {
   description: [Text]
   durationMs: BigInteger
   endMs: BigInteger
-  existsAs: [Item]!
-  "The PDP id of the item."
-  id: String!
   identifiers: [Identifier]!
   instantiatedBy: [Essence]
   keywords: [String]
