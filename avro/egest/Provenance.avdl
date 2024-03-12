@@ -20,9 +20,7 @@ protocol Provenance {
         Gico_RTS,
         DigAS_SRF,
         DigAS_RTR,
-        CUE_RSI,
-        EntityRecognitionDD24_SRF,
-        FaceRecognitionDD24_SRF
+        CUE_RSI
     } = Unknown;
 
 }
