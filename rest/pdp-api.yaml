@@ -360,7 +360,7 @@ components:
           items:
             $ref: '#/components/schemas/AccessCondition'
         locator:
-          type: string
+          $ref: '#/components/schemas/URL'
 
 
     AccessCondition:
@@ -612,3 +612,9 @@ components:
         - ProductId
         - ProductElementId
       type: string
+
+    URL:
+      type: object
+      properties:
+        url:
+          type: string

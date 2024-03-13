@@ -5,6 +5,7 @@ protocol Subtitling {
     import idl "Identifier.avdl";
     import idl "Provenance.avdl";
     import idl "Publisher.avdl";
+    import idl "URL.avdl";
 
     /** In the context of the PDP a subtitling is a subtitling to a programme. */
     record Subtitling {
@@ -21,7 +22,7 @@ protocol Subtitling {
         /** Additional ids. */
         array<Identifier> identifiers;
         /** The URL to the subtitling file. */
-        string locator;
+        URL locator;
     }
 
 }
