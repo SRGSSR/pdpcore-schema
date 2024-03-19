@@ -1159,11 +1159,13 @@ input ProgrammeFilterInput {
   "Filters programmes matching any of the provided identifiers."
   identifiers: [String]
   keywords: [String]
+  "Filters programmes depending on the collection they are a member of. Use the PDP ID of the collection."
+  memberOf: String
   "Filters programmes depending on their provenance."
   provenance: Provenance
   "Filters programmes depending on their publisher."
   publisher: Publisher
-  "Filters programmes depending on when they were updated. A channel counts as updated when either the source systemchanges its data or a relation to another asset is updated."
+  "Filters programmes depending on when they were updated. A channel counts as updated when either the source system changes its data or a relation to another asset is updated."
   updated: TemporalFilterInput
 }
 
