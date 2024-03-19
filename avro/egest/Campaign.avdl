@@ -9,6 +9,7 @@ protocol Campaign {
         union{null, array<Text>} title = null;
         union{null, array<PublicationPlan>} publicationPlans = null;
         array<AccessCondition> accessConditions;
+        union{null, map<string>} sourceValues = null;
     }
 
     record PublicationPlan {
