@@ -950,6 +950,7 @@ enum Provenance {
   Gico_RTS
   OpenMedia_RTR
   OpenMedia_SRF
+  PlaySuisse_SRG
   Play_SRF
   Siranau_RTS
   Unknown

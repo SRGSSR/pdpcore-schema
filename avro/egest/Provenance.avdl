@@ -20,7 +20,8 @@ protocol Provenance {
         Gico_RTS,
         DigAS_SRF,
         DigAS_RTR,
-        CUE_RSI
+        CUE_RSI,
+        PlaySuisse_SRG
     } = Unknown;
 
 }
