@@ -612,6 +612,7 @@ components:
         - ANR
         - ProductId
         - ProductElementId
+        - ConceptId
       type: string
 
     URL:

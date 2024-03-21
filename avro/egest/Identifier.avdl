@@ -12,7 +12,8 @@ protocol Identifier {
         SourceId,
         ANR,
         ProductId,
-        ProductElementId
+        ProductElementId,
+        ConceptId
     } = Unknown;
 
 }
