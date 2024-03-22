@@ -3,6 +3,7 @@ protocol Campaign {
 
     import idl "Text.avdl";
     import idl "AccessConditions.avdl";
+    import idl "Identifier.avdl";
 
     record Campaign {
         string id;
@@ -10,6 +11,7 @@ protocol Campaign {
         union{null, array<PublicationPlan>} publicationPlans = null;
         array<AccessCondition> accessConditions;
         union{null, map<string>} sourceValues = null;
+        union{null, array<Identifier>} identifiers = null;
     }
 
     record PublicationPlan {
