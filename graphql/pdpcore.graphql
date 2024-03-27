@@ -724,11 +724,17 @@ enum EpgPublicationChannel {
 }
 
 enum IdentifierType {
+  "Identifies an object in the archive context (e.g. '2308936')"
   ANR
+  "Identifies a campaign in the OfferPortfolio (e.g. 'A00104')"
   ConceptId
+  "Identifies an object in the PDP (e.g. 'urn:pdp:faro_srf:programme:85bef433-ef9a-4183-8d86-78e4e0f40781')"
   PdpId
+  "Identifies a product element (e.g. 'NEWS20201116_TM_0100_0001')"
   ProductElementId
+  "Identifies a product (e.g. 'NEWS20201116_TM_0100')"
   ProductId
+  "Identifies an object in the source system (see provenance)"
   SourceId
 }
 

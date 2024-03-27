@@ -606,6 +606,14 @@ components:
           $ref: '#/components/schemas/IdentifierType'
 
     IdentifierType:
+      description: |
+        IdentifierType defines the meaning of an Identifier:
+        *  PdpId identifies an object in the PDP (e.g. 'urn:pdp:faro_srf:programme:85bef433-ef9a-4183-8d86-78e4e0f40781')
+        *  SourceId identifies an object in the source system (see provenance)
+        *  ANR identifies an object in the archive context (e.g. '2308936')
+        *  ProductId identifies a product (e.g. 'NEWS20201116_TM_0100')
+        *  ProductElementId identifies a product element (e.g. 'NEWS20201116_TM_0100_0001')
+        *  ConceptId identifies a campaign in the OfferPortfolio (e.g. 'A00104')
       enum:
         - PdpId
         - SourceId
