@@ -28,6 +28,7 @@ protocol Programme {
         union{null, array<PublicationEvent>} scheduledOn = null;
         long? durationMs = null;
         union {null, array<string>} associatedCampaigns = null;
+        array<string> existsAs = [];
     }
 
     record PublicationEvent {
