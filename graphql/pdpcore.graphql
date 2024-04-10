@@ -81,12 +81,16 @@ type Article {
   "Involvements of People, teams or departments who contributed to the article."
   contributors: [Involvement]
   covers: [NamedEntity]
+  "Other articles with the same content."
+  existsAs: [Article]
   "The genres this article belongs to."
   genres: [Genre]
   "The PDP id of the article."
   id: String!
   "This field indicates whether the article is longer or more extensive."
   isLongForm: Boolean
+  "Keywords for this article"
+  keywords: [String]
   "A line of newspaper type set above a title usually in a different typeface and intended to provoke interest in, editorialize about, or provide orientation for the matter in the copy heads. The kicker may be available in different languages."
   kicker: [Text]
   "A lead is a self-contained, brief, and meaningful description of an article. The lead may be available in different languages."
