@@ -23,7 +23,8 @@ protocol Identifier {
         ANR,
         ProductId,
         ProductElementId,
-        ConceptId
+        ConceptId,
+        ISAN
     } = Unknown;
 
 }

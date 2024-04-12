@@ -736,6 +736,8 @@ enum IdentifierType {
   ANR
   "Identifies a campaign in the OfferPortfolio (e.g. 'A00104')"
   ConceptId
+  "The Unique ISO Identifier for Audiovisual Content (see: https://www.isan.org )"
+  ISAN
   "Identifies an object in the PDP (e.g. 'urn:pdp:faro_srf:programme:85bef433-ef9a-4183-8d86-78e4e0f40781')"
   PdpId
   "Identifies a product element (e.g. 'NEWS20201116_TM_0100_0001')"

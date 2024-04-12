@@ -621,6 +621,7 @@ components:
         - ProductId
         - ProductElementId
         - ConceptId
+        - ISAN
       type: string
 
     URL:
