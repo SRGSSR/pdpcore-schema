@@ -46,7 +46,7 @@ protocol Article {
         URL? url = null;
         /** The source URL from where the article can be accessed. */
         URL? sourceUrl = null;
-        /** The web or seo URL from where the article can be accessed */
+        /** The web or seo URL from where the article can be accessed. */
         URL? webUrl = null;
         /** A lead is a self-contained, brief, and meaningful description of an article. The lead may be available in different languages. */
         union{null, array<Text>} lead = null;
@@ -62,6 +62,10 @@ protocol Article {
         boolean? isLongForm = null;
         /** The access conditions for this article. */
         union{null, array<AccessCondition>} accessConditions = null;
+        /** PDP ids of other articles with the same content. */
+        array<string> existsAs = [];
+        /** Keywords for this article. */
+        union{null, array<string>} keywords = null;
     }
 
     /** The text content of an article. */
