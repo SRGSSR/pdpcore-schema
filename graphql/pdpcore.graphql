@@ -998,6 +998,7 @@ enum Publisher {
   RTR
   RTS
   SRF
+  SRGSSR
   SWI
   SwissTXT
   Unknown

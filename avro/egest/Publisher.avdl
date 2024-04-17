@@ -15,7 +15,7 @@ protocol Publisher {
         NZZ,
         AP,
         SwissTXT,
+        SRGSSR,
         Unknown
     } = Unknown;
-
 }

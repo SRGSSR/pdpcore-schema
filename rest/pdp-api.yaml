@@ -320,6 +320,7 @@ components:
         - NZZ
         - AP
         - SwissTXT
+        - SRGSSR
 
     ConfidentialityLevel:
       description: |
