@@ -968,6 +968,7 @@ enum Provenance {
   CMS_SRF
   CMS_SWI
   CUE_RSI
+  CUE_RTS
   DigAS_RTR
   DigAS_SRF
   Escenic_RSI

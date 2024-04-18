@@ -21,7 +21,8 @@ protocol Provenance {
         DigAS_SRF,
         DigAS_RTR,
         CUE_RSI,
-        PlaySuisse_SRGSSR
+        PlaySuisse_SRGSSR,
+        CUE_RTS
     } = Unknown;
 
 }
