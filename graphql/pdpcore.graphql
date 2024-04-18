@@ -156,6 +156,10 @@ type Campaign {
   publisher: Publisher!
   "The id of the campaign in the source system. It is unique in the source system, but not globally."
   sourceId: String!
+  sourceValues(
+    "Get entry/entries for a certain key/s"
+    key: [String]
+  ): [Entry_String_String]
   "The title or headline of the article. The title may be available in different languages."
   title: [Text]
 }
@@ -235,6 +239,11 @@ type EditorialSegment {
   coversLocations: [Location]!
   identifiers: [Identifier]!
   segmentNumber: Int!
+}
+
+type Entry_String_String {
+  key: String
+  value: String
 }
 
 "The available information for a programme of an EPG schedule."
