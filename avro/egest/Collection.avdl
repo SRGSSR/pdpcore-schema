@@ -24,5 +24,6 @@ protocol Collection {
         union{null, array<Text>} description = null;
         /** Resources such as pictures or documents related to this collection. */
         union{null, array<union{Picture, Document}>} resources = null;
+        array<string> memberOf = [];
     }
 }

@@ -177,6 +177,7 @@ type Collection {
   "The PDP id of the collection."
   id: String!
   lead: [Text]
+  memberOf: [String]!
   "The source system publishing the metadata."
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
