@@ -4,6 +4,8 @@ protocol Campaign {
     import idl "Text.avdl";
     import idl "AccessConditions.avdl";
     import idl "Identifier.avdl";
+    import idl "Genre.avdl";
+    import idl "Involvement.avdl";
 
     record Campaign {
         string id;
@@ -12,6 +14,8 @@ protocol Campaign {
         array<AccessCondition> accessConditions;
         union{null, map<string>} sourceValues = null;
         union{null, array<Identifier>} identifiers = null;
+        union{null, array<Genre>} genres = null;
+        union{null, array<Involvement>} contributors = null;
     }
 
     record PublicationPlan {

@@ -147,7 +147,11 @@ type AudioTrack {
 type Campaign {
   "The conditions under which content can be accessed."
   accessConditions: [AccessCondition]!
+  "Involvements of People, teams or departments who contributed to the article."
+  contributors: [Involvement]
   description: [Text]
+  "The genres this article belongs to."
+  genres: [Genre]
   "The PDP id of the campaign."
   id: String!
   "The source system publishing the metadata."
