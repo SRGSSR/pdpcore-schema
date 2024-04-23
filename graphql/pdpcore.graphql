@@ -1194,6 +1194,8 @@ input ProgrammeFilterInput {
   "Filters programmes matching any of the provided identifiers."
   identifiers: [String]
   keywords: [String]
+  "Filters programmes by MediaType."
+  mediaType: ProgrammeMediaType
   "Filters programmes depending on the collection they are a member of. Use the PDP ID of the collection."
   memberOf: String
   "Filters programmes depending on their provenance."
