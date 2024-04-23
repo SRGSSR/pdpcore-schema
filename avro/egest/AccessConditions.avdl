@@ -9,5 +9,7 @@ protocol AccessCondition {
         string name;
         /** The description of the access condition. */
         union{null, array<Text>} description = null;
+        /** The date and time (expressed as timestamp) at which the editorial object is available to. */
+        timestamp_ms? availableTo = null;
     }
 }

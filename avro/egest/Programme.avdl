@@ -2,12 +2,14 @@
 protocol Programme {
 
     import idl "Agent.avdl";
+    import idl "AccessConditions.avdl";
     import idl "Provenance.avdl";
     import idl "PublicationStatus.avdl";
     import idl "Publisher.avdl";
     import idl "Text.avdl";
     import idl "Identifier.avdl";
     import idl "Essence.avdl";
+    import idl "Resource.avdl";
 
     /** In the context of the PDP a programme is an episode. */
     record Programme {
@@ -19,6 +21,8 @@ protocol Programme {
         Publisher publisher;
         /** The source system publishing the metadata. */
         Provenance provenance;
+        /** The access conditions for this article. */
+        union{null, array<AccessCondition>} accessConditions = null;
         /** Additional ids. */
         array<Identifier> identifiers;
         /** The title or headline of the programme. The title may be available in different languages. */
@@ -29,6 +33,9 @@ protocol Programme {
         long? durationMs = null;
         union {null, array<string>} associatedCampaigns = null;
         array<string> existsAs = [];
+        /** Resources such as pictures or documents related to this article. */
+        union{null, array<union{Picture, Document}>} resources = null;
+
     }
 
     record PublicationEvent {

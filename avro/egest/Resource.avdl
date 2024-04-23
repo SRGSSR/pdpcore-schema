@@ -28,6 +28,8 @@ protocol Resource {
         int? height = null;
         /** The copyright statement. */
         string? copyright = null;
+        /** The alternative text. */
+        union{null, array<Text>} altText = null;
     }
 
 }
