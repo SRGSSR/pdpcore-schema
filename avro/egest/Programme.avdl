@@ -21,7 +21,7 @@ protocol Programme {
         Publisher publisher;
         /** The source system publishing the metadata. */
         Provenance provenance;
-        /** The access conditions for this article. */
+        /** The access conditions for this programme. */
         union{null, array<AccessCondition>} accessConditions = null;
         /** A list of identifiers this programme might be referenced by. */
         array<Identifier> identifiers;
@@ -69,6 +69,8 @@ protocol Programme {
         /** The duration/length of this item in milliseconds. */
         long? durationMs = null;
         union{null, array<Essence>} instantiatedBy = null;
+        /** The access conditions for this item. */
+        array<AccessCondition> accessConditions = [];
     }
 
     record PublicationEvent {
