@@ -46,6 +46,8 @@ protocol Programme {
         /** Date at which this programm was or is going to be broadcasted. */
         timestamp_ms? broadcastDate = null;
         MediaType? mediaType = null;
+        /** List of PDP ids of collections that this programme is a member of. */
+        array<string> memberOf = [];
     }
 
     enum MediaType {
