@@ -23,19 +23,50 @@ protocol Programme {
         Provenance provenance;
         /** The access conditions for this article. */
         union{null, array<AccessCondition>} accessConditions = null;
-        /** Additional ids. */
+        /** A list of identifiers this programme might be referenced by. */
         array<Identifier> identifiers;
         /** The title or headline of the programme. The title may be available in different languages. */
         union{null, array<Text>} title = null;
-        /** The title or headline of the programme. The title may be available in different languages. */
+        /** The abstract of the programme. The abstract may be available in different languages. */
+        union{null, array<Text>} abstract = null;
+        /** The lead of the programme. The lead may be available in different languages. */
+        union{null, array<Text>} lead = null;
+        /** The description of the programme. The description may be available in different languages. */
+        union{null, array<Text>} description = null;
         union{null, array<Essence>} instantiatedBy = null;
         union{null, array<PublicationEvent>} scheduledOn = null;
+        /** The duration/length of this whole programme in milliseconds. */
         long? durationMs = null;
         union {null, array<string>} associatedCampaigns = null;
+        /** List of PDP ids from different source systems referencing the same programme. */
         array<string> existsAs = [];
         /** Resources such as pictures or documents related to this article. */
         union{null, array<union{Picture, Document}>} resources = null;
+        union{null, array<Item>} items = null;
+        /** Date at which this programm was or is going to be broadcasted. */
+        timestamp_ms? broadcastDate = null;
+        MediaType? mediaType = null;
+    }
 
+    enum MediaType {
+        Unknown,
+        Audio,
+        Video
+    } = Unknown;
+
+    record Item {
+        /** A list of identifiers this item might be referenced by. */
+        array<Identifier> identifiers = [];
+        MediaType? mediaType = null;
+        /** The title or headline of the item. The title may be available in different languages. */
+        union{null, array<Text>} title = null;
+        /** The abstract of the item. The abstract may be available in different languages. */
+        union{null, array<Text>} abstract = null;
+        /** The description of the item. The description may be available in different languages. */
+        union{null, array<Text>} description = null;
+        /** The duration/length of this item in milliseconds. */
+        long? durationMs = null;
+        union{null, array<Essence>} instantiatedBy = null;
     }
 
     record PublicationEvent {
