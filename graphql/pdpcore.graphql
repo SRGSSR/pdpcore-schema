@@ -180,12 +180,14 @@ type Collection {
   description: [Text]
   "The PDP id of the collection."
   id: String!
+  identifiers: [Identifier]!
   lead: [Text]
   memberOf: [Collection]
   "The source system publishing the metadata."
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."
   publisher: Publisher!
+  resources: [Resource]
   "The id of the collection in the source system. It is unique in the source system, but not globally."
   sourceId: String!
   title: [Text]
