@@ -62,6 +62,8 @@ protocol Programme {
         MediaType? mediaType = null;
         /** The title or headline of the item. The title may be available in different languages. */
         union{null, array<Text>} title = null;
+        /** The lead of the programme. The lead may be available in different languages. */
+        union{null, array<Text>} lead = null;
         /** The abstract of the item. The abstract may be available in different languages. */
         union{null, array<Text>} abstract = null;
         /** The description of the item. The description may be available in different languages. */
@@ -71,6 +73,10 @@ protocol Programme {
         union{null, array<Essence>} instantiatedBy = null;
         /** The access conditions for this item. */
         array<AccessCondition> accessConditions = [];
+        /** Resources such as pictures or documents related to this article. */
+        union{null, array<union{Picture, Document}>} resources = null;
+        /** position of the item in the list */
+        int? position = null;
     }
 
     record PublicationEvent {
