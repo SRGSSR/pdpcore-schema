@@ -5,6 +5,7 @@ schema {
 "Indicates a Bean Validation constraint"
 directive @constraint(format: String, max: BigInteger, maxFloat: BigDecimal, maxLength: Int, min: BigInteger, minFloat: BigDecimal, minLength: Int, pattern: String) repeatable on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
 
+"Marks the field, argument, input field or enum value as deprecated"
 directive @deprecated(reason: String) on FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
 
 """
@@ -19,6 +20,9 @@ directive @include(
     "Included when true."
     if: Boolean!
   ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Indicates an Input Object is a OneOf Input Object."
+directive @oneOf on INPUT_OBJECT
 
 "Used to specify the role required to execute a given field or operation."
 directive @rolesAllowed(value: String) on FIELD_DEFINITION
