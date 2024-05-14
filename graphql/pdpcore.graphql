@@ -257,24 +257,6 @@ type Entry_String_String {
   value: String
 }
 
-"The available information for a programme of an EPG schedule."
-type EpgProgramme {
-  "The end of the programme. (ISO-8601)"
-  end: DateTime!
-  "The start of the programme. (ISO-8601)"
-  start: DateTime!
-  "The title of the programme."
-  title: String!
-}
-
-"A publication channel's EPG schedule for a single day."
-type EpgSchedule {
-  "The date of the schedule. (ISO-8601)"
-  date: Date!
-  "The programmes published on the respective publication channel and date."
-  programmes: [EpgProgramme]!
-}
-
 type Essence {
   aspectRatio: AspectRatio
   audioTracks: [AudioTrack]
@@ -562,18 +544,6 @@ type Query {
     "Specifies the order in which the query returns matching contents."
     sort: [ContentSortInput] = []
   ): ContentPage! @rolesAllowed(value : "Resource.ReadInternal")
-  """
-  **Experimental, do not use in production!**
-  This query might be changed or removed at any time without notice.
-  
-  Returns the electronic programme guide (EPG) for the given publication channel and date.
-  """
-  epg_experimental(
-    "The date (YYYY-MM-DD) of the programme guide. (ISO-8601)"
-    date: Date!,
-    "The publication channel of the programme guide."
-    publicationChannel: EpgPublicationChannel!
-  ): EpgSchedule!
   "Returns the programme with the provided PDP id or null if it does not exist."
   programme_experimental(
     "A PDP id of a programme."
@@ -728,28 +698,6 @@ enum DomainType {
   Speaker
   "Subtitling are text representing the contents of the audio in a film, television show or other audiovisual media. Subtitling might provide a transcription or translation of spoken dialogue."
   Subtitling
-}
-
-"The channels available for the EPG."
-enum EpgPublicationChannel {
-  "Radio SRF 1"
-  RadioSRF1
-  "Radio SRF 2 Kultur"
-  RadioSRF2
-  "Radio SRF 3"
-  RadioSRF3
-  "Radio SRF 4 News"
-  RadioSRF4
-  "Radio SRF Musikwelle"
-  RadioSRFMusikwelle
-  "Radio SRF Virus"
-  RadioSRFVirus
-  "Radio Swiss Classic"
-  RadioSwissClassic
-  "Radio Swiss Jazz"
-  RadioSwissJazz
-  "Radio Swiss Pop"
-  RadioSwissPop
 }
 
 enum IdentifierType {
@@ -1059,9 +1007,6 @@ scalar BigDecimal
 
 "Scalar for BigInteger"
 scalar BigInteger
-
-"Scalar for Date"
-scalar Date
 
 "Scalar for DateTime"
 scalar DateTime
