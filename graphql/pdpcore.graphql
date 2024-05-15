@@ -391,6 +391,7 @@ type Programme {
   coversLocations: [Location]
   description: [Text]
   durationMs: BigInteger
+  episodeNumber: Int
   existsAs: [Programme]!
   genres: [Genre]
   "The PDP id of the programme."
@@ -414,6 +415,7 @@ type Programme {
   publisher: Publisher!
   resources: [Resource]
   scheduledOn: [PublicationEvent]
+  seasonNumber: Int
   "The id of the programme in the source system. It is unique in the source system, but not globally."
   sourceId: String!
   title: [Text]
