@@ -10,6 +10,7 @@ protocol Programme {
     import idl "Identifier.avdl";
     import idl "Essence.avdl";
     import idl "Resource.avdl";
+    import idl "Involvement.avdl";
 
     /** In the context of the PDP a programme is an episode. */
     record Programme {
@@ -48,6 +49,8 @@ protocol Programme {
         MediaType? mediaType = null;
         /** List of PDP ids of collections that this programme is a member of. */
         array<string> memberOf = [];
+        /** People, teams or departments who contributed to the programme. */
+        union{null, array<Involvement>} contributors = null;
     }
 
     enum MediaType {
@@ -77,6 +80,8 @@ protocol Programme {
         union{null, array<union{Picture, Document}>} resources = null;
         /** position of the item in the list */
         int? position = null;
+        /** People, teams or departments who contributed to the item. */
+        union{null, array<Involvement>} contributors = null;
     }
 
     record PublicationEvent {
