@@ -51,6 +51,8 @@ protocol Programme {
         array<string> memberOf = [];
         /** People, teams or departments who contributed to the programme. */
         union{null, array<Involvement>} contributors = null;
+        /** Unmapped values directly from the source system. These might change or vanish without notice. */
+        map<string> sourceValues = {};
     }
 
     enum MediaType {

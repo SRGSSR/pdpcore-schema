@@ -164,6 +164,7 @@ type Campaign {
   publisher: Publisher!
   "The id of the campaign in the source system. It is unique in the source system, but not globally."
   sourceId: String!
+  "Unmapped values directly from the source system. These might change or vanish without notice."
   sourceValues(
     "Get entry/entries for a certain key/s"
     key: [String]
@@ -418,6 +419,11 @@ type Programme {
   seasonNumber: Int
   "The id of the programme in the source system. It is unique in the source system, but not globally."
   sourceId: String!
+  "Unmapped values directly from the source system. These might change or vanish without notice."
+  sourceValues(
+    "Get entry/entries for a certain key/s"
+    key: [String]
+  ): [Entry_String_String]!
   title: [Text]
 }
 

@@ -12,6 +12,7 @@ protocol Campaign {
         union{null, array<Text>} title = null;
         union{null, array<PublicationPlan>} publicationPlans = null;
         array<AccessCondition> accessConditions;
+        /** Unmapped values directly from the source system. These might change or vanish without notice. */
         union{null, map<string>} sourceValues = null;
         union{null, array<Identifier>} identifiers = null;
         union{null, array<Genre>} genres = null;
