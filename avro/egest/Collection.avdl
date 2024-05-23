@@ -5,6 +5,7 @@ protocol Collection {
     import idl "Text.avdl";
     import idl "Identifier.avdl";
     import idl "Resource.avdl";
+    import idl "AccessConditions.avdl";
 
     /** In the context of the PDP a collection is a grouping of programmes (e.g. a "Show"). */
     record Collection {
@@ -18,10 +19,14 @@ protocol Collection {
         Provenance provenance;
         /** Additional ids. */
         array<Identifier> identifiers;
+        /** The access conditions for this collection. */
+        union{null, array<AccessCondition>} accessConditions = null;
         /** The title or headline of the collection. The title may be available in different languages. */
         union{null, array<Text>} title = null;
         /** The description of the collection. The description may be available in different languages. */
         union{null, array<Text>} description = null;
+        /** The lead of the collection. The lead may be available in different languages. */
+        union{null, array<Text>} lead = null;
         /** Resources such as pictures or documents related to this collection. */
         union{null, array<union{Picture, Document}>} resources = null;
         array<string> memberOf = [];
