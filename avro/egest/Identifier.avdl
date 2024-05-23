@@ -13,7 +13,9 @@ protocol Identifier {
      *  <li>ANR identifies an object in the archive context (e.g. '2308936')</li>
      *  <li>ProductId identifies a product (e.g. 'NEWS20201116_TM_0100')</li>
      *  <li>ProductElementId identifies a product element (e.g. 'NEWS20201116_TM_0100_0001')</li>
+     *  <li>VariantId identifies a product variant (e.g. 'AUDI20230623_RS_0015_APP_02')</li>
      *  <li>ConceptId identifies a campaign in the OfferPortfolio (e.g. 'A00104')</li>
+     *  <li>ISAN is a unique ISO identifier for audiovisual content (see: https://www.isan.org)</li>
      * </ul>
      */
     enum IdentifierType {
@@ -23,6 +25,7 @@ protocol Identifier {
         ANR,
         ProductId,
         ProductElementId,
+        VariantId,
         ConceptId,
         ISAN
     } = Unknown;

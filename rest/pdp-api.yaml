@@ -615,13 +615,16 @@ components:
         *  ANR identifies an object in the archive context (e.g. '2308936')
         *  ProductId identifies a product (e.g. 'NEWS20201116_TM_0100')
         *  ProductElementId identifies a product element (e.g. 'NEWS20201116_TM_0100_0001')
+        *  VariantId identifies a product variant (e.g. 'NEWS20201116_TM_0100_0001')
         *  ConceptId identifies a campaign in the OfferPortfolio (e.g. 'A00104')
+        *  ISAN is a unique ISO identifier for audiovisual content (see: https://www.isan.org)
       enum:
         - PdpId
         - SourceId
         - ANR
         - ProductId
         - ProductElementId
+        - VariantId
         - ConceptId
         - ISAN
       type: string
