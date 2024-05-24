@@ -1,0 +1,15 @@
+@namespace("ch.srgssr.pdp.domain.egest")
+protocol Location {
+    import idl "Identifier.avdl";
+    import idl "Text.avdl";
+
+    record Location {
+        /** A list of identifiers this location might be referenced by. */
+        array<Identifier> identifiers;
+        /** The name of the location. The name may be available in different languages. */
+        union{null, array<Text>} name = null;
+        /** The country. The country may be available in different languages. */
+        union{null, array<Text>} country = null;
+    }
+
+}
