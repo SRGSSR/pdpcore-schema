@@ -711,6 +711,8 @@ enum DomainType {
 enum IdentifierType {
   "Identifies an object in the archive context (e.g. '2308936')"
   ANR
+  "Identifies an episode in the AIS"
+  AisEpisodeId
   "Identifies a campaign in the OfferPortfolio (e.g. 'A00104')"
   ConceptId
   "The Unique ISO Identifier for Audiovisual Content (see: https://www.isan.org)"

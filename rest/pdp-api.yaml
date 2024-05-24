@@ -618,6 +618,7 @@ components:
         *  VariantId identifies a product variant (e.g. 'NEWS20201116_TM_0100_0001')
         *  ConceptId identifies a campaign in the OfferPortfolio (e.g. 'A00104')
         *  ISAN is a unique ISO identifier for audiovisual content (see: https://www.isan.org)
+        *  AisEpisodeId identifies an episode in the AIS
       enum:
         - PdpId
         - SourceId
@@ -627,6 +628,7 @@ components:
         - VariantId
         - ConceptId
         - ISAN
+        - AisEpisodeId
       type: string
 
     URL:
