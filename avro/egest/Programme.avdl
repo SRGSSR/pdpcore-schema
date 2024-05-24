@@ -16,6 +16,7 @@ protocol Programme {
     import idl "Genre.avdl";
     import idl "ProductionType.avdl";
     import idl "Producer.avdl";
+    import idl "EditorialSegment.avdl";
 
     /** In the context of the PDP a programme is an episode. */
     record Programme {
@@ -87,6 +88,8 @@ protocol Programme {
     } = Unknown;
 
     record Item {
+        /** The PDP id of the item. */
+        string id;
         /** A list of identifiers this item might be referenced by. */
         array<Identifier> identifiers = [];
         MediaType? mediaType = null;
@@ -100,6 +103,10 @@ protocol Programme {
         union{null, array<Text>} description = null;
         /** The duration/length of this item in milliseconds. */
         long? durationMs = null;
+        /** The start of this whole programme in milliseconds. */
+        long? startMs = null;
+        /** The end of this whole programme in milliseconds. */
+        long? endMs = null;
         union{null, array<Essence>} instantiatedBy = null;
         /** The access conditions for this item. */
         array<AccessCondition> accessConditions = [];
@@ -109,6 +116,21 @@ protocol Programme {
         int? position = null;
         /** People, teams or departments who contributed to the item. */
         union{null, array<Involvement>} contributors = null;
+        /** A list of rights, each held by a rights holder. */
+        union{null, array<Rights>} coveredBy = null;
+        /** The locations covered in this programme. */
+        union{null, array<Location>} coversLocations = null;
+        union{null, array<EditorialSegment>} parts = null;
+        /** A list of keywords for this programme. */
+        union{null, array<string>} keywords = null;
+        /** Date at which this programme was produced. */
+        timestamp_ms? productionDate = null;
+        /** Date at which this programme was last modified. */
+        timestamp_ms? modificationDate = null;
+        /** A list of producers who worked on this programme. */
+        union{null, array<Producer>} producers = null;
+        /** List of PDP ids from different source systems referencing the same programme. */
+        array<string> existsAs = [];
     }
 
     record PublicationEvent {
