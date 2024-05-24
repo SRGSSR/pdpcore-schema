@@ -1,6 +1,8 @@
 @namespace("ch.srgssr.pdp.domain.egest")
 protocol Campaign {
 
+    import idl "Provenance.avdl";
+    import idl "Publisher.avdl";
     import idl "Text.avdl";
     import idl "AccessConditions.avdl";
     import idl "Identifier.avdl";
@@ -9,7 +11,15 @@ protocol Campaign {
 
     record Campaign {
         string id;
+        /** The id of a campaign in the source system. It is unique in the source system, but not globally. */
+        string sourceId;
+        /** The business unit or external organisation publishing the metadata. */
+        Publisher publisher;
+        /** The source system publishing the metadata. */
+        Provenance provenance;
         union{null, array<Text>} title = null;
+        /** The description of the campaign. The description may be available in different languages. */
+        union{null, array<Text>} description = null;
         union{null, array<PublicationPlan>} publicationPlans = null;
         array<AccessCondition> accessConditions;
         /** Unmapped values directly from the source system. These might change or vanish without notice. */
