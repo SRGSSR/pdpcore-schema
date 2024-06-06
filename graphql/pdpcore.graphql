@@ -180,8 +180,8 @@ type CampaignPage {
 }
 
 type Collection {
-  "The conditions under which content can be accessed."
   accessConditions: [AccessCondition]!
+  collectionType: CollectionType
   description: [Text]
   "The PDP id of the collection."
   id: String!
@@ -662,6 +662,13 @@ enum CampaignSortField {
 "Specifies the fields that can be used to sort collections."
 enum CollectionSortField {
   updatedAt
+}
+
+enum CollectionType {
+  "The collection represents a named grouping of programmes or sub groupings."
+  Grouping
+  "The collection represents a show with episodes as its members."
+  Show
 }
 
 """
