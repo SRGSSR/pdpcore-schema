@@ -166,9 +166,9 @@ type Campaign {
   sourceId: String!
   "Unmapped values directly from the source system. These might change or vanish without notice."
   sourceValues(
-    "Get entry/entries for a certain key/s"
+    "The key(s) of the source values you want to load. All source values are returned when the value is null or an empty list."
     key: [String]
-  ): [Entry_String_String]
+  ): [SourceValue]!
   "The title or headline of the article. The title may be available in different languages."
   title: [Text]
 }
@@ -195,6 +195,11 @@ type Collection {
   resources: [Resource]
   "The id of the collection in the source system. It is unique in the source system, but not globally."
   sourceId: String!
+  "Unmapped values directly from the source system. These might change or vanish without notice."
+  sourceValues(
+    "The key(s) of the source values you want to load. All source values are returned when the value is null or an empty list."
+    key: [String]
+  ): [SourceValue]!
   title: [Text]
 }
 
@@ -251,11 +256,6 @@ type EditorialSegment {
   coversLocations: [Location]!
   identifiers: [Identifier]!
   segmentNumber: Int!
-}
-
-type Entry_String_String {
-  key: String
-  value: String
 }
 
 type Essence {
@@ -421,9 +421,9 @@ type Programme {
   sourceId: String!
   "Unmapped values directly from the source system. These might change or vanish without notice."
   sourceValues(
-    "Get entry/entries for a certain key/s"
+    "The key(s) of the source values you want to load. All source values are returned when the value is null or an empty list."
     key: [String]
-  ): [Entry_String_String]!
+  ): [SourceValue]!
   title: [Text]
 }
 
@@ -618,6 +618,12 @@ type SourceData {
 type SourceSchema {
   "Schema version of the data. Should be changed in case of major schema changes."
   version: String!
+}
+
+"An unmapped value directly from the source system."
+type SourceValue {
+  key: String!
+  value: String!
 }
 
 "A team is a group of clearly identifiable and organizationally related actors who are jointly involved in the creation process of an editorial object. An example of a team is the editorial team of \"Regionaljournal Ostschweiz\"."

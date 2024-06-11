@@ -32,6 +32,8 @@ protocol Collection {
         /** Resources such as pictures or documents related to this collection. */
         union{null, array<union{Picture, Document}>} resources = null;
         array<string> memberOf = [];
+        /** Unmapped values directly from the source system. These might change or vanish without notice. */
+        map<string> sourceValues = {};
     }
 
     /**
