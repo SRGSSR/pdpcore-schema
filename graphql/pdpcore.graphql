@@ -330,6 +330,13 @@ type Item {
   title: [Text]
 }
 
+"A link used by an editorial object, e.g. a link to a related article."
+type Link implements Resource {
+  description: [Text]
+  name: [Text]
+  url: URL
+}
+
 type Location {
   country: [Text]
   identifiers: [Identifier]!
