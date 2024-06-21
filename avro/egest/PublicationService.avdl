@@ -28,5 +28,4 @@ protocol PublicationService {
         /** The access conditions for this article. */
         union{null, array<AccessCondition>} accessConditions = null;
     }
-
 }
