@@ -84,7 +84,6 @@ type Article {
   content: ArticleContent
   "Involvements of People, teams or departments who contributed to the article."
   contributors: [Involvement]
-  covers: [NamedEntity]
   "Other articles with the same content."
   existsAs: [Article]
   "The genres this article belongs to."
@@ -345,11 +344,6 @@ type Location {
 
 type MediumType {
   sourceValue: String!
-}
-
-type NamedEntity {
-  name: String!
-  type: NamedEntityType!
 }
 
 type Occupation {
@@ -934,12 +928,6 @@ enum Language {
   za
   zh
   zu
-}
-
-enum NamedEntityType {
-  Location
-  Organisation
-  Person
 }
 
 enum ProgrammeMediaType {
