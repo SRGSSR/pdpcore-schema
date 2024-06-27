@@ -49,7 +49,7 @@ interface Agent {
 interface Resource {
   description: [Text]
   name: [Text]
-  url: URL
+  url: URI
 }
 
 "Rights held by a rights holder"
@@ -115,13 +115,13 @@ type Article {
   "The id of the article in the source system. It is unique in the source system, but not globally."
   sourceId: String!
   "The source URL from where the article can be accessed in raw format."
-  sourceUrl: URL
+  sourceUrl: URI
   "The title or headline of the article. The title may be available in different languages."
   title: [Text]
   "The permanent URL from where the article can be accessed."
-  url: URL
+  url: URI
   "The web or seo URL from where the article can be accessed"
-  webUrl: URL
+  webUrl: URI
 }
 
 "The text content of an article."
@@ -246,8 +246,13 @@ type Department implements Agent {
 "A publication in the form of a document used by an editorial object, e.g. a PDF attached to an article."
 type Document implements Resource {
   description: [Text]
+  identifiers: [Identifier]
+  "ISO-8601"
+  modificationDate: DateTime
   name: [Text]
-  url: URL
+  "ISO-8601"
+  productionDate: DateTime
+  url: URI
 }
 
 type EditorialSegment {
@@ -333,7 +338,7 @@ type Item {
 type Link implements Resource {
   description: [Text]
   name: [Text]
-  url: URL
+  url: URI
 }
 
 type Location {
@@ -369,7 +374,7 @@ type Picture implements Resource {
   description: [Text]
   height: Int
   name: [Text]
-  url: URL
+  url: URI
   width: Int
 }
 
@@ -642,9 +647,11 @@ type Text {
 }
 
 "A Uniform Resource Locator referencing a resource."
-type URL {
+type URI {
   "The URL."
-  url: String!
+  url: String
+  "The URN."
+  urn: String
 }
 
 "A usage right given to the rights holder"
