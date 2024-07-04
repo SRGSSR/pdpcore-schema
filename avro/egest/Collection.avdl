@@ -47,7 +47,8 @@ protocol Collection {
     enum CollectionType {
         Unknown,
         Show,
-        Grouping
+        Grouping,
+        Series
     } = Unknown;
 
 }

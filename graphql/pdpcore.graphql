@@ -679,9 +679,25 @@ enum CollectionSortField {
 }
 
 enum CollectionType {
-  "The collection represents a named grouping of programmes or sub groupings."
+  """
+  The collection represents a grouping of some kind, e.g. a topic
+  or category. A grouping can have other groupings as its members when
+  representing a hirarchical structure.
+  """
   Grouping
-  "The collection represents a show with episodes as its members."
+  """
+  A series is a special type of content collection that consists of several episodes.
+  It is grouped according to characters, themes or a publication scheme and can contain
+  both continuous stories and stand-alone episodes. Series differ from shows in their specific
+  structure and thematic or narrative continuity.
+  """
+  Series
+  """
+  A show is a format that serves as a framework for a series of programmes or episodes produced in a
+  particular style or on a particular theme. Each show may have regularly recurring segments,
+  a fixed time slot and a specific target audience. An example of this is the main news programme
+  on Swiss Radio and Television (SRF), the "Tagesschau".
+  """
   Show
 }
 
