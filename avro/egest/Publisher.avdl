@@ -16,6 +16,10 @@ protocol Publisher {
         AP,
         SwissTXT,
         SRGSSR,
+        ARTE,
+        FranceTV,
+        ARD,
+        ZDF,
         Unknown
     } = Unknown;
 }

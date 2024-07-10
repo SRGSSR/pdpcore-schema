@@ -322,6 +322,10 @@ components:
         - AP
         - SwissTXT
         - SRGSSR
+        - ARTE
+        - FranceTV
+        - ARD
+        - ZDF
 
     ConfidentialityLevel:
       description: |

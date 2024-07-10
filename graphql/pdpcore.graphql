@@ -710,7 +710,6 @@ If you are unsure set the confidentiality level to "C2_Internal" and/or check ou
 enum ConfidentialityLevel {
   C1_Public
   C2_Internal
-  Unknown
 }
 
 "Specifies the fields that can be used to sort contents."
@@ -983,7 +982,6 @@ enum Provenance {
   PlaySuisse_SRGSSR
   Play_SRF
   Siranau_RTS
-  Unknown
   WhatsOn_SRF
 }
 
@@ -1005,6 +1003,9 @@ Please contact the PDP team if a publisher is missing.
 """
 enum Publisher {
   AP
+  ARD
+  ARTE
+  FranceTV
   NZZ
   PZBundeshaus
   RSI
@@ -1014,7 +1015,7 @@ enum Publisher {
   SRGSSR
   SWI
   SwissTXT
-  Unknown
+  ZDF
 }
 
 "Values for sorting."
