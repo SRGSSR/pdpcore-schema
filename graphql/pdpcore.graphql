@@ -981,6 +981,7 @@ enum Provenance {
   OpenMedia_SRF
   PlaySuisse_SRGSSR
   Play_SRF
+  SAM_SRGSSR
   Siranau_RTS
   WhatsOn_SRF
 }

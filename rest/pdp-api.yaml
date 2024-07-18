@@ -307,6 +307,7 @@ components:
         - CUE_RSI
         - PlaySuisse_SRGSSR
         - CUE_RTS
+        - SAM_SRGSSR
 
     Publisher:
       description: 'The business unit or external organisation publishing the metadata. Please contact the PDP team if a publisher is missing.'
