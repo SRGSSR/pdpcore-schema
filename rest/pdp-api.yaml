@@ -1,643 +1,2281 @@
+---
 openapi: 3.0.3
 info:
   title: PDP REST API
-  description: REST API for SRG SSR's Publication Data Platform.
-  version: v1
-servers:
-  - url: https://api.pdp.{environment}.srgssr.ch/api
-    variables:
-      environment:
-        default: production
-        enum:
-          - dev
-          - int
-          - production
+  description: REST API for the SRG SSR's Publication Data Platform.
+  version: v2
 externalDocs:
   description: PDP Schema Documentation
-  url: 'https://api.pdp.production.srgssr.ch/docs-page.html#section-2'
-
+  url: https://api.pdp.production.srgssr.ch/docs-page.html#section-2
+servers:
+- url: "https://api.pdp.{environment}.srgssr.ch/api"
+  variables:
+    environment:
+      default: production
+      enum:
+      - dev
+      - int
+      - production
+tags:
+- name: data consumption
+- name: data production
 paths:
-
-  /contents:
+  /api/contents:
     post:
       tags:
-        - content
-      summary: 'Create or update content and its extracted domain object.'
-      operationId: postContent
-      responses:
-        '200':
-          description: >
-            The content is successfully stored in the PDP and available in the
-            Kafka topics "contents". The source data is extracted asynchronously
-            and should be available as the appropriate domain object in the
-            GraphQL API and Kafka topic shortly.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuccessResponse'
-        '400':
-          description: 'Bad Request'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiError'
-        '500':
-          description: 'Internal Server Error'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiError'
-      security:
-        - azure_auth:
-            - 'write:all'
+      - data production
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Content'
-        description: Article payload
-        required: true
+              $ref: "#/components/schemas/Content"
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.Ops
+        - Resource.Write
     delete:
       tags:
-        - content
-      summary: >
-        Delete content by provenance, domain type and sourceId. This also 
-        deletes the domain object that was extracted from this content.
-      operationId: deleteContentByQuery
+      - data production
       parameters:
-        - name: provenance
-          in: query
-          description: 'The source system publishing the metadata.'
-          required: true
-          schema:
-            $ref: '#/components/schemas/Provenance'
-        - name: domainType
-          in: query
-          description: 'The domain type of the content.'
-          required: true
-          schema:
-            $ref: '#/components/schemas/DomainType'
-        - name: sourceId
-          in: query
-          description: 'The id in the source system. It has to be unique for the domain type in the source system, but not globally.'
-          required: true
-          schema:
-            type: string
+      - name: domainType
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/DomainType"
+      - name: provenance
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/Provenance"
+      - name: sourceId
+        in: query
+        required: true
+        schema:
+          minLength: 1
+          type: string
       responses:
-        '204':
-          description: >
-            The content is deleted. Extracted domain objects are deleted 
-            asynchronously, i.e. it will be unavailable in GraphQL API and the 
-            appropriate Kafka topic will receive a tombstone record shortly.
-        '400':
-          description: 'Bad request, e.g. invalid parameter values.'
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.Ops
+        - Resource.Write
+  /api/contents/bulk:
+    delete:
+      tags:
+      - data production
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        "200":
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiError'
+                type: object
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
       security:
-        - azure_auth:
-            - 'write:all'
-
-  /contents/{pdpId}:
+      - azureAuthDev:
+        - Resource.Ops
+        - Resource.Write
+  /api/contents/{pdpId}:
     delete:
       tags:
-        - content
-      summary: >
-        Delete content by PDP ID. This also deletes the domain object that was
-        extracted from this content.
-      operationId: deleteContentById
+      - data production
       parameters:
-        - name: pdpId
-          in: path
-          description: 'A PDP ID of a content.'
-          required: true
-          schema:
-            type: string
+      - name: pdpId
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
-        '204':
-          description: >
-            The content is deleted. Extracted domain objects are deleted 
-            asynchronously, i.e. it will be unavailable in GraphQL API and the 
-            appropriate Kafka topic will receive a tombstone record shortly.
-        '400':
-          description: 'Not found'
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
       security:
-        - azure_auth:
-            - 'write:all'
-
+      - azureAuthDev:
+        - Resource.Ops
+        - Resource.Write
+  /api/subtitlings:
+    get:
+      tags:
+      - data consumption
+      parameters:
+      - name: provenance
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/Provenance"
+      - name: source-id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Subtitling"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/articles:
+    get:
+      tags:
+      - Article Resource
+      parameters:
+      - name: cursor
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - name: end-release-date
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      - name: end-updated-date
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      - name: keywords
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+          nullable: true
+      - name: limit
+        in: query
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - name: provenance
+        in: query
+        schema:
+          type: object
+          nullable: true
+      - name: publisher
+        in: query
+        schema:
+          type: object
+          nullable: true
+      - name: sort
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+          nullable: true
+      - name: start-release-date
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      - name: start-updated-date
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArticlePage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/articles/{id}:
+    get:
+      tags:
+      - Article Resource
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Article"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/campaigns:
+    get:
+      tags:
+      - Campaign Resource
+      parameters:
+      - name: cursor
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - name: end-updated-date
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      - name: identifiers
+        in: query
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: limit
+        in: query
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - name: provenance
+        in: query
+        schema:
+          type: object
+          nullable: true
+      - name: publisher
+        in: query
+        schema:
+          type: object
+          nullable: true
+      - name: sort
+        in: query
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: start-updated-date
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignPage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/campaigns/{id}:
+    get:
+      tags:
+      - Campaign Resource
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Campaign"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/collections:
+    get:
+      tags:
+      - data consumption
+      parameters:
+      - name: cursor
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - name: end_updated_date
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      - name: identifiers
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+          nullable: true
+      - name: limit
+        in: query
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - name: provenance
+        in: query
+        schema:
+          type: object
+          nullable: true
+      - name: publisher
+        in: query
+        schema:
+          type: object
+          nullable: true
+      - name: sort
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+          nullable: true
+      - name: start_updated_date
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CollectionPage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/collections/{id}:
+    get:
+      tags:
+      - data consumption
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Collection"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/programmes:
+    get:
+      tags:
+      - data consumption
+      parameters:
+      - name: cursor
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - name: end-broadcast-date
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      - name: end-updated-date
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      - name: identifiers
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+          nullable: true
+      - name: keywords
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+          nullable: true
+      - name: limit
+        in: query
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - name: media-type
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/ProgrammeMediaType"
+          - nullable: true
+      - name: member-of
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - name: provenance
+        in: query
+        schema:
+          type: object
+          nullable: true
+      - name: publisher
+        in: query
+        schema:
+          type: object
+          nullable: true
+      - name: sort
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+          nullable: true
+      - name: start-broadcast-date
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      - name: start-updated-date
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProgrammePage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/programmes/{id}:
+    get:
+      tags:
+      - data consumption
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Programme"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/publication-services:
+    get:
+      tags:
+      - Publication Service Resource
+      parameters:
+      - name: cursor
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - name: distribution-vector
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/DistributionVector"
+          - nullable: true
+      - name: end-updated-date
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      - name: identifiers
+        in: query
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: limit
+        in: query
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - name: provenance
+        in: query
+        schema:
+          type: object
+          nullable: true
+      - name: publisher
+        in: query
+        schema:
+          type: object
+          nullable: true
+      - name: sort
+        in: query
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: start-updated-date
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicationServicePage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/publication-services/{id}:
+    get:
+      tags:
+      - Publication Service Resource
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicationService"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
 components:
+  schemas:
+    AccessCondition:
+      description: The conditions under which content can be accessed.
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          description: The name of the AccessCondition.
+          type: string
+        description:
+          description: The description of the AccessCondition.
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        blockReason:
+          description: Indicates that the content is blocked and why. (e.g. for legal
+            reasons).
+          type: string
+          nullable: true
+        embeddingDisabled:
+          description: Indicates that the content cannot be embedded.
+          type: boolean
+          nullable: true
+        geoBlockingWhitelist:
+          description: Indicates that the content can only be viewed in the listed
+            locations.
+          type: array
+          items:
+            $ref: "#/components/schemas/GeoBlockingLocation"
+          nullable: true
+        availableFrom:
+          format: date-time
+          description: Indicates that the content can only be viewed after the given
+            date and time (ISO-8601).
+          type: string
+          example: 2022-03-10T16:15:50Z
+          nullable: true
+        availableTo:
+          format: date-time
+          description: Indicates that the content can only be viewed until the given
+            date and time (ISO-8601).
+          type: string
+          example: 2022-03-10T16:15:50Z
+          nullable: true
+    Agent:
+      description: "An agent represents a person, team or department."
+      type: object
+      oneOf:
+      - $ref: "#/components/schemas/Person"
+      - $ref: "#/components/schemas/Department"
+      - $ref: "#/components/schemas/Team"
+      discriminator:
+        propertyName: type
+        mapping:
+          Person: "#/components/schemas/Person"
+          Department: "#/components/schemas/Department"
+          Team: "#/components/schemas/Team"
+    Article:
+      required:
+      - id
+      - publisher
+      - provenance
+      - accessConditions
+      type: object
+      properties:
+        id:
+          type: string
+        publisher:
+          $ref: "#/components/schemas/Publisher"
+        provenance:
+          $ref: "#/components/schemas/Provenance"
+        accessConditions:
+          type: array
+          items:
+            $ref: "#/components/schemas/AccessCondition"
+        title:
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        contributors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Involvement"
+          nullable: true
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/Genre"
+          nullable: true
+        content:
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/ArticleContent"
+          nullable: true
+        lead:
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        modificationDate:
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          nullable: true
+        releaseDate:
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          nullable: true
+        kicker:
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        resources:
+          type: array
+          items:
+            $ref: "#/components/schemas/Resource"
+          nullable: true
+        keywords:
+          type: array
+          items:
+            type: string
+          nullable: true
+        relatedArticles:
+          type: array
+          items:
+            type: string
+          nullable: true
+        existsAs:
+          type: array
+          items:
+            type: string
+          nullable: true
+    ArticleContent:
+      required:
+      - text
+      type: object
+      properties:
+        text:
+          type: array
+          items:
+            type: string
+    ArticlePage:
+      required:
+      - results
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Article"
+    AspectRatio:
+      description: The aspect ratio of an essence.
+      required:
+      - ratio
+      type: object
+      properties:
+        ratio:
+          description: The aspect ratio.
+          type: string
+          example: 16:9
+    AudioTrack:
+      description: The audio track of an essence.
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          description: The name of the audio track.
+          type: string
+    Campaign:
+      required:
+      - id
+      - sourceId
+      - publisher
+      - provenance
+      - accessConditions
+      type: object
+      properties:
+        id:
+          type: string
+        sourceId:
+          type: string
+        publisher:
+          $ref: "#/components/schemas/Publisher"
+        provenance:
+          $ref: "#/components/schemas/Provenance"
+        accessConditions:
+          type: array
+          items:
+            $ref: "#/components/schemas/AccessCondition"
+        title:
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        description:
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        sourceValues:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/Genre"
+          nullable: true
+        contributors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Involvement"
+          nullable: true
+    CampaignPage:
+      required:
+      - results
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Campaign"
+    Collection:
+      description: "A collection aggregates related editorial objects into a common,\
+        \ higher-level container, thereby enhancing their organization and accessibility."
+      required:
+      - id
+      - publisher
+      - provenance
+      - accessConditions
+      - identifiers
+      type: object
+      properties:
+        id:
+          description: The PDP-id of this collection
+          type: string
+        publisher:
+          description: The publisher of this collection (usually a business unit).
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+        provenance:
+          description: The source system from which this collection originated.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+        accessConditions:
+          description: The conditions under which this collection can be accessed.
+          type: array
+          items:
+            $ref: "#/components/schemas/AccessCondition"
+        collectionType:
+          description: The type of this collection which allows a more detailed categorization
+            of different collections into sub-categories like Shows or Groupings.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/CollectionType"
+          nullable: true
+        title:
+          description: The title of the collection.
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        lead:
+          description: "The lead is a short, opening paragraph to gain the consumers\
+            \ interest."
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        description:
+          description: The description contains more extensive information about the
+            collection.
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        memberOf:
+          description: Indicates to which collection this collection belongs.
+          type: array
+          items:
+            type: string
+          nullable: true
+        resources:
+          description: Additional resources belonging to this collection (e.g. pictures
+            or documents).
+          type: array
+          items:
+            $ref: "#/components/schemas/Resource"
+          nullable: true
+        identifiers:
+          description: All known identifiers of this collection.
+          type: array
+          items:
+            $ref: "#/components/schemas/Identifier"
+    CollectionPage:
+      required:
+      - results
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Collection"
+    CollectionType:
+      description: Allows a more detailed categorization of the different collections.
+      enum:
+      - Show
+      - Grouping
+      - Series
+      type: string
+    ColourSpace:
+      description: The colour space of a programme.
+      required:
+      - sourceValue
+      type: object
+      properties:
+        sourceValue:
+          description: The name of the colour space directly from the source system.
+          type: string
+    ConfidentialityLevel:
+      enum:
+      - C1_Public
+      - C2_Internal
+      type: string
+    Content:
+      required:
+      - domainType
+      - publisher
+      - provenance
+      - sourceId
+      - confidentialityLevel
+      - sourceData
+      type: object
+      properties:
+        domainType:
+          $ref: "#/components/schemas/DomainType"
+        publisher:
+          $ref: "#/components/schemas/Publisher"
+        provenance:
+          $ref: "#/components/schemas/Provenance"
+        sourceId:
+          type: string
+        confidentialityLevel:
+          $ref: "#/components/schemas/ConfidentialityLevel"
+        sourceData:
+          $ref: "#/components/schemas/SourceData"
+    Department:
+      required:
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+          writeOnly: true
+        type:
+          description: The type of the agent. Always 'Department'
+          type: string
+    DistributionVector:
+      enum:
+      - TV
+      - Radio
+      - Online
+      - Unknown
+      type: string
+    Document:
+      required:
+      - identifiers
+      - type
+      type: object
+      properties:
+        locator:
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/URI"
+          writeOnly: true
+        name:
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        description:
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        identifiers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Identifier"
+        productionDate:
+          format: date-time
+          type: string
+          example: 2022-03-10T16:15:50Z
+          nullable: true
+        modificationDate:
+          format: date-time
+          type: string
+          example: 2022-03-10T16:15:50Z
+          nullable: true
+        type:
+          description: The type of the resource. Always 'Document'
+          type: string
+    DomainType:
+      enum:
+      - Article
+      - PublicationService
+      - PublicationChannel
+      - Programme
+      - Campaign
+      - Speaker
+      - Subtitling
+      - Collection
+      type: string
+    EditorialSegment:
+      description: "Represents a small, distinct part of an editorial work. In this\
+        \ case an editorial segment is a smaller part of an item like a scene or a\
+        \ part."
+      required:
+      - identifiers
+      - contentDescription
+      - coversLocations
+      type: object
+      properties:
+        identifiers:
+          description: All known identifiers of this editorial segment.
+          type: array
+          items:
+            $ref: "#/components/schemas/Identifier"
+        segmentNumber:
+          format: int32
+          description: The segment number allows to put different segments into a
+            specific order.
+          type: integer
+        contentDescription:
+          description: The description contains more extensive information about the
+            editorial segment.
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+        coversLocations:
+          description: List of location(s) which this editorial segment covers.
+          type: array
+          items:
+            $ref: "#/components/schemas/Location"
+    Essence:
+      description: The actual physical representation of one or more MediaResource
+        edited for consumption. The Essence is a physical representation of a MediaResource
+        in a particular Format destined for play-out or publishing.
+      required:
+      - identifiers
+      - locator
+      type: object
+      properties:
+        identifiers:
+          description: All known identifiers of this essence.
+          type: array
+          items:
+            $ref: "#/components/schemas/Identifier"
+        locator:
+          description: Indicates where this essence can be found.
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/URI"
+        mediumType:
+          description: Indicates what type this essence is (e.g. VHS or DVD).
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/MediumType"
+          nullable: true
+        aspectRatio:
+          description: The aspect ratio of this essence.
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/AspectRatio"
+          nullable: true
+        colourSpace:
+          description: The colour space of this essence.
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/ColourSpace"
+          nullable: true
+        audioTracks:
+          description: The audio track of this essence.
+          type: array
+          items:
+            $ref: "#/components/schemas/AudioTrack"
+          nullable: true
+        comment:
+          description: "Additional comments about this essence from the source system.\
+            \ Attention: these are not user comments!"
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+    Genre:
+      description: "The genre is used to classify audiovisual objects depending on\
+        \ their content into subject areas such as 'Culture', 'Sports', 'News' or\
+        \ 'Economy'."
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          description: The name of this genre.
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/Text"
+        description:
+          description: The description of this genre.
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/Text"
+          nullable: true
+        sourceId:
+          description: The id of this genre from the source system.
+          type: string
+          nullable: true
+    GeoBlockingLocation:
+      description: The location to which the content is restricted (e.g. 'Switzerland').
+      required:
+      - sourceValue
+      type: object
+      properties:
+        sourceValue:
+          type: string
+    Identifier:
+      description: Identifier for an object. Includes the identifier value as well
+        as a type.
+      required:
+      - value
+      - type
+      type: object
+      properties:
+        value:
+          description: The value of this identifier.
+          type: string
+        type:
+          description: "The specific type of the identifier.\n  *  PdpId identifies\
+            \ an object in the PDP (e.g. 'urn:pdp:faro_srf:programme:85bef433-ef9a-4183-8d86-78e4e0f40781')\n\
+            \  *  SourceId identifies an object in the source system (see provenance)\n\
+            \  *  ANR identifies an object in the archive context (e.g. '2308936')\n\
+            \  *  ProductId identifies a product (e.g. 'NEWS20201116_TM_0100')\n \
+            \ *  ProductElementId identifies a product element (e.g. 'NEWS20201116_TM_0100_0001')\n\
+            \  *  VariantId identifies a product variant (e.g. 'AUDI20230623_RS_0015_APP_02')\n\
+            \  *  ConceptId identifies a campaign in the OfferPortfolio (e.g. 'A00104')\n\
+            \  *  ISAN is a unique ISO identifier for audiovisual content (see: https://www.isan.org)\n\
+            \  *  AisEpisodeId identifies an episode in the AIS\n    "
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/IdentifierType"
+    IdentifierType:
+      description: |
+        The identifier type defines the different types of possible identifiers.
+          *  PdpId identifies an object in the PDP (e.g. 'urn:pdp:faro_srf:programme:85bef433-ef9a-4183-8d86-78e4e0f40781')
+          *  SourceId identifies an object in the source system (see provenance)
+          *  ANR identifies an object in the archive context (e.g. '2308936')
+          *  ProductId identifies a product (e.g. 'NEWS20201116_TM_0100')
+          *  ProductElementId identifies a product element (e.g. 'NEWS20201116_TM_0100_0001')
+          *  VariantId identifies a product variant (e.g. 'AUDI20230623_RS_0015_APP_02')
+          *  ConceptId identifies a campaign in the OfferPortfolio (e.g. 'A00104')
+          *  ISAN is a unique ISO identifier for audiovisual content (see: https://www.isan.org)
+          *  AisEpisodeId identifies an episode in the AIS
+      enum:
+      - PdpId
+      - SourceId
+      - ANR
+      - ProductId
+      - ProductElementId
+      - VariantId
+      - ConceptId
+      - ISAN
+      - AisEpisodeId
+      type: string
+    Instant:
+      format: date-time
+      type: string
+      example: 2022-03-10T16:15:50Z
+    Involvement:
+      description: An Agent's participation in the creation of publication of an editorial
+        object (e.g. Programme).
+      required:
+      - name
+      - agent
+      type: object
+      properties:
+        name:
+          description: The name of the involvement (e.g. author).
+          type: string
+        agent:
+          description: "The Person, Department, or Team involved."
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/Agent"
+    Item:
+      description: An item is a single editorial (audiovisual) contribution. An item
+        is usually a part of a programme.
+      required:
+      - id
+      - identifiers
+      - accessConditions
+      - existsAs
+      type: object
+      properties:
+        id:
+          description: The PDP-id of this item.
+          type: string
+        identifiers:
+          description: All known identifiers of this item.
+          type: array
+          items:
+            $ref: "#/components/schemas/Identifier"
+        accessConditions:
+          description: The conditions under which content can be accessed.
+          type: array
+          items:
+            $ref: "#/components/schemas/AccessCondition"
+        title:
+          description: The title(s) of this item.
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        abstract:
+          description: "The abstract is a self-contained, brief, and meaningful summary\
+            \ of this item. In contrast to the 'description', the 'abstract' is as\
+            \ complete as possible."
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        contributors:
+          description: Indicates the contributors who are involved in the creation
+            of this item.
+          type: array
+          items:
+            $ref: "#/components/schemas/Involvement"
+          nullable: true
+        keywords:
+          description: "A keyword is a frequently used term or group of words, numbers\
+            \ or characters that either appears directly in the asset or is used to\
+            \ identify and categorise the nature of the asset."
+          type: array
+          items:
+            type: string
+          nullable: true
+        durationMs:
+          format: int64
+          description: The duration of this item in milliseconds.
+          type: integer
+          nullable: true
+        mediaType:
+          description: The media type of this item. Can either be 'video' or 'audio'.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/ProgrammeMediaType"
+          nullable: true
+        parts:
+          description: "Parts describe small, distinct segments of an item like a\
+            \ scene or a shot."
+          type: array
+          items:
+            $ref: "#/components/schemas/EditorialSegment"
+          nullable: true
+        coversLocations:
+          description: List of location(s) which this item covers.
+          type: array
+          items:
+            $ref: "#/components/schemas/Location"
+          nullable: true
+        instantiatedBy:
+          description: List of essences instantiating this item.
+          type: array
+          items:
+            $ref: "#/components/schemas/Essence"
+          nullable: true
+        description:
+          description: The description of this item. The description may be available
+            in different languages.
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        productionDate:
+          format: date-time
+          description: Date at which this item was produced.
+          type: string
+          example: 2022-03-10T16:15:50Z
+          nullable: true
+        modificationDate:
+          format: date-time
+          description: Date at which this programme was last modified.
+          type: string
+          example: 2022-03-10T16:15:50Z
+          nullable: true
+        broadcastDate:
+          format: date-time
+          description: Date at which this item was or is going to be broadcasted.
+          type: string
+          example: 2022-03-10T16:15:50Z
+          nullable: true
+        startMs:
+          format: int64
+          description: The start of this item in milliseconds in relation to the whole
+            programme.
+          type: integer
+          nullable: true
+        endMs:
+          format: int64
+          description: The end of this item in milliseconds in relation to the whole
+            programme.
+          type: integer
+          nullable: true
+        productionTypes:
+          description: "A list of production types this item consists of, e.g. 'in-house\
+            \ production' or 'third-party production'."
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductionType"
+          nullable: true
+        producers:
+          description: A list of producers who worked on this item.
+          type: array
+          items:
+            $ref: "#/components/schemas/Producer"
+          nullable: true
+        resources:
+          description: List of resources belonging to this item (e.g. pictures or
+            documents).
+          type: array
+          items:
+            $ref: "#/components/schemas/Resource"
+          nullable: true
+        coveredBy:
+          description: "A list of rights, each held by a rights holder."
+          type: array
+          items:
+            $ref: "#/components/schemas/Rights"
+          nullable: true
+        position:
+          format: int32
+          description: The position of this item in the programme.
+          type: integer
+          nullable: true
+        existsAs:
+          description: List of PDP ids from different source systems referencing the
+            same item.
+          type: array
+          items:
+            type: string
+    Language:
+      enum:
+      - Unknown
+      - ab
+      - aa
+      - af
+      - ak
+      - sq
+      - am
+      - ar
+      - an
+      - hy
+      - as
+      - av
+      - ae
+      - ay
+      - az
+      - bm
+      - ba
+      - eu
+      - be
+      - bn
+      - bi
+      - bs
+      - br
+      - bg
+      - my
+      - ca
+      - ch
+      - ce
+      - ny
+      - zh
+      - cv
+      - kw
+      - co
+      - cr
+      - hr
+      - cs
+      - da
+      - dv
+      - nl
+      - dz
+      - en
+      - eo
+      - et
+      - ee
+      - fo
+      - fj
+      - fi
+      - fr
+      - ff
+      - gl
+      - ka
+      - de
+      - el
+      - gn
+      - gu
+      - ht
+      - ha
+      - he
+      - hz
+      - hi
+      - ho
+      - hu
+      - ia
+      - id
+      - ie
+      - ga
+      - ig
+      - ik
+      - io
+      - is
+      - it
+      - iu
+      - ja
+      - jv
+      - kl
+      - kn
+      - kr
+      - ks
+      - kk
+      - km
+      - ki
+      - rw
+      - ky
+      - kv
+      - kg
+      - ko
+      - ku
+      - kj
+      - la
+      - lb
+      - lg
+      - li
+      - ln
+      - lo
+      - lt
+      - lu
+      - lv
+      - gv
+      - mk
+      - mg
+      - ms
+      - ml
+      - mt
+      - mi
+      - mr
+      - mh
+      - mn
+      - na
+      - nv
+      - nd
+      - ne
+      - ng
+      - nb
+      - nn
+      - "no"
+      - ii
+      - nr
+      - oc
+      - oj
+      - cu
+      - om
+      - or
+      - os
+      - pa
+      - pi
+      - fa
+      - pl
+      - ps
+      - pt
+      - qu
+      - rm
+      - rn
+      - ro
+      - ru
+      - sa
+      - sc
+      - sd
+      - se
+      - sm
+      - sg
+      - sr
+      - gd
+      - sn
+      - si
+      - sk
+      - sl
+      - so
+      - st
+      - es
+      - su
+      - sw
+      - ss
+      - sv
+      - ta
+      - te
+      - tg
+      - th
+      - ti
+      - bo
+      - tk
+      - tl
+      - tn
+      - to
+      - tr
+      - ts
+      - tt
+      - tw
+      - ty
+      - ug
+      - uk
+      - ur
+      - uz
+      - ve
+      - vi
+      - vo
+      - wa
+      - cy
+      - wo
+      - fy
+      - xh
+      - yi
+      - yo
+      - za
+      - zu
+      type: string
+    Link:
+      required:
+      - type
+      type: object
+      properties:
+        locator:
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/URI"
+          writeOnly: true
+        name:
+          type: string
+          nullable: true
+        type:
+          description: The type of the resource. Always 'Link'
+          type: string
+    Location:
+      description: Describes a location.
+      required:
+      - identifiers
+      - name
+      type: object
+      properties:
+        identifiers:
+          description: All known identifiers of this location.
+          type: array
+          items:
+            $ref: "#/components/schemas/Identifier"
+        name:
+          description: The name of this location. The name may be available in different
+            languages.
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+        country:
+          description: The country of this location. The country may be available
+            in different languages
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+    MediumType:
+      description: A type of medium (e.g. VHS or DVD)
+      required:
+      - sourceValue
+      type: object
+      properties:
+        sourceValue:
+          description: The name of the medium type directly from the source system.
+          type: string
+    Occupation:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+    Person:
+      required:
+      - identifiers
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+          writeOnly: true
+        identifiers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Identifier"
+        occupations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Occupation"
+          nullable: true
+        alias:
+          type: array
+          items:
+            type: string
+          nullable: true
+        type:
+          description: The type of the agent. Always 'Person'
+          type: string
+    Picture:
+      required:
+      - type
+      type: object
+      properties:
+        locator:
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/URI"
+          writeOnly: true
+        name:
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        description:
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        width:
+          format: int32
+          type: integer
+          nullable: true
+        height:
+          format: int32
+          type: integer
+          nullable: true
+        copyright:
+          type: string
+          nullable: true
+        altText:
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        type:
+          description: The type of the resource. Always 'Picture'
+          type: string
+    Producer:
+      description: "The production entity (company, person, team, etc.) involved in\
+        \ the creation of this asset."
+      required:
+      - sourceValue
+      type: object
+      properties:
+        sourceValue:
+          description: The name of the producer directly from the source system.
+          type: string
+    ProductionType:
+      description: "The type of the production, e.g. 'in-house production', 'third-party\
+        \ production'."
+      required:
+      - sourceValue
+      type: object
+      properties:
+        sourceValue:
+          description: The name of the production type directly from the source system.
+          type: string
+    Programme:
+      description: "A programme is an audiovisual work. It can represent a movie,\
+        \ an episode or any other standalone audiovisual object."
+      required:
+      - id
+      - publisher
+      - provenance
+      - identifiers
+      - accessConditions
+      - existsAs
+      - sourceValues
+      type: object
+      properties:
+        id:
+          description: The PDP-id of this programme
+          type: string
+        publisher:
+          description: The publisher of this programme (usually a business unit).
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+        provenance:
+          description: The source system publishing the metadata.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+        identifiers:
+          description: All known identifiers of this programme.
+          type: array
+          items:
+            $ref: "#/components/schemas/Identifier"
+        accessConditions:
+          description: The access conditions for this programme.
+          type: array
+          items:
+            $ref: "#/components/schemas/AccessCondition"
+        existsAs:
+          description: List of PDP ids from different source systems referencing the
+            same programme.
+          type: array
+          items:
+            type: string
+        title:
+          description: The title or headline of the programme. The title may be available
+            in different languages.
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        lead:
+          description: The lead of the programme. The lead may be available in different
+            languages.
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        description:
+          description: The description of the programme. The description may be available
+            in different languages.
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        items:
+          description: List of items this programme consists of (e.g. segments of
+            a news episode).
+          type: array
+          items:
+            $ref: "#/components/schemas/Item"
+          nullable: true
+        contributors:
+          description: Contributors who are involved in the creation of this programme.
+          type: array
+          items:
+            $ref: "#/components/schemas/Involvement"
+          nullable: true
+        instantiatedBy:
+          description: List of essences instantiating this programme.
+          type: array
+          items:
+            $ref: "#/components/schemas/Essence"
+          nullable: true
+        memberOf:
+          description: List of PDP ids of collections that this programme is a member
+            of.
+          type: array
+          items:
+            type: string
+          nullable: true
+        keywords:
+          description: "A keyword is a frequently used term or group of words, numbers\
+            \ or characters that either appears directly in this programme or is used\
+            \ to identify and categorise the nature of this programme."
+          type: array
+          items:
+            type: string
+          nullable: true
+        durationMs:
+          format: int64
+          description: The duration of the programme in milliseconds.
+          type: integer
+          nullable: true
+        mediaType:
+          description: The media type of the programme. Can either be 'video' or 'audio'.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/ProgrammeMediaType"
+          nullable: true
+        productionDate:
+          format: date-time
+          description: Date at which this item was produced.
+          type: string
+          example: 2022-03-10T16:15:50Z
+          nullable: true
+        modificationDate:
+          format: date-time
+          description: Date at which this programme was last modified.
+          type: string
+          example: 2022-03-10T16:15:50Z
+          nullable: true
+        broadcastDate:
+          format: date-time
+          description: Date at which this item was or is going to be broadcasted.
+          type: string
+          example: 2022-03-10T16:15:50Z
+          nullable: true
+        abstract:
+          description: "The abstract is a self-contained, brief, and meaningful summary\
+            \ of this programme. In contrast to the 'description', the 'abstract'\
+            \ is as complete as possible."
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        scheduledOn:
+          description: List of publication events of this programme.
+          type: array
+          items:
+            $ref: "#/components/schemas/PublicationEvent"
+          nullable: true
+        associatedCampaigns:
+          description: List of PDP ids of campaigns this programme is associated with.
+            Allows linking back to the start of the media value chain.
+          type: array
+          items:
+            type: string
+          nullable: true
+        resources:
+          description: List of resources belonging to this programme (e.g. pictures
+            or documents).
+          type: array
+          items:
+            $ref: "#/components/schemas/Resource"
+          nullable: true
+        coveredBy:
+          description: "A list of rights, each held by a rights holder."
+          type: array
+          items:
+            $ref: "#/components/schemas/Rights"
+          nullable: true
+        coversLocations:
+          description: List of location(s) which this programme covers.
+          type: array
+          items:
+            $ref: "#/components/schemas/Location"
+          nullable: true
+        genres:
+          description: A list of genres used to classify this programme depending
+            on its content.
+          type: array
+          items:
+            $ref: "#/components/schemas/Genre"
+          nullable: true
+        productionTypes:
+          description: "A list of production types of this programme, e.g. 'in-house\
+            \ production' or 'third-party production'."
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductionType"
+          nullable: true
+        producers:
+          description: A list of producers who worked on this programme.
+          type: array
+          items:
+            $ref: "#/components/schemas/Producer"
+          nullable: true
+        episodeNumber:
+          format: int32
+          description: The episode number of this programme within a season.
+          type: integer
+          nullable: true
+        seasonNumber:
+          format: int32
+          description: The season number of this programme within a series.
+          type: integer
+          nullable: true
+        sourceValues:
+          description: Unmapped values directly from the source system. These might
+            change or vanish without notice.
+          type: object
+          additionalProperties:
+            type: string
+    ProgrammeMediaType:
+      description: Indicates if the programme is a video or a audio
+      enum:
+      - Audio
+      - Video
+      type: string
+    ProgrammePage:
+      required:
+      - results
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Programme"
+    Provenance:
+      description: The source system publishing the metadata.
+      enum:
+      - AIS_SRF
+      - CMS_SRF
+      - Play_SRF
+      - Escenic_RSI
+      - Escenic_RTS
+      - Angebotsportfolio_SRF
+      - CMS_SWI
+      - WhatsOn_SRF
+      - OpenMedia_SRF
+      - OpenMedia_RTR
+      - AIBOX_SRGSSR
+      - Faro_SRF
+      - Siranau_RTS
+      - Gico_RTS
+      - DigAS_SRF
+      - DigAS_RTR
+      - CUE_RSI
+      - PlaySuisse_SRGSSR
+      - SAM_SRGSSR
+      - CUE_RTS
+      type: string
+    PublicationEvent:
+      description: The event of publishing an essence by a service to a channel under
+        rights conditions.
+      required:
+      - identifiers
+      - scheduleDate
+      type: object
+      properties:
+        identifiers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Identifier"
+        scheduleDate:
+          format: date-time
+          type: string
+          example: 2022-03-10T16:15:50Z
+    PublicationService:
+      required:
+      - id
+      - sourceId
+      - publisher
+      - provenance
+      - accessConditions
+      type: object
+      properties:
+        id:
+          type: string
+        sourceId:
+          type: string
+        publisher:
+          $ref: "#/components/schemas/Publisher"
+        provenance:
+          $ref: "#/components/schemas/Provenance"
+        accessConditions:
+          type: array
+          items:
+            $ref: "#/components/schemas/AccessCondition"
+        name:
+          type: string
+          nullable: true
+        distributionVector:
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/DistributionVector"
+          nullable: true
+        resources:
+          type: array
+          items:
+            $ref: "#/components/schemas/Resource"
+          nullable: true
+    PublicationServicePage:
+      required:
+      - results
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/PublicationService"
+    Publisher:
+      description: The business unit or external organisation publishing the metadata.
+      enum:
+      - SRF
+      - RTS
+      - RSI
+      - RTR
+      - SWI
+      - PZBundeshaus
+      - NZZ
+      - AP
+      - SwissTXT
+      - SRGSSR
+      - ARTE
+      - FranceTV
+      - ARD
+      - ZDF
+      type: string
+    Resource:
+      description: Resources are additional files or assets like pictures or documents
+        belonging to a specific editorial object.
+      type: object
+      oneOf:
+      - $ref: "#/components/schemas/Document"
+      - $ref: "#/components/schemas/Picture"
+      - $ref: "#/components/schemas/Link"
+      discriminator:
+        propertyName: type
+        mapping:
+          Document: "#/components/schemas/Document"
+          Picture: "#/components/schemas/Picture"
+          Link: "#/components/schemas/Link"
+    Rights:
+      description: Rights held by a rights holder.
+      type: object
+      oneOf:
+      - $ref: "#/components/schemas/UsageRights"
+      discriminator:
+        propertyName: type
+        mapping:
+          UsageRights: "#/components/schemas/UsageRights"
+    RightsHolder:
+      description: A person or entity holding the right.
+      required:
+      - sourceValue
+      type: object
+      properties:
+        sourceValue:
+          description: The name of the rights holder directly from the source system.
+          type: string
+    SourceData:
+      required:
+      - data
+      - schema
+      - mimeType
+      type: object
+      properties:
+        data:
+          type: string
+        schema:
+          $ref: "#/components/schemas/SourceSchema"
+        mimeType:
+          type: string
+    SourceSchema:
+      required:
+      - version
+      type: object
+      properties:
+        version:
+          type: string
+    Subtitling:
+      description: A subtitling to a programme.
+      required:
+      - id
+      - sourceId
+      - identifiers
+      - publisher
+      - provenance
+      - accessConditions
+      - locator
+      type: object
+      properties:
+        id:
+          description: The PDP id of the subtitling.
+          type: string
+        sourceId:
+          description: "The id of the subtitling in the source system. It is unique\
+            \ in the source system, but not globally."
+          type: string
+        identifiers:
+          description: Additional ids.
+          type: array
+          items:
+            $ref: "#/components/schemas/Identifier"
+        publisher:
+          description: The business unit or external organisation publishing the metadata.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+        provenance:
+          description: The source system publishing the metadata.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+        accessConditions:
+          description: The access conditions for this subtitling.
+          type: array
+          items:
+            $ref: "#/components/schemas/AccessCondition"
+        locator:
+          description: The URI to the subtitling file.
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/URI"
+    Team:
+      required:
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+          writeOnly: true
+        type:
+          description: The type of the agent. Always 'Team'
+          type: string
+    Text:
+      description: Container for textual metadata like titles or descriptions including
+        an optional language.
+      required:
+      - content
+      type: object
+      properties:
+        content:
+          description: The textual content.
+          type: string
+        language:
+          description: Language this content is written in.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Language"
+          nullable: true
+    URI:
+      description: The uniform resource identifier (URI) is intended to identify abstract
+        or physical resources.
+      type: object
+      properties:
+        url:
+          description: A uniform resource locator (URL) is a reference to a resource
+            that specifies its location on a computer network and a mechanism for
+            retrieving it.
+          type: string
+          nullable: true
+        urn:
+          description: "A uniform resource name (URN) identifying the resource, might\
+            \ not be unique depending on the source system."
+          type: string
+          nullable: true
+    UsageRights:
+      description: Usage rights held by a rights holder.
+      required:
+      - sourceValue
+      - type
+      type: object
+      properties:
+        sourceValue:
+          description: The name of the usage rights directly from the source system.
+          type: string
+        rightsHolder:
+          description: The holder of the rights.
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/RightsHolder"
+          nullable: true
+        type:
+          description: The type of the right. Always 'UsageRights'
+          type: string
   securitySchemes:
     azureAuthDev:
       type: oauth2
       flows:
         clientCredentials:
-          tokenUrl: 'https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/token'
-          authorizationUrl: 'https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/authorize'
+          authorizationUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/token
           scopes:
-            'write:all': 'https://graphql-api.pdp.dev.srgssr.ch/api/.default'
+            write:all: https://graphql-api.pdp.dev.srgssr.ch/api/.default
     azureAuthInt:
       type: oauth2
       flows:
         clientCredentials:
-          tokenUrl: 'https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/token'
-          authorizationUrl: 'https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/authorize'
+          authorizationUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/token
           scopes:
-            'write:all': 'https://graphql-api.pdp.int.srgssr.ch/api/.default'
+            write:all: https://graphql-api.pdp.int.srgssr.ch/api/.default
     azureAuthProduction:
       type: oauth2
       flows:
         clientCredentials:
-          tokenUrl: 'https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/token'
-          authorizationUrl: 'https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/authorize'
+          authorizationUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/token
           scopes:
-            'write:all': 'https://graphql-api.pdp.production.srgssr.ch/api/.default'
-
-  schemas:
-
-    ApiError:
-      type: object
-      required:
-        - status
-        - message
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-
-    DomainType:
-      description: |
-        The type of the content. Contact the PDP team if you have data that does
-        not fit any of these types.
-        - Article  
-          An editorial work consisting of text, graphic, sometimes
-          video or audio, created for publication on web-sites, blogs and other
-          channels similar to the more traditional paper-based publications.
-        - PublicationService  
-          A service by which a publishing organisation or person publishes its
-          content and offers access to consumers, e.g. "SRF Info" or
-          "RSI Rete Uno".
-        - PublicationChannel  
-          Specific conduits or pathways through which content is delivered from 
-          publication services. Operated on a publication platform, e.g. 
-          "Radio SRF 1 on Radio" or "Radio SRF 1 on srf.ch".
-        - Programme  
-          An editorial work as a stand-alone piece or an episode of a
-          series, intended to be consumed as a whole.
-        - Campaign  
-          A Campaign defines a strategy for publishing content to a targeted
-          Audience according to a PublicationPlan. Campaign strategies can be
-          refined taking into account the analysis of the Resonance of related
-          ConsumptionEvents (e.g. likes, downloads, etc). Campaigns can apply to a
-          variety of broadcasting strategies e.g. advertising campaigns,
-          promotional campaigns or else.
-        - Speaker  
-          An AI-powered data enrichment that provides essential information about
-          the speaking-times of different individuals, primarily public figures,
-          within audiovisual assets. This AI-generated data enables in-depth analysis
-          and better understanding of the speaker's contribution, aiding journalistic
-          research, content discovery, and fact-checking.
-        - Collection
-          A collection aggregates related editorial objects into a common, higher-level
-          container, thereby enhancing their organization and accessibility.
-        - Subtitling
-          Subtitling are text representing the contents of the audio in a film, television 
-          show or other audiovisual media. Subtitling might provide a transcription or translation of spoken dialogue.
-      type: string
-      enum:
-        - Article
-        - PublicationService
-        - PublicationChannel
-        - Programme
-        - Campaign
-        - Speaker
-        - Collection
-        - Subtitling
-
-    Content:
-      description: >
-        Content is an envelope around the input
-      type: object
-      required:
-        - domainType
-        - sourceId
-        - publisher
-        - provenance
-        - confidentialityLevel
-        - sourceData
-      properties:
-        domainType:
-          $ref: '#/components/schemas/DomainType'
-        publisher:
-          $ref: '#/components/schemas/Publisher'
-        provenance:
-          $ref: '#/components/schemas/Provenance'
-        sourceId:
-          description: >
-            The id of the content in the source system. It must be unique for
-            the domain type in the source system, but not globally.
-          type: string
-        confidentialityLevel:
-          $ref: '#/components/schemas/ConfidentialityLevel'
-        sourceData:
-          $ref: '#/components/schemas/SourceData'
-
-    SourceData:
-      description:
-        Upstream data source model
-      type: object
-      required:
-        - data
-        - schema
-      properties:
-        data:
-          description: String of source data
-          type: string
-        schema:
-          $ref: '#/components/schemas/SourceSchema'
-        mimeType:
-          description: "Source data mimetype"
-          type: string
-          default: "application/json"
-
-    SourceSchema:
-      description: "Source data version"
-      type: object
-      required:
-        - version
-      properties:
-        version:
-          type: string
-
-    AcceptedResponse:
-      description: Accepted write operation response
-      type: object
-      properties:
-        id:
-          type: string
-
-    SuccessResponse:
-      description: Created or updated resource response
-      type: object
-      properties:
-        id:
-          type: string
-
-    Provenance:
-      description: 'The source system publishing the metadata.'
-      type: string
-      enum:
-        - CMS_SRF
-        - Escenic_RSI
-        - Escenic_RTS
-        - CMS_SWI
-        - Play_SRF
-        - AIS_SRF
-        - Angebotsportfolio_SRF
-        - WhatsOn_SRF
-        - OpenMedia_SRF
-        - OpenMedia_RTR
-        - AIBOX_SRGSSR
-        - Faro_SRF
-        - Siranau_RTS
-        - Gico_RTS
-        - DigAS_SRF
-        - DigAS_RTR
-        - CUE_RSI
-        - PlaySuisse_SRGSSR
-        - CUE_RTS
-        - SAM_SRGSSR
-
-    Publisher:
-      description: 'The business unit or external organisation publishing the metadata. Please contact the PDP team if a publisher is missing.'
-      type: string
-      enum:
-        - SRF
-        - RTS
-        - RSI
-        - RTR
-        - SWI
-        - PZBundeshaus
-        - NZZ
-        - AP
-        - SwissTXT
-        - SRGSSR
-        - ARTE
-        - FranceTV
-        - ARD
-        - ZDF
-
-    ConfidentialityLevel:
-      description: |
-        The confidentiality level declares the sensitivity of the data and who
-        is allowed to access it.
-        - C1_Public: available to anyone
-        - C2_Internal: available to SRG SSR employees only
-      type: string
-      enum:
-        - C1_Public
-        - C2_Internal
-
-    Subtitling:
-      required:
-        - id
-        - sourceId
-        - publisher
-        - provenance
-        - accessConditions
-        - updatedAt
-        - locator
-        - identifiers
-      type: object
-      properties:
-        id:
-          type: string
-        sourceId:
-          type: string
-        identifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Identifier'
-        publisher:
-          $ref: '#/components/schemas/Publisher'
-        provenance:
-          $ref: '#/components/schemas/Provenance'
-        accessConditions:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccessCondition'
-        locator:
-          $ref: '#/components/schemas/URL'
-
-
-    AccessCondition:
-      required:
-        - name
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: array
-          items:
-            $ref: '#/components/schemas/Text'
-          nullable: true
-
-    Text:
-      required:
-        - content
-      type: object
-      properties:
-        content:
-          type: string
-        language:
-          $ref: '#/components/schemas/Language'
-        formatted:
-          type: object
-          allOf:
-            - $ref: '#/components/schemas/FormattedContent'
-          nullable: true
-
-
-    Language:
-      enum:
-        - Unknown
-        - ab
-        - aa
-        - af
-        - ak
-        - sq
-        - am
-        - ar
-        - an
-        - hy
-        - as
-        - av
-        - ae
-        - ay
-        - az
-        - bm
-        - ba
-        - eu
-        - be
-        - bn
-        - bi
-        - bs
-        - br
-        - bg
-        - my
-        - ca
-        - ch
-        - ce
-        - ny
-        - zh
-        - cv
-        - kw
-        - co
-        - cr
-        - hr
-        - cs
-        - da
-        - dv
-        - nl
-        - dz
-        - en
-        - eo
-        - et
-        - ee
-        - fo
-        - fj
-        - fi
-        - fr
-        - ff
-        - gl
-        - ka
-        - de
-        - el
-        - gn
-        - gu
-        - ht
-        - ha
-        - he
-        - hz
-        - hi
-        - ho
-        - hu
-        - ia
-        - id
-        - ie
-        - ga
-        - ig
-        - ik
-        - io
-        - is
-        - it
-        - iu
-        - ja
-        - jv
-        - kl
-        - kn
-        - kr
-        - ks
-        - kk
-        - km
-        - ki
-        - rw
-        - ky
-        - kv
-        - kg
-        - ko
-        - ku
-        - kj
-        - la
-        - lb
-        - lg
-        - li
-        - ln
-        - lo
-        - lt
-        - lu
-        - lv
-        - gv
-        - mk
-        - mg
-        - ms
-        - ml
-        - mt
-        - mi
-        - mr
-        - mh
-        - mn
-        - na
-        - nv
-        - nd
-        - ne
-        - ng
-        - nb
-        - nn
-        - "no"
-        - ii
-        - nr
-        - oc
-        - oj
-        - cu
-        - om
-        - or
-        - os
-        - pa
-        - pi
-        - fa
-        - pl
-        - ps
-        - pt
-        - qu
-        - rm
-        - rn
-        - ro
-        - ru
-        - sa
-        - sc
-        - sd
-        - se
-        - sm
-        - sg
-        - sr
-        - gd
-        - sn
-        - si
-        - sk
-        - sl
-        - so
-        - st
-        - es
-        - su
-        - sw
-        - ss
-        - sv
-        - ta
-        - te
-        - tg
-        - th
-        - ti
-        - bo
-        - tk
-        - tl
-        - tn
-        - to
-        - tr
-        - ts
-        - tt
-        - tw
-        - ty
-        - ug
-        - uk
-        - ur
-        - uz
-        - ve
-        - vi
-        - vo
-        - wa
-        - cy
-        - wo
-        - fy
-        - xh
-        - yi
-        - yo
-        - za
-        - zu
-      type: string
-      nullable: true
-
-
-    FormattedContent:
-      required:
-        - content
-        - contentType
-      type: object
-      properties:
-        content:
-          type: string
-        contentType:
-          type: string
-
-    Identifier:
-      required:
-        - value
-        - type
-      type: object
-      properties:
-        value:
-          type: string
-        type:
-          $ref: '#/components/schemas/IdentifierType'
-
-    IdentifierType:
-      description: |
-        IdentifierType defines the meaning of an Identifier:
-        *  PdpId identifies an object in the PDP (e.g. 'urn:pdp:faro_srf:programme:85bef433-ef9a-4183-8d86-78e4e0f40781')
-        *  SourceId identifies an object in the source system (see provenance)
-        *  ANR identifies an object in the archive context (e.g. '2308936')
-        *  ProductId identifies a product (e.g. 'NEWS20201116_TM_0100')
-        *  ProductElementId identifies a product element (e.g. 'NEWS20201116_TM_0100_0001')
-        *  VariantId identifies a product variant (e.g. 'NEWS20201116_TM_0100_0001')
-        *  ConceptId identifies a campaign in the OfferPortfolio (e.g. 'A00104')
-        *  ISAN is a unique ISO identifier for audiovisual content (see: https://www.isan.org)
-        *  AisEpisodeId identifies an episode in the AIS
-      enum:
-        - PdpId
-        - SourceId
-        - ANR
-        - ProductId
-        - ProductElementId
-        - VariantId
-        - ConceptId
-        - ISAN
-        - AisEpisodeId
-      type: string
-
-    URL:
-      type: object
-      properties:
-        url:
-          type: string
+            write:all: https://graphql-api.pdp.production.srgssr.ch/api/.default
+    SecurityScheme:
+      type: openIdConnect
+      description: Authentication
+      openIdConnectUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/v2.0/.well-known/openid-configuration
