@@ -2278,4 +2278,3 @@ components:
     SecurityScheme:
       type: openIdConnect
       description: Authentication
-      openIdConnectUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/v2.0/.well-known/openid-configuration
