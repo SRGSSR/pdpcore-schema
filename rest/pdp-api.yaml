@@ -1,8 +1,8 @@
 ---
 openapi: 3.0.3
 info:
-  title: PDP REST API
-  description: REST API for the SRG SSR's Publication Data Platform.
+  title: PDP API
+  description: REST API for SRGSSR's publication data.
   version: v2
 externalDocs:
   description: PDP API Documentation
