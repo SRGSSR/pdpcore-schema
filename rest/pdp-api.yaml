@@ -16,11 +16,34 @@ servers:
       - dev
       - int
       - production
+tags:
+- name: Articles
+  externalDocs:
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Main-Concepts
+- name: Campaigns
+  externalDocs:
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Main-Concepts
+- name: Collections
+  externalDocs:
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Main-Concepts
+- name: Contents
+  description: API for publishing content
+  externalDocs:
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Contents
+- name: Programmes
+  externalDocs:
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Main-Concepts
+- name: PublicationServices
+  externalDocs:
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Main-Concepts
+- name: Subtitlings
+  externalDocs:
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Main-Concepts
 paths:
   /api/contents:
     post:
       tags:
-      - Content Rest Resource
+      - Contents
       requestBody:
         content:
           application/json:
@@ -39,7 +62,7 @@ paths:
         - Resource.Write
     delete:
       tags:
-      - Content Rest Resource
+      - Contents
       parameters:
       - name: domainType
         in: query
@@ -71,7 +94,7 @@ paths:
   /api/contents/bulk:
     delete:
       tags:
-      - Content Rest Resource
+      - Contents
       requestBody:
         content:
           application/json:
@@ -98,7 +121,7 @@ paths:
   /api/contents/{pdpId}:
     delete:
       tags:
-      - Content Rest Resource
+      - Contents
       parameters:
       - name: pdpId
         in: path
@@ -119,7 +142,7 @@ paths:
   /api/subtitlings:
     get:
       tags:
-      - Subtitling Rest Resource
+      - Subtitlings
       parameters:
       - name: provenance
         in: query
@@ -151,7 +174,7 @@ paths:
   /api/v2/articles:
     get:
       tags:
-      - Article Resource
+      - Articles
       parameters:
       - name: cursor
         in: query
@@ -232,7 +255,7 @@ paths:
   /api/v2/articles/{id}:
     get:
       tags:
-      - Article Resource
+      - Articles
       parameters:
       - name: id
         in: path
@@ -257,7 +280,7 @@ paths:
   /api/v2/campaigns:
     get:
       tags:
-      - Campaign Resource
+      - Campaigns
       parameters:
       - name: cursor
         in: query
@@ -326,7 +349,7 @@ paths:
   /api/v2/campaigns/{id}:
     get:
       tags:
-      - Campaign Resource
+      - Campaigns
       parameters:
       - name: id
         in: path
@@ -351,7 +374,7 @@ paths:
   /api/v2/collections:
     get:
       tags:
-      - Collection Resource
+      - Collections
       parameters:
       - name: cursor
         in: query
@@ -420,7 +443,7 @@ paths:
   /api/v2/collections/{id}:
     get:
       tags:
-      - Collection Resource
+      - Collections
       parameters:
       - name: id
         in: path
@@ -445,7 +468,7 @@ paths:
   /api/v2/programmes:
     get:
       tags:
-      - Programme Resource
+      - Programmes
       parameters:
       - name: cursor
         in: query
@@ -544,7 +567,7 @@ paths:
   /api/v2/programmes/{id}:
     get:
       tags:
-      - Programme Resource
+      - Programmes
       parameters:
       - name: id
         in: path
@@ -569,7 +592,7 @@ paths:
   /api/v2/publication-services:
     get:
       tags:
-      - Publication Service Resource
+      - PublicationServices
       parameters:
       - name: cursor
         in: query
@@ -644,7 +667,7 @@ paths:
   /api/v2/publication-services/{id}:
     get:
       tags:
-      - Publication Service Resource
+      - PublicationServices
       parameters:
       - name: id
         in: path
