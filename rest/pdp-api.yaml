@@ -95,6 +95,8 @@ paths:
     delete:
       tags:
       - Contents
+      summary: Bulk delete by PDP IDs.
+      description: Pass a list of PDP IDs to delete.
       requestBody:
         content:
           application/json:
