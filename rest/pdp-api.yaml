@@ -213,13 +213,15 @@ paths:
       - name: provenance
         in: query
         schema:
-          type: object
-          nullable: true
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          - nullable: true
       - name: publisher
         in: query
         schema:
-          type: object
-          nullable: true
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          - nullable: true
       - name: sort
         in: query
         schema:
@@ -313,13 +315,15 @@ paths:
       - name: provenance
         in: query
         schema:
-          type: object
-          nullable: true
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          - nullable: true
       - name: publisher
         in: query
         schema:
-          type: object
-          nullable: true
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          - nullable: true
       - name: sort
         in: query
         required: true
@@ -407,13 +411,15 @@ paths:
       - name: provenance
         in: query
         schema:
-          type: object
-          nullable: true
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          - nullable: true
       - name: publisher
         in: query
         schema:
-          type: object
-          nullable: true
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          - nullable: true
       - name: sort
         in: query
         schema:
@@ -525,13 +531,15 @@ paths:
       - name: provenance
         in: query
         schema:
-          type: object
-          nullable: true
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          - nullable: true
       - name: publisher
         in: query
         schema:
-          type: object
-          nullable: true
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          - nullable: true
       - name: sort
         in: query
         schema:
@@ -631,13 +639,15 @@ paths:
       - name: provenance
         in: query
         schema:
-          type: object
-          nullable: true
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          - nullable: true
       - name: publisher
         in: query
         schema:
-          type: object
-          nullable: true
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          - nullable: true
       - name: sort
         in: query
         required: true
