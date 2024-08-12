@@ -27,7 +27,7 @@ tags:
   externalDocs:
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Main-Concepts
 - name: Contents
-  description: API for publishing content
+  description: API for publishing and retrieving content.
   externalDocs:
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Contents
 - name: Programmes
@@ -41,6 +41,105 @@ tags:
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Main-Concepts
 paths:
   /api/contents:
+    get:
+      tags:
+      - Contents
+      summary: Find contents.
+      description: Returns the contents matching the provided filter criteria.
+      parameters:
+      - name: cursor
+        in: query
+        description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
+        schema:
+          type: string
+          nullable: true
+      - name: domain-type
+        in: query
+        description: Filters contents depending on their domain type.
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/DomainType"
+          - nullable: true
+      - name: end-updated-date
+        in: query
+        description: Filters contents depending on when they were updated. A content
+          counts as updated when the source system sends an update. The update may
+          or may not contain any actual changes to the content. Provide an ISO-8601
+          UTC date-time to filter for contents updated strictly before that date-time.
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      - name: identifiers
+        in: query
+        description: Filters contents with an id or alternative identifier matching
+          any of the provided identifiers.
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: limit
+        in: query
+        description: "The number of contents per page. Minimum: 1, maximum: 10."
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - name: provenance
+        in: query
+        description: Filters contents depending on their provenance.
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          - nullable: true
+      - name: publisher
+        in: query
+        description: Filters contents depending on their publisher.
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          - nullable: true
+      - name: sort
+        in: query
+        description: "Specifies the order in which the query returns matching contents.\
+          \ Format: `-field` to sort descending, `+field` to sort ascending.  Available\
+          \ fields: updatedAt."
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+        example: -updatedAt
+      - name: start-updated-date
+        in: query
+        description: Filters contents depending on when they were updated. A content
+          counts as updated when the source system sends an update. The update may
+          or may not contain any actual changes to the content. Provide an ISO-8601
+          UTC date-time to filter for contents updated strictly after that date-time.
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentPage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
     post:
       tags:
       - Contents
@@ -48,7 +147,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Content"
+              $ref: "#/components/schemas/ContentCreation"
       responses:
         "200":
           description: OK
@@ -120,6 +219,35 @@ paths:
       - azureAuthDev:
         - Resource.Ops
         - Resource.Write
+  /api/contents/{id}:
+    get:
+      tags:
+      - Contents
+      summary: Get content by PDP ID.
+      description: Returns the content with the given PDP ID.
+      parameters:
+      - name: id
+        in: path
+        description: The PDP ID of the content.
+        required: true
+        schema:
+          type: string
+        example: urn:pdp:cue_rsi:content_article:rsi:cue:story:2044947
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Content"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
   /api/contents/{pdpId}:
     delete:
       tags:
@@ -1045,27 +1173,125 @@ components:
       - C2_Internal
       type: string
     Content:
+      description: A content contains the raw data of a domain object from a source
+        system.
       required:
-      - domainType
+      - id
+      - sourceId
       - publisher
       - provenance
+      - confidentialityLevel
+      - accessConditions
+      - domainType
+      - sourceData
+      type: object
+      properties:
+        id:
+          description: The PDP ID of the content.
+          type: string
+          example: urn:pdp:cue_rsi:content_article:rsi:cue:story:2044947
+        sourceId:
+          description: "The ID of the content in the source system. It must be unique\
+            \ for the domain type in the source system, but not globally."
+          type: string
+          example: rsi:cue:story:2044947
+        publisher:
+          description: The business unit or external organisation publishing the metadata.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          example: RSI
+        provenance:
+          description: The source system publishing the metadata.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          example: CUE_RSI
+        confidentialityLevel:
+          description: In the context of the PDP this field is used to indicate whether
+            the data may be published publicly.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/ConfidentialityLevel"
+          example: C1_Public
+        accessConditions:
+          description: The conditions under which content can be accessed.
+          type: array
+          items:
+            $ref: "#/components/schemas/AccessCondition"
+        domainType:
+          description: The domain type of the content.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/DomainType"
+          example: Article
+        sourceData:
+          description: The raw data from the source object including information about
+            its schema.
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/SourceData"
+    ContentCreation:
+      description: A content contains the raw data of a domain object from a source
+        system.
+      required:
+      - provenance
+      - domainType
       - sourceId
+      - publisher
       - confidentialityLevel
       - sourceData
       type: object
       properties:
-        domainType:
-          $ref: "#/components/schemas/DomainType"
-        publisher:
-          $ref: "#/components/schemas/Publisher"
         provenance:
-          $ref: "#/components/schemas/Provenance"
-        sourceId:
+          description: The source system publishing the metadata.
           type: string
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          example: CUE_RSI
+        domainType:
+          description: The domain type of the content.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/DomainType"
+          example: Article
+        sourceId:
+          description: "The ID of the content in the source system. It must be unique\
+            \ for the domain type in the source system, but not globally."
+          type: string
+          example: rsi:cue:story:2044947
+        publisher:
+          description: The business unit or external organisation publishing the metadata.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          example: RSI
         confidentialityLevel:
-          $ref: "#/components/schemas/ConfidentialityLevel"
+          description: In the context of the PDP this field is used to indicate whether
+            the data may be published publicly.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/ConfidentialityLevel"
+          example: C1_Public
         sourceData:
-          $ref: "#/components/schemas/SourceData"
+          description: The raw data from the source object including information about
+            its schema.
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/SourceData"
+    ContentPage:
+      description: A page containing contents matching the query filters.
+      required:
+      - results
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Content"
     Department:
       required:
       - type
@@ -2157,25 +2383,40 @@ components:
           description: The name of the rights holder directly from the source system.
           type: string
     SourceData:
+      description: The raw data from the source object including information about
+        its schema.
       required:
       - data
-      - schema
       - mimeType
+      - schema
       type: object
       properties:
         data:
+          description: The raw source data.
           type: string
-        schema:
-          $ref: "#/components/schemas/SourceSchema"
+          example: "{ \"id\": \"rsi:cue:story:2044947\", \"title\": \"Gobbi, il Governo\
+            \ chiede l’accesso agli atti\" }"
         mimeType:
+          description: The media type of the data. See https://en.wikipedia.org/wiki/Media_type#Common_examples.
           type: string
+          example: application/json
+        schema:
+          description: Information about the schema of the source data.
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/SourceSchema"
     SourceSchema:
+      description: Information about the schema of the source data.
       required:
       - version
       type: object
       properties:
         version:
+          description: The version of the schema. Preferably an integer that only
+            changes when the schema changes in a backwards-incompatible way. Backwards-compatible
+            changes (e.g. adding a new optional field) do not require a new version.
           type: string
+          example: "1"
     Subtitling:
       description: A subtitling to a programme.
       required:
