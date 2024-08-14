@@ -109,11 +109,9 @@ paths:
         description: "Specifies the order in which the query returns matching contents.\
           \ Format: `-field` to sort descending, `+field` to sort ascending.  Available\
           \ fields: updatedAt."
-        required: true
+        required: false
         schema:
-          type: array
-          items:
-            type: string
+          type: string
         example: -updatedAt
       - name: start-updated-date
         in: query
@@ -352,11 +350,9 @@ paths:
           - nullable: true
       - name: sort
         in: query
+        required: false
         schema:
-          type: array
-          items:
-            type: string
-          nullable: true
+          type: string
       - name: start-release-date
         in: query
         schema:
@@ -454,11 +450,9 @@ paths:
           - nullable: true
       - name: sort
         in: query
-        required: true
+        required: false
         schema:
-          type: array
-          items:
-            type: string
+          type: string
       - name: start-updated-date
         in: query
         schema:
@@ -550,11 +544,9 @@ paths:
           - nullable: true
       - name: sort
         in: query
+        required: false
         schema:
-          type: array
-          items:
-            type: string
-          nullable: true
+          type: string
       - name: start_updated_date
         in: query
         schema:
@@ -670,11 +662,9 @@ paths:
           - nullable: true
       - name: sort
         in: query
+        required: false
         schema:
-          type: array
-          items:
-            type: string
-          nullable: true
+          type: string
       - name: start-broadcast-date
         in: query
         schema:
@@ -778,11 +768,9 @@ paths:
           - nullable: true
       - name: sort
         in: query
-        required: true
+        required: false
         schema:
-          type: array
-          items:
-            type: string
+          type: string
       - name: start-updated-date
         in: query
         schema:
