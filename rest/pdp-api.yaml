@@ -19,26 +19,33 @@ servers:
 tags:
 - name: Articles
   externalDocs:
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Main-Concepts
+    description: Article Documentation
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Article
 - name: Campaigns
   externalDocs:
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Main-Concepts
+    description: Campaign Documentation
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Campaign
 - name: Collections
   externalDocs:
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Main-Concepts
+    description: Collection Documentation
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Collection
 - name: Contents
   description: API for publishing and retrieving content.
   externalDocs:
+    description: Content Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Contents
 - name: Programmes
   externalDocs:
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Main-Concepts
+    description: Programme Documentation
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Programme
 - name: PublicationServices
   externalDocs:
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Main-Concepts
+    description: PublicationService Documentation
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#PublicationService
 - name: Subtitlings
   externalDocs:
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Main-Concepts
+    description: Subtitling Documentation
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Subtitling
 paths:
   /api/contents:
     get:
