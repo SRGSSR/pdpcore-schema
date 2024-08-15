@@ -199,23 +199,28 @@ paths:
     delete:
       tags:
       - Contents
-      summary: Bulk delete by PDP IDs.
-      description: Pass a list of PDP IDs to delete.
+      summary: Bulk delete contents.
+      description: "\nDeleting multiple contents in bulk is much faster than deleting\
+        \ them one by one.\nIn the body of the request, pass an array of the content\
+        \ IDs you want to delete.\nA content ID can either be a string containing\
+        \ a PDP ID or\nan object with the properties `provenance`, `domainType`, and\
+        \ `sourceId`:\n\n```json\n[\n  \"urn:pdp:cms_srf:content_article:2044947\"\
+        ,\n  \"urn:pdp:cms_srf:content_article:2044948\"\n]\n```\n\nor\n\n```json\n\
+        [\n  {\n    \"provenance\": \"CMS_SRF\",\n    \"domainType\": \"Article\"\
+        ,\n    \"sourceId\": \"2044947\"\n  },\n  {\n    \"provenance\": \"CMS_SRF\"\
+        ,\n    \"domainType\": \"Article\",\n    \"sourceId\": \"2044948\"\n  }\n\
+        ]\n```\n        "
       requestBody:
         content:
           application/json:
             schema:
               type: array
               items:
-                type: string
+                $ref: "#/components/schemas/BulkDeleteId"
         required: true
       responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
+        "204":
+          description: The request was successful.
         "401":
           description: Not Authorized
         "403":
@@ -253,12 +258,11 @@ paths:
       - azureAuthDev:
         - Resource.ReadInternal
         - Resource.ReadPublic
-  /api/contents/{pdpId}:
     delete:
       tags:
       - Contents
       parameters:
-      - name: pdpId
+      - name: id
         in: path
         required: true
         schema:
@@ -1002,6 +1006,15 @@ components:
         name:
           description: The name of the audio track.
           type: string
+    BulkDeleteId:
+      description: "\nThe ID can either be a string containing a PDP ID, e.g. `urn:pdp:cms_srf:content_article:2044947`,\n\
+        or an object with the properties `provenance`, `domainType`, and `sourceId`,\n\
+        e.g. `{\"provenance\": \"CMS_SRF\", \"domainType\": \"Article\", \"sourceId\"\
+        : \"2044947\"}`.\n            "
+      type: object
+      oneOf:
+      - type: string
+      - $ref: "#/components/schemas/ComposedBulkDeleteId"
     Campaign:
       required:
       - id
@@ -1162,6 +1175,29 @@ components:
         sourceValue:
           description: The name of the colour space directly from the source system.
           type: string
+    ComposedBulkDeleteId:
+      required:
+      - provenance
+      - domainType
+      - sourceId
+      type: object
+      properties:
+        provenance:
+          description: The provenance of the content.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          example: CMS_SRF
+        domainType:
+          description: The domain type of the content.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/DomainType"
+          example: Article
+        sourceId:
+          description: The ID of the content in the source system.
+          type: string
+          example: "2044948"
     ConfidentialityLevel:
       enum:
       - C1_Public
