@@ -31,11 +31,6 @@ protocol Article {
         union{null, array<Involvement>} contributors = null;
         /** The genres this article belongs to. */
         union{null, array<Genre>} genres = null;
-        /**
-         * The images of the article.
-         * Deprecated: use resources with type Picture instead.
-         */
-        union{null, array<Image>} images = null;
         /** Resources such as pictures or documents related to this article. */
         union{null, array<union{Picture, Document}>} resources = null;
         /** The full text of the article. */
