@@ -59,6 +59,9 @@ servers:
       - dev
       - int
       - production
+security:
+- azureAuthDev:
+  - https://graphql-api.pdp.dev.srgssr.ch/api/.default
 tags:
 - name: Articles
   externalDocs:
@@ -2605,23 +2608,7 @@ components:
           authorizationUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/authorize
           tokenUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/token
           scopes:
-            write:all: https://graphql-api.pdp.dev.srgssr.ch/api/.default
-    azureAuthInt:
-      type: oauth2
-      flows:
-        clientCredentials:
-          authorizationUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/authorize
-          tokenUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/token
-          scopes:
-            write:all: https://graphql-api.pdp.int.srgssr.ch/api/.default
-    azureAuthProduction:
-      type: oauth2
-      flows:
-        clientCredentials:
-          authorizationUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/authorize
-          tokenUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/token
-          scopes:
-            write:all: https://graphql-api.pdp.production.srgssr.ch/api/.default
+            https://graphql-api.pdp.dev.srgssr.ch/api/.default: read resources
     SecurityScheme:
       type: openIdConnect
       description: Authentication
