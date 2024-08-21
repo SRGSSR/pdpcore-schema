@@ -2,16 +2,59 @@
 openapi: 3.0.3
 info:
   title: PDP API
-  description: REST API for SRGSSR's publication data.
-  version: v2
+  description: "REST API for the SRGSSR's publication data platform.\n\n## Introduction\n\
+    \nThe PDP API provides multilingual metadata about content produced by SRG SSR.\
+    \ \nThis API offers access to a variety of audios, videos, and texts metadata\
+    \ originating from different source systems across the individual SRG SSR business\
+    \ units.\nThe API is composed of REST endpoints that provide a unified structure\
+    \ for accessing all relevant domain objects related to media asset management.\n\
+    It supports a wide range of operations tailored to specific use cases, enabling\
+    \ seamless interaction with the content.\n\n## Available Environments\n\nThe API\
+    \ is available in different environments tailored to various stages of development,\
+    \ integration and production:\n\n- dev: This environment is strictly for development\
+    \ purposes. Please note that it is regularly wiped and deleted.\n- int: This environment\
+    \ is intended for testing your integration with the PDP.\n- production: Use this\
+    \ environment only after receiving approval from the PDP team.\n\n## Authentication\n\
+    \nThe API uses Azure Active Directory (AAD) authentication. The PDP team manages\
+    \ the AAD application registration and configuration.\nTo get technical access\
+    \ for an application, you need to:\n\n1. Request your own SRG Active Directory\
+    \ credentials for the PDP-API.\n1. Get the bearer token.\n1. Send requests with\
+    \ the token to the PDP API.\n\n### Requesting your own SRG Active Directory credentials\
+    \ for the PDP-API\n\nEmail us your project description at pdp@srgssr.ch. We will\
+    \ set up an Azure App Registration for you with the required access. You will\
+    \ use this information to obtain the bearer token in the next step.\n\n### Getting\
+    \ the bearer token\n\nMake sure you replace `YOUR_CLIENT_ID` and `YOUR_CLIENT_SECRET`\
+    \ with your client credentials.\n\nIf you need a token for the `dev` or `int`\
+    \ environments, use the scope `https://graphql-api.pdp.dev.srgssr.ch/api/.default`\
+    \ or `https://graphql-api.pdp.int.srgssr.ch/api/.default` respectively.\n\n```bash\n\
+    curl --request POST \\\n  --url 'https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/token'\
+    \ \\\n  --header 'Content-Type: application/x-www-form-urlencoded' \\\n  --data\
+    \ 'grant_type=client_credentials&client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET&scope=https%3A%2F%2Fgraphql-api.pdp.production.srgssr.ch%2Fapi/.default'\n\
+    ```\n\nYou will get back the `access_token` that you will need in the next step.\n\
+    \nFor more information about the OAuth2 client credentials flow, please refer\
+    \ to the [Microsoft OAuth 2.0 Client Credentials Flow Documentation](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-client-creds-grant-flow).\n\
+    \n### Sending requests with the access token\n\nMake sure you replace `YOUR_ACCESS_TOKEN`\
+    \ with the access token you received in the previous step.\n\n```bash\ncurl --request\
+    \ GET \\\n  --url 'https://api.pdp.production.srgssr.ch/api/v2/programmes?provenance=Faro_SRF'\
+    \ \\\n  --header 'Authorization: Bearer YOUR_ACCESS_TOKEN'\n```\n\n## Rate Limits\n\
+    \nTo ensure optimal performance and fair usage, we have implemented a rate limit\
+    \ of 30’000 requests per minute per IP and 60'000 requests per minute globally\
+    \ across all endpoints.\nIf this limit is exceeded, the server will return a “\
+    429 – Too Many Requests” status code.\nThe response will include a `Retry-After`\
+    \ header, indicating the number of seconds you should wait before making further\
+    \ requests.\n"
+  version: "2"
 externalDocs:
   description: PDP API Documentation
   url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference
 servers:
-- url: "https://api.pdp.{environment}.srgssr.ch/api"
+- url: http://localhost:8080/
+  description: Local development
+- url: "https://api.pdp.{environment}.srgssr.ch/"
+  description: Deployed environments
   variables:
     environment:
-      default: production
+      default: int
       enum:
       - dev
       - int
