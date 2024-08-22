@@ -66,32 +66,32 @@ tags:
 - name: Articles
   externalDocs:
     description: Article Documentation
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Article
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Article
 - name: Campaigns
   externalDocs:
     description: Campaign Documentation
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Campaign
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Campaign
 - name: Collections
   externalDocs:
     description: Collection Documentation
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Collection
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Collection
 - name: Contents
   description: API for publishing and retrieving content.
   externalDocs:
     description: Content Documentation
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Contents
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Contents
 - name: Programmes
   externalDocs:
     description: Programme Documentation
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Programme
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Programme
 - name: PublicationServices
   externalDocs:
     description: PublicationService Documentation
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#PublicationService
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#PublicationService
 - name: Subtitlings
   externalDocs:
     description: Subtitling Documentation
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference#Subtitling
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Subtitling
 paths:
   /api/contents:
     get:
