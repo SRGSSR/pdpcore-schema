@@ -74,6 +74,8 @@ tags:
     description: Campaign Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Campaign
 - name: Collections
+  description: "API for retrieving high-level metadata about shows, series and other\
+    \ groupings."
   externalDocs:
     description: Collection Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Collection
@@ -83,10 +85,12 @@ tags:
     description: Content Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Contents
 - name: Programmes
+  description: API for retrieving programme metadata
   externalDocs:
     description: Programme Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Programme
 - name: PublicationServices
+  description: API for retrieving publication services metadata
   externalDocs:
     description: PublicationService Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#PublicationService
@@ -582,20 +586,32 @@ paths:
     get:
       tags:
       - Collections
+      description: Returns the articles matching the provided filter criteria.
       parameters:
       - name: cursor
         in: query
+        description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
         schema:
           type: string
           nullable: true
       - name: end-updated-date
         in: query
+        description: |-
+          Filters objects based on when they were last updated. An
+          update is considered valid when the source system sends an update,
+          regardless of whether any actual changes were made to the object. Provide an
+          ISO-8601 UTC date-time to filter for objects updated strictly before that date-time.
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
           - nullable: true
       - name: identifiers
         in: query
+        description: Filter on an ID or an alternative identifier that matches any
+          of the provided values.
+        required: false
         schema:
           type: array
           items:
@@ -603,6 +619,7 @@ paths:
           nullable: true
       - name: limit
         in: query
+        description: "The number of collections per page. Minimum: 1, maximum: 10."
         schema:
           format: int32
           default: 10
@@ -611,23 +628,31 @@ paths:
           type: integer
       - name: provenance
         in: query
+        description: Filters collection depending on their provenance.
         schema:
           allOf:
           - $ref: "#/components/schemas/Provenance"
           - nullable: true
       - name: publisher
         in: query
+        description: Filters collection depending on their publisher.
         schema:
           allOf:
           - $ref: "#/components/schemas/Publisher"
           - nullable: true
       - name: sort
         in: query
+        description: "Specifies the order in which the query returns matching objects.\
+          \ Format: `-field` to sort descending, `+field` to sort ascending."
         required: false
         schema:
           type: string
+        example: -updatedAt
       - name: start-updated-date
         in: query
+        description: "Filters content based on when they were last updated. Provide\
+          \ \nan ISO-8601 UTC date-time to filter for objects updated strictly after\
+          \ the specified date-time."
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
@@ -651,12 +676,15 @@ paths:
     get:
       tags:
       - Collections
+      description: Returns the article with the given PDP ID.
       parameters:
       - name: id
         in: path
+        description: The PDP ID of the collection.
         required: true
         schema:
           type: string
+        example: urn:pdp:play_srf:collection:urn:rsi:show:tv:702711
       responses:
         "200":
           description: OK
@@ -676,26 +704,41 @@ paths:
     get:
       tags:
       - Programmes
+      description: Returns the programmes matching the provided filter criteria.
       parameters:
       - name: cursor
         in: query
+        description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
         schema:
           type: string
           nullable: true
       - name: end-broadcast-date
         in: query
+        description: |-
+          Filters objects based on their broadcast date. Provide an ISO-
+          8601 UTC date-time to retrieve objects released strictly before the specified date-time.
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
           - nullable: true
       - name: end-updated-date
         in: query
+        description: |-
+          Filters objects based on when they were last updated. An
+          update is considered valid when the source system sends an update,
+          regardless of whether any actual changes were made to the object. Provide an
+          ISO-8601 UTC date-time to filter for objects updated strictly before that date-time.
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
           - nullable: true
       - name: identifiers
         in: query
+        description: Filter on an ID or an alternative identifier that matches any
+          of the provided values.
+        required: false
         schema:
           type: array
           items:
@@ -703,6 +746,7 @@ paths:
           nullable: true
       - name: keywords
         in: query
+        description: Filters the results based on one or more freely chosen keywords.
         schema:
           type: array
           items:
@@ -710,6 +754,7 @@ paths:
           nullable: true
       - name: limit
         in: query
+        description: "The number of programmes per page. Minimum: 1, maximum: 10."
         schema:
           format: int32
           default: 10
@@ -718,40 +763,54 @@ paths:
           type: integer
       - name: media-type
         in: query
+        description: "Filters results based on the media type (e.g., audio, video)."
         schema:
           allOf:
           - $ref: "#/components/schemas/ProgrammeMediaType"
           - nullable: true
       - name: member-of
         in: query
+        description: Filters results based on the collection a specific program is
+          part of.
         schema:
           type: string
           nullable: true
       - name: provenance
         in: query
+        description: Filters programmes depending on their provenance.
         schema:
           allOf:
           - $ref: "#/components/schemas/Provenance"
           - nullable: true
       - name: publisher
         in: query
+        description: Filters programmes depending on their publisher.
         schema:
           allOf:
           - $ref: "#/components/schemas/Publisher"
           - nullable: true
       - name: sort
         in: query
+        description: "Specifies the order in which the query returns matching objects.\
+          \ Format: `-field` to sort descending, `+field` to sort ascending."
         required: false
         schema:
           type: string
+        example: -updatedAt
       - name: start-broadcast-date
         in: query
+        description: |-
+          Filters content based on their broadcast date. Provide an
+          ISO-8601 UTC date-time to retrieve objects released on or after the specified date-time.
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
           - nullable: true
       - name: start-updated-date
         in: query
+        description: "Filters content based on when they were last updated. Provide\
+          \ \nan ISO-8601 UTC date-time to filter for objects updated strictly after\
+          \ the specified date-time."
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
@@ -775,12 +834,15 @@ paths:
     get:
       tags:
       - Programmes
+      description: Returns the programme with the given PDP ID.
       parameters:
       - name: id
         in: path
+        description: The PDP ID of the programme.
         required: true
         schema:
           type: string
+        example: urn:pdp:faro_srf:programme:2665c3e9-7708-450e-b3d4-003407f02e01
       responses:
         "200":
           description: OK
@@ -800,26 +862,39 @@ paths:
     get:
       tags:
       - PublicationServices
+      description: Returns the publication services matching the provided filter criteria.
       parameters:
       - name: cursor
         in: query
+        description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
         schema:
           type: string
           nullable: true
       - name: distribution-vector
         in: query
+        description: "Filters results based on the distribution vector (e.g., TV/Radio,\
+          \ Online, Unknown)."
         schema:
           allOf:
           - $ref: "#/components/schemas/DistributionVector"
           - nullable: true
       - name: end-updated-date
         in: query
+        description: |-
+          Filters objects based on when they were last updated. An
+          update is considered valid when the source system sends an update,
+          regardless of whether any actual changes were made to the object. Provide an
+          ISO-8601 UTC date-time to filter for objects updated strictly before that date-time.
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
           - nullable: true
       - name: identifiers
         in: query
+        description: Filter on an ID or an alternative identifier that matches any
+          of the provided values.
         required: false
         schema:
           type: array
@@ -827,6 +902,7 @@ paths:
             type: string
       - name: limit
         in: query
+        description: "The number of programmes per page. Minimum: 1, maximum: 10."
         schema:
           format: int32
           default: 10
@@ -835,23 +911,31 @@ paths:
           type: integer
       - name: provenance
         in: query
+        description: Filters publication services depending on their provenance.
         schema:
           allOf:
           - $ref: "#/components/schemas/Provenance"
           - nullable: true
       - name: publisher
         in: query
+        description: Filters publication services depending on their publisher.
         schema:
           allOf:
           - $ref: "#/components/schemas/Publisher"
           - nullable: true
       - name: sort
         in: query
+        description: "Specifies the order in which the query returns matching objects.\
+          \ Format: `-field` to sort descending, `+field` to sort ascending."
         required: false
         schema:
           type: string
+        example: -updatedAt
       - name: start-updated-date
         in: query
+        description: "Filters content based on when they were last updated. Provide\
+          \ \nan ISO-8601 UTC date-time to filter for objects updated strictly after\
+          \ the specified date-time."
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
@@ -875,12 +959,15 @@ paths:
     get:
       tags:
       - PublicationServices
+      description: Returns the publication service with the given PDP ID.
       parameters:
       - name: id
         in: path
+        description: The PDP ID of the publication service.
         required: true
         schema:
           type: string
+        example: urn:pdp:ais_srf:publicationservice:23ffbe1b-65ce-4188-add2-c724186c2c9f
       responses:
         "200":
           description: OK
