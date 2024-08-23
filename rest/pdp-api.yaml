@@ -64,10 +64,12 @@ security:
   - https://graphql-api.pdp.dev.srgssr.ch/api/.default
 tags:
 - name: Articles
+  description: API for retrieving textual content.
   externalDocs:
     description: Article Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Article
 - name: Campaigns
+  description: API for retrieving campaign metadata
   externalDocs:
     description: Campaign Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Campaign
@@ -329,26 +331,39 @@ paths:
     get:
       tags:
       - Articles
+      description: Returns the articles matching the provided filter criteria.
       parameters:
       - name: cursor
         in: query
+        description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
         schema:
           type: string
           nullable: true
       - name: end-release-date
         in: query
+        description: |-
+          Filters objects based on their release date. Provide an ISO-
+          8601 UTC date-time to retrieve objects released strictly before the specified date-time.
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
           - nullable: true
       - name: end-updated-date
         in: query
+        description: |-
+          Filters objects based on when they were last updated. An
+          update is considered valid when the source system sends an update,
+          regardless of whether any actual changes were made to the object. Provide an
+          ISO-8601 UTC date-time to filter for objects updated strictly before that date-time.
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
           - nullable: true
       - name: keywords
         in: query
+        description: Filters the results based on one or more freely chosen keywords.
         schema:
           type: array
           items:
@@ -356,6 +371,7 @@ paths:
           nullable: true
       - name: limit
         in: query
+        description: "The number of articles per page. Minimum: 1, maximum: 10."
         schema:
           format: int32
           default: 10
@@ -364,29 +380,40 @@ paths:
           type: integer
       - name: provenance
         in: query
+        description: Filters articles depending on their provenance.
         schema:
           allOf:
           - $ref: "#/components/schemas/Provenance"
           - nullable: true
       - name: publisher
         in: query
+        description: Filters articles depending on their publisher.
         schema:
           allOf:
           - $ref: "#/components/schemas/Publisher"
           - nullable: true
       - name: sort
         in: query
+        description: "Specifies the order in which the query returns matching objects.\
+          \ Format: `-field` to sort descending, `+field` to sort ascending."
         required: false
         schema:
           type: string
+        example: -updatedAt
       - name: start-release-date
         in: query
+        description: |-
+          Filters content based on their release date. Provide an
+          ISO-8601 UTC date-time to retrieve objects released on or after the specified date-time.
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
           - nullable: true
       - name: start-updated-date
         in: query
+        description: "Filters content based on when they were last updated. Provide\
+          \ \nan ISO-8601 UTC date-time to filter for objects updated strictly after\
+          \ the specified date-time."
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
@@ -410,12 +437,15 @@ paths:
     get:
       tags:
       - Articles
+      description: Returns the article with the given PDP ID.
       parameters:
       - name: id
         in: path
+        description: The PDP ID of the article.
         required: true
         schema:
           type: string
+        example: urn:pdp:cms_srf:article:urn:srf:article:20271622
       responses:
         "200":
           description: OK
@@ -435,20 +465,31 @@ paths:
     get:
       tags:
       - Campaigns
+      description: Returns the campaigns matching the provided filter criteria.
       parameters:
       - name: cursor
         in: query
+        description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
         schema:
           type: string
           nullable: true
       - name: end-updated-date
         in: query
+        description: |-
+          Filters objects based on when they were last updated. An
+          update is considered valid when the source system sends an update,
+          regardless of whether any actual changes were made to the object. Provide an
+          ISO-8601 UTC date-time to filter for objects updated strictly before that date-time.
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
           - nullable: true
       - name: identifiers
         in: query
+        description: Filter on an ID or an alternative identifier that matches any
+          of the provided values.
         required: false
         schema:
           type: array
@@ -456,6 +497,7 @@ paths:
             type: string
       - name: limit
         in: query
+        description: "The number of campaigns per page. Minimum: 1, maximum: 10."
         schema:
           format: int32
           default: 10
@@ -464,23 +506,31 @@ paths:
           type: integer
       - name: provenance
         in: query
+        description: Filters campaigns depending on their provenance.
         schema:
           allOf:
           - $ref: "#/components/schemas/Provenance"
           - nullable: true
       - name: publisher
         in: query
+        description: Filters campaigns depending on their publisher.
         schema:
           allOf:
           - $ref: "#/components/schemas/Publisher"
           - nullable: true
       - name: sort
         in: query
+        description: "Specifies the order in which the query returns matching objects.\
+          \ Format: `-field` to sort descending, `+field` to sort ascending."
         required: false
         schema:
           type: string
+        example: -updatedAt
       - name: start-updated-date
         in: query
+        description: "Filters content based on when they were last updated. Provide\
+          \ \nan ISO-8601 UTC date-time to filter for objects updated strictly after\
+          \ the specified date-time."
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
@@ -504,12 +554,15 @@ paths:
     get:
       tags:
       - Campaigns
+      description: Returns the campaign with the given PDP ID.
       parameters:
       - name: id
         in: path
+        description: The PDP ID of the campaign.
         required: true
         schema:
           type: string
+        example: urn:pdp:angebotsportfolio_srf:campaign:A00905
       responses:
         "200":
           description: OK
@@ -847,7 +900,6 @@ paths:
     get:
       tags:
       - Subtitlings
-      summary: Find subtitlings.
       description: Returns the subtitlings matching the provided filter criteria.
       parameters:
       - name: cursor
@@ -904,8 +956,7 @@ paths:
       - name: sort
         in: query
         description: "Specifies the order in which the query returns matching subtitlings.\
-          \ Format: `-field` to sort descending, `+field` to sort ascending.  Available\
-          \ fields: updatedAt."
+          \ Format: `-field` to sort descending, `+field` to sort ascending."
         required: false
         schema:
           type: string
@@ -940,7 +991,6 @@ paths:
     get:
       tags:
       - Subtitlings
-      summary: Get a subtitling by PDP ID.
       description: Returns the subtitling with the given PDP ID.
       parameters:
       - name: id
