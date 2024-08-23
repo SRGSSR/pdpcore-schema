@@ -89,6 +89,7 @@ tags:
     description: PublicationService Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#PublicationService
 - name: Subtitlings
+  description: API for retrieving subtitlings.
   externalDocs:
     description: Subtitling Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Subtitling
@@ -324,39 +325,6 @@ paths:
       - azureAuthDev:
         - Resource.Ops
         - Resource.Write
-  /api/subtitlings:
-    get:
-      tags:
-      - Subtitlings
-      parameters:
-      - name: provenance
-        in: query
-        required: true
-        schema:
-          $ref: "#/components/schemas/Provenance"
-      - name: source-id
-        in: query
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Subtitling"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      deprecated: true
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
   /api/v2/articles:
     get:
       tags:
@@ -867,6 +835,124 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PublicationService"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/subtitlings:
+    get:
+      tags:
+      - Subtitlings
+      summary: Find subtitlings.
+      description: Returns the subtitlings matching the provided filter criteria.
+      parameters:
+      - name: cursor
+        in: query
+        description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
+        schema:
+          type: string
+          nullable: true
+      - name: end-updated-date
+        in: query
+        description: Filters subtitlings depending on when they were updated. A subtitling
+          counts as updated when the source system sends an update or the PDP extracts
+          new properties.  The update may or may not contain any actual changes to
+          the content. Provide an ISO-8601 UTC date-time to filter for subtitlings
+          updated strictly before that date-time.
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      - name: identifiers
+        in: query
+        description: Filters subtitlings with an id or alternative identifier matching
+          any of the provided identifiers.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: limit
+        in: query
+        description: "The number of subtitlings per page. Minimum: 1, maximum: 10."
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - name: provenance
+        in: query
+        description: Filters subtitlings depending on their provenance.
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          - nullable: true
+      - name: publisher
+        in: query
+        description: Filters contents depending on their publisher.
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          - nullable: true
+      - name: sort
+        in: query
+        description: "Specifies the order in which the query returns matching subtitlings.\
+          \ Format: `-field` to sort descending, `+field` to sort ascending.  Available\
+          \ fields: updatedAt."
+        required: false
+        schema:
+          type: string
+        example: -updatedAt
+      - name: start-updated-date
+        in: query
+        description: Filters subtitlings depending on when they were updated. A subtitling
+          counts as updated when the source system sends an update or the PDP extracts
+          new properties.  The update may or may not contain any actual changes to
+          the content. Provide an ISO-8601 UTC date-time to filter for subtitlings
+          updated strictly after that date-time.
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Instant"
+          - nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubtitlingPage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/subtitlings/{id}:
+    get:
+      tags:
+      - Subtitlings
+      summary: Get a subtitling by PDP ID.
+      description: Returns the subtitling with the given PDP ID.
+      parameters:
+      - name: id
+        in: path
+        description: The PDP ID of the subtitling.
+        required: true
+        schema:
+          type: string
+        example: urn:pdp:play_srf:programme:urn:rts:video:15079445
+      responses:
+        "404":
+          description: Not Found
         "401":
           description: Not Authorized
         "403":
@@ -2539,6 +2625,18 @@ components:
           type: object
           allOf:
           - $ref: "#/components/schemas/URI"
+    SubtitlingPage:
+      required:
+      - results
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subtitling"
     Team:
       required:
       - type
