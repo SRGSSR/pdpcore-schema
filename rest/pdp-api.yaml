@@ -104,7 +104,6 @@ paths:
     get:
       tags:
       - Contents
-      summary: Find contents.
       description: Returns the contents matching the provided filter criteria.
       parameters:
       - name: cursor
@@ -252,7 +251,6 @@ paths:
     delete:
       tags:
       - Contents
-      summary: Bulk delete contents.
       description: "\nDeleting multiple contents in bulk is much faster than deleting\
         \ them one by one.\nIn the body of the request, pass an array of the content\
         \ IDs you want to delete.\nA content ID can either be a string containing\
@@ -286,7 +284,6 @@ paths:
     get:
       tags:
       - Contents
-      summary: Get content by PDP ID.
       description: Returns the content with the given PDP ID.
       parameters:
       - name: id
@@ -1167,71 +1164,98 @@ components:
       type: object
       properties:
         id:
+          description: The PDP id of the article.
           type: string
         publisher:
-          $ref: "#/components/schemas/Publisher"
+          description: The business unit or external organisation publishing the metadata.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
         provenance:
-          $ref: "#/components/schemas/Provenance"
+          description: The source system publishing the metadata.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
         accessConditions:
+          description: The access conditions for this article.
           type: array
           items:
             $ref: "#/components/schemas/AccessCondition"
         title:
+          description: The title or headline. The title may be available in different
+            languages.
           type: array
           items:
             $ref: "#/components/schemas/Text"
           nullable: true
         contributors:
+          description: "People, teams or departments who contributed to the article."
           type: array
           items:
             $ref: "#/components/schemas/Involvement"
           nullable: true
         genres:
+          description: The genres this article belongs to.
           type: array
           items:
             $ref: "#/components/schemas/Genre"
           nullable: true
         content:
+          description: The full text of the article.
           type: object
           allOf:
           - $ref: "#/components/schemas/ArticleContent"
           nullable: true
         lead:
+          description: "A lead is a self-contained, brief, and meaningful description\
+            \ of an article. The lead may be available in different languages."
           type: array
           items:
             $ref: "#/components/schemas/Text"
           nullable: true
         modificationDate:
+          description: The date and time (expressed as timestamp) at which the article
+            was modified.
           type: string
           allOf:
           - $ref: "#/components/schemas/Instant"
           nullable: true
         releaseDate:
+          description: The date and time (expressed as timestamp) at which the article
+            was released.
           type: string
           allOf:
           - $ref: "#/components/schemas/Instant"
           nullable: true
         kicker:
+          description: "A line of newspaper type set above a title usually in a different\
+            \ typeface and intended to provoke interest in, editorialize about, or\
+            \ provide orientation for the matter in the copy heads. The kicker may\
+            \ be available in different languages."
           type: array
           items:
             $ref: "#/components/schemas/Text"
           nullable: true
         resources:
+          description: Resources such as pictures or documents related to this article.
           type: array
           items:
             $ref: "#/components/schemas/Resource"
           nullable: true
         keywords:
+          description: Keywords for this article.
           type: array
           items:
             type: string
           nullable: true
         relatedArticles:
+          description: Other articles related to this article.
           type: array
           items:
             type: string
           nullable: true
         existsAs:
+          description: PDP ids of other articles with the same content.
           type: array
           items:
             type: string
@@ -1242,6 +1266,8 @@ components:
       type: object
       properties:
         text:
+          description: "The complete, unformatted text of the article. The text should\
+            \ not contain any HTML tags or similar."
           type: array
           items:
             type: string
@@ -1295,38 +1321,54 @@ components:
       type: object
       properties:
         id:
+          description: The PDP id of the campaign.
           type: string
         sourceId:
+          description: The id of a campaign in the source system.
           type: string
         publisher:
-          $ref: "#/components/schemas/Publisher"
+          description: The business unit or external organisation publishing the metadata.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
         provenance:
-          $ref: "#/components/schemas/Provenance"
+          description: The source system publishing the metadata.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
         accessConditions:
+          description: The access conditions for this article.
           type: array
           items:
             $ref: "#/components/schemas/AccessCondition"
         title:
+          description: The title or headline of the campaign.
           type: array
           items:
             $ref: "#/components/schemas/Text"
           nullable: true
         description:
+          description: The description of the campaign. The description may be available
+            in different languages.
           type: array
           items:
             $ref: "#/components/schemas/Text"
           nullable: true
         sourceValues:
+          description: Unmapped values directly from the source system. These may
+            change or vanish without notice.
           type: object
           additionalProperties:
             type: string
           nullable: true
         genres:
+          description: The genres this campaign belongs to.
           type: array
           items:
             $ref: "#/components/schemas/Genre"
           nullable: true
         contributors:
+          description: "People, teams or departments who contributed to the campaign."
           type: array
           items:
             $ref: "#/components/schemas/Involvement"
@@ -1613,36 +1655,42 @@ components:
       type: string
     Document:
       required:
+      - locator
       - identifiers
       - type
       type: object
       properties:
-        locator:
-          type: object
-          allOf:
-          - $ref: "#/components/schemas/URI"
-          writeOnly: true
         name:
+          description: The name of the document. This can be a filename or a title.
           type: array
           items:
             $ref: "#/components/schemas/Text"
           nullable: true
         description:
+          description: The description of the document.
           type: array
           items:
             $ref: "#/components/schemas/Text"
           nullable: true
+        locator:
+          description: The permanent URL from where the document can be accessed.
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/URI"
         identifiers:
+          description: A list of identifiers that can be used to reference the document.
           type: array
           items:
             $ref: "#/components/schemas/Identifier"
         productionDate:
           format: date-time
+          description: The date when the document was produced.
           type: string
           example: 2022-03-10T16:15:50Z
           nullable: true
         modificationDate:
           format: date-time
+          description: The date when the document was last modified.
           type: string
           example: 2022-03-10T16:15:50Z
           nullable: true
@@ -2185,17 +2233,19 @@ components:
       type: string
     Link:
       required:
+      - locator
       - type
       type: object
       properties:
+        name:
+          description: The name of the link.
+          type: string
+          nullable: true
         locator:
+          description: The permanent URI of the link.
           type: object
           allOf:
           - $ref: "#/components/schemas/URI"
-          writeOnly: true
-        name:
-          type: string
-          nullable: true
         type:
           description: The type of the resource. Always 'Link'
           type: string
@@ -2252,10 +2302,12 @@ components:
           type: string
           writeOnly: true
         identifiers:
+          description: The alternative identifiers of the person.
           type: array
           items:
             $ref: "#/components/schemas/Identifier"
         occupations:
+          description: The role(s) the person takes in relation to the asset.
           type: array
           items:
             $ref: "#/components/schemas/Occupation"
@@ -2270,36 +2322,44 @@ components:
           type: string
     Picture:
       required:
+      - locator
       - type
       type: object
       properties:
-        locator:
-          type: object
-          allOf:
-          - $ref: "#/components/schemas/URI"
-          writeOnly: true
         name:
+          description: The name of the picture. This can be a filename or a title.
           type: array
           items:
             $ref: "#/components/schemas/Text"
           nullable: true
         description:
+          description: The description of the picture. This can be a caption or alternative
+            text of the picture.
           type: array
           items:
             $ref: "#/components/schemas/Text"
           nullable: true
+        locator:
+          description: The permanent URI from where the picture can be accessed.
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/URI"
         width:
           format: int32
+          description: The width of the picture in pixels.
           type: integer
           nullable: true
         height:
           format: int32
+          description: The height of the picture in pixels.
           type: integer
           nullable: true
         copyright:
+          description: The copyright statement.
           type: string
           nullable: true
         altText:
+          description: The alternative text.
           type: array
           items:
             $ref: "#/components/schemas/Text"
@@ -2597,26 +2657,40 @@ components:
       type: object
       properties:
         id:
+          description: The PDP id of the publication service.
           type: string
         sourceId:
+          description: "The id of the publication service in the source system. It\
+            \ is unique in the source system, but not globally"
           type: string
         publisher:
-          $ref: "#/components/schemas/Publisher"
+          description: The business unit or external organisation publishing the metadata.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
         provenance:
-          $ref: "#/components/schemas/Provenance"
+          description: The source system publishing the metadata.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
         accessConditions:
+          description: The access conditions for this article.
           type: array
           items:
             $ref: "#/components/schemas/AccessCondition"
         name:
+          description: The name of the publication service.
           type: string
           nullable: true
         distributionVector:
+          description: Specifies the distribution vector of a publication service.
           type: string
           allOf:
           - $ref: "#/components/schemas/DistributionVector"
           nullable: true
         resources:
+          description: Resources such as pictures or documents related to this publication
+            service.
           type: array
           items:
             $ref: "#/components/schemas/Resource"
