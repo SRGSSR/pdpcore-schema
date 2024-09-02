@@ -8,6 +8,7 @@ protocol PublicationService {
     import idl "Provenance.avdl";
     import idl "Publisher.avdl";
     import idl "Resource.avdl";
+    import idl "Identifier.avdl";
 
     /** A service by which a publishing organisation or person publishes its content and offers access to consumers, e.g. "SRF Info" or "RSI Rete Uno". */
     record PublicationService {
@@ -27,5 +28,7 @@ protocol PublicationService {
         union{null, array<union{Picture, Document}>} resources = null;
         /** The access conditions for this article. */
         union{null, array<AccessCondition>} accessConditions = null;
+        /** A list of identifiers this publication service might be referenced by. */
+        array<Identifier> identifiers = [];
     }
 }

@@ -14,6 +14,7 @@ protocol Article {
     import idl "Text.avdl";
     import idl "URL.avdl";
     import idl "Involvement.avdl";
+    import idl "Identifier.avdl";
 
     /** In the context of the PDP an article is a (CMS) website article. */
     record Article {
@@ -61,6 +62,8 @@ protocol Article {
         array<string> existsAs = [];
         /** Keywords for this article. */
         union{null, array<string>} keywords = null;
+        /** Identifiers for this article. */
+        array<Identifier> identifiers = [];
     }
 
     /** The text content of an article. */
