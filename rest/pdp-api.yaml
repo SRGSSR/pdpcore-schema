@@ -251,23 +251,61 @@ paths:
     delete:
       tags:
       - Contents
-      description: "\nDeleting multiple contents in bulk is much faster than deleting\
-        \ them one by one.\nIn the body of the request, pass an array of the content\
-        \ IDs you want to delete.\nA content ID can either be a string containing\
-        \ a PDP ID or\nan object with the properties `provenance`, `domainType`, and\
-        \ `sourceId`:\n\n```json\n[\n  \"urn:pdp:cms_srf:content_article:2044947\"\
-        ,\n  \"urn:pdp:cms_srf:content_article:2044948\"\n]\n```\n\nor\n\n```json\n\
-        [\n  {\n    \"provenance\": \"CMS_SRF\",\n    \"domainType\": \"Article\"\
-        ,\n    \"sourceId\": \"2044947\"\n  },\n  {\n    \"provenance\": \"CMS_SRF\"\
-        ,\n    \"domainType\": \"Article\",\n    \"sourceId\": \"2044948\"\n  }\n\
-        ]\n```\n        "
+      description: |2-
+
+        Deleting multiple contents in bulk is much faster than deleting them one by one.
+        In the body of the request, pass an array of the content PDP IDs you want to delete.
+        ```json
+        [
+          "urn:pdp:cms_srf:content_article:2044947",
+          "urn:pdp:cms_srf:content_article:2044948"
+        ]
+        ```
       requestBody:
         content:
           application/json:
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/BulkDeleteId"
+                type: string
+        required: true
+      responses:
+        "204":
+          description: The request was successful.
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - azureAuthDev:
+        - Resource.Ops
+        - Resource.Write
+  /api/contents/bulk-source:
+    delete:
+      tags:
+      - Contents
+      description: "\nDeleting multiple contents in bulk is much faster than deleting\
+        \ them one by one.\nPass a provenance and domain type as query parameters\
+        \ and a list of source IDs in the body.\n\n```json\n[\n  \"2044947\", \n \
+        \ \"2044948\"\n]\n```\n        "
+      parameters:
+      - name: domain-type
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/DomainType"
+      - name: provenance
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/Provenance"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
         required: true
       responses:
         "204":
@@ -1302,15 +1340,6 @@ components:
         name:
           description: The name of the audio track.
           type: string
-    BulkDeleteId:
-      description: "\nThe ID can either be a string containing a PDP ID, e.g. `urn:pdp:cms_srf:content_article:2044947`,\n\
-        or an object with the properties `provenance`, `domainType`, and `sourceId`,\n\
-        e.g. `{\"provenance\": \"CMS_SRF\", \"domainType\": \"Article\", \"sourceId\"\
-        : \"2044947\"}`.\n            "
-      type: object
-      oneOf:
-      - type: string
-      - $ref: "#/components/schemas/ComposedBulkDeleteId"
     Campaign:
       required:
       - id
@@ -1487,29 +1516,6 @@ components:
         sourceValue:
           description: The name of the colour space directly from the source system.
           type: string
-    ComposedBulkDeleteId:
-      required:
-      - provenance
-      - domainType
-      - sourceId
-      type: object
-      properties:
-        provenance:
-          description: The provenance of the content.
-          type: string
-          allOf:
-          - $ref: "#/components/schemas/Provenance"
-          example: CMS_SRF
-        domainType:
-          description: The domain type of the content.
-          type: string
-          allOf:
-          - $ref: "#/components/schemas/DomainType"
-          example: Article
-        sourceId:
-          description: The ID of the content in the source system.
-          type: string
-          example: "2044948"
     ConfidentialityLevel:
       enum:
       - C1_Public
