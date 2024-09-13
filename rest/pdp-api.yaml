@@ -1902,6 +1902,7 @@ components:
       - identifiers
       - accessConditions
       - existsAs
+      - sourceValues
       type: object
       properties:
         id:
@@ -2049,6 +2050,12 @@ components:
             same item.
           type: array
           items:
+            type: string
+        sourceValues:
+          description: Unmapped values directly from the source system. These might
+            change or vanish without notice.
+          type: object
+          additionalProperties:
             type: string
     Language:
       enum:
