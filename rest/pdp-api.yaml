@@ -798,10 +798,10 @@ paths:
           type: integer
       - name: media-type
         in: query
-        description: "Filters results based on the media type (e.g., audio, video)."
+        description: Filters results based on the media type.
         schema:
           allOf:
-          - $ref: "#/components/schemas/ProgrammeMediaType"
+          - $ref: "#/components/schemas/MediaTypeParameter"
           - nullable: true
       - name: member-of
         in: query
@@ -1488,6 +1488,12 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Identifier"
+        mediaType:
+          description: The media type of the editorial objects in this collection.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/MediaType"
+          nullable: true
     CollectionPage:
       required:
       - results
@@ -1953,10 +1959,10 @@ components:
           type: integer
           nullable: true
         mediaType:
-          description: The media type of this item. Can either be 'video' or 'audio'.
+          description: Describes the format in which the item is presented.
           type: string
           allOf:
-          - $ref: "#/components/schemas/ProgrammeMediaType"
+          - $ref: "#/components/schemas/MediaType"
           nullable: true
         parts:
           description: "Parts describe small, distinct segments of an item like a\
@@ -2287,6 +2293,31 @@ components:
           items:
             $ref: "#/components/schemas/Text"
           nullable: true
+    MediaType:
+      description: |2
+
+        Describes the format in which an editorial object is presented.
+
+        - Audio: An editorial object presented as a audio-only.
+        - Video: An editorial object presented as a video, with or without audio.
+        - Unknown: A replacement for enum values potentially added in the future.
+          Clients should map unknown values returned by the server to Unknown.
+      enum:
+      - Unknown
+      - Audio
+      - Video
+      type: string
+    MediaTypeParameter:
+      description: |2
+
+        Describes the format in which an editorial object is presented.
+
+        - Audio: An editorial object presented as a audio-only.
+        - Video: An editorial object presented as a video, with or without audio.
+      enum:
+      - Audio
+      - Video
+      type: string
     MediumType:
       description: A type of medium (e.g. VHS or DVD)
       required:
@@ -2503,10 +2534,10 @@ components:
           type: integer
           nullable: true
         mediaType:
-          description: The media type of the programme. Can either be 'video' or 'audio'.
+          description: Describes the format in which the programme is presented.
           type: string
           allOf:
-          - $ref: "#/components/schemas/ProgrammeMediaType"
+          - $ref: "#/components/schemas/MediaType"
           nullable: true
         productionDate:
           format: date-time
@@ -2602,12 +2633,6 @@ components:
           type: object
           additionalProperties:
             type: string
-    ProgrammeMediaType:
-      description: Indicates if the programme is a video or a audio
-      enum:
-      - Audio
-      - Video
-      type: string
     ProgrammePage:
       required:
       - results

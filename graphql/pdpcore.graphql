@@ -186,6 +186,8 @@ type Collection {
   id: String!
   identifiers: [Identifier]!
   lead: [Text]
+  "Describes the format in which the collection's editorial objects are presented."
+  mediaType: MediaType
   memberOf: [Collection]
   "The source system publishing the metadata."
   provenance: Provenance!
@@ -320,7 +322,7 @@ type Item {
   identifiers: [Identifier]!
   instantiatedBy: [Essence]
   keywords: [String]
-  mediaType: ProgrammeMediaType
+  mediaType: MediaType
   "ISO-8601"
   modificationDate: DateTime
   parts: [EditorialSegment]
@@ -408,7 +410,8 @@ type Programme {
   items: [Item]
   keywords: [String]
   lead: [Text]
-  mediaType: ProgrammeMediaType
+  "Describes the format in which the programme is presented."
+  mediaType: MediaType
   memberOf: [Collection]
   "ISO-8601"
   modificationDate: DateTime
@@ -952,8 +955,11 @@ enum Language {
   zu
 }
 
-enum ProgrammeMediaType {
+"Describes the format in which an editorial object is presented."
+enum MediaType {
+  "A editorial object presented as a audio-only."
   Audio
+  "A editorial object presented as a video, with or without audio."
   Video
 }
 
@@ -1190,8 +1196,8 @@ input ProgrammeFilterInput {
   "Filters programmes matching any of the provided identifiers."
   identifiers: [String]
   keywords: [String]
-  "Filters programmes by MediaType."
-  mediaType: ProgrammeMediaType
+  "Filters programmes depending on their media type."
+  mediaType: MediaType
   "Filters programmes depending on the collection they are a member of. Use the PDP ID of the collection."
   memberOf: String
   "Filters programmes depending on their provenance."
