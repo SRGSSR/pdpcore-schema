@@ -1251,7 +1251,7 @@ input TemporalFilterInput {
   before: DateTime
   """
   Provide an ISO-8601 date-time with an offset from UTC/Greenwich, such as
-  2022-07-18T10:15:30+02:00 to filter for items strictly after that date-time. (ISO-8601)
+  2022-07-18T10:15:30+02:00 to filter for items on or after that date-time. (ISO-8601)
   """
   from: DateTime
   """

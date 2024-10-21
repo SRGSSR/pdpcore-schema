@@ -177,7 +177,7 @@ paths:
         description: Filters contents depending on when they were updated. A content
           counts as updated when the source system sends an update. The update may
           or may not contain any actual changes to the content. Provide an ISO-8601
-          UTC date-time to filter for contents updated strictly after that date-time.
+          UTC date-time to filter for contents updated on or after that date-time.
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
@@ -451,7 +451,7 @@ paths:
       - name: start-updated-date
         in: query
         description: "Filters content based on when they were last updated. Provide\
-          \ \nan ISO-8601 UTC date-time to filter for objects updated strictly after\
+          \ \nan ISO-8601 UTC date-time to filter for objects updated on or after\
           \ the specified date-time."
         schema:
           allOf:
@@ -568,7 +568,7 @@ paths:
       - name: start-updated-date
         in: query
         description: "Filters content based on when they were last updated. Provide\
-          \ \nan ISO-8601 UTC date-time to filter for objects updated strictly after\
+          \ \nan ISO-8601 UTC date-time to filter for objects updated on or after\
           \ the specified date-time."
         schema:
           allOf:
@@ -686,7 +686,7 @@ paths:
       - name: start-updated-date
         in: query
         description: "Filters content based on when they were last updated. Provide\
-          \ \nan ISO-8601 UTC date-time to filter for objects updated strictly after\
+          \ \nan ISO-8601 UTC date-time to filter for objects updated on or after\
           \ the specified date-time."
         schema:
           allOf:
@@ -844,7 +844,7 @@ paths:
       - name: start-updated-date
         in: query
         description: "Filters content based on when they were last updated. Provide\
-          \ \nan ISO-8601 UTC date-time to filter for objects updated strictly after\
+          \ \nan ISO-8601 UTC date-time to filter for objects updated on or after\
           \ the specified date-time."
         schema:
           allOf:
@@ -969,7 +969,7 @@ paths:
       - name: start-updated-date
         in: query
         description: "Filters content based on when they were last updated. Provide\
-          \ \nan ISO-8601 UTC date-time to filter for objects updated strictly after\
+          \ \nan ISO-8601 UTC date-time to filter for objects updated on or after\
           \ the specified date-time."
         schema:
           allOf:
@@ -1089,7 +1089,7 @@ paths:
           counts as updated when the source system sends an update or the PDP extracts
           new properties.  The update may or may not contain any actual changes to
           the content. Provide an ISO-8601 UTC date-time to filter for subtitlings
-          updated strictly after that date-time.
+          updated on or after that date-time.
         schema:
           allOf:
           - $ref: "#/components/schemas/Instant"
