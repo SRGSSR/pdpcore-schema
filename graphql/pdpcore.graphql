@@ -972,6 +972,7 @@ enum ProgrammeSortField {
 enum Provenance {
   AIBOX_SRGSSR
   AIS_SRF
+  AS_STXT
   Angebotsportfolio_SRF
   CMS_SRF
   CMS_SWI

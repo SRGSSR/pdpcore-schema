@@ -2668,6 +2668,7 @@ components:
       - PlaySuisse_SRGSSR
       - SAM_SRGSSR
       - CUE_RTS
+      - AS_STXT
       type: string
     PublicationEvent:
       description: The event of publishing an essence by a service to a channel under
