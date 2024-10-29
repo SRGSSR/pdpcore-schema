@@ -189,6 +189,8 @@ type Collection {
   "Describes the format in which the collection's editorial objects are presented."
   mediaType: MediaType
   memberOf: [Collection]
+  "The number of episodes in this collection."
+  numberOfEpisodes: Int
   "The source system publishing the metadata."
   provenance: Provenance!
   "The business unit or external organisation publishing the metadata."

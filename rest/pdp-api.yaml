@@ -1494,6 +1494,11 @@ components:
           allOf:
           - $ref: "#/components/schemas/MediaType"
           nullable: true
+        numberOfEpisodes:
+          format: int32
+          description: The number of episodes in this collection.
+          type: integer
+          nullable: true
     CollectionPage:
       required:
       - results
