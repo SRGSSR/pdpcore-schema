@@ -200,7 +200,6 @@ paths:
     post:
       tags:
       - Contents
-      description: Create
       requestBody:
         content:
           application/json:
@@ -220,7 +219,6 @@ paths:
     delete:
       tags:
       - Contents
-      description: Delete With Params
       parameters:
       - name: domainType
         in: query
@@ -351,7 +349,6 @@ paths:
     delete:
       tags:
       - Contents
-      description: Delete With Id
       parameters:
       - name: id
         in: path
