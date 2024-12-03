@@ -1858,7 +1858,8 @@ components:
             \  *  VariantId identifies a product variant (e.g. 'AUDI20230623_RS_0015_APP_02')\n\
             \  *  ConceptId identifies a campaign in the OfferPortfolio (e.g. 'A00104')\n\
             \  *  ISAN is a unique ISO identifier for audiovisual content (see: https://www.isan.org)\n\
-            \  *  AisEpisodeId identifies an episode in the AIS\n    "
+            \  *  AisEpisodeId identifies an episode in the AIS\n  *  OpenMediaUrn\
+            \ identifies an episode or item in OpenMedia\n    "
           type: string
           allOf:
           - $ref: "#/components/schemas/IdentifierType"
@@ -1874,6 +1875,7 @@ components:
           *  ConceptId identifies a campaign in the OfferPortfolio (e.g. 'A00104')
           *  ISAN is a unique ISO identifier for audiovisual content (see: https://www.isan.org)
           *  AisEpisodeId identifies an episode in the AIS
+          *  OpenMediaUrn identifies an episode or item in OpenMedia
       enum:
       - PdpId
       - SourceId
@@ -1884,6 +1886,7 @@ components:
       - ConceptId
       - ISAN
       - AisEpisodeId
+      - OpenMediaUrn
       type: string
     Involvement:
       description: An Agent's participation in the creation of publication of an editorial

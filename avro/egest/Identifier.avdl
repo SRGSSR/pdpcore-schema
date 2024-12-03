@@ -17,6 +17,7 @@ protocol Identifier {
      *  <li>ConceptId identifies a campaign in the OfferPortfolio (e.g. 'A00104')</li>
      *  <li>ISAN is a unique ISO identifier for audiovisual content (see: https://www.isan.org)</li>
      *  <li>AisEpisodeId identifies an episode in the AIS</li>
+     *  <li>OpenMediaUrn identifies an episode or item in OpenMedia</li>
      * </ul>
      */
     enum IdentifierType {
@@ -29,7 +30,8 @@ protocol Identifier {
         VariantId,
         ConceptId,
         ISAN,
-        AisEpisodeId
+        AisEpisodeId,
+        OpenMediaUrn
     } = Unknown;
 
 }
