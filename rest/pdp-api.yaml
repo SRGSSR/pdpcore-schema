@@ -121,16 +121,6 @@ paths:
           allOf:
           - $ref: "#/components/schemas/DomainType"
           - nullable: true
-      - name: end-updated-date
-        in: query
-        description: Filters contents depending on when they were updated. A content
-          counts as updated when the source system sends an update. The update may
-          or may not contain any actual changes to the content. Provide an ISO-8601
-          UTC date-time to filter for contents updated strictly before that date-time.
-        schema:
-          format: date-time
-          type: string
-          nullable: true
       - name: identifiers
         in: query
         description: Filters contents with an id or alternative identifier matching
@@ -163,25 +153,6 @@ paths:
           allOf:
           - $ref: "#/components/schemas/Publisher"
           - nullable: true
-      - name: sort
-        in: query
-        description: "Specifies the order in which the query returns matching contents.\
-          \ Format: `-field` to sort descending, `+field` to sort ascending.  Available\
-          \ fields: updatedAt."
-        required: false
-        schema:
-          type: string
-        example: -updatedAt
-      - name: start-updated-date
-        in: query
-        description: Filters contents depending on when they were updated. A content
-          counts as updated when the source system sends an update. The update may
-          or may not contain any actual changes to the content. Provide an ISO-8601
-          UTC date-time to filter for contents updated on or after that date-time.
-        schema:
-          format: date-time
-          type: string
-          nullable: true
       responses:
         "200":
           description: OK
@@ -380,34 +351,6 @@ paths:
         schema:
           type: string
           nullable: true
-      - name: end-release-date
-        in: query
-        description: |-
-          Filters objects based on their release date. Provide an ISO-
-          8601 UTC date-time to retrieve objects released strictly before the specified date-time.
-        schema:
-          format: date-time
-          type: string
-          nullable: true
-      - name: end-updated-date
-        in: query
-        description: |-
-          Filters objects based on when they were last updated. An
-          update is considered valid when the source system sends an update,
-          regardless of whether any actual changes were made to the object. Provide an
-          ISO-8601 UTC date-time to filter for objects updated strictly before that date-time.
-        schema:
-          format: date-time
-          type: string
-          nullable: true
-      - name: keywords
-        in: query
-        description: Filters the results based on one or more freely chosen keywords.
-        schema:
-          type: array
-          items:
-            type: string
-          nullable: true
       - name: limit
         in: query
         description: "The number of articles per page. Minimum: 1, maximum: 10."
@@ -431,32 +374,6 @@ paths:
           allOf:
           - $ref: "#/components/schemas/Publisher"
           - nullable: true
-      - name: sort
-        in: query
-        description: "Specifies the order in which the query returns matching objects.\
-          \ Format: `-field` to sort descending, `+field` to sort ascending."
-        required: false
-        schema:
-          type: string
-        example: -updatedAt
-      - name: start-release-date
-        in: query
-        description: |-
-          Filters content based on their release date. Provide an
-          ISO-8601 UTC date-time to retrieve objects released on or after the specified date-time.
-        schema:
-          format: date-time
-          type: string
-          nullable: true
-      - name: start-updated-date
-        in: query
-        description: "Filters content based on when they were last updated. Provide\
-          \ \nan ISO-8601 UTC date-time to filter for objects updated on or after\
-          \ the specified date-time."
-        schema:
-          format: date-time
-          type: string
-          nullable: true
       responses:
         "200":
           description: OK
@@ -514,17 +431,6 @@ paths:
         schema:
           type: string
           nullable: true
-      - name: end-updated-date
-        in: query
-        description: |-
-          Filters objects based on when they were last updated. An
-          update is considered valid when the source system sends an update,
-          regardless of whether any actual changes were made to the object. Provide an
-          ISO-8601 UTC date-time to filter for objects updated strictly before that date-time.
-        schema:
-          format: date-time
-          type: string
-          nullable: true
       - name: identifiers
         in: query
         description: Filter on an ID or an alternative identifier that matches any
@@ -557,23 +463,6 @@ paths:
           allOf:
           - $ref: "#/components/schemas/Publisher"
           - nullable: true
-      - name: sort
-        in: query
-        description: "Specifies the order in which the query returns matching objects.\
-          \ Format: `-field` to sort descending, `+field` to sort ascending."
-        required: false
-        schema:
-          type: string
-        example: -updatedAt
-      - name: start-updated-date
-        in: query
-        description: "Filters content based on when they were last updated. Provide\
-          \ \nan ISO-8601 UTC date-time to filter for objects updated on or after\
-          \ the specified date-time."
-        schema:
-          format: date-time
-          type: string
-          nullable: true
       responses:
         "200":
           description: OK
@@ -631,17 +520,6 @@ paths:
         schema:
           type: string
           nullable: true
-      - name: end-updated-date
-        in: query
-        description: |-
-          Filters objects based on when they were last updated. An
-          update is considered valid when the source system sends an update,
-          regardless of whether any actual changes were made to the object. Provide an
-          ISO-8601 UTC date-time to filter for objects updated strictly before that date-time.
-        schema:
-          format: date-time
-          type: string
-          nullable: true
       - name: identifiers
         in: query
         description: Filter on an ID or an alternative identifier that matches any
@@ -675,23 +553,6 @@ paths:
           allOf:
           - $ref: "#/components/schemas/Publisher"
           - nullable: true
-      - name: sort
-        in: query
-        description: "Specifies the order in which the query returns matching objects.\
-          \ Format: `-field` to sort descending, `+field` to sort ascending."
-        required: false
-        schema:
-          type: string
-        example: -updatedAt
-      - name: start-updated-date
-        in: query
-        description: "Filters content based on when they were last updated. Provide\
-          \ \nan ISO-8601 UTC date-time to filter for objects updated on or after\
-          \ the specified date-time."
-        schema:
-          format: date-time
-          type: string
-          nullable: true
       responses:
         "200":
           description: OK
@@ -749,39 +610,11 @@ paths:
         schema:
           type: string
           nullable: true
-      - name: end-broadcast-date
-        in: query
-        description: |-
-          Filters objects based on their broadcast date. Provide an ISO-
-          8601 UTC date-time to retrieve objects released strictly before the specified date-time.
-        schema:
-          format: date-time
-          type: string
-          nullable: true
-      - name: end-updated-date
-        in: query
-        description: |-
-          Filters objects based on when they were last updated. An
-          update is considered valid when the source system sends an update,
-          regardless of whether any actual changes were made to the object. Provide an
-          ISO-8601 UTC date-time to filter for objects updated strictly before that date-time.
-        schema:
-          format: date-time
-          type: string
-          nullable: true
       - name: identifiers
         in: query
         description: Filter on an ID or an alternative identifier that matches any
           of the provided values.
         required: false
-        schema:
-          type: array
-          items:
-            type: string
-          nullable: true
-      - name: keywords
-        in: query
-        description: Filters the results based on one or more freely chosen keywords.
         schema:
           type: array
           items:
@@ -796,13 +629,6 @@ paths:
           maximum: 10
           minimum: 1
           type: integer
-      - name: media-type
-        in: query
-        description: Filters results based on the media type.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/MediaTypeParameter"
-          - nullable: true
       - name: member-of
         in: query
         description: Filters results based on the collection a specific program is
@@ -824,32 +650,6 @@ paths:
           allOf:
           - $ref: "#/components/schemas/Publisher"
           - nullable: true
-      - name: sort
-        in: query
-        description: "Specifies the order in which the query returns matching objects.\
-          \ Format: `-field` to sort descending, `+field` to sort ascending."
-        required: false
-        schema:
-          type: string
-        example: -updatedAt
-      - name: start-broadcast-date
-        in: query
-        description: |-
-          Filters content based on their broadcast date. Provide an
-          ISO-8601 UTC date-time to retrieve objects released on or after the specified date-time.
-        schema:
-          format: date-time
-          type: string
-          nullable: true
-      - name: start-updated-date
-        in: query
-        description: "Filters content based on when they were last updated. Provide\
-          \ \nan ISO-8601 UTC date-time to filter for objects updated on or after\
-          \ the specified date-time."
-        schema:
-          format: date-time
-          type: string
-          nullable: true
       responses:
         "200":
           description: OK
@@ -907,25 +707,6 @@ paths:
         schema:
           type: string
           nullable: true
-      - name: distribution-vector
-        in: query
-        description: "Filters results based on the distribution vector (e.g., TV/Radio,\
-          \ Online, Unknown)."
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/DistributionVector"
-          - nullable: true
-      - name: end-updated-date
-        in: query
-        description: |-
-          Filters objects based on when they were last updated. An
-          update is considered valid when the source system sends an update,
-          regardless of whether any actual changes were made to the object. Provide an
-          ISO-8601 UTC date-time to filter for objects updated strictly before that date-time.
-        schema:
-          format: date-time
-          type: string
-          nullable: true
       - name: identifiers
         in: query
         description: Filter on an ID or an alternative identifier that matches any
@@ -958,23 +739,6 @@ paths:
           allOf:
           - $ref: "#/components/schemas/Publisher"
           - nullable: true
-      - name: sort
-        in: query
-        description: "Specifies the order in which the query returns matching objects.\
-          \ Format: `-field` to sort descending, `+field` to sort ascending."
-        required: false
-        schema:
-          type: string
-        example: -updatedAt
-      - name: start-updated-date
-        in: query
-        description: "Filters content based on when they were last updated. Provide\
-          \ \nan ISO-8601 UTC date-time to filter for objects updated on or after\
-          \ the specified date-time."
-        schema:
-          format: date-time
-          type: string
-          nullable: true
       responses:
         "200":
           description: OK
@@ -1032,17 +796,6 @@ paths:
         schema:
           type: string
           nullable: true
-      - name: end-updated-date
-        in: query
-        description: Filters subtitlings depending on when they were updated. A subtitling
-          counts as updated when the source system sends an update or the PDP extracts
-          new properties.  The update may or may not contain any actual changes to
-          the content. Provide an ISO-8601 UTC date-time to filter for subtitlings
-          updated strictly before that date-time.
-        schema:
-          format: date-time
-          type: string
-          nullable: true
       - name: identifiers
         in: query
         description: Filters subtitlings with an id or alternative identifier matching
@@ -1075,25 +828,6 @@ paths:
           allOf:
           - $ref: "#/components/schemas/Publisher"
           - nullable: true
-      - name: sort
-        in: query
-        description: "Specifies the order in which the query returns matching subtitlings.\
-          \ Format: `-field` to sort descending, `+field` to sort ascending."
-        required: false
-        schema:
-          type: string
-        example: -updatedAt
-      - name: start-updated-date
-        in: query
-        description: Filters subtitlings depending on when they were updated. A subtitling
-          counts as updated when the source system sends an update or the PDP extracts
-          new properties.  The update may or may not contain any actual changes to
-          the content. Provide an ISO-8601 UTC date-time to filter for subtitlings
-          updated on or after that date-time.
-        schema:
-          format: date-time
-          type: string
-          nullable: true
       responses:
         "200":
           description: OK
