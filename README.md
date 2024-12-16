@@ -2,25 +2,10 @@
 
 This repository contains the schema of the [Publication Data Platform](http://api.pdp.production.srgssr.ch/).
 
-The PDP offers four schemas types.
+The PDP offers two schemas types.
 
 - [REST OpenAPI](https://github.com/SRGSSR/pdpcore-schema/blob/main/rest/pdp-api.yaml)
-- [GraphQL](https://github.com/SRGSSR/pdpcore-schema/blob/main/graphql/pdp.ebucore.v1.deprecated.graphql)
-- [Avro Ingest](https://github.com/SRGSSR/pdpcore-schema/blob/main/avro/ingest/PDP.avdl)
-- [Avro Egest](https://github.com/SRGSSR/pdpcore-schema/blob/main/avro/egest/PDP.avdl)
+- [Kafka Avro](https://github.com/SRGSSR/pdpcore-schema/blob/main/avro/egest/PDP.avdl)
 
 It is meant to be used for discussing the schemas and suggesting changes.
 Please open a new issue or pull request to start a discussion, ask questions or suggest changes.
-
-## REST Ingest
-
-The primary write API is REST defined in [REST OpenAPI](https://github.com/SRGSSR/pdpcore-schema/blob/main/rest/pdp-api.yaml). It is work in progress. Please refer to Avro implementation for a full PDPCore write schema.
-
-## Avro
-
-The Kafka Avro write API is being depecated. Please use REST if possible because it validates your input data synchronously. The Avro schemas in this repository must not be used by applications that use the PDP. Applications must use the Avro schemas published in the
-[Avro schema registry](https://akhq.pdp.production.admin.srgssr.ch/ui/strimzi/schema)
-
-## GraphQL
-
-The [GraphQL schema](https://api.pdp.production.srgssr.ch/graphql/schema.graphql) is backwards compatible.
