@@ -351,6 +351,16 @@ paths:
         schema:
           type: string
           nullable: true
+      - name: identifiers
+        in: query
+        description: Filter on an ID or an alternative identifier that matches any
+          of the provided values.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          nullable: true
       - name: limit
         in: query
         description: "The number of articles per page. Minimum: 1, maximum: 10."
@@ -933,6 +943,7 @@ components:
       - publisher
       - provenance
       - accessConditions
+      - identifiers
       type: object
       properties:
         id:
@@ -960,6 +971,11 @@ components:
           items:
             $ref: "#/components/schemas/Text"
           nullable: true
+        identifiers:
+          description: All known identifiers of this article.
+          type: array
+          items:
+            $ref: "#/components/schemas/Identifier"
         contributors:
           description: "People, teams or departments who contributed to the article."
           type: array
