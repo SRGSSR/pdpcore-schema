@@ -2400,7 +2400,10 @@ components:
           items:
             $ref: "#/components/schemas/Programme"
     Provenance:
-      description: The source system publishing the metadata.
+      description: |-
+        The source system publishing the metadata.
+
+         DigAS_RTR is deprecated.
       enum:
       - AIS_SRF
       - CMS_SRF
