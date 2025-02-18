@@ -1269,7 +1269,7 @@ components:
       - Series
       type: string
     ColourSpace:
-      description: The colour space of a programme.
+      description: The colour space of an essence.
       required:
       - sourceValue
       type: object
