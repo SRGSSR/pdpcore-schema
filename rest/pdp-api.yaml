@@ -966,7 +966,7 @@ components:
             $ref: "#/components/schemas/AccessCondition"
         title:
           description: The title or headline. The title may be available in different
-            languages.
+            languages. The language reflects the target audience language.
           type: array
           items:
             $ref: "#/components/schemas/Text"
@@ -996,7 +996,8 @@ components:
           nullable: true
         lead:
           description: "A lead is a self-contained, brief, and meaningful description\
-            \ of an article. The lead may be available in different languages."
+            \ of an article. The lead may be available in different languages. The\
+            \ language reflects the target audience language."
           type: array
           items:
             $ref: "#/components/schemas/Text"
@@ -1019,7 +1020,8 @@ components:
           description: "A line of newspaper type set above a title usually in a different\
             \ typeface and intended to provoke interest in, editorialize about, or\
             \ provide orientation for the matter in the copy heads. The kicker may\
-            \ be available in different languages."
+            \ be available in different languages. The language reflects the target\
+            \ audience language."
           type: array
           items:
             $ref: "#/components/schemas/Text"
