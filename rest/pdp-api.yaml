@@ -622,8 +622,8 @@ paths:
           nullable: true
       - name: identifiers
         in: query
-        description: Filter on an ID or an alternative identifier that matches any
-          of the provided values.
+        description: Filters for programme and item IDs or alternative identifiers
+          that match any of the values provided.
         required: false
         schema:
           type: array
