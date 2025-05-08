@@ -1,0 +1,8 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol Producer {
+
+    record Producer {
+        /** The value directly from the source system. */
+        string sourceValue;
+    }
+}

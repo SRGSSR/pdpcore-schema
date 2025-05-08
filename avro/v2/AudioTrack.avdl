@@ -1,0 +1,8 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol AudioTrack {
+    /** The audio track of an essence. */
+    record AudioTrack {
+        /** The name of the audio track. */
+        string? name;
+    }
+}

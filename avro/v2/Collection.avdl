@@ -1,0 +1,64 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol Collection {
+    import idl "Provenance.avdl";
+    import idl "Publisher.avdl";
+    import idl "Text.avdl";
+    import idl "Identifier.avdl";
+    import idl "Resource.avdl";
+    import idl "AccessConditions.avdl";
+    import idl "MediaType.avdl";
+
+    /** A collection is a grouping of editorial objects (e.g. a show or a topic). */
+    record Collection {
+        /** The PDP id of the collection. */
+        string id;
+        /** The business unit or external organisation publishing the metadata. */
+        Publisher publisher;
+        /** The source system publishing the metadata. */
+        Provenance provenance;
+        /** The access conditions for this collection. */
+        array<AccessCondition> accessConditions = [];
+        /** Additional ids. */
+        array<Identifier> identifiers;
+        /** The type of the collection. */
+        CollectionType collectionType = "Unknown";
+        /** The title or headline of the collection. The title may be available in different languages. */
+        union{null, array<Text>} title = null;
+        /** The description of the collection. The description may be available in different languages. */
+        union{null, array<Text>} description = null;
+        /** The lead of the collection. The lead may be available in different languages. */
+        union{null, array<Text>} lead = null;
+        /** Resources such as pictures or documents related to this article. */
+        union{null, array<Resource>} resources = null;
+        array<string> memberOf = [];
+        /** Describes the format in which the collection's editorial objects are presented. */
+        MediaType? mediaType = null;
+        /** The number of episodes in this collection. */
+        int? numberOfEpisodes = null;
+        /** Unmapped values directly from the source system. These might change or vanish without notice. */
+        map<string> sourceValues = {};
+    }
+
+    /**
+     * The type of the collection.
+     *
+     * Show: A show is a format that serves as a framework for a series of programmes or episodes produced in a
+     * particular style or on a particular theme. Each show may have regularly recurring segments,
+     * a fixed time slot and a specific target audience. An example of this is the main news programme
+     * on Swiss Radio and Television (SRF), the "Tagesschau".
+     * Grouping: The collection represents a grouping of some kind, e.g. a topic
+     * or category. A grouping can have other groupings as its members when
+     * representing a hirarchical structure.
+     * Series: A series is a special type of content collection that consists of several episodes.
+     * It is grouped according to characters, themes or a publication scheme and can contain both continuous
+     * stories and stand-alone episodes. Series differ from shows in their specific structure and thematic
+     * or narrative continuity.
+     */
+    enum CollectionType {
+        Unknown,
+        Show,
+        Grouping,
+        Series
+    } = Unknown;
+
+}

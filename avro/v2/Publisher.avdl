@@ -1,0 +1,25 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol Publisher {
+
+    /**
+    The business unit or external organisation publishing the metadata.
+    Please contact the PDP team if a publisher is missing.
+    */
+    enum Publisher {
+        SRF,
+        RTS,
+        RSI,
+        RTR,
+        SWI,
+        PZBundeshaus,
+        NZZ,
+        AP,
+        SwissTXT,
+        SRGSSR,
+        ARTE,
+        FranceTV,
+        ARD,
+        ZDF,
+        Unknown
+    } = Unknown;
+}

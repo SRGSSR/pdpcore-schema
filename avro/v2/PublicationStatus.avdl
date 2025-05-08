@@ -1,0 +1,11 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol PublicationStatus {
+
+    /** The publication state of an article. */
+    enum PublicationStatus {
+        Published,
+        Unpublished,
+        Unknown
+    } = Unknown;
+
+}

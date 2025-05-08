@@ -1,0 +1,30 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol PublicationService {
+
+    import idl "AccessConditions.avdl";
+    import idl "DistributionVector.avdl";
+    import idl "Provenance.avdl";
+    import idl "Publisher.avdl";
+    import idl "Resource.avdl";
+    import idl "Identifier.avdl";
+
+    /** A service by which a publishing organisation or person publishes its content and offers access to consumers, e.g. "SRF Info" or "RSI Rete Uno". */
+    record PublicationService {
+        /** The PDP id of the channel. */
+        string id;
+        /** The business unit or external organisation publishing the metadata. */
+        Publisher publisher;
+        /** The source system publishing the metadata. */
+        Provenance provenance;
+        /** The name of the channel. */
+        string name;
+        /** Specifies the distribution vector of a channel. */
+        DistributionVector? distributionVector;
+        /** Resources such as pictures or documents. */
+        union{null, array<Resource>} resources;
+        /** The access conditions for this article. */
+        array<AccessCondition> accessConditions;
+        /** A list of identifiers this publication service might be referenced by. */
+        array<Identifier> identifiers;
+    }
+}

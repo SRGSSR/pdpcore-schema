@@ -1,0 +1,11 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol MediaType {
+
+    /** Describes the format in which an editorial object is presented. */
+    enum MediaType {
+        Unknown,
+        Audio,
+        Video
+    } = Unknown;
+
+}

@@ -1,0 +1,79 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol Campaign {
+
+    import idl "Provenance.avdl";
+    import idl "Publisher.avdl";
+    import idl "Text.avdl";
+    import idl "AccessConditions.avdl";
+    import idl "Identifier.avdl";
+    import idl "Genre.avdl";
+    import idl "Involvement.avdl";
+
+    record Campaign {
+        string id;
+        /** The business unit or external organisation publishing the metadata. */
+        Publisher publisher;
+        /** The source system publishing the metadata. */
+        Provenance provenance;
+        /** The access conditions. */
+        array<AccessCondition> accessConditions = [];
+        /** A list of identifiers. */
+        array<Identifier> identifiers;
+        /** The title of the Campaign. The description may be available in different languages. */
+        union{null, array<Text>} title = null;
+        /** The description of the campaign. The description may be available in different languages. */
+        union{null, array<Text>} description = null;
+        union{null, array<PublicationPlan>} publicationPlans = null;
+        /** Unmapped values directly from the source system. These might change or vanish without notice. */
+        union{null, map<string>} sourceValues = null;
+        union{null, array<Genre>} genres = null;
+        union{null, array<Involvement>} contributors = null;
+    }
+
+    record PublicationPlan {
+        string publicationChannelName;
+        union{null, array<PublicationSchedule>} publicationSchedules = null;
+    }
+
+    record RepeatDaily {
+        int repeatEvery;
+    }
+
+    record RepeatWeekly {
+        int repeatEvery;
+        array<DayOfWeek> onDayOfWeek;
+    }
+
+    record RepeatMonthlyOnDayOfMonth {
+        int repeatEvery;
+        array<int> onDayOfMonth;
+    }
+
+    record RepeatMonthlyOnDayOfWeek {
+        int repeatEvery;
+        array<int> onWeekOfMonth;
+        array<DayOfWeek> onDayOfWeek;
+    }
+
+    record PublicationSchedule {
+        long? durationMs = null;
+        date? startDate = null;
+        /** The start time of the publication at timezone Europe/Zurich */
+        time_ms? startTime = null;
+        timestamp_ms? end = null;
+        boolean? isFirstShowing = null;
+        // records need to be defined BEFORE this union in order to generate java source files
+        union{null, RepeatDaily, RepeatWeekly, RepeatMonthlyOnDayOfMonth, RepeatMonthlyOnDayOfWeek} repeat = null;
+        union{null, array<timestamp_ms>} exclusions = null;
+    }
+
+    enum DayOfWeek {
+        Monday,
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday,
+        Sunday
+    }
+}

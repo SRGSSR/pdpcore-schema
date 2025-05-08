@@ -1,0 +1,21 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol EditorialSegment {
+    import idl "Identifier.avdl";
+    import idl "Text.avdl";
+    import idl "Location.avdl";
+
+    record EditorialSegment {
+        Scene? scene = null;
+    }
+
+    record Scene {
+        /** A list of identifiers this EditorialSegment might be referenced by. */
+        array<Identifier> identifiers = [];
+        int? segmentNumber = null;
+        /** The description of the editorialSegment's content. The description may be available in different languages. */
+        union{null, array<Text>} contentDescription = null;
+        /** The locations covered in this programme. */
+        union{null, array<Location>} coversLocations = null;
+    }
+
+}

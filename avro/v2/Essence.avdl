@@ -1,0 +1,22 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol Essence {
+    import idl "Identifier.avdl";
+    import idl "URI.avdl";
+    import idl "Text.avdl";
+    import idl "MediumType.avdl";
+    import idl "AspectRatio.avdl";
+    import idl "ColourSpace.avdl";
+    import idl "AudioTrack.avdl";
+
+    /** A reference to the playable asset. */
+    record Essence {
+        /** The url. */
+        URI locator;
+        array<Identifier> identifiers = [];
+        MediumType? mediumType = null;
+        AspectRatio? aspectRatio = null;
+        ColourSpace? colourSpace = null;
+        union{null, array<AudioTrack>} audioTracks = null;
+        union{null, array<Text>} comment = null;
+    }
+}

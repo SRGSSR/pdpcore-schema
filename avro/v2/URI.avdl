@@ -1,0 +1,12 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol URI {
+
+    /** A Uniform Resource Identifier referencing a resource. */
+    record URI {
+        /** The URL. */
+        string? url = null;
+        /** The URN. */
+        string? urn = null;
+    }
+
+}

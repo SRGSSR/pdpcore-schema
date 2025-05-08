@@ -1,0 +1,26 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol Subtitling {
+
+    import idl "AccessConditions.avdl";
+    import idl "Identifier.avdl";
+    import idl "Provenance.avdl";
+    import idl "Publisher.avdl";
+    import idl "URI.avdl";
+    import idl "Essence.avdl";
+
+    /** A subtitling to a programme. */
+    record Subtitling {
+        /** The PDP id of the subtitling. */
+        string id;
+        /** The business unit or external organisation publishing the metadata. */
+        Publisher publisher;
+        /** The source system publishing the metadata. */
+        Provenance provenance;
+        /** The access conditions for this subtitling. */
+        array<AccessCondition> accessConditions = [];
+        /** Additional ids. */
+        array<Identifier> identifiers;
+        /** The essences to the subtitling file. */
+        union{null, array<Essence>} instantiatedBy = null;
+    }
+}

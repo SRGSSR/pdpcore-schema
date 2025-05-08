@@ -1,0 +1,21 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol Text {
+
+    import idl "Language.avdl";
+
+    /** Represents a human readable text for a corresponding asset. */
+    record Text {
+        /** The content of the text. */
+        string content;
+        /** The language of the text. */
+        Language? language;
+        /** The formatted content.  */
+        FormattedContent? formatted = null;
+    }
+
+    record FormattedContent {
+        string content;
+        string contentType;
+    }
+
+}

@@ -1,0 +1,30 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol Provenance {
+
+    /** The source system publishing the metadata. DigAS_RTR is deprecated. */
+    enum Provenance {
+        Unknown,
+        CMS_SRF,
+        Escenic_RSI,
+        Escenic_RTS,
+        Play_SRF,
+        Angebotsportfolio_SRF,
+        AIS_SRF,
+        CMS_SWI,
+        WhatsOn_SRF,
+        OpenMedia_SRF,
+        OpenMedia_RTR,
+        AIBOX_SRGSSR,
+        Faro_SRF,
+        Siranau_RTS,
+        Gico_RTS,
+        DigAS_SRF,
+        DigAS_RTR,
+        CUE_RSI,
+        PlaySuisse_SRGSSR,
+        CUE_RTS,
+        SAM_SRGSSR,
+        AS_STXT
+    } = Unknown;
+
+}

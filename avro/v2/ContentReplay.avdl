@@ -1,0 +1,7 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol ContentReplay {
+    record ContentReplay {
+        string replayId;
+        boolean forceEmit;
+    }
+}

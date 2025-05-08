@@ -1,0 +1,8 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol MediumType {
+    /** A type of medium (e.g. VHS or DVD) */
+    record MediumType {
+        /** The name of the medium type directly from the source system. */
+        string sourceValue;
+    }
+}

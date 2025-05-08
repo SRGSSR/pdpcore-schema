@@ -1,0 +1,7 @@
+// Only IDLs imported into this file (including transitive imports) are converted to avsc.
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol PDP {
+
+    import idl "Programme.avdl";
+
+}

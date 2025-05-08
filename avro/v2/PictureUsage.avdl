@@ -1,0 +1,8 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol PictureUsage {
+    /** The usage of a picture. */
+    record PictureUsage {
+        /** The picture usage directly adapted from the source system. */
+        string sourceValue;
+    }
+}

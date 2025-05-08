@@ -1,0 +1,137 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol Programme {
+
+    import idl "Agent.avdl";
+    import idl "AccessConditions.avdl";
+    import idl "Provenance.avdl";
+    import idl "PublicationStatus.avdl";
+    import idl "Publisher.avdl";
+    import idl "Text.avdl";
+    import idl "Identifier.avdl";
+    import idl "Essence.avdl";
+    import idl "Resource.avdl";
+    import idl "Involvement.avdl";
+    import idl "Rights.avdl";
+    import idl "Location.avdl";
+    import idl "Genre.avdl";
+    import idl "ProductionType.avdl";
+    import idl "Producer.avdl";
+    import idl "EditorialSegment.avdl";
+    import idl "MediaType.avdl";
+
+    /** In the context of the PDP a programme is an episode. */
+    record Programme {
+        /** The PDP id of the programme. */
+        string id;
+        /** The business unit or external organisation publishing the metadata. */
+        Publisher publisher;
+        /** The source system publishing the metadata. */
+        Provenance provenance;
+        /** The access conditions for this programme. */
+        array<AccessCondition> accessConditions = [];
+        /** A list of identifiers this programme might be referenced by. */
+        array<Identifier> identifiers;
+        /** The title or headline of the programme. The title may be available in different languages. */
+        union{null, array<Text>} title = null;
+        /** The abstract of the programme. The abstract may be available in different languages. */
+        union{null, array<Text>} abstract = null;
+        /** The lead of the programme. The lead may be available in different languages. */
+        union{null, array<Text>} lead = null;
+        /** The description of the programme. The description may be available in different languages. */
+        union{null, array<Text>} description = null;
+        union{null, array<Essence>} instantiatedBy = null;
+        union{null, array<PublicationEvent>} scheduledOn = null;
+        /** The duration/length of this whole programme in milliseconds. */
+        long? durationMs = null;
+        union{null, array<string>} associatedCampaigns = null;
+        /** List of PDP ids from different source systems referencing the same programme. */
+        array<string> existsAs = [];
+        /** Resources such as pictures or documents related to this article. */
+        union{null, array<Resource>} resources = null;
+        union{null, array<Item>} items = null;
+        /** Date at which this programm was or is going to be broadcasted. */
+        timestamp_ms? broadcastDate = null;
+        /** Describes the format in which the programme is presented. */
+        MediaType? mediaType = null;
+        /** A list of PDP ids of collections that this programme is a member of. */
+        array<string> memberOf = [];
+        /** People, teams or departments who contributed to the programme. */
+        union{null, array<Involvement>} contributors = null;
+        /** Unmapped values directly from the source system. These might change or vanish without notice. */
+        map<string> sourceValues = {};
+        /** A list of keywords for this programme. */
+        union{null, array<string>} keywords = null;
+        /** Date at which this programme was produced. */
+        timestamp_ms? productionDate = null;
+        /** Date at which this programme was last modified. */
+        timestamp_ms? modificationDate = null;
+        /** The episode number of this programme within a season. */
+        int? episodeNumber = null;
+        /** The season number of this programme within a series. */
+        int? seasonNumber = null;
+        /** A list of rights, each held by a rights holder. */
+        union{null, array<Rights>} coveredBy = null;
+        /** The locations covered in this programme. */
+        union{null, array<Location>} coversLocations = null;
+        /** A list of genres used to classify this programme depending on its content. */
+        union{null, array<Genre>} genres = null;
+        /** A list of productiontypes this programme consists of, e.g. "in-house production", "third-party production" */
+        union{null, array<ProductionType>} productionTypes = null;
+        /** A list of producers who worked on this programme. */
+        union{null, array<Producer>} producers = null;
+    }
+
+    record Item {
+        /** The PDP id of the item. */
+        string id;
+        /** A list of identifiers this item might be referenced by. */
+        array<Identifier> identifiers = [];
+        /** Describes the format in which the item is presented. */
+        MediaType? mediaType = null;
+        /** The title or headline of the item. The title may be available in different languages. */
+        union{null, array<Text>} title = null;
+        /** The lead of the programme. The lead may be available in different languages. */
+        union{null, array<Text>} lead = null;
+        /** The abstract of the item. The abstract may be available in different languages. */
+        union{null, array<Text>} abstract = null;
+        /** The description of the item. The description may be available in different languages. */
+        union{null, array<Text>} description = null;
+        /** The duration/length of this item in milliseconds. */
+        long? durationMs = null;
+        /** The start of this whole programme in milliseconds. */
+        long? startMs = null;
+        /** The end of this whole programme in milliseconds. */
+        long? endMs = null;
+        union{null, array<Essence>} instantiatedBy = null;
+        /** The access conditions for this item. */
+        array<AccessCondition> accessConditions = [];
+        /** Resources such as pictures or documents related to this article. */
+        union{null, array<Resource>} resources = null;
+        /** position of the item in the list */
+        int? position = null;
+        /** People, teams or departments who contributed to the item. */
+        union{null, array<Involvement>} contributors = null;
+        /** A list of rights, each held by a rights holder. */
+        union{null, array<Rights>} coveredBy = null;
+        /** The locations covered in this programme. */
+        union{null, array<Location>} coversLocations = null;
+        union{null, array<EditorialSegment>} parts = null;
+        /** A list of keywords for this programme. */
+        union{null, array<string>} keywords = null;
+        /** Date at which this programme was produced. */
+        timestamp_ms? productionDate = null;
+        /** Date at which this programme was last modified. */
+        timestamp_ms? modificationDate = null;
+        /** A list of producers who worked on this programme. */
+        union{null, array<Producer>} producers = null;
+        /** List of PDP ids from different source systems referencing the same programme. */
+        array<string> existsAs = [];
+        /** Unmapped values directly from the source system. These might change or vanish without notice. */
+        map<string> sourceValues = {};
+    }
+
+    record PublicationEvent {
+        array<Identifier> identifiers;
+        timestamp_ms scheduleDate;
+    }
+}

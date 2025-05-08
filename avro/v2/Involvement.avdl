@@ -1,0 +1,12 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol Involvement {
+    import idl "Agent.avdl";
+
+    record Involvement {
+        /** The description of the involvement (e.g. author). */
+        string name;
+        /** The Person, Department, or Team involved. */
+        Agent agent;
+    }
+
+}

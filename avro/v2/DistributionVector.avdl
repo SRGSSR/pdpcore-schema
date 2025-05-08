@@ -1,0 +1,9 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol DistributionVector {
+
+    /** Specifies the distribution vector of a channel. */
+    enum DistributionVector {
+        Unknown, TV, Radio, Online
+    } = Unknown;
+
+}

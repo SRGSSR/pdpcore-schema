@@ -1,0 +1,8 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol ColourSpace {
+    /** The colour space of an essence. */
+    record ColourSpace {
+        /** The name of the colour space directly from the source system. */
+        string sourceValue;
+    }
+}
