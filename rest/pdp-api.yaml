@@ -2164,8 +2164,22 @@ components:
           items:
             $ref: "#/components/schemas/Text"
           nullable: true
+        usage:
+          description: Usage of the picture.
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/PictureUsage"
+          nullable: true
         type:
           description: The type of the resource. Always 'Picture'
+          type: string
+    PictureUsage:
+      required:
+      - sourceValue
+      type: object
+      properties:
+        sourceValue:
+          description: The source value of the picture usage.
           type: string
     Producer:
       description: "The production entity (company, person, team, etc.) involved in\
