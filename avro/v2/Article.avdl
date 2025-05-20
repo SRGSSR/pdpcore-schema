@@ -48,6 +48,8 @@ protocol Article {
         array<string> existsAs = [];
         /** Keywords for this article. */
         union{null, array<string>} keywords = null;
+        /** Related editorial objects, for example to identify the broadcast reference of an article. */
+         array<string> relatedEditorialObjects = [];
     }
 
     /** The text content of an article. */
