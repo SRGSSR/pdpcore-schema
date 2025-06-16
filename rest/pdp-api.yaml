@@ -1362,7 +1362,7 @@ components:
           - $ref: "#/components/schemas/Provenance"
           example: CUE_RSI
         domainType:
-          description: The domain type of the content.
+          description: The domain type of the content. Speaker and Item are not accepted.
           type: string
           allOf:
           - $ref: "#/components/schemas/DomainType"
@@ -1476,6 +1476,7 @@ components:
       - Speaker
       - Subtitling
       - Collection
+      - Item
       type: string
     EditorialSegment:
       description: "Represents a small, distinct part of an editorial work. In this\
