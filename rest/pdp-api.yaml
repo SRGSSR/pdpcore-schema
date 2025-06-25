@@ -1398,9 +1398,12 @@ components:
       type: object
       properties:
         cursor:
+          description: The cursor for requesting the next page. A cursor is only temporarily
+            valid and cannot be used with different filter criteria.
           type: string
           nullable: true
         results:
+          description: The list of contents matching the filter criteria.
           type: array
           items:
             $ref: "#/components/schemas/Content"
