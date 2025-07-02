@@ -44,9 +44,6 @@ info:
     \ header, indicating the number of seconds you should wait before making further\
     \ requests.\n"
   version: "2"
-externalDocs:
-  description: PDP API Documentation
-  url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference
 servers:
 - url: http://localhost:8080/
   description: Local development
@@ -59,825 +56,22 @@ servers:
       - dev
       - int
       - production
-security:
-- azureAuthDev:
-  - https://graphql-api.pdp.dev.srgssr.ch/api/.default
-tags:
-- name: Articles
-  description: API for retrieving textual content.
-  externalDocs:
-    description: Article Documentation
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Article
-- name: Campaigns
-  description: API for retrieving campaign metadata
-  externalDocs:
-    description: Campaign Documentation
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Campaign
-- name: Collections
-  description: "API for retrieving high-level metadata about shows, series and other\
-    \ groupings."
-  externalDocs:
-    description: Collection Documentation
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Collection
-- name: Contents
-  description: API for publishing and retrieving content.
-  externalDocs:
-    description: Content Documentation
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Contents
-- name: Programmes
-  description: API for retrieving programme metadata
-  externalDocs:
-    description: Programme Documentation
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Programme
-- name: PublicationServices
-  description: API for retrieving publication services metadata
-  externalDocs:
-    description: PublicationService Documentation
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#PublicationService
-- name: Subtitlings
-  description: API for retrieving subtitlings.
-  externalDocs:
-    description: Subtitling Documentation
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Subtitling
-paths:
-  /api/contents:
-    get:
-      tags:
-      - Contents
-      description: Returns the contents matching the provided filter criteria.
-      parameters:
-      - name: cursor
-        in: query
-        description: The cursor from the previous request. Omit to get the first page.
-          A cursor is only temporarily valid and cannot be used with different filter
-          criteria.
-        schema:
-          type: string
-          nullable: true
-      - name: domain-type
-        in: query
-        description: Filters contents depending on their domain type.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/DomainType"
-          - nullable: true
-      - name: identifiers
-        in: query
-        description: Filters contents with an id or alternative identifier matching
-          any of the provided identifiers.
-        required: false
-        schema:
-          type: array
-          items:
-            type: string
-      - name: limit
-        in: query
-        description: "The number of contents per page. Minimum: 1, maximum: 10."
-        schema:
-          format: int32
-          default: 10
-          maximum: 10
-          minimum: 1
-          type: integer
-      - name: provenance
-        in: query
-        description: Filters contents depending on their provenance.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/Provenance"
-          - nullable: true
-      - name: publisher
-        in: query
-        description: Filters contents depending on their publisher.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/Publisher"
-          - nullable: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ContentPage"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
-    post:
-      tags:
-      - Contents
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ContentCreation"
-      responses:
-        "200":
-          description: OK
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.Ops
-        - Resource.Write
-    delete:
-      tags:
-      - Contents
-      parameters:
-      - name: domainType
-        in: query
-        required: true
-        schema:
-          $ref: "#/components/schemas/DomainType"
-      - name: provenance
-        in: query
-        required: true
-        schema:
-          $ref: "#/components/schemas/Provenance"
-      - name: sourceId
-        in: query
-        required: true
-        schema:
-          minLength: 1
-          type: string
-      responses:
-        "200":
-          description: OK
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.Ops
-        - Resource.Write
-  /api/contents/bulk:
-    delete:
-      tags:
-      - Contents
-      description: |2-
-
-        Deleting multiple contents in bulk is much faster than deleting them one by one.
-        In the body of the request, pass an array of the content PDP IDs you want to delete.
-        ```json
-        [
-          "urn:pdp:cms_srf:content_article:2044947",
-          "urn:pdp:cms_srf:content_article:2044948"
-        ]
-        ```
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                type: string
-        required: true
-      responses:
-        "204":
-          description: The request was successful.
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.Ops
-        - Resource.Write
-  /api/contents/bulk-source:
-    delete:
-      tags:
-      - Contents
-      description: "\nDeleting multiple contents in bulk is much faster than deleting\
-        \ them one by one.\nPass a provenance and domain type as query parameters\
-        \ and a list of source IDs in the body.\n\n```json\n[\n  \"2044947\", \n \
-        \ \"2044948\"\n]\n```\n        "
-      parameters:
-      - name: domain-type
-        in: query
-        required: true
-        schema:
-          $ref: "#/components/schemas/DomainType"
-      - name: provenance
-        in: query
-        required: true
-        schema:
-          $ref: "#/components/schemas/Provenance"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                type: string
-        required: true
-      responses:
-        "204":
-          description: The request was successful.
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.Ops
-        - Resource.Write
-  /api/contents/{id}:
-    get:
-      tags:
-      - Contents
-      description: Returns the content with the given PDP ID.
-      parameters:
-      - name: id
-        in: path
-        description: The PDP ID of the content.
-        required: true
-        schema:
-          type: string
-        example: urn:pdp:cue_rsi:content_article:rsi:cue:story:2044947
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Content"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
-    delete:
-      tags:
-      - Contents
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: OK
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.Ops
-        - Resource.Write
-  /api/v2/articles:
-    get:
-      tags:
-      - Articles
-      description: Returns the articles matching the provided filter criteria.
-      parameters:
-      - name: cursor
-        in: query
-        description: The cursor from the previous request. Omit to get the first page.
-          A cursor is only temporarily valid and cannot be used with different filter
-          criteria.
-        schema:
-          type: string
-          nullable: true
-      - name: identifiers
-        in: query
-        description: Filter on an ID or an alternative identifier that matches any
-          of the provided values.
-        required: false
-        schema:
-          type: array
-          items:
-            type: string
-          nullable: true
-      - name: limit
-        in: query
-        description: "The number of articles per page. Minimum: 1, maximum: 10."
-        schema:
-          format: int32
-          default: 10
-          maximum: 10
-          minimum: 1
-          type: integer
-      - name: provenance
-        in: query
-        description: Filters articles depending on their provenance.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/Provenance"
-          - nullable: true
-      - name: publisher
-        in: query
-        description: Filters articles depending on their publisher.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/Publisher"
-          - nullable: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ArticlePage"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
-  /api/v2/articles/{id}:
-    get:
-      tags:
-      - Articles
-      description: Returns the article with the given PDP ID.
-      parameters:
-      - name: id
-        in: path
-        description: The PDP ID of the article.
-        required: true
-        schema:
-          type: string
-        example: urn:pdp:cms_srf:article:urn:srf:article:20271622
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Article"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
-  /api/v2/campaigns:
-    get:
-      tags:
-      - Campaigns
-      description: Returns the campaigns matching the provided filter criteria.
-      parameters:
-      - name: cursor
-        in: query
-        description: The cursor from the previous request. Omit to get the first page.
-          A cursor is only temporarily valid and cannot be used with different filter
-          criteria.
-        schema:
-          type: string
-          nullable: true
-      - name: identifiers
-        in: query
-        description: Filter on an ID or an alternative identifier that matches any
-          of the provided values.
-        required: false
-        schema:
-          type: array
-          items:
-            type: string
-      - name: limit
-        in: query
-        description: "The number of campaigns per page. Minimum: 1, maximum: 10."
-        schema:
-          format: int32
-          default: 10
-          maximum: 10
-          minimum: 1
-          type: integer
-      - name: provenance
-        in: query
-        description: Filters campaigns depending on their provenance.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/Provenance"
-          - nullable: true
-      - name: publisher
-        in: query
-        description: Filters campaigns depending on their publisher.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/Publisher"
-          - nullable: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CampaignPage"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
-  /api/v2/campaigns/{id}:
-    get:
-      tags:
-      - Campaigns
-      description: Returns the campaign with the given PDP ID.
-      parameters:
-      - name: id
-        in: path
-        description: The PDP ID of the campaign.
-        required: true
-        schema:
-          type: string
-        example: urn:pdp:angebotsportfolio_srf:campaign:A00905
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Campaign"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
-  /api/v2/collections:
-    get:
-      tags:
-      - Collections
-      description: Returns the articles matching the provided filter criteria.
-      parameters:
-      - name: cursor
-        in: query
-        description: The cursor from the previous request. Omit to get the first page.
-          A cursor is only temporarily valid and cannot be used with different filter
-          criteria.
-        schema:
-          type: string
-          nullable: true
-      - name: identifiers
-        in: query
-        description: Filter on an ID or an alternative identifier that matches any
-          of the provided values.
-        required: false
-        schema:
-          type: array
-          items:
-            type: string
-          nullable: true
-      - name: limit
-        in: query
-        description: "The number of collections per page. Minimum: 1, maximum: 10."
-        schema:
-          format: int32
-          default: 10
-          maximum: 10
-          minimum: 1
-          type: integer
-      - name: provenance
-        in: query
-        description: Filters collection depending on their provenance.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/Provenance"
-          - nullable: true
-      - name: publisher
-        in: query
-        description: Filters collection depending on their publisher.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/Publisher"
-          - nullable: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CollectionPage"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
-  /api/v2/collections/{id}:
-    get:
-      tags:
-      - Collections
-      description: Returns the article with the given PDP ID.
-      parameters:
-      - name: id
-        in: path
-        description: The PDP ID of the collection.
-        required: true
-        schema:
-          type: string
-        example: urn:pdp:play_srf:collection:urn:rsi:show:tv:702711
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Collection"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
-  /api/v2/programmes:
-    get:
-      tags:
-      - Programmes
-      description: Returns the programmes matching the provided filter criteria.
-      parameters:
-      - name: cursor
-        in: query
-        description: The cursor from the previous request. Omit to get the first page.
-          A cursor is only temporarily valid and cannot be used with different filter
-          criteria.
-        schema:
-          type: string
-          nullable: true
-      - name: identifiers
-        in: query
-        description: Filters for programme and item IDs or alternative identifiers
-          that match any of the values provided.
-        required: false
-        schema:
-          type: array
-          items:
-            type: string
-          nullable: true
-      - name: limit
-        in: query
-        description: "The number of programmes per page. Minimum: 1, maximum: 10."
-        schema:
-          format: int32
-          default: 10
-          maximum: 10
-          minimum: 1
-          type: integer
-      - name: member-of
-        in: query
-        description: Filters results based on the collection a specific program is
-          part of.
-        schema:
-          type: string
-          nullable: true
-      - name: provenance
-        in: query
-        description: Filters programmes depending on their provenance.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/Provenance"
-          - nullable: true
-      - name: publisher
-        in: query
-        description: Filters programmes depending on their publisher.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/Publisher"
-          - nullable: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ProgrammePage"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
-  /api/v2/programmes/{id}:
-    get:
-      tags:
-      - Programmes
-      description: Returns the programme with the given PDP ID.
-      parameters:
-      - name: id
-        in: path
-        description: The PDP ID of the programme.
-        required: true
-        schema:
-          type: string
-        example: urn:pdp:faro_srf:programme:2665c3e9-7708-450e-b3d4-003407f02e01
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Programme"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
-  /api/v2/publication-services:
-    get:
-      tags:
-      - PublicationServices
-      description: Returns the publication services matching the provided filter criteria.
-      parameters:
-      - name: cursor
-        in: query
-        description: The cursor from the previous request. Omit to get the first page.
-          A cursor is only temporarily valid and cannot be used with different filter
-          criteria.
-        schema:
-          type: string
-          nullable: true
-      - name: identifiers
-        in: query
-        description: Filter on an ID or an alternative identifier that matches any
-          of the provided values.
-        required: false
-        schema:
-          type: array
-          items:
-            type: string
-      - name: limit
-        in: query
-        description: "The number of programmes per page. Minimum: 1, maximum: 10."
-        schema:
-          format: int32
-          default: 10
-          maximum: 10
-          minimum: 1
-          type: integer
-      - name: provenance
-        in: query
-        description: Filters publication services depending on their provenance.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/Provenance"
-          - nullable: true
-      - name: publisher
-        in: query
-        description: Filters publication services depending on their publisher.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/Publisher"
-          - nullable: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/PublicationServicePage"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
-  /api/v2/publication-services/{id}:
-    get:
-      tags:
-      - PublicationServices
-      description: Returns the publication service with the given PDP ID.
-      parameters:
-      - name: id
-        in: path
-        description: The PDP ID of the publication service.
-        required: true
-        schema:
-          type: string
-        example: urn:pdp:ais_srf:publicationservice:23ffbe1b-65ce-4188-add2-c724186c2c9f
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/PublicationService"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
-  /api/v2/subtitlings:
-    get:
-      tags:
-      - Subtitlings
-      description: Returns the subtitlings matching the provided filter criteria.
-      parameters:
-      - name: cursor
-        in: query
-        description: The cursor from the previous request. Omit to get the first page.
-          A cursor is only temporarily valid and cannot be used with different filter
-          criteria.
-        schema:
-          type: string
-          nullable: true
-      - name: identifiers
-        in: query
-        description: Filters subtitlings with an id or alternative identifier matching
-          any of the provided identifiers.
-        required: false
-        schema:
-          type: array
-          items:
-            type: string
-      - name: limit
-        in: query
-        description: "The number of subtitlings per page. Minimum: 1, maximum: 10."
-        schema:
-          format: int32
-          default: 10
-          maximum: 10
-          minimum: 1
-          type: integer
-      - name: provenance
-        in: query
-        description: Filters subtitlings depending on their provenance.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/Provenance"
-          - nullable: true
-      - name: publisher
-        in: query
-        description: Filters contents depending on their publisher.
-        schema:
-          allOf:
-          - $ref: "#/components/schemas/Publisher"
-          - nullable: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SubtitlingPage"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
-  /api/v2/subtitlings/{id}:
-    get:
-      tags:
-      - Subtitlings
-      description: Returns the subtitling with the given PDP ID.
-      parameters:
-      - name: id
-        in: path
-        description: The PDP ID of the subtitling.
-        required: true
-        schema:
-          type: string
-        example: urn:pdp:play_srf:programme:urn:rts:video:15079445
-      responses:
-        "404":
-          description: Not Found
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
+externalDocs:
+  description: PDP API Documentation
+  url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/892960901/PDP+API-Reference
 components:
+  securitySchemes:
+    azureAuthDev:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/token
+          scopes:
+            https://graphql-api.pdp.dev.srgssr.ch/api/.default: read resources
+    SecurityScheme:
+      type: openIdConnect
+      description: Authentication
   schemas:
     AccessCondition:
       description: The conditions under which content can be accessed.
@@ -2726,15 +1920,843 @@ components:
         type:
           description: The type of the right. Always 'UsageRights'
           type: string
-  securitySchemes:
-    azureAuthDev:
-      type: oauth2
-      flows:
-        authorizationCode:
-          authorizationUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/authorize
-          tokenUrl: https://login.microsoftonline.com/2598639a-d083-492d-bdbe-f1dd8066b03a/oauth2/v2.0/token
-          scopes:
-            https://graphql-api.pdp.dev.srgssr.ch/api/.default: read resources
-    SecurityScheme:
-      type: openIdConnect
-      description: Authentication
+security:
+- azureAuthDev:
+  - https://graphql-api.pdp.dev.srgssr.ch/api/.default
+tags:
+- name: Articles
+  description: API for retrieving textual content.
+  externalDocs:
+    description: Article Documentation
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Article
+- name: Campaigns
+  description: API for retrieving campaign metadata
+  externalDocs:
+    description: Campaign Documentation
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Campaign
+- name: Collections
+  description: "API for retrieving high-level metadata about shows, series and other\
+    \ groupings."
+  externalDocs:
+    description: Collection Documentation
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Collection
+- name: Contents
+  description: API for publishing and retrieving content.
+  externalDocs:
+    description: Content Documentation
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Contents
+- name: Programmes
+  description: API for retrieving programme metadata
+  externalDocs:
+    description: Programme Documentation
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Programme
+- name: PublicationServices
+  description: API for retrieving publication services metadata
+  externalDocs:
+    description: PublicationService Documentation
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#PublicationService
+- name: Subtitlings
+  description: API for retrieving subtitlings.
+  externalDocs:
+    description: Subtitling Documentation
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Subtitling
+paths:
+  /api/contents:
+    get:
+      description: Returns the contents matching the provided filter criteria.
+      tags:
+      - Contents
+      parameters:
+      - description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
+        name: cursor
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - description: Filters contents depending on their domain type.
+        name: domain-type
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/DomainType"
+          nullable: true
+      - description: Filters contents with an id or alternative identifier matching
+          any of the provided identifiers.
+        required: false
+        name: identifiers
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - description: "The number of contents per page. Minimum: 1, maximum: 10."
+        name: limit
+        in: query
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - description: Filters contents depending on their provenance.
+        name: provenance
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          nullable: true
+      - description: Filters contents depending on their publisher.
+        name: publisher
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentPage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Content By Filter
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+    delete:
+      tags:
+      - Contents
+      parameters:
+      - name: domainType
+        in: query
+        schema:
+          $ref: "#/components/schemas/DomainType"
+        required: true
+      - name: provenance
+        in: query
+        schema:
+          $ref: "#/components/schemas/Provenance"
+        required: true
+      - name: sourceId
+        in: query
+        schema:
+          minLength: 1
+          type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Delete With Params
+      security:
+      - azureAuthDev:
+        - Resource.Ops
+        - Resource.Write
+    post:
+      tags:
+      - Contents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContentCreation"
+        required: true
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+        "400":
+          description: Bad Request
+      summary: Create
+      security:
+      - azureAuthDev:
+        - Resource.Ops
+        - Resource.Write
+  /api/contents/bulk:
+    delete:
+      description: |2-
+
+        Deleting multiple contents in bulk is much faster than deleting them one by one.
+        In the body of the request, pass an array of the content PDP IDs you want to delete.
+        ```json
+        [
+          "urn:pdp:cms_srf:content_article:2044947",
+          "urn:pdp:cms_srf:content_article:2044948"
+        ]
+        ```
+      tags:
+      - Contents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        "204":
+          description: The request was successful.
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Delete With Pdp Ids
+      security:
+      - azureAuthDev:
+        - Resource.Ops
+        - Resource.Write
+  /api/contents/bulk-source:
+    delete:
+      description: "\nDeleting multiple contents in bulk is much faster than deleting\
+        \ them one by one.\nPass a provenance and domain type as query parameters\
+        \ and a list of source IDs in the body.\n\n```json\n[\n  \"2044947\", \n \
+        \ \"2044948\"\n]\n```\n        "
+      tags:
+      - Contents
+      parameters:
+      - name: domain-type
+        in: query
+        schema:
+          $ref: "#/components/schemas/DomainType"
+        required: true
+      - name: provenance
+        in: query
+        schema:
+          $ref: "#/components/schemas/Provenance"
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        "204":
+          description: The request was successful.
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Delete With Source Ids
+      security:
+      - azureAuthDev:
+        - Resource.Ops
+        - Resource.Write
+  /api/contents/{id}:
+    get:
+      description: Returns the content with the given PDP ID.
+      tags:
+      - Contents
+      parameters:
+      - description: The PDP ID of the content.
+        example: urn:pdp:cue_rsi:content_article:rsi:cue:story:2044947
+        required: true
+        name: id
+        in: path
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Content"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Content By Id
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+    delete:
+      tags:
+      - Contents
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Delete With Id
+      security:
+      - azureAuthDev:
+        - Resource.Ops
+        - Resource.Write
+  /api/v2/articles:
+    get:
+      description: Returns the articles matching the provided filter criteria.
+      tags:
+      - Articles
+      parameters:
+      - description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
+        name: cursor
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - description: Filter on an ID or an alternative identifier that matches any
+          of the provided values.
+        required: false
+        name: identifiers
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+          nullable: true
+      - description: "The number of articles per page. Minimum: 1, maximum: 10."
+        name: limit
+        in: query
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - description: Filters articles depending on their provenance.
+        name: provenance
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          nullable: true
+      - description: Filters articles depending on their publisher.
+        name: publisher
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArticlePage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Articles V 2 By Filter
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/articles/{id}:
+    get:
+      description: Returns the article with the given PDP ID.
+      tags:
+      - Articles
+      parameters:
+      - description: The PDP ID of the article.
+        example: urn:pdp:cms_srf:article:urn:srf:article:20271622
+        name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Article"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Article V 2
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/campaigns:
+    get:
+      description: Returns the campaigns matching the provided filter criteria.
+      tags:
+      - Campaigns
+      parameters:
+      - description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
+        name: cursor
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - description: Filter on an ID or an alternative identifier that matches any
+          of the provided values.
+        required: false
+        name: identifiers
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - description: "The number of campaigns per page. Minimum: 1, maximum: 10."
+        name: limit
+        in: query
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - description: Filters campaigns depending on their provenance.
+        name: provenance
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          nullable: true
+      - description: Filters campaigns depending on their publisher.
+        name: publisher
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignPage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Campaigns V 2 By Filter
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/campaigns/{id}:
+    get:
+      description: Returns the campaign with the given PDP ID.
+      tags:
+      - Campaigns
+      parameters:
+      - description: The PDP ID of the campaign.
+        example: urn:pdp:angebotsportfolio_srf:campaign:A00905
+        name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Campaign"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Campaign V 2
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/collections:
+    get:
+      description: Returns the articles matching the provided filter criteria.
+      tags:
+      - Collections
+      parameters:
+      - description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
+        name: cursor
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - description: Filter on an ID or an alternative identifier that matches any
+          of the provided values.
+        required: false
+        name: identifiers
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+          nullable: true
+      - description: "The number of collections per page. Minimum: 1, maximum: 10."
+        name: limit
+        in: query
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - description: Filters collection depending on their provenance.
+        name: provenance
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          nullable: true
+      - description: Filters collection depending on their publisher.
+        name: publisher
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CollectionPage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Collections By Filter
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/collections/{id}:
+    get:
+      description: Returns the article with the given PDP ID.
+      tags:
+      - Collections
+      parameters:
+      - description: The PDP ID of the collection.
+        example: urn:pdp:play_srf:collection:urn:rsi:show:tv:702711
+        name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Collection"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Collection By Id
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/programmes:
+    get:
+      description: Returns the programmes matching the provided filter criteria.
+      tags:
+      - Programmes
+      parameters:
+      - description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
+        name: cursor
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - description: Filters for programme and item IDs or alternative identifiers
+          that match any of the values provided.
+        required: false
+        name: identifiers
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+          nullable: true
+      - description: "The number of programmes per page. Minimum: 1, maximum: 10."
+        name: limit
+        in: query
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - description: Filters results based on the collection a specific program is
+          part of.
+        name: member-of
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - description: Filters programmes depending on their provenance.
+        name: provenance
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          nullable: true
+      - description: Filters programmes depending on their publisher.
+        name: publisher
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProgrammePage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Programmes V 2 By Filter
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/programmes/{id}:
+    get:
+      description: Returns the programme with the given PDP ID.
+      tags:
+      - Programmes
+      parameters:
+      - description: The PDP ID of the programme.
+        example: urn:pdp:faro_srf:programme:2665c3e9-7708-450e-b3d4-003407f02e01
+        name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Programme"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Programme V 2
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/publication-services:
+    get:
+      description: Returns the publication services matching the provided filter criteria.
+      tags:
+      - PublicationServices
+      parameters:
+      - description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
+        name: cursor
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - description: Filter on an ID or an alternative identifier that matches any
+          of the provided values.
+        required: false
+        name: identifiers
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - description: "The number of programmes per page. Minimum: 1, maximum: 10."
+        name: limit
+        in: query
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - description: Filters publication services depending on their provenance.
+        name: provenance
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          nullable: true
+      - description: Filters publication services depending on their publisher.
+        name: publisher
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicationServicePage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Publication Services V 2 By Filter
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/publication-services/{id}:
+    get:
+      description: Returns the publication service with the given PDP ID.
+      tags:
+      - PublicationServices
+      parameters:
+      - description: The PDP ID of the publication service.
+        example: urn:pdp:ais_srf:publicationservice:23ffbe1b-65ce-4188-add2-c724186c2c9f
+        name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicationService"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Publication Service V 2
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/subtitlings:
+    get:
+      description: Returns the subtitlings matching the provided filter criteria.
+      tags:
+      - Subtitlings
+      parameters:
+      - description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
+        name: cursor
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - description: Filters subtitlings with an id or alternative identifier matching
+          any of the provided identifiers.
+        required: false
+        name: identifiers
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - description: "The number of subtitlings per page. Minimum: 1, maximum: 10."
+        name: limit
+        in: query
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - description: Filters subtitlings depending on their provenance.
+        name: provenance
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          nullable: true
+      - description: Filters contents depending on their publisher.
+        name: publisher
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubtitlingPage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Subtitlings V 2 By Filter
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/subtitlings/{id}:
+    get:
+      description: Returns the subtitling with the given PDP ID.
+      tags:
+      - Subtitlings
+      parameters:
+      - description: The PDP ID of the subtitling.
+        example: urn:pdp:play_srf:programme:urn:rts:video:15079445
+        name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "404":
+          description: Not Found
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Subtitling V 2
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
