@@ -79,6 +79,7 @@ protocol Programme {
         union{null, array<ProductionType>} productionTypes = null;
         /** A list of producers who worked on this programme. */
         union{null, array<Producer>} producers = null;
+        union{null, array<EditorialSegment>} parts = null;
     }
 
     record Item {

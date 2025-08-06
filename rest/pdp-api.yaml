@@ -1601,6 +1601,13 @@ components:
           description: The season number of this programme within a series.
           type: integer
           nullable: true
+        parts:
+          description: "Parts describe small, distinct segments of an item like a\
+            \ scene or a shot."
+          type: array
+          items:
+            $ref: "#/components/schemas/EditorialSegment"
+          nullable: true
         sourceValues:
           description: Unmapped values directly from the source system. These might
             change or vanish without notice.
