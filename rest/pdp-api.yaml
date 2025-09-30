@@ -2177,7 +2177,8 @@ paths:
       tags:
       - Contents
       parameters:
-      - description: The PDP ID of the content.
+      - description: "The PDP ID of the content. The PDP ID is constituted as follows:\
+          \ urn:pdp:{[PROVENANCE](#model-Provenance)}:content_{[DOMAINTYPE](#model-DomainType)}:{SOURCEID}."
         example: urn:pdp:cue_rsi:content_article:rsi:cue:story:2044947
         required: true
         name: id
@@ -2290,7 +2291,8 @@ paths:
       tags:
       - Articles
       parameters:
-      - description: The PDP ID of the article.
+      - description: "The PDP ID of the article. The PDP ID is constituted as follows:\
+          \ urn:pdp:{[PROVENANCE](#model-Provenance)}:{[DOMAINTYPE](#model-DomainType)}:{SOURCEID}."
         example: urn:pdp:cms_srf:article:urn:srf:article:20271622
         name: id
         in: path
@@ -2381,7 +2383,8 @@ paths:
       tags:
       - Campaigns
       parameters:
-      - description: The PDP ID of the campaign.
+      - description: "The PDP ID of the campaign. The PDP ID is constituted as follows:\
+          \ urn:pdp:{[PROVENANCE](#model-Provenance)}:{[DOMAINTYPE](#model-DomainType)}:{SOURCEID}."
         example: urn:pdp:angebotsportfolio_srf:campaign:A00905
         name: id
         in: path
@@ -2473,7 +2476,8 @@ paths:
       tags:
       - Collections
       parameters:
-      - description: The PDP ID of the collection.
+      - description: "The PDP ID of the collection. The PDP ID is constituted as follows:\
+          \ urn:pdp:{[PROVENANCE](#model-Provenance)}:{[DOMAINTYPE](#model-DomainType)}:{SOURCEID}."
         example: urn:pdp:play_srf:collection:urn:rsi:show:tv:702711
         name: id
         in: path
@@ -2572,7 +2576,8 @@ paths:
       tags:
       - Programmes
       parameters:
-      - description: The PDP ID of the programme.
+      - description: "The PDP ID of the programme. The PDP ID is constituted as follows:\
+          \ urn:pdp:{[PROVENANCE](#model-Provenance)}:{[DOMAINTYPE](#model-DomainType)}:{SOURCEID}."
         example: urn:pdp:faro_srf:programme:2665c3e9-7708-450e-b3d4-003407f02e01
         name: id
         in: path
@@ -2663,7 +2668,8 @@ paths:
       tags:
       - PublicationServices
       parameters:
-      - description: The PDP ID of the publication service.
+      - description: "The PDP ID of the publication service. The PDP ID is constituted\
+          \ as follows: urn:pdp:{[PROVENANCE](#model-Provenance)}:{[DOMAINTYPE](#model-DomainType)}:{SOURCEID}."
         example: urn:pdp:ais_srf:publicationservice:23ffbe1b-65ce-4188-add2-c724186c2c9f
         name: id
         in: path
@@ -2754,7 +2760,8 @@ paths:
       tags:
       - Subtitlings
       parameters:
-      - description: The PDP ID of the subtitling.
+      - description: "The PDP ID of the subtitling. The PDP ID is constituted as follows:\
+          \ urn:pdp:{[PROVENANCE](#model-Provenance)}:{[DOMAINTYPE](#model-DomainType)}:{SOURCEID}."
         example: urn:pdp:play_srf:programme:urn:rts:video:15079445
         name: id
         in: path
