@@ -1,0 +1,38 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol PublicationChannel {
+
+    import idl "AccessConditions.avdl";
+    import idl "DistributionVector.avdl";
+    import idl "Provenance.avdl";
+    import idl "Publisher.avdl";
+    import idl "Identifier.avdl";
+    import idl "Involvement.avdl";
+
+    /** A channel by which a publishing organisation or person publishes its content and offers access to consumers. */
+    record PublicationChannel {
+        /** The PDP id of the channel. */
+        string id;
+        /** The business unit or external organisation publishing the metadata. */
+        Publisher publisher;
+        /** The source system publishing the metadata. */
+        Provenance provenance;
+        /** A list of identifiers this programme might be referenced by. */
+        array<Identifier> identifiers;
+        /** The access conditions for this channel. */
+        array<AccessCondition> accessConditions = [];
+        /** The name of the channel. */
+        string name;
+        /** The start date of the channel availability. */
+        timestamp_ms? startDate = null;
+        /** The end date of the channel availability. */
+        timestamp_ms? endDate = null;
+        /** List of channels this channel is a member of. */
+        union{null, array<string>} memberOf = null;
+        /** Source system specific values. */
+        union{null, map<string>} sourceValues = null;
+        /** Contributors to the channel. */
+        union{null, array<Involvement>} contributors = null;
+        /** List of PDP ids from different source systems referencing the same programme. */
+        array<string> existsAs = [];
+    }
+}
