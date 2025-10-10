@@ -32,7 +32,8 @@ protocol Identifier {
         ISAN,
         AisEpisodeId,
         OpenMediaUrn,
-        AzureId
+        AzureId,
+        RtsArchiveId
     } = Unknown;
 
 }

@@ -845,6 +845,7 @@ components:
       - AisEpisodeId
       - OpenMediaUrn
       - AzureId
+      - RtsArchiveId
       type: string
     Involvement:
       description: An Agent's participation in the creation of publication of an editorial
