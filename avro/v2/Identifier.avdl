@@ -31,7 +31,8 @@ protocol Identifier {
         ConceptId,
         ISAN,
         AisEpisodeId,
-        OpenMediaUrn
+        OpenMediaUrn,
+        AzureId
     } = Unknown;
 
 }

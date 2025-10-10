@@ -58,7 +58,8 @@ protocol Collection {
         Unknown,
         Show,
         Grouping,
-        Series
+        Series,
+        Brand
     } = Unknown;
 
 }

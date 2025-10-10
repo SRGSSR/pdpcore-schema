@@ -469,6 +469,7 @@ components:
       - Show
       - Grouping
       - Series
+      - Brand
       type: string
     ColourSpace:
       description: The colour space of an essence.
@@ -843,6 +844,7 @@ components:
       - ISAN
       - AisEpisodeId
       - OpenMediaUrn
+      - AzureId
       type: string
     Involvement:
       description: An Agent's participation in the creation of publication of an editorial
