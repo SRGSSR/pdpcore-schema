@@ -1657,6 +1657,85 @@ components:
       - CUE_RTS
       - AS_STXT
       type: string
+    PublicationChannel:
+      required:
+      - id
+      - sourceId
+      - publisher
+      - provenance
+      - accessConditions
+      - name
+      type: object
+      properties:
+        id:
+          description: The PDP id of the publication channel.
+          type: string
+        sourceId:
+          description: The id of the publication channel in the source system.
+          type: string
+        publisher:
+          description: The business unit or external organisation publishing the metadata.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+        provenance:
+          description: The source system publishing the metadata.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+        accessConditions:
+          description: The access conditions for this publication channel.
+          type: array
+          items:
+            $ref: "#/components/schemas/AccessCondition"
+        name:
+          description: The name of the publication channel.
+          type: string
+        startDate:
+          format: date-time
+          description: The start date of the publication channel.
+          type: string
+          example: 2022-03-10T16:15:50Z
+          nullable: true
+        endDate:
+          format: date-time
+          description: The end date of the publication channel.
+          type: string
+          example: 2022-03-10T16:15:50Z
+          nullable: true
+        memberOf:
+          description: The collections or entities this publication channel is a member
+            of.
+          type: array
+          items:
+            type: string
+          nullable: true
+        sourceValues:
+          description: Unmapped values directly from the source system. These may
+            change or vanish without notice.
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        contributors:
+          description: "People, teams or departments who contributed to the publication\
+            \ channel."
+          type: array
+          items:
+            $ref: "#/components/schemas/Involvement"
+          nullable: true
+    PublicationChannelPage:
+      required:
+      - results
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/PublicationChannel"
     PublicationEvent:
       description: The event of publishing an essence by a service to a channel under
         rights conditions.
@@ -1966,6 +2045,11 @@ tags:
   externalDocs:
     description: Programme Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Programme
+- name: PublicationChannels
+  description: API for retrieving publication channels metadata
+  externalDocs:
+    description: PublicationChannel Documentation
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#PublicationChannel
 - name: PublicationServices
   description: API for retrieving publication services metadata
   externalDocs:
@@ -2691,6 +2775,99 @@ paths:
         "403":
           description: Not Allowed
       summary: Get Publication Service V 2
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/publicationChannels:
+    get:
+      description: Returns the publicationChannels matching the provided filter criteria.
+      tags:
+      - PublicationChannels
+      parameters:
+      - description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
+        name: cursor
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - description: Filter on an ID or an alternative identifier that matches any
+          of the provided values.
+        required: false
+        name: identifiers
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - description: "The number of publicationChannels per page. Minimum: 1, maximum:\
+          \ 10."
+        name: limit
+        in: query
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - description: Filters publicationChannels depending on their provenance.
+        name: provenance
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          nullable: true
+      - description: Filters publicationChannels depending on their publisher.
+        name: publisher
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicationChannelPage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Publication Channels V 2 By Filter
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/publicationChannels/{id}:
+    get:
+      description: Returns the publicationChannel with the given PDP ID.
+      tags:
+      - PublicationChannels
+      parameters:
+      - description: "The PDP ID of the publicationChannel. The PDP ID is constituted\
+          \ as follows: urn:pdp:{[PROVENANCE](#model-Provenance)}:{[DOMAINTYPE](#model-DomainType)}:{SOURCEID}."
+        example: urn:pdp:angebotsportfolio_srf:publicationChannel:A00905
+        name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicationChannel"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Publication Channel V 2
       security:
       - azureAuthDev:
         - Resource.ReadInternal
