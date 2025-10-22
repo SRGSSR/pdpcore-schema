@@ -2134,8 +2134,8 @@ tags:
     description: Campaign Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Campaign
 - name: Collections
-  description: "API for retrieving high-level metadata about shows, series and other\
-    \ groupings."
+  description: "DEPRECATED: Use Editorial Groups Endpoint instead. API for retrieving\
+    \ high-level metadata about shows, series and other groupings."
   externalDocs:
     description: Collection Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Collection
