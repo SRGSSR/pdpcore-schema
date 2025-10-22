@@ -765,7 +765,7 @@ components:
           description: The number of episodes in this editorial group.
           type: integer
           nullable: true
-    EditorialGroupPagePage:
+    EditorialGroupPage:
       required:
       - results
       type: object
@@ -2753,7 +2753,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EditorialGroupPagePage"
+                $ref: "#/components/schemas/EditorialGroupPage"
         "401":
           description: Not Authorized
         "403":
