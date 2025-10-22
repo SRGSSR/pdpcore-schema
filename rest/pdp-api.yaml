@@ -682,6 +682,110 @@ components:
       - Collection
       - Item
       type: string
+    EditorialGroup:
+      description: "An editorial group defines a collection or group of media resources\
+        \ - for example, a series composed of multiple episodes."
+      required:
+      - id
+      - publisher
+      - provenance
+      - accessConditions
+      - identifiers
+      type: object
+      properties:
+        id:
+          description: The PDP-id of this editorial group
+          type: string
+        publisher:
+          description: The publisher of this editorial group (usually a business unit).
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+        provenance:
+          description: The source system from which this editorial group originated.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+        accessConditions:
+          description: The conditions under which this editorial group can be accessed.
+          type: array
+          items:
+            $ref: "#/components/schemas/AccessCondition"
+        editorialGroupType:
+          description: The type of this editorial group which allows a more detailed
+            categorization into sub-categories like Shows or Collections.
+          type: object
+          nullable: true
+        title:
+          description: The title of the editorial group.
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        lead:
+          description: "The lead is a short, opening paragraph to gain the consumers\
+            \ interest."
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        description:
+          description: The description contains more extensive information about the
+            editorial group.
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
+        memberOf:
+          description: Indicates to which editorial group this editorial group belongs.
+          type: array
+          items:
+            type: string
+          nullable: true
+        resources:
+          description: Additional resources belonging to this editorial group (e.g.
+            pictures or documents).
+          type: array
+          items:
+            $ref: "#/components/schemas/Resource"
+          nullable: true
+        identifiers:
+          description: All known identifiers of this editorial group.
+          type: array
+          items:
+            $ref: "#/components/schemas/Identifier"
+        mediaType:
+          description: The media type of the editorial objects in this editorial group.
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/MediaType"
+          nullable: true
+        numberOfEpisodes:
+          format: int32
+          description: The number of episodes in this editorial group.
+          type: integer
+          nullable: true
+    EditorialGroupPagePage:
+      required:
+      - results
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditorialGroup"
+    EditorialGroupType:
+      description: Allows a more detailed categorization of the different editorial
+        group.
+      enum:
+      - Show
+      - Collection
+      - Series
+      - Brand
+      type: string
     EditorialSegment:
       description: "Represents a small, distinct part of an editorial work. In this\
         \ case an editorial segment is a smaller part of an item like a scene or a\
@@ -2040,6 +2144,12 @@ tags:
   externalDocs:
     description: Content Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Contents
+- name: Editorial Groups
+  description: "API for retrieving high-level metadata about shows, series and other\
+    \ groupings."
+  externalDocs:
+    description: Editorial Group Documentation
+    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation##Editorial-Group
 - name: Programmes
   description: API for retrieving programme metadata
   externalDocs:
@@ -2496,7 +2606,8 @@ paths:
         - Resource.ReadPublic
   /api/v2/collections:
     get:
-      description: Returns the articles matching the provided filter criteria.
+      description: Returns the collection matching the provided filter criteria.
+      deprecated: true
       tags:
       - Collections
       parameters:
@@ -2559,7 +2670,8 @@ paths:
         - Resource.ReadPublic
   /api/v2/collections/{id}:
     get:
-      description: Returns the article with the given PDP ID.
+      description: Returns the collection with the given PDP ID.
+      deprecated: true
       tags:
       - Collections
       parameters:
@@ -2583,6 +2695,100 @@ paths:
         "403":
           description: Not Allowed
       summary: Get Collection By Id
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/editorial-groups:
+    get:
+      description: Returns the articles matching the provided filter criteria.
+      tags:
+      - Editorial Groups
+      parameters:
+      - description: The cursor from the previous request. Omit to get the first page.
+          A cursor is only temporarily valid and cannot be used with different filter
+          criteria.
+        name: cursor
+        in: query
+        schema:
+          type: string
+          nullable: true
+      - description: Filter on an ID or an alternative identifier that matches any
+          of the provided values.
+        required: false
+        name: identifiers
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+          nullable: true
+      - description: "The number of editorial groups per page. Minimum: 1, maximum:\
+          \ 10."
+        name: limit
+        in: query
+        schema:
+          format: int32
+          default: 10
+          maximum: 10
+          minimum: 1
+          type: integer
+      - description: Filters editorial group depending on their provenance.
+        name: provenance
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Provenance"
+          nullable: true
+      - description: Filters editorial group depending on their publisher.
+        name: publisher
+        in: query
+        schema:
+          allOf:
+          - $ref: "#/components/schemas/Publisher"
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EditorialGroupPagePage"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Editorial Groups By Filter
+      security:
+      - azureAuthDev:
+        - Resource.ReadInternal
+        - Resource.ReadPublic
+  /api/v2/editorial-groups/{id}:
+    get:
+      description: Returns the article with the given PDP ID.
+      tags:
+      - Editorial Groups
+      parameters:
+      - description: "The PDP ID of the editorial group. The PDP ID is constituted\
+          \ as follows: urn:pdp:{[PROVENANCE](#model-Provenance)}:{[DOMAINTYPE](#model-DomainType)}:{SOURCEID}."
+        example: urn:pdp:play_srf:collection:urn:rsi:show:tv:702711
+        name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EditorialGroup"
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Editorial Group By Id
       security:
       - azureAuthDev:
         - Resource.ReadInternal
