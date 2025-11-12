@@ -1960,10 +1960,12 @@ components:
       type: object
       oneOf:
       - $ref: "#/components/schemas/UsageRights"
+      - $ref: "#/components/schemas/UsageRestriction"
       discriminator:
         propertyName: type
         mapping:
           UsageRights: "#/components/schemas/UsageRights"
+          UsageRestrictions: "#/components/schemas/UsageRestriction"
     RightsHolder:
       description: A person or entity holding the right.
       required:
@@ -2107,6 +2109,26 @@ components:
             \ not be unique depending on the source system."
           type: string
           nullable: true
+    UsageRestriction:
+      description: Usage restriction held by a rights holder.
+      required:
+      - sourceValue
+      - type
+      type: object
+      properties:
+        sourceValue:
+          description: The name of the usage restriction directly from the source
+            system.
+          type: string
+        rightsHolder:
+          description: The holder of the rights.
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/RightsHolder"
+          nullable: true
+        type:
+          description: The type of the restriction. Always 'UsageRestrictions'
+          type: string
     UsageRights:
       description: Usage rights held by a rights holder.
       required:

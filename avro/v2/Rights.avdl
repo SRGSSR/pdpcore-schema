@@ -5,6 +5,8 @@ protocol Rights {
     record Rights {
         /** Expresses usage rights. */
         UsageRights? usageRights = null;
+        /** Expresses usage restrictions. */
+        UsageRestrictions? usageRestrictions = null;
     }
 
     /** An agent (contact, person or organisation) having or managing the rights to an asset. */
@@ -18,6 +20,14 @@ protocol Rights {
         /** An agent (contact, person or organisation) having or managing the rights to an asset. */
         RightsHolder? rightsHolder = null;
         /** Usage right description from the source system. */
+        string? sourceValue = null;
+    }
+
+    /** Expresses usage restrictions. */
+    record UsageRestrictions {
+        /** An agent (contact, person or organisation) having or managing the rights to an asset. */
+        RightsHolder? rightsHolder = null;
+        /** Usage restriction description from the source system. */
         string? sourceValue = null;
     }
 
