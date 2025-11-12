@@ -49,7 +49,9 @@ protocol Article {
         /** Keywords for this article. */
         union{null, array<string>} keywords = null;
         /** Related editorial objects, for example to identify the broadcast reference of an article. */
-         array<string> relatedEditorialObjects = [];
+        array<string> relatedEditorialObjects = [];
+        /** Unmapped values directly from the source system. These might change or vanish without notice. */
+        map<string> sourceValues = {};
     }
 
     /** The text content of an article. */
