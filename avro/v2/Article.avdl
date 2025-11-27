@@ -11,6 +11,7 @@ protocol Article {
     import idl "URI.avdl";
     import idl "Involvement.avdl";
     import idl "Identifier.avdl";
+    import idl "ProductionType.avdl";
 
     /** In the context of the PDP an article is a (CMS) website article. */
     record Article {
@@ -50,6 +51,8 @@ protocol Article {
         union{null, array<string>} keywords = null;
         /** Related editorial objects, for example to identify the broadcast reference of an article. */
         array<string> relatedEditorialObjects = [];
+        /** A list of productiontypes this article consists of, e.g. "in-house production", "third-party production" */
+        union{null, array<ProductionType>} productionTypes = null;
         /** Unmapped values directly from the source system. These might change or vanish without notice. */
         map<string> sourceValues = {};
     }
