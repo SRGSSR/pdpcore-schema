@@ -127,6 +127,8 @@ protocol Programme {
         union{null, array<Producer>} producers = null;
         /** List of PDP ids from different source systems referencing the same programme. */
         array<string> existsAs = [];
+        /** The comments belonging to the item. The comments may be available in different languages. */
+        union{null, array<Text>} comments = null;
         /** Unmapped values directly from the source system. These might change or vanish without notice. */
         map<string> sourceValues = {};
     }
@@ -134,5 +136,6 @@ protocol Programme {
     record PublicationEvent {
         array<Identifier> identifiers;
         timestamp_ms scheduleDate;
+        union{null, array<string>} publicationChannels;
     }
 }
