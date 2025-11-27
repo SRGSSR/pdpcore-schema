@@ -1138,12 +1138,6 @@ components:
           type: array
           items:
             type: string
-        comments:
-          description: Comments for an item.
-          type: array
-          items:
-            $ref: "#/components/schemas/Text"
-          nullable: true
         sourceValues:
           description: Unmapped values directly from the source system. These might
             change or vanish without notice.
@@ -1876,11 +1870,6 @@ components:
           format: date-time
           type: string
           example: 2022-03-10T16:15:50Z
-        publicationChannels:
-          type: array
-          items:
-            type: string
-          nullable: true
     PublicationService:
       required:
       - id
