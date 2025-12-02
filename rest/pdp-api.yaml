@@ -1011,6 +1011,12 @@ components:
           items:
             $ref: "#/components/schemas/Text"
           nullable: true
+        lead:
+          description: The lead(s) of this item.
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
+          nullable: true
         abstract:
           description: "The abstract is a self-contained, brief, and meaningful summary\
             \ of this item. In contrast to the 'description', the 'abstract' is as\

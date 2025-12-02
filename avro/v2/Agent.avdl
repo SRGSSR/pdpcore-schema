@@ -2,6 +2,7 @@
 protocol Agent {
 
     import idl "Text.avdl";
+    import idl "Identifier.avdl";
 
     /** The Person, Department, or Team involved. */
     record Agent {
@@ -19,6 +20,10 @@ protocol Agent {
         union{null, array<Occupation>} occupations = null;
         /** The full name of the person. */
         string name;
+        /** A list of aliases this person might be referenced by. */
+        union{null, array<string>} alias = null;
+        /** A list of identifiers this person might be identified by. */
+        array<Identifier> identifiers = [];
     }
 
     /** The job or occupation of a Person*/
