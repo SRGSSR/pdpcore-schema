@@ -28,6 +28,8 @@ protocol Campaign {
         union{null, map<string>} sourceValues = null;
         union{null, array<Genre>} genres = null;
         union{null, array<Involvement>} contributors = null;
+        /** A list of PDP ids of collections that this campaign is a member of. */
+        union{null, array<string>} memberOf = null;
     }
 
     record PublicationPlan {
