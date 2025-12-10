@@ -2479,6 +2479,57 @@ paths:
       - azureAuthDev:
         - Resource.Ops
         - Resource.Write
+  /api/correlation/{pdpIdA}/{pdpIdB}:
+    delete:
+      parameters:
+      - name: pdpIdA
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: pdpIdB
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Delete Correlation
+      tags:
+      - Correlation Resource
+      security:
+      - azureAuthDev:
+        - Resource.Write
+    put:
+      parameters:
+      - name: pdpIdA
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: pdpIdB
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Create Correlation
+      tags:
+      - Correlation Resource
+      security:
+      - azureAuthDev:
+        - Resource.Write
   /api/v2/articles:
     get:
       description: Returns the articles matching the provided filter criteria.
