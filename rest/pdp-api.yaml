@@ -2225,6 +2225,8 @@ tags:
   externalDocs:
     description: PublicationService Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#PublicationService
+- name: Replays
+  description: API for managing replays
 - name: Subtitlings
   description: API for retrieving subtitlings.
   externalDocs:
@@ -2530,6 +2532,150 @@ paths:
       security:
       - azureAuthDev:
         - Resource.Write
+  /api/ops/replays:
+    post:
+      tags:
+      - Replays
+      parameters:
+      - name: contentsPerMinute
+        in: query
+        schema:
+          format: int32
+          default: 1000
+          type: integer
+      - name: domainType
+        in: query
+        schema:
+          $ref: "#/components/schemas/DomainType"
+        required: true
+      - name: forceEmit
+        in: query
+        schema:
+          type: boolean
+      - name: provenance
+        in: query
+        schema:
+          $ref: "#/components/schemas/Provenance"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Create
+      security:
+      - azureAuthDev:
+        - Resource.Ops
+  /api/ops/replays/unfinished:
+    get:
+      tags:
+      - Replays
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Unfinished
+      security:
+      - azureAuthDev:
+        - Resource.Ops
+  /api/ops/replays/{id}:
+    put:
+      tags:
+      - Replays
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: contentsPerMinute
+        in: query
+        schema:
+          format: int32
+          type: integer
+          nullable: true
+      - name: state
+        in: query
+        schema:
+          type: object
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Update
+      security:
+      - azureAuthDev:
+        - Resource.Ops
+    get:
+      tags:
+      - Replays
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get
+      security:
+      - azureAuthDev:
+        - Resource.Ops
+    delete:
+      tags:
+      - Replays
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Delete
+      security:
+      - azureAuthDev:
+        - Resource.Ops
   /api/v2/articles:
     get:
       description: Returns the articles matching the provided filter criteria.
