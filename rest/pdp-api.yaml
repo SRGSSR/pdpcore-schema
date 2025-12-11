@@ -1972,6 +1972,31 @@ components:
       - ARD
       - ZDF
       type: string
+    ReplayCreation:
+      required:
+      - provenance
+      - domainType
+      type: object
+      properties:
+        provenance:
+          $ref: "#/components/schemas/Provenance"
+        domainType:
+          $ref: "#/components/schemas/DomainType"
+        forceEmit:
+          type: boolean
+        contentsPerMinute:
+          format: int32
+          type: integer
+    ReplayUpdate:
+      type: object
+      properties:
+        state:
+          type: object
+          nullable: true
+        contentsPerMinute:
+          format: int32
+          type: integer
+          nullable: true
     Resource:
       description: Resources are additional files or assets like pictures or documents
         belonging to a specific editorial object.
@@ -2536,26 +2561,11 @@ paths:
     post:
       tags:
       - Replays
-      parameters:
-      - name: contentsPerMinute
-        in: query
-        schema:
-          format: int32
-          default: 1000
-          type: integer
-      - name: domainType
-        in: query
-        schema:
-          $ref: "#/components/schemas/DomainType"
-        required: true
-      - name: forceEmit
-        in: query
-        schema:
-          type: boolean
-      - name: provenance
-        in: query
-        schema:
-          $ref: "#/components/schemas/Provenance"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReplayCreation"
         required: true
       responses:
         "200":
@@ -2568,6 +2578,8 @@ paths:
           description: Not Authorized
         "403":
           description: Not Allowed
+        "400":
+          description: Bad Request
       summary: Create
       security:
       - azureAuthDev:
@@ -2602,17 +2614,12 @@ paths:
         required: true
         schema:
           type: string
-      - name: contentsPerMinute
-        in: query
-        schema:
-          format: int32
-          type: integer
-          nullable: true
-      - name: state
-        in: query
-        schema:
-          type: object
-          nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReplayUpdate"
+        required: true
       responses:
         "200":
           description: OK
@@ -2624,6 +2631,8 @@ paths:
           description: Not Authorized
         "403":
           description: Not Allowed
+        "400":
+          description: Bad Request
       summary: Update
       security:
       - azureAuthDev:
