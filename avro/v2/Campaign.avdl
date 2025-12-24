@@ -19,8 +19,10 @@ protocol Campaign {
         array<AccessCondition> accessConditions = [];
         /** A list of identifiers. */
         array<Identifier> identifiers;
-        /** The title of the Campaign. The description may be available in different languages. */
+        /** The title of the Campaign. The title may be available in different languages. */
         union{null, array<Text>} title = null;
+        /** The lead of the Campaign. The lead may be available in different languages. */
+        union{null, array<Text>} lead = null;
         /** The description of the campaign. The description may be available in different languages. */
         union{null, array<Text>} description = null;
         union{null, array<PublicationPlan>} publicationPlans = null;

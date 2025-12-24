@@ -366,6 +366,13 @@ components:
           items:
             $ref: "#/components/schemas/Text"
           description: The title or headline of the campaign.
+        lead:
+          type:
+          - array
+          - "null"
+          items:
+            $ref: "#/components/schemas/Text"
+          description: The lead of the campaign.
         description:
           type:
           - array
