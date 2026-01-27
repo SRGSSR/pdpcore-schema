@@ -24,7 +24,8 @@ protocol Provenance {
         PlaySuisse_SRGSSR,
         CUE_RTS,
         SAM_SRGSSR,
-        AS_STXT
+        AS_STXT,
+        CMM_RSI
     } = Unknown;
 
 }

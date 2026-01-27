@@ -1922,6 +1922,7 @@ components:
       - SAM_SRGSSR
       - CUE_RTS
       - AS_STXT
+      - CMM_RSI
     PublicationChannel:
       type: object
       required:
