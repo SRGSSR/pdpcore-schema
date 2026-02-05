@@ -1923,6 +1923,7 @@ components:
       - CUE_RTS
       - AS_STXT
       - CMM_RSI
+      - PlayPlus_SRGSSR
     PublicationChannel:
       type: object
       required:

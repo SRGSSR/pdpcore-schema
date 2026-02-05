@@ -25,7 +25,8 @@ protocol Provenance {
         CUE_RTS,
         SAM_SRGSSR,
         AS_STXT,
-        CMM_RSI
+        CMM_RSI,
+        PlayPlus_SRGSSR
     } = Unknown;
 
 }
