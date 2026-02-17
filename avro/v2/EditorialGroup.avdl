@@ -37,6 +37,8 @@ protocol EditorialGroup {
         int? numberOfEpisodes = null;
         /** Unmapped values directly from the source system. These might change or vanish without notice. */
         map<string> sourceValues = {};
+        /** PDP ids of editorial objects related to this editorial group. */
+        union{null, array<string>} relatedEditorialObjects = null;
     }
 
     /**

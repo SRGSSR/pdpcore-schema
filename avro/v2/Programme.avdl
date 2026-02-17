@@ -80,6 +80,8 @@ protocol Programme {
         /** A list of producers who worked on this programme. */
         union{null, array<Producer>} producers = null;
         union{null, array<EditorialSegment>} parts = null;
+        /** PDP ids of editorial objects related to this programme. */
+        union{null, array<string>} relatedEditorialObjects = null;
     }
 
     record Item {
@@ -133,6 +135,8 @@ protocol Programme {
         map<string> sourceValues = {};
         /** A list of productiontypes this item consists of, e.g. "in-house production", "third-party production" */
         union{null, array<ProductionType>} productionTypes = null;
+        /** PDP ids of editorial objects related to this item. */
+        union{null, array<string>} relatedEditorialObjects = null;
     }
 
     record PublicationEvent {

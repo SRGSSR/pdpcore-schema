@@ -846,6 +846,13 @@ components:
           - "null"
           format: int32
           description: The number of episodes in this editorial group.
+        relatedEditorialObjects:
+          type:
+          - array
+          - "null"
+          items:
+            type: string
+          description: PDP ids of editorial objects related to this editorial group.
     EditorialGroupPage:
       type: object
       properties:
@@ -1255,6 +1262,13 @@ components:
             type: string
           description: Unmapped values directly from the source system. These might
             change or vanish without notice.
+        relatedEditorialObjects:
+          type:
+          - array
+          - "null"
+          items:
+            type: string
+          description: PDP ids of editorial objects related to this item.
     Language:
       type: string
       enum:
@@ -1881,6 +1895,13 @@ components:
             type: string
           description: Unmapped values directly from the source system. These might
             change or vanish without notice.
+        relatedEditorialObjects:
+          type:
+          - array
+          - "null"
+          items:
+            type: string
+          description: PDP ids of editorial objects related to this programme.
     ProgrammePage:
       type: object
       properties:
