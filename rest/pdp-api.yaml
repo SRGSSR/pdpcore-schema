@@ -853,6 +853,14 @@ components:
           items:
             type: string
           description: PDP ids of editorial objects related to this editorial group.
+        sourceValues:
+          type:
+          - object
+          - "null"
+          additionalProperties:
+            type: string
+          description: Unmapped values directly from the source system. These might
+            change or vanish without notice.
     EditorialGroupPage:
       type: object
       properties:
