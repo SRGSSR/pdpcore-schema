@@ -2169,6 +2169,10 @@ components:
           - integer
           - "null"
           format: int32
+        forceEmit:
+          type:
+          - boolean
+          - "null"
     Resource:
       type: object
       oneOf:
@@ -2760,6 +2764,26 @@ paths:
         "400":
           description: Bad Request
       summary: Create
+      security:
+      - azureAuthDev:
+        - Resource.Ops
+  /api/ops/replays/recent:
+    get:
+      tags:
+      - Replays
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Get Recent
       security:
       - azureAuthDev:
         - Resource.Ops
