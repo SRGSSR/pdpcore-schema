@@ -2787,26 +2787,6 @@ paths:
       security:
       - azureAuthDev:
         - Resource.Ops
-  /api/ops/replays/unfinished:
-    get:
-      tags:
-      - Replays
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items: {}
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      summary: Get Unfinished
-      security:
-      - azureAuthDev:
-        - Resource.Ops
   /api/ops/replays/{id}:
     put:
       tags:
