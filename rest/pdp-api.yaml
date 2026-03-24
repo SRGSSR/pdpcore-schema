@@ -853,6 +853,13 @@ components:
           items:
             type: string
           description: PDP ids of editorial objects related to this editorial group.
+        contributors:
+          type:
+          - array
+          - "null"
+          items:
+            $ref: "#/components/schemas/Involvement"
+          description: "People, teams or departments who contributed to the campaign."
         sourceValues:
           type:
           - object
@@ -1055,9 +1062,9 @@ components:
       - AzureId
       - RtsArchiveId
     Involvement:
+      type: object
       description: An Agent's participation in the creation of publication of an editorial
         object (e.g. Programme).
-      type: object
       required:
       - name
       - agent
