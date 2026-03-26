@@ -2793,7 +2793,7 @@ paths:
       summary: Get Recent
       security:
       - azureAuthDev:
-        - Resource.Ops
+        - Resource.ReadInternal
   /api/ops/replays/{id}:
     put:
       tags:
@@ -2850,7 +2850,7 @@ paths:
       summary: Get
       security:
       - azureAuthDev:
-        - Resource.Ops
+        - Resource.ReadInternal
     delete:
       tags:
       - Replays
