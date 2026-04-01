@@ -82,6 +82,8 @@ protocol Programme {
         union{null, array<EditorialSegment>} parts = null;
         /** PDP ids of editorial objects related to this programme. */
         union{null, array<string>} relatedEditorialObjects = null;
+        /** PDP ids of other programme variants of this programme (e.g. HbbTV, podcast, trailer). */
+        union{null, array<string>} versions = null;
     }
 
     record Item {

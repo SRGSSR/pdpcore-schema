@@ -976,6 +976,52 @@ components:
             $ref: "#/components/schemas/Text"
           description: "Additional comments about this essence from the source system.\
             \ Attention: these are not user comments!"
+        frameWidthPx:
+          type:
+          - integer
+          - "null"
+          format: int32
+          description: The width of the video frame in pixels.
+        frameHeightPx:
+          type:
+          - integer
+          - "null"
+          format: int32
+          description: The height of the video frame in pixels.
+        frameRate:
+          type:
+          - number
+          - "null"
+          format: float
+          description: The number of frames per second.
+        audioCodec:
+          type:
+          - string
+          - "null"
+          description: The audio codec used for encoding.
+        videoCodec:
+          type:
+          - string
+          - "null"
+          description: The video codec used for encoding.
+        audioBitrate:
+          type:
+          - integer
+          - "null"
+          format: int64
+          description: The audio bitrate in bits per second.
+        videoBitrate:
+          type:
+          - integer
+          - "null"
+          format: int64
+          description: The video bitrate in bits per second.
+        fileSizeBytes:
+          type:
+          - integer
+          - "null"
+          format: int64
+          description: The file size in bytes.
     Genre:
       description: "The genre is used to classify audiovisual objects depending on\
         \ their content into subject areas such as 'Culture', 'Sports', 'News' or\
@@ -1917,6 +1963,14 @@ components:
           items:
             type: string
           description: PDP ids of editorial objects related to this programme.
+        versions:
+          type:
+          - array
+          - "null"
+          items:
+            type: string
+          description: "PDP ids of other programme variants of this programme (e.g.\
+            \ HbbTV, podcast, trailer)."
     ProgrammePage:
       type: object
       properties:

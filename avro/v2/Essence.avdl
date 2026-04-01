@@ -18,5 +18,21 @@ protocol Essence {
         ColourSpace? colourSpace = null;
         union{null, array<AudioTrack>} audioTracks = null;
         union{null, array<Text>} comment = null;
+        /** The width of the video frame in pixels. */
+        int? frameWidthPx = null;
+        /** The height of the video frame in pixels. */
+        int? frameHeightPx = null;
+        /** The number of frames per second. */
+        float? frameRate = null;
+        /** The audio codec used for encoding. */
+        string? audioCodec = null;
+        /** The video codec used for encoding. */
+        string? videoCodec = null;
+        /** The audio bitrate in bits per second. */
+        long? audioBitrate = null;
+        /** The video bitrate in bits per second. */
+        long? videoBitrate = null;
+        /** The file size in bytes. */
+        long? fileSizeBytes = null;
     }
 }
