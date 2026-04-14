@@ -1107,6 +1107,11 @@ components:
       - OpenMediaUrn
       - AzureId
       - RtsArchiveId
+    Instant:
+      type: string
+      format: date-time
+      examples:
+      - 2022-03-10T16:15:50Z
     Involvement:
       type: object
       description: An Agent's participation in the creation of publication of an editorial
@@ -2825,6 +2830,37 @@ paths:
         "400":
           description: Bad Request
       summary: Create
+      security:
+      - azureAuthDev:
+        - Resource.Ops
+  /api/ops/replays/ais-audio-replay:
+    post:
+      tags:
+      - Replays
+      parameters:
+      - name: batch-delay-ms
+        in: query
+        schema:
+          type: integer
+          format: int64
+      - name: from-broadcast-date
+        in: query
+        schema:
+          $ref: "#/components/schemas/Instant"
+        required: true
+      - name: to-broadcast-date
+        in: query
+        schema:
+          $ref: "#/components/schemas/Instant"
+        required: true
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      summary: Magic
       security:
       - azureAuthDev:
         - Resource.Ops
