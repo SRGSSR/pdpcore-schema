@@ -424,120 +424,6 @@ components:
             $ref: "#/components/schemas/Campaign"
       required:
       - results
-    Collection:
-      description: "A collection aggregates related editorial objects into a common,\
-        \ higher-level container, thereby enhancing their organization and accessibility."
-      type: object
-      required:
-      - id
-      - publisher
-      - provenance
-      - accessConditions
-      - identifiers
-      properties:
-        id:
-          type: string
-          description: The PDP-id of this collection
-        publisher:
-          description: The publisher of this collection (usually a business unit).
-          type: string
-          $ref: "#/components/schemas/Publisher"
-        provenance:
-          description: The source system from which this collection originated.
-          type: string
-          $ref: "#/components/schemas/Provenance"
-        accessConditions:
-          type: array
-          items:
-            $ref: "#/components/schemas/AccessCondition"
-          description: The conditions under which this collection can be accessed.
-        collectionType:
-          description: The type of this collection which allows a more detailed categorization
-            of different collections into sub-categories like Shows or Groupings.
-          type:
-          - string
-          - "null"
-          anyOf:
-          - $ref: "#/components/schemas/CollectionType"
-          - type: "null"
-        title:
-          type:
-          - array
-          - "null"
-          items:
-            $ref: "#/components/schemas/Text"
-          description: The title of the collection.
-        lead:
-          type:
-          - array
-          - "null"
-          items:
-            $ref: "#/components/schemas/Text"
-          description: "The lead is a short, opening paragraph to gain the consumers\
-            \ interest."
-        description:
-          type:
-          - array
-          - "null"
-          items:
-            $ref: "#/components/schemas/Text"
-          description: The description contains more extensive information about the
-            collection.
-        memberOf:
-          type:
-          - array
-          - "null"
-          items:
-            type: string
-          description: Indicates to which collection this collection belongs.
-        resources:
-          type:
-          - array
-          - "null"
-          items:
-            $ref: "#/components/schemas/Resource"
-          description: Additional resources belonging to this collection (e.g. pictures
-            or documents).
-        identifiers:
-          type: array
-          items:
-            $ref: "#/components/schemas/Identifier"
-          description: All known identifiers of this collection.
-        mediaType:
-          description: The media type of the editorial objects in this collection.
-          type:
-          - string
-          - "null"
-          anyOf:
-          - $ref: "#/components/schemas/MediaType"
-          - type: "null"
-        numberOfEpisodes:
-          type:
-          - integer
-          - "null"
-          format: int32
-          description: The number of episodes in this collection.
-    CollectionPage:
-      type: object
-      properties:
-        cursor:
-          type:
-          - string
-          - "null"
-        results:
-          type: array
-          items:
-            $ref: "#/components/schemas/Collection"
-      required:
-      - results
-    CollectionType:
-      description: Allows a more detailed categorization of the different collections.
-      type: string
-      enum:
-      - Show
-      - Grouping
-      - Series
-      - Brand
     ColourSpace:
       description: The colour space of an essence.
       type: object
@@ -2466,12 +2352,6 @@ tags:
   externalDocs:
     description: Campaign Documentation
     url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Campaign
-- name: Collections
-  description: "DEPRECATED: Use Editorial Groups Endpoint instead. API for retrieving\
-    \ high-level metadata about shows, series and other groupings."
-  externalDocs:
-    description: Collection Documentation
-    url: https://srgssr-ch.atlassian.net/wiki/spaces/GD/pages/891289717/PDP+API-Documentation#Collection
 - name: Contents
   description: API for publishing and retrieving content.
   externalDocs:
@@ -3155,101 +3035,20 @@ paths:
         - Resource.ReadPublic
   /api/v2/collections:
     get:
-      description: Returns the collection matching the provided filter criteria.
-      deprecated: true
-      tags:
-      - Collections
-      parameters:
-      - description: The cursor from the previous request. Omit to get the first page.
-          A cursor is only temporarily valid and cannot be used with different filter
-          criteria.
-        name: cursor
-        in: query
-        schema:
-          type:
-          - string
-          - "null"
-      - description: Filter on an ID or an alternative identifier that matches any
-          of the provided values.
-        required: false
-        name: identifiers
-        in: query
-        schema:
-          type:
-          - array
-          - "null"
-          items:
-            type: string
-      - description: "The number of collections per page. Minimum: 1, maximum: 10."
-        name: limit
-        in: query
-        schema:
-          type: integer
-          format: int32
-          maximum: 10
-          minimum: 1
-          default: 10
-      - description: Filters collection depending on their provenance.
-        name: provenance
-        in: query
-        schema:
-          anyOf:
-          - $ref: "#/components/schemas/Provenance"
-          - type: "null"
-      - description: Filters collection depending on their publisher.
-        name: publisher
-        in: query
-        schema:
-          anyOf:
-          - $ref: "#/components/schemas/Publisher"
-          - type: "null"
       responses:
         "200":
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CollectionPage"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      summary: Get Collections By Filter
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
+      summary: Redirect List
+      tags:
+      - Collection Redirect Resource
   /api/v2/collections/{id}:
     get:
-      description: Returns the collection with the given PDP ID.
-      deprecated: true
-      tags:
-      - Collections
-      parameters:
-      - description: "The PDP ID of the collection. The PDP ID is constituted as follows:\
-          \ urn:pdp:{[PROVENANCE](#model-Provenance)}:{[DOMAINTYPE](#model-DomainType)}:{SOURCEID}."
-        example: urn:pdp:play_srf:collection:urn:rsi:show:tv:702711
-        name: id
-        in: path
-        required: true
-        schema:
-          type: string
       responses:
         "200":
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Collection"
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      summary: Get Collection By Id
-      security:
-      - azureAuthDev:
-        - Resource.ReadInternal
-        - Resource.ReadPublic
+      summary: Redirect By Id
+      tags:
+      - Collection Redirect Resource
   /api/v2/editorial-groups:
     get:
       description: Returns the articles matching the provided filter criteria.
