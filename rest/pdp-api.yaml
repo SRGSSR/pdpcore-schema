@@ -76,8 +76,6 @@ components:
     AccessCondition:
       type: object
       description: The conditions under which content can be accessed.
-      required:
-      - name
       properties:
         name:
           type: string
@@ -141,13 +139,6 @@ components:
       type: object
     Article:
       type: object
-      required:
-      - id
-      - publisher
-      - provenance
-      - accessConditions
-      - identifiers
-      - sourceValues
       properties:
         id:
           type: string
@@ -289,8 +280,6 @@ components:
             change or vanish without notice.
     ArticleContent:
       type: object
-      required:
-      - text
       properties:
         text:
           type: array
@@ -300,6 +289,9 @@ components:
             \ not contain any HTML tags or similar."
     ArticlePage:
       type: object
+      required:
+      - cursor
+      - results
       properties:
         cursor:
           type:
@@ -309,13 +301,9 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Article"
-      required:
-      - results
     AspectRatio:
       description: The aspect ratio of an essence.
       type: object
-      required:
-      - ratio
       properties:
         ratio:
           type: string
@@ -325,20 +313,12 @@ components:
     AudioTrack:
       description: The audio track of an essence.
       type: object
-      required:
-      - name
       properties:
         name:
           type: string
           description: The name of the audio track.
     Campaign:
       type: object
-      required:
-      - id
-      - sourceId
-      - publisher
-      - provenance
-      - accessConditions
       properties:
         id:
           type: string
@@ -413,6 +393,9 @@ components:
             of.
     CampaignPage:
       type: object
+      required:
+      - cursor
+      - results
       properties:
         cursor:
           type:
@@ -422,13 +405,9 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Campaign"
-      required:
-      - results
     ColourSpace:
       description: The colour space of an essence.
       type: object
-      required:
-      - sourceValue
       properties:
         sourceValue:
           type: string
@@ -442,15 +421,6 @@ components:
       type: object
       description: A content contains the raw data of a domain object from a source
         system.
-      required:
-      - id
-      - sourceId
-      - publisher
-      - provenance
-      - confidentialityLevel
-      - accessConditions
-      - domainType
-      - sourceData
       properties:
         id:
           type: string
@@ -502,13 +472,6 @@ components:
       description: A content contains the raw data of a domain object from a source
         system.
       type: object
-      required:
-      - provenance
-      - domainType
-      - sourceId
-      - publisher
-      - confidentialityLevel
-      - sourceData
       properties:
         provenance:
           description: The source system publishing the metadata.
@@ -549,6 +512,9 @@ components:
     ContentPage:
       description: A page containing contents matching the query filters.
       type: object
+      required:
+      - cursor
+      - results
       properties:
         cursor:
           type:
@@ -561,8 +527,6 @@ components:
           items:
             $ref: "#/components/schemas/Content"
           description: The list of contents matching the filter criteria.
-      required:
-      - results
     Department:
       type: object
       properties:
@@ -572,8 +536,6 @@ components:
         type:
           type: string
           description: The type of the agent. Always 'Department'
-      required:
-      - type
     DistributionVector:
       type: string
       enum:
@@ -626,10 +588,6 @@ components:
         type:
           type: string
           description: The type of the resource. Always 'Document'
-      required:
-      - locator
-      - identifiers
-      - type
     DomainType:
       type: string
       enum:
@@ -646,12 +604,6 @@ components:
       description: "An editorial group defines a collection or group of media resources\
         \ - for example, a series composed of multiple episodes."
       type: object
-      required:
-      - id
-      - publisher
-      - provenance
-      - accessConditions
-      - identifiers
       properties:
         id:
           type: string
@@ -756,6 +708,9 @@ components:
             change or vanish without notice.
     EditorialGroupPage:
       type: object
+      required:
+      - cursor
+      - results
       properties:
         cursor:
           type:
@@ -765,8 +720,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/EditorialGroup"
-      required:
-      - results
     EditorialGroupType:
       description: Allows a more detailed categorization of the different editorial
         group.
@@ -781,10 +734,6 @@ components:
         \ case an editorial segment is a smaller part of an item like a scene or a\
         \ part."
       type: object
-      required:
-      - identifiers
-      - contentDescription
-      - coversLocations
       properties:
         identifiers:
           type: array
@@ -812,9 +761,6 @@ components:
         edited for consumption. The Essence is a physical representation of a MediaResource
         in a particular Format destined for play-out or publishing.
       type: object
-      required:
-      - identifiers
-      - locator
       properties:
         identifiers:
           type: array
@@ -913,8 +859,6 @@ components:
         \ their content into subject areas such as 'Culture', 'Sports', 'News' or\
         \ 'Economy'."
       type: object
-      required:
-      - name
       properties:
         name:
           description: The name of this genre.
@@ -945,9 +889,6 @@ components:
       type: object
       description: Identifier for an object. Includes the identifier value as well
         as a type.
-      required:
-      - value
-      - type
       properties:
         value:
           type: string
@@ -1002,9 +943,6 @@ components:
       type: object
       description: An Agent's participation in the creation of publication of an editorial
         object (e.g. Programme).
-      required:
-      - name
-      - agent
       properties:
         name:
           type: string
@@ -1017,12 +955,6 @@ components:
       description: An item is a single editorial (audiovisual) contribution. An item
         is usually a part of a programme.
       type: object
-      required:
-      - id
-      - identifiers
-      - accessConditions
-      - existsAs
-      - sourceValues
       properties:
         id:
           type: string
@@ -1423,15 +1355,9 @@ components:
         type:
           type: string
           description: The type of the resource. Always 'Link'
-      required:
-      - locator
-      - type
     Location:
       type: object
       description: Describes a location.
-      required:
-      - identifiers
-      - name
       properties:
         identifiers:
           type: array
@@ -1480,8 +1406,6 @@ components:
     MediumType:
       type: object
       description: A type of medium (e.g. VHS or DVD)
-      required:
-      - sourceValue
       properties:
         sourceValue:
           type: string
@@ -1522,9 +1446,6 @@ components:
         type:
           type: string
           description: The type of the agent. Always 'Person'
-      required:
-      - identifiers
-      - type
     Picture:
       type: object
       properties:
@@ -1580,13 +1501,8 @@ components:
         type:
           type: string
           description: The type of the resource. Always 'Picture'
-      required:
-      - locator
-      - type
     PictureUsage:
       type: object
-      required:
-      - sourceValue
       properties:
         sourceValue:
           type: string
@@ -1595,8 +1511,6 @@ components:
       type: object
       description: "The production entity (company, person, team, etc.) involved in\
         \ the creation of this asset."
-      required:
-      - sourceValue
       properties:
         sourceValue:
           type: string
@@ -1605,8 +1519,6 @@ components:
       type: object
       description: "The type of the production, e.g. 'in-house production', 'third-party\
         \ production'."
-      required:
-      - sourceValue
       properties:
         sourceValue:
           type: string
@@ -1615,14 +1527,6 @@ components:
       description: "A programme is an audiovisual work. It can represent a movie,\
         \ an episode or any other standalone audiovisual object."
       type: object
-      required:
-      - id
-      - publisher
-      - provenance
-      - identifiers
-      - accessConditions
-      - existsAs
-      - sourceValues
       properties:
         id:
           type: string
@@ -1864,6 +1768,9 @@ components:
             \ HbbTV, podcast, trailer)."
     ProgrammePage:
       type: object
+      required:
+      - cursor
+      - results
       properties:
         cursor:
           type:
@@ -1873,8 +1780,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Programme"
-      required:
-      - results
     Provenance:
       description: |-
         The source system publishing the metadata.
@@ -1907,13 +1812,6 @@ components:
       - PlayPlus_SRGSSR
     PublicationChannel:
       type: object
-      required:
-      - id
-      - sourceId
-      - publisher
-      - provenance
-      - accessConditions
-      - name
       properties:
         id:
           type: string
@@ -1979,6 +1877,9 @@ components:
             \ channel."
     PublicationChannelPage:
       type: object
+      required:
+      - cursor
+      - results
       properties:
         cursor:
           type:
@@ -1988,8 +1889,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/PublicationChannel"
-      required:
-      - results
     PublicationEvent:
       type: object
       description: The event of publishing an essence by a service to a channel under
@@ -1997,6 +1896,7 @@ components:
       required:
       - identifiers
       - scheduleDate
+      - publicationChannels
       properties:
         identifiers:
           type: array
@@ -2015,12 +1915,6 @@ components:
             type: string
     PublicationService:
       type: object
-      required:
-      - id
-      - sourceId
-      - publisher
-      - provenance
-      - accessConditions
       properties:
         id:
           type: string
@@ -2065,6 +1959,9 @@ components:
             service.
     PublicationServicePage:
       type: object
+      required:
+      - cursor
+      - results
       properties:
         cursor:
           type:
@@ -2074,8 +1971,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/PublicationService"
-      required:
-      - results
     Publisher:
       description: The business unit or external organisation publishing the metadata.
       type: string
@@ -2153,8 +2048,6 @@ components:
     RightsHolder:
       type: object
       description: A person or entity holding the right.
-      required:
-      - sourceValue
       properties:
         sourceValue:
           type: string
@@ -2163,10 +2056,6 @@ components:
       type: object
       description: The raw data from the source object including information about
         its schema.
-      required:
-      - data
-      - mimeType
-      - schema
       properties:
         data:
           type: string
@@ -2186,8 +2075,6 @@ components:
     SourceSchema:
       type: object
       description: Information about the schema of the source data.
-      required:
-      - version
       properties:
         version:
           type: string
@@ -2199,14 +2086,6 @@ components:
     Subtitling:
       description: A subtitling to a programme.
       type: object
-      required:
-      - id
-      - sourceId
-      - identifiers
-      - publisher
-      - provenance
-      - accessConditions
-      - locator
       properties:
         id:
           type: string
@@ -2239,6 +2118,9 @@ components:
           $ref: "#/components/schemas/URI"
     SubtitlingPage:
       type: object
+      required:
+      - cursor
+      - results
       properties:
         cursor:
           type:
@@ -2248,8 +2130,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Subtitling"
-      required:
-      - results
     Team:
       type: object
       properties:
@@ -2259,14 +2139,10 @@ components:
         type:
           type: string
           description: The type of the agent. Always 'Team'
-      required:
-      - type
     Text:
       type: object
       description: Container for textual metadata like titles or descriptions including
         an optional language.
-      required:
-      - content
       properties:
         content:
           type: string
@@ -2300,9 +2176,6 @@ components:
     UsageRestriction:
       description: Usage restriction held by a rights holder.
       type: object
-      required:
-      - sourceValue
-      - type
       properties:
         sourceValue:
           type: string
@@ -2322,9 +2195,6 @@ components:
     UsageRights:
       description: Usage rights held by a rights holder.
       type: object
-      required:
-      - sourceValue
-      - type
       properties:
         sourceValue:
           type: string
@@ -2401,6 +2271,7 @@ paths:
           type:
           - string
           - "null"
+        required: true
       - description: Filters contents depending on their domain type.
         name: domain-type
         in: query
@@ -2408,6 +2279,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/DomainType"
           - type: "null"
+        required: true
       - description: Filters contents with an id or alternative identifier matching
           any of the provided identifiers.
         required: false
@@ -2426,6 +2298,7 @@ paths:
           maximum: 10
           minimum: 1
           default: 10
+        required: true
       - description: Filters contents depending on their provenance.
         name: provenance
         in: query
@@ -2433,6 +2306,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
+        required: true
       - description: Filters contents depending on their publisher.
         name: publisher
         in: query
@@ -2440,6 +2314,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
+        required: true
       responses:
         "200":
           description: OK
@@ -2479,6 +2354,9 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema: {}
         "401":
           description: Not Authorized
         "403":
@@ -2500,6 +2378,9 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema: {}
         "401":
           description: Not Authorized
         "403":
@@ -2626,6 +2507,9 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema: {}
         "401":
           description: Not Authorized
         "403":
@@ -2672,6 +2556,7 @@ paths:
         schema:
           type: integer
           format: int64
+        required: true
       - name: from-broadcast-date
         in: query
         schema:
@@ -2685,6 +2570,9 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema: {}
         "401":
           description: Not Authorized
         "403":
@@ -2809,6 +2697,7 @@ paths:
           type:
           - string
           - "null"
+        required: true
       - description: Filter on an ID or an alternative identifier that matches any
           of the provided values.
         required: false
@@ -2829,6 +2718,7 @@ paths:
           maximum: 10
           minimum: 1
           default: 10
+        required: true
       - description: Filters articles depending on their provenance.
         name: provenance
         in: query
@@ -2836,6 +2726,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
+        required: true
       - description: Filters articles depending on their publisher.
         name: publisher
         in: query
@@ -2843,6 +2734,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
+        required: true
       responses:
         "200":
           description: OK
@@ -2904,6 +2796,7 @@ paths:
           type:
           - string
           - "null"
+        required: true
       - description: Filter on an ID or an alternative identifier that matches any
           of the provided values.
         required: false
@@ -2922,6 +2815,7 @@ paths:
           maximum: 10
           minimum: 1
           default: 10
+        required: true
       - description: Filters campaigns depending on their provenance.
         name: provenance
         in: query
@@ -2929,6 +2823,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
+        required: true
       - description: Filters campaigns depending on their publisher.
         name: publisher
         in: query
@@ -2936,6 +2831,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
+        required: true
       responses:
         "200":
           description: OK
@@ -2987,6 +2883,9 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema: {}
       summary: Redirect List
       tags:
       - Collection Redirect Resource
@@ -2995,6 +2894,9 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema: {}
       summary: Redirect By Id
       tags:
       - Collection Redirect Resource
@@ -3013,6 +2915,7 @@ paths:
           type:
           - string
           - "null"
+        required: true
       - description: Filter on an ID or an alternative identifier that matches any
           of the provided values.
         required: false
@@ -3034,6 +2937,7 @@ paths:
           maximum: 10
           minimum: 1
           default: 10
+        required: true
       - description: Filters editorial group depending on their provenance.
         name: provenance
         in: query
@@ -3041,6 +2945,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
+        required: true
       - description: Filters editorial group depending on their publisher.
         name: publisher
         in: query
@@ -3048,6 +2953,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
+        required: true
       responses:
         "200":
           description: OK
@@ -3109,6 +3015,7 @@ paths:
           type:
           - string
           - "null"
+        required: true
       - description: Filters for programme and item IDs or alternative identifiers
           that match any of the values provided.
         required: false
@@ -3129,6 +3036,7 @@ paths:
           maximum: 10
           minimum: 1
           default: 10
+        required: true
       - description: Filters results based on the collection a specific program is
           part of.
         name: member-of
@@ -3137,6 +3045,7 @@ paths:
           type:
           - string
           - "null"
+        required: true
       - description: Filters programmes depending on their provenance.
         name: provenance
         in: query
@@ -3144,6 +3053,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
+        required: true
       - description: Filters programmes depending on their publisher.
         name: publisher
         in: query
@@ -3151,6 +3061,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
+        required: true
       responses:
         "200":
           description: OK
@@ -3212,6 +3123,7 @@ paths:
           type:
           - string
           - "null"
+        required: true
       - description: Filter on an ID or an alternative identifier that matches any
           of the provided values.
         required: false
@@ -3230,6 +3142,7 @@ paths:
           maximum: 10
           minimum: 1
           default: 10
+        required: true
       - description: Filters publication services depending on their provenance.
         name: provenance
         in: query
@@ -3237,6 +3150,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
+        required: true
       - description: Filters publication services depending on their publisher.
         name: publisher
         in: query
@@ -3244,6 +3158,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
+        required: true
       responses:
         "200":
           description: OK
@@ -3305,6 +3220,7 @@ paths:
           type:
           - string
           - "null"
+        required: true
       - description: Filter on an ID or an alternative identifier that matches any
           of the provided values.
         required: false
@@ -3324,6 +3240,7 @@ paths:
           maximum: 10
           minimum: 1
           default: 10
+        required: true
       - description: Filters publicationChannels depending on their provenance.
         name: provenance
         in: query
@@ -3331,6 +3248,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
+        required: true
       - description: Filters publicationChannels depending on their publisher.
         name: publisher
         in: query
@@ -3338,6 +3256,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
+        required: true
       responses:
         "200":
           description: OK
@@ -3399,6 +3318,7 @@ paths:
           type:
           - string
           - "null"
+        required: true
       - description: Filters subtitlings with an id or alternative identifier matching
           any of the provided identifiers.
         required: false
@@ -3417,6 +3337,7 @@ paths:
           maximum: 10
           minimum: 1
           default: 10
+        required: true
       - description: Filters subtitlings depending on their provenance.
         name: provenance
         in: query
@@ -3424,6 +3345,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
+        required: true
       - description: Filters contents depending on their publisher.
         name: publisher
         in: query
@@ -3431,6 +3353,7 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
+        required: true
       responses:
         "200":
           description: OK
