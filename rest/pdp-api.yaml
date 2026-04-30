@@ -808,6 +808,14 @@ components:
             $ref: "#/components/schemas/Text"
           description: "Additional comments about this essence from the source system.\
             \ Attention: these are not user comments!"
+        sourceValues:
+          type:
+          - object
+          - "null"
+          additionalProperties:
+            type: string
+          description: Unmapped values directly from the source system. These might
+            change or vanish without notice.
         frameWidthPx:
           type:
           - integer
