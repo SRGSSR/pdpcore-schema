@@ -2279,7 +2279,6 @@ paths:
           type:
           - string
           - "null"
-        required: true
       - description: Filters contents depending on their domain type.
         name: domain-type
         in: query
@@ -2287,7 +2286,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/DomainType"
           - type: "null"
-        required: true
       - description: Filters contents with an id or alternative identifier matching
           any of the provided identifiers.
         required: false
@@ -2314,7 +2312,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
-        required: true
       - description: Filters contents depending on their publisher.
         name: publisher
         in: query
@@ -2322,7 +2319,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
-        required: true
       responses:
         "200":
           description: OK
@@ -2705,7 +2701,6 @@ paths:
           type:
           - string
           - "null"
-        required: true
       - description: Filter on an ID or an alternative identifier that matches any
           of the provided values.
         required: false
@@ -2734,7 +2729,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
-        required: true
       - description: Filters articles depending on their publisher.
         name: publisher
         in: query
@@ -2742,7 +2736,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
-        required: true
       responses:
         "200":
           description: OK
@@ -2804,7 +2797,6 @@ paths:
           type:
           - string
           - "null"
-        required: true
       - description: Filter on an ID or an alternative identifier that matches any
           of the provided values.
         required: false
@@ -2831,7 +2823,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
-        required: true
       - description: Filters campaigns depending on their publisher.
         name: publisher
         in: query
@@ -2839,7 +2830,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
-        required: true
       responses:
         "200":
           description: OK
@@ -2923,7 +2913,6 @@ paths:
           type:
           - string
           - "null"
-        required: true
       - description: Filter on an ID or an alternative identifier that matches any
           of the provided values.
         required: false
@@ -2953,7 +2942,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
-        required: true
       - description: Filters editorial group depending on their publisher.
         name: publisher
         in: query
@@ -2961,7 +2949,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
-        required: true
       responses:
         "200":
           description: OK
@@ -3023,7 +3010,6 @@ paths:
           type:
           - string
           - "null"
-        required: true
       - description: Filters for programme and item IDs or alternative identifiers
           that match any of the values provided.
         required: false
@@ -3053,7 +3039,6 @@ paths:
           type:
           - string
           - "null"
-        required: true
       - description: Filters programmes depending on their provenance.
         name: provenance
         in: query
@@ -3061,7 +3046,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
-        required: true
       - description: Filters programmes depending on their publisher.
         name: publisher
         in: query
@@ -3069,7 +3053,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
-        required: true
       responses:
         "200":
           description: OK
@@ -3131,7 +3114,6 @@ paths:
           type:
           - string
           - "null"
-        required: true
       - description: Filter on an ID or an alternative identifier that matches any
           of the provided values.
         required: false
@@ -3158,7 +3140,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
-        required: true
       - description: Filters publication services depending on their publisher.
         name: publisher
         in: query
@@ -3166,7 +3147,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
-        required: true
       responses:
         "200":
           description: OK
@@ -3228,7 +3208,6 @@ paths:
           type:
           - string
           - "null"
-        required: true
       - description: Filter on an ID or an alternative identifier that matches any
           of the provided values.
         required: false
@@ -3256,7 +3235,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
-        required: true
       - description: Filters publicationChannels depending on their publisher.
         name: publisher
         in: query
@@ -3264,7 +3242,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
-        required: true
       responses:
         "200":
           description: OK
@@ -3326,7 +3303,6 @@ paths:
           type:
           - string
           - "null"
-        required: true
       - description: Filters subtitlings with an id or alternative identifier matching
           any of the provided identifiers.
         required: false
@@ -3353,7 +3329,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Provenance"
           - type: "null"
-        required: true
       - description: Filters contents depending on their publisher.
         name: publisher
         in: query
@@ -3361,7 +3336,6 @@ paths:
           anyOf:
           - $ref: "#/components/schemas/Publisher"
           - type: "null"
-        required: true
       responses:
         "200":
           description: OK
