@@ -2469,25 +2469,6 @@ paths:
       - azureAuthDev:
         - Resource.Ops
         - Resource.Write
-  /api/contents/old-gico-programmes:
-    delete:
-      tags:
-      - Contents
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema: {}
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      summary: Delete Old Gico Programmes
-      security:
-      - azureAuthDev:
-        - Resource.Ops
-        - Resource.Write
   /api/contents/{id}:
     get:
       description: Returns the content with the given PDP ID.
