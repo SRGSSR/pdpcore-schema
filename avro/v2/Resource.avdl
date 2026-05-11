@@ -5,6 +5,7 @@ protocol Resource {
     import idl "URI.avdl";
     import idl "Identifier.avdl";
     import idl "PictureUsage.avdl";
+    import idl "Language.avdl";
 
     /** Resources such as pictures or documents related to this object. */
     record Resource {
@@ -50,6 +51,8 @@ protocol Resource {
         union{null, array<Text>} altText = null;
         /** Usage of the picture. */
         PictureUsage? usage = null;
+        /** The content language of this picture variant. */
+        Language? language = null;
     }
 
     /** Links related to this object.*/

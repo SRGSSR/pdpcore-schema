@@ -1506,6 +1506,14 @@ components:
           anyOf:
           - $ref: "#/components/schemas/PictureUsage"
           - type: "null"
+        language:
+          description: The content language of this picture variant.
+          type:
+          - string
+          - "null"
+          anyOf:
+          - $ref: "#/components/schemas/Language"
+          - type: "null"
         type:
           type: string
           description: The type of the resource. Always 'Picture'
