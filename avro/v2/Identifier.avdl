@@ -18,6 +18,9 @@ protocol Identifier {
      *  <li>ISAN is a unique ISO identifier for audiovisual content (see: https://www.isan.org)</li>
      *  <li>AisEpisodeId identifies an episode in the AIS</li>
      *  <li>OpenMediaUrn identifies an episode or item in OpenMedia</li>
+     *  <li>AzureId identifies an object/person in Azure</li>
+     *  <li>RtsArchiveId identifies an object in the RTS archive context (e.g. 'AA2410080931') </li>
+     *  <li>SamEpisodeId identifies an episode in SAM</li>
      * </ul>
      */
     enum IdentifierType {
@@ -33,7 +36,8 @@ protocol Identifier {
         AisEpisodeId,
         OpenMediaUrn,
         AzureId,
-        RtsArchiveId
+        RtsArchiveId,
+        SamEpisodeId
     } = Unknown;
 
 }
