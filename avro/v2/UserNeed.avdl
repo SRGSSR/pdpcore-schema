@@ -1,0 +1,10 @@
+@namespace("ch.srgssr.pdp.kafka.v2")
+protocol UserNeed {
+
+    /** The target user need of the object. */
+    record UserNeed {
+        /** The target user need as defined in the source system. */
+        string sourceValue;
+    }
+
+}

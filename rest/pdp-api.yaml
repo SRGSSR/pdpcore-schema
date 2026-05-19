@@ -278,6 +278,13 @@ components:
             type: string
           description: Unmapped values directly from the source system. These might
             change or vanish without notice.
+        userNeeds:
+          type:
+          - array
+          - "null"
+          items:
+            $ref: "#/components/schemas/UserNeed"
+          description: A list of target user needs.
     ArticleContent:
       type: object
       properties:
@@ -2231,6 +2238,13 @@ components:
         type:
           type: string
           description: The type of the right. Always 'UsageRights'
+    UserNeed:
+      description: The target user need of the object.
+      type: object
+      properties:
+        sourceValue:
+          type: string
+          description: The target user need as defined in the source system.
 security:
 - azureAuthDev:
   - https://graphql-api.pdp.dev.srgssr.ch/api/.default

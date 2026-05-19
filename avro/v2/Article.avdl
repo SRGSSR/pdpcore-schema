@@ -12,6 +12,7 @@ protocol Article {
     import idl "Involvement.avdl";
     import idl "Identifier.avdl";
     import idl "ProductionType.avdl";
+    import idl "UserNeed.avdl";
 
     /** In the context of the PDP an article is a (CMS) website article. */
     record Article {
@@ -55,6 +56,8 @@ protocol Article {
         union{null, array<ProductionType>} productionTypes = null;
         /** Unmapped values directly from the source system. These might change or vanish without notice. */
         map<string> sourceValues = {};
+        /** A list of target user needs. */
+        union{null, array<UserNeed>} userNeeds = null;
     }
 
     /** The text content of an article. */
