@@ -941,6 +941,9 @@ components:
           *  AzureId identifies an object/person in Azure
           *  RtsArchiveId identifies an object in the RTS archive context (e.g. 'AA2410080931')
           *  SamEpisodeId identifies an episode in SAM
+          *  WhatsOnLinearTransmissionId as defined in AIS/TOM
+          *  WhatsOnVodTransmissionId as defined in AIS/TOM
+          *  WhatsOnProductId as defined in AIS/TOM
       type: string
       enum:
       - PdpId
@@ -956,6 +959,9 @@ components:
       - AzureId
       - RtsArchiveId
       - SamEpisodeId
+      - WhatsOnLinearTransmissionId
+      - WhatsOnVodTransmissionId
+      - WhatsOnProductId
     Instant:
       type: string
       format: date-time

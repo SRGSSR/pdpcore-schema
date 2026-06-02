@@ -21,6 +21,9 @@ protocol Identifier {
      *  <li>AzureId identifies an object/person in Azure</li>
      *  <li>RtsArchiveId identifies an object in the RTS archive context (e.g. 'AA2410080931') </li>
      *  <li>SamEpisodeId identifies an episode in SAM</li>
+     *  <li>WhatsOnLinearTransmissionId as defined in AIS/TOM</li>
+     *  <li>WhatsOnVodTransmissionId as defined in AIS/TOM</li>
+     *  <li>WhatsOnProductId as defined in AIS/TOM</li>
      * </ul>
      */
     enum IdentifierType {
@@ -37,7 +40,10 @@ protocol Identifier {
         OpenMediaUrn,
         AzureId,
         RtsArchiveId,
-        SamEpisodeId
+        SamEpisodeId,
+        WhatsOnLinearTransmissionId,
+        WhatsOnVodTransmissionId,
+        WhatsOnProductId
     } = Unknown;
 
 }
