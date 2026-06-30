@@ -922,7 +922,8 @@ components:
             \ identifies an episode or item in OpenMedia\n  *  AzureId identifies\
             \ an object/person in Azure\n  *  RtsArchiveId identifies an object in\
             \ the RTS archive context (e.g. 'AA2410080931')\n  *  SamEpisodeId identifies\
-            \ an episode in SAM\n    "
+            \ an episode in SAM\n  *  CueContentSourceId identifies an object in the\
+            \ CUE content source system\n    "
           type: string
           $ref: "#/components/schemas/IdentifierType"
     IdentifierType:
@@ -945,6 +946,7 @@ components:
           *  WhatsOnVodTransmissionId as defined in AIS/TOM
           *  WhatsOnProductId as defined in AIS/TOM
           *  AisUniqueName for Collections from SRF AIS/TOM
+          *  CueContentSourceId identifies an object in the CUE content source system
       type: string
       enum:
       - PdpId
@@ -964,6 +966,7 @@ components:
       - WhatsOnVodTransmissionId
       - WhatsOnProductId
       - AisUniqueName
+      - CueContentSourceId
     Instant:
       type: string
       format: date-time

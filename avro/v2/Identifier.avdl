@@ -25,6 +25,7 @@ protocol Identifier {
      *  <li>WhatsOnVodTransmissionId as defined in AIS/TOM</li>
      *  <li>WhatsOnProductId as defined in AIS/TOM</li>
      *  <li>AisUniqueName for Collections from SRF AIS/TOM</li>
+     *  <li>CueContentSourceId identifies an object in the CUE content source system</li>
      * </ul>
      */
     enum IdentifierType {
@@ -45,7 +46,8 @@ protocol Identifier {
         WhatsOnLinearTransmissionId,
         WhatsOnVodTransmissionId,
         WhatsOnProductId,
-        AisUniqueName
+        AisUniqueName,
+        CueContentSourceId
     } = Unknown;
 
 }
