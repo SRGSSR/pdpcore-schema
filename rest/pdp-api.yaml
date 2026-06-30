@@ -944,6 +944,7 @@ components:
           *  WhatsOnLinearTransmissionId as defined in AIS/TOM
           *  WhatsOnVodTransmissionId as defined in AIS/TOM
           *  WhatsOnProductId as defined in AIS/TOM
+          *  AisUniqueName for Collections from SRF AIS/TOM
       type: string
       enum:
       - PdpId
@@ -962,6 +963,7 @@ components:
       - WhatsOnLinearTransmissionId
       - WhatsOnVodTransmissionId
       - WhatsOnProductId
+      - AisUniqueName
     Instant:
       type: string
       format: date-time

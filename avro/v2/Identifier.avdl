@@ -24,6 +24,7 @@ protocol Identifier {
      *  <li>WhatsOnLinearTransmissionId as defined in AIS/TOM</li>
      *  <li>WhatsOnVodTransmissionId as defined in AIS/TOM</li>
      *  <li>WhatsOnProductId as defined in AIS/TOM</li>
+     *  <li>AisUniqueName for Collections from SRF AIS/TOM</li>
      * </ul>
      */
     enum IdentifierType {
@@ -43,7 +44,8 @@ protocol Identifier {
         SamEpisodeId,
         WhatsOnLinearTransmissionId,
         WhatsOnVodTransmissionId,
-        WhatsOnProductId
+        WhatsOnProductId,
+        AisUniqueName
     } = Unknown;
 
 }
