@@ -1659,6 +1659,18 @@ components:
           description: "A keyword is a frequently used term or group of words, numbers\
             \ or characters that either appears directly in this programme or is used\
             \ to identify and categorise the nature of this programme."
+        startMs:
+          type:
+          - integer
+          - "null"
+          format: int64
+          description: Mark in pointer in milliseconds.
+        endMs:
+          type:
+          - integer
+          - "null"
+          format: int64
+          description: Mark out pointer in milliseconds.
         durationMs:
           type:
           - integer

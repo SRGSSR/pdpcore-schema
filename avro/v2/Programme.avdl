@@ -41,6 +41,8 @@ protocol Programme {
         union{null, array<Text>} description = null;
         union{null, array<Essence>} instantiatedBy = null;
         union{null, array<PublicationEvent>} scheduledOn = null;
+        long? startMs = null;
+        long? endMs = null;
         /** The duration/length of this whole programme in milliseconds. */
         long? durationMs = null;
         union{null, array<string>} associatedCampaigns = null;
