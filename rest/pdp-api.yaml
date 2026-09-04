@@ -713,6 +713,14 @@ components:
             type: string
           description: Unmapped values directly from the source system. These might
             change or vanish without notice.
+        genres:
+          type:
+          - array
+          - "null"
+          items:
+            $ref: "#/components/schemas/Genre"
+          description: A list of genres used to classify this editorial group depending
+            on its content.
     EditorialGroupPage:
       type: object
       required:
@@ -870,10 +878,10 @@ components:
           format: int64
           description: The file size in bytes.
     Genre:
+      type: object
       description: "The genre is used to classify audiovisual objects depending on\
         \ their content into subject areas such as 'Culture', 'Sports', 'News' or\
         \ 'Economy'."
-      type: object
       properties:
         name:
           description: The name of this genre.

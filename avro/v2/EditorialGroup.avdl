@@ -7,6 +7,7 @@ protocol EditorialGroup {
     import idl "Resource.avdl";
     import idl "AccessConditions.avdl";
     import idl "MediaType.avdl";
+    import idl "Genre.avdl";
 
     /** An editorial group defines a collection or group of media resources (e.g. a show or a topic). */
     record EditorialGroup {
@@ -39,6 +40,8 @@ protocol EditorialGroup {
         map<string> sourceValues = {};
         /** PDP ids of editorial objects related to this editorial group. */
         union{null, array<string>} relatedEditorialObjects = null;
+        /** A list of genres used to classify this editorial group depending on its content. */
+        union{null, array<Genre>} genres = null;
     }
 
     /**
