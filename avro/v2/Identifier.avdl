@@ -2,7 +2,9 @@
 protocol Identifier {
 
     record Identifier {
+        /** The identifier value */
         string value;
+        /** The type of the identifier, see enum for further information and examples */
         IdentifierType type;
     }
 
@@ -24,7 +26,7 @@ protocol Identifier {
      *  <li>WhatsOnLinearTransmissionId as defined in AIS/TOM</li>
      *  <li>WhatsOnVodTransmissionId as defined in AIS/TOM</li>
      *  <li>WhatsOnProductId as defined in AIS/TOM</li>
-     *  <li>AisUniqueName for Collections from SRF AIS/TOM</li>
+     *  <li>AisUniqueName for EditorialGroups from AIS/TOM</li>
      *  <li>CueContentSourceId identifies an object in the CUE content source system</li>
      * </ul>
      */

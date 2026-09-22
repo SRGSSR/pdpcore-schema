@@ -22,6 +22,7 @@ protocol AccessCondition {
     }
 
     record GeoBlockingLocation {
+        /** Location name as defined in the source system */
         string sourceValue;
     }
 }

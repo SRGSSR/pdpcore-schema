@@ -14,7 +14,9 @@ protocol Text {
     }
 
     record FormattedContent {
+        /** The content containing formatting */
         string content;
+        /** The type of formatting used (e.g. 'application/rtf')  */
         string contentType;
     }
 

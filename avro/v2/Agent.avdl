@@ -28,6 +28,7 @@ protocol Agent {
 
     /** The job or occupation of a Person*/
     record Occupation {
+        /** The name of the occupation */
         array<Text> name;
     }
 
