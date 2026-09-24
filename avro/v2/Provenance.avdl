@@ -26,7 +26,8 @@ protocol Provenance {
         SAM_SRGSSR,
         AS_STXT,
         CMM_RSI,
-        PlayPlus_SRGSSR
+        PlayPlus_SRGSSR,
+        FormatMapper_SRF
     } = Unknown;
 
 }

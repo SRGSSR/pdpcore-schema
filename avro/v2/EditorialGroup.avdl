@@ -42,6 +42,8 @@ protocol EditorialGroup {
         union{null, array<string>} relatedEditorialObjects = null;
         /** A list of genres used to classify this editorial group depending on its content. */
         union{null, array<Genre>} genres = null;
+        /** PDP ids of campaigns associated with this editorial group. */
+        union{null, array<string>} associatedCampaigns = null;
     }
 
     /**

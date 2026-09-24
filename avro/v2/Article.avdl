@@ -58,6 +58,8 @@ protocol Article {
         map<string> sourceValues = {};
         /** A list of target user needs. */
         union{null, array<UserNeed>} userNeeds = null;
+        /** PDP ids of campaigns associated with this article. */
+        union{null, array<string>} associatedCampaigns = null;
     }
 
     /** The text content of an article. */

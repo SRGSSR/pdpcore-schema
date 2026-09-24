@@ -264,6 +264,13 @@ components:
           items:
             type: string
           description: PDP ids of editorial objects related to this article
+        associatedCampaigns:
+          type:
+          - array
+          - "null"
+          items:
+            type: string
+          description: PDP ids of campaigns associated with this article.
         productionTypes:
           type:
           - array
@@ -721,6 +728,14 @@ components:
             $ref: "#/components/schemas/Genre"
           description: A list of genres used to classify this editorial group depending
             on its content.
+        associatedCampaigns:
+          type:
+          - array
+          - "null"
+          items:
+            type: string
+          description: List of PDP ids of campaigns this editorial group is associated
+            with. Allows linking back to the start of the media value chain.
     EditorialGroupPage:
       type: object
       required:
@@ -1871,6 +1886,7 @@ components:
       - AS_STXT
       - CMM_RSI
       - PlayPlus_SRGSSR
+      - FormatMapper_SRF
     PublicationChannel:
       type: object
       properties:
