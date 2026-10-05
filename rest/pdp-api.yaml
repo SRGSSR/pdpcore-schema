@@ -544,9 +544,6 @@ components:
     Department:
       type: object
       properties:
-        name:
-          type: string
-          writeOnly: true
         type:
           type: string
           description: The type of the agent. Always 'Department'
@@ -1478,9 +1475,6 @@ components:
     Person:
       type: object
       properties:
-        name:
-          type: string
-          writeOnly: true
         identifiers:
           type: array
           items:
@@ -2210,9 +2204,6 @@ components:
     Team:
       type: object
       properties:
-        name:
-          type: string
-          writeOnly: true
         type:
           type: string
           description: The type of the agent. Always 'Team'
