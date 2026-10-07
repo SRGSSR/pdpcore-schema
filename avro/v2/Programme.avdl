@@ -39,12 +39,17 @@ protocol Programme {
         union{null, array<Text>} lead = null;
         /** The description of the programme. The description may be available in different languages. */
         union{null, array<Text>} description = null;
+        /** Contains metadata about the physical or digital manifestation of this programme. */
         union{null, array<Essence>} instantiatedBy = null;
+        /** Link to the available metadata about a specific airing of a programme. */
         union{null, array<PublicationEvent>} scheduledOn = null;
+        /** The start offset of this whole programme in milliseconds. */
         long? startMs = null;
+        /** The end offset of this whole programme in milliseconds. */
         long? endMs = null;
         /** The duration/length of this whole programme in milliseconds. */
         long? durationMs = null;
+        /** Link to the corresponding campaign of this programme. */
         union{null, array<string>} associatedCampaigns = null;
         /** List of PDP ids from different source systems referencing the same programme. */
         array<string> existsAs = [];
@@ -81,6 +86,7 @@ protocol Programme {
         union{null, array<ProductionType>} productionTypes = null;
         /** A list of producers who worked on this programme. */
         union{null, array<Producer>} producers = null;
+        /** Contains metadata about individual parts of this programme. */
         union{null, array<EditorialSegment>} parts = null;
         /** PDP ids of editorial objects related to this programme. */
         union{null, array<string>} relatedEditorialObjects = null;
@@ -105,10 +111,11 @@ protocol Programme {
         union{null, array<Text>} description = null;
         /** The duration/length of this item in milliseconds. */
         long? durationMs = null;
-        /** The start of this whole programme in milliseconds. */
+        /** The start of this whole item in milliseconds. */
         long? startMs = null;
-        /** The end of this whole programme in milliseconds. */
+        /** The end of this whole item in milliseconds. */
         long? endMs = null;
+        /** Contains metadata about the physical or digital manifestation of this item. */
         union{null, array<Essence>} instantiatedBy = null;
         /** The access conditions for this item. */
         array<AccessCondition> accessConditions = [];
@@ -122,6 +129,7 @@ protocol Programme {
         union{null, array<Rights>} coveredBy = null;
         /** The locations covered in this programme. */
         union{null, array<Location>} coversLocations = null;
+        /** Contains metadata about individual parts of this item. */
         union{null, array<EditorialSegment>} parts = null;
         /** A list of keywords for this programme. */
         union{null, array<string>} keywords = null;
@@ -144,8 +152,11 @@ protocol Programme {
     }
 
     record PublicationEvent {
+        /** Available, external/additional identifiers for this specific publication event. */
         array<Identifier> identifiers;
+        /** The date for the planned publication event of this programme. */
         timestamp_ms scheduleDate;
+        /** The name of specific publication channels for which this publication event is valid. */
         union{null, array<string>} publicationChannels = null;
     }
 }

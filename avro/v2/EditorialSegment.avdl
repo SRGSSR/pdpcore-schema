@@ -5,12 +5,14 @@ protocol EditorialSegment {
     import idl "Location.avdl";
 
     record EditorialSegment {
+        /** Contains metadata about the smallest, described segments of a programme or item. */
         Scene? scene = null;
     }
 
     record Scene {
         /** A list of identifiers this EditorialSegment might be referenced by. */
         array<Identifier> identifiers = [];
+        /** Numbering of the described scenes of a programme. */
         int? segmentNumber = null;
         /** The description of the editorialSegment's content. The description may be available in different languages. */
         union{null, array<Text>} contentDescription = null;

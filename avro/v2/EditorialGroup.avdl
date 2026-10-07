@@ -31,6 +31,7 @@ protocol EditorialGroup {
         union{null, array<Text>} lead = null;
         /** Resources such as pictures or documents related to this article. */
         union{null, array<Resource>} resources = null;
+        /** Link to another editorial group this object belongs to. */
         array<string> memberOf = [];
         /** Describes the format in which the editorial group editorial objects are presented. */
         MediaType? mediaType = null;

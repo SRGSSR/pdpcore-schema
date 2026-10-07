@@ -10,6 +10,7 @@ protocol Campaign {
     import idl "Involvement.avdl";
 
     record Campaign {
+        /** The unique pdp-identifier of this campaign-object. */
         string id;
         /** The business unit or external organisation publishing the metadata. */
         Publisher publisher;
@@ -25,17 +26,22 @@ protocol Campaign {
         union{null, array<Text>} lead = null;
         /** The description of the campaign. The description may be available in different languages. */
         union{null, array<Text>} description = null;
+        /** The publication plan contains the rule set for the publication of a specific campaign. */
         union{null, array<PublicationPlan>} publicationPlans = null;
         /** Unmapped values directly from the source system. These might change or vanish without notice. */
         union{null, map<string>} sourceValues = null;
+        /** The genre is used to classify audiovisual objects depending on their content into different subject areas. */
         union{null, array<Genre>} genres = null;
+        /** Describes the agents involvement in the campaign */
         union{null, array<Involvement>} contributors = null;
         /** A list of PDP ids of collections that this campaign is a member of. */
         union{null, array<string>} memberOf = null;
     }
 
     record PublicationPlan {
+        /** The name of a specific publication channel for which a specific publication plan is valid. */
         string publicationChannelName;
+        /** Metadata about the planned airings of this campaign. */
         union{null, array<PublicationSchedule>} publicationSchedules = null;
     }
 
@@ -60,14 +66,20 @@ protocol Campaign {
     }
 
     record PublicationSchedule {
+        /** the planned duration in milliseconds of a specific airing. */
         long? durationMs = null;
+        /** The date of this planned publication of this campaign. */
         date? startDate = null;
         /** The start time of the publication at timezone Europe/Zurich */
         time_ms? startTime = null;
+        /** The date of the last planned publication of this schedule. */
         timestamp_ms? end = null;
+        /** Indicates whether this broadcast is the first airing or not. */
         boolean? isFirstShowing = null;
         // records need to be defined BEFORE this union in order to generate java source files
+        /** Pattern in which this schedule repeats. */
         union{null, RepeatDaily, RepeatWeekly, RepeatMonthlyOnDayOfMonth, RepeatMonthlyOnDayOfWeek} repeat = null;
+        /** Specific dates, when the publication will not be aired. */
         union{null, array<timestamp_ms>} exclusions = null;
     }
 

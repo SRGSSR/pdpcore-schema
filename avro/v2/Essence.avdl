@@ -12,11 +12,17 @@ protocol Essence {
     record Essence {
         /** The url. */
         URI locator;
+        /** Available, external/additional identifiers for this specific essence. */
         array<Identifier> identifiers = [];
+        /** A field for the classification of this specific essence like "Betamax", "DVD", "LP" etc. */
         MediumType? mediumType = null;
+        /** Contains metadata about the aspect ratio of this (video-) essence. */
         AspectRatio? aspectRatio = null;
+        /** Contains metadata about the colour space of this (video-) essence. */
         ColourSpace? colourSpace = null;
+        /** Contains metadata about the available audio track of this essence. */
         union{null, array<AudioTrack>} audioTracks = null;
+        /** Potential available (archival) annotations/comments about this essence. */
         union{null, array<Text>} comment = null;
         /** Unmapped values directly from the source system. These might change or vanish without notice. */
         union{null, map<string>} sourceValues = null;
