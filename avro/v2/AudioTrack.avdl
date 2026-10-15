@@ -4,5 +4,11 @@ protocol AudioTrack {
     record AudioTrack {
         /** The name of the audio track. */
         string? name;
+        /** The language of the audio track. */
+        string? trackLanguage = null;
+        /** The role of the audio track, e.g. "audioDescription". */
+        string? trackRole = null;
+        /** The index of the audio track. */
+        int? trackIndex = null;
     }
 }

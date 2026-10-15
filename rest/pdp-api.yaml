@@ -331,6 +331,22 @@ components:
         name:
           type: string
           description: The name of the audio track.
+        trackRole:
+          type:
+          - string
+          - "null"
+          description: "The role of the audio track, e.g. \"audioDescription\"."
+        trackIndex:
+          type:
+          - integer
+          - "null"
+          format: int32
+          description: The index of the audio track.
+        trackLanguage:
+          type:
+          - string
+          - "null"
+          description: The language of the audio track.
     Campaign:
       type: object
       properties:
