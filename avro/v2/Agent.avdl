@@ -32,6 +32,12 @@ protocol Agent {
         array<Text> name;
     }
 
+    /** The character a Person plays*/
+    record PlayedCharacter {
+        /** The name of the character */
+        array<Text> name;
+    }
+
     /** A team is a group of clearly identifiable and organizationally related actors who are jointly involved in the creation process of an editorial object. An example of a team is the editorial team of "Regionaljournal Ostschweiz". */
     record Team {
         /** The name of the team. */

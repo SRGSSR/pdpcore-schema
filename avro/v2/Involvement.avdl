@@ -7,6 +7,8 @@ protocol Involvement {
         string name;
         /** The Person, Department, or Team involved. */
         Agent agent;
+        /** The character(s) the agent plays in an asset. */
+        union{null, array<PlayedCharacter>} playsCharacter = null;
     }
 
 }

@@ -1020,6 +1020,13 @@ components:
           description: "The Person, Department, or Team involved."
           type: object
           $ref: "#/components/schemas/Agent"
+        playsCharacter:
+          type:
+          - array
+          - "null"
+          items:
+            $ref: "#/components/schemas/PlayedCharacter"
+          description: The character(s) the agent plays in the asset.
     Item:
       description: An item is a single editorial (audiovisual) contribution. An item
         is usually a part of a programme.
@@ -1581,6 +1588,15 @@ components:
         sourceValue:
           type: string
           description: The source value of the picture usage.
+    PlayedCharacter:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: array
+          items:
+            $ref: "#/components/schemas/Text"
     Producer:
       type: object
       description: "The production entity (company, person, team, etc.) involved in\
