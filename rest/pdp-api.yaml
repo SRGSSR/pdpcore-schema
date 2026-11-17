@@ -1153,6 +1153,14 @@ components:
           examples:
           - 2022-03-10T16:15:50Z
           description: Date at which this item was or is going to be broadcasted.
+        archivingDate:
+          type:
+          - string
+          - "null"
+          format: date-time
+          examples:
+          - 2022-03-10T16:15:50Z
+          description: Date at which this item was archived.
         startMs:
           type:
           - integer
@@ -1758,6 +1766,14 @@ components:
           examples:
           - 2022-03-10T16:15:50Z
           description: Date at which this item was or is going to be broadcasted.
+        archivingDate:
+          type:
+          - string
+          - "null"
+          format: date-time
+          examples:
+          - 2022-03-10T16:15:50Z
+          description: Date at which this programme was archived.
         abstract:
           type:
           - array

@@ -92,6 +92,8 @@ protocol Programme {
         union{null, array<string>} relatedEditorialObjects = null;
         /** PDP ids of other programme variants of this programme (e.g. HbbTV, podcast, trailer). */
         union{null, array<string>} versions = null;
+        /** Date at which this programme was archived. */
+        timestamp_ms? archivingDate = null;
     }
 
     record Item {
@@ -149,6 +151,8 @@ protocol Programme {
         union{null, array<ProductionType>} productionTypes = null;
         /** PDP ids of editorial objects related to this item. */
         union{null, array<string>} relatedEditorialObjects = null;
+        /** Date at which this item was archived. */
+        timestamp_ms? archivingDate = null;
     }
 
     record PublicationEvent {
