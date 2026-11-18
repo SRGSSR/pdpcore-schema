@@ -1006,6 +1006,7 @@ components:
       - AisUniqueName
       - CueContentSourceId
       - RtsLegacyId
+      - CmmId
     Instant:
       type: string
       format: date-time
